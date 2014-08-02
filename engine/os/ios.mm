@@ -1,4 +1,7 @@
 #include "os.h"
+
+#if kBuildIos
+
 #include "ios.h"
 
 @implementation ios
@@ -58,3 +61,5 @@ namespace os
 	{
 	}
 }
+
+#endif

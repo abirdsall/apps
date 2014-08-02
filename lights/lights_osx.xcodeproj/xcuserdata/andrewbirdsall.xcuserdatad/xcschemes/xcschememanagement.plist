@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>zulu_ios.xcscheme</key>
+		<key>lights.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,7 +12,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>D69DF17917B81C2800FE1FCC</key>
+		<key>D668580F16FB4445007C002F</key>
 		<dict>
 			<key>primary</key>
 			<true/>

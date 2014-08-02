@@ -6,8 +6,8 @@
 
 #define kBuildWindows     ( 0							)
 #define kBuildLinux       ( 0							)
-#define kBuildMac         ( 0							)
-#define kBuildIos         ( 1							)
+#define kBuildMac         ( 1                           )
+#define kBuildIos         ( 0                           )
 
 #define kBuildOpenGles2   ( kBuildIos					)
 #define kBuildOpenGl3     ( kBuildMac					)

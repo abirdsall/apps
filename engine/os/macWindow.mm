@@ -324,9 +324,9 @@ namespace os
 		[sWindowRef orderOut:nil];
 		if( fullscreen )
 		{
-			[[sWindowRef contentView] exitFullScreenModeWithOptions:nil];
-			CGDisplaySwitchToMode( CGMainDisplayID(), (CFDictionaryRef)sOriginalMode );
-			CGReleaseAllDisplays();
+//			[[sWindowRef contentView] exitFullScreenModeWithOptions:nil];
+//			CGDisplaySwitchToMode( CGMainDisplayID(), (CFDictionaryRef)sOriginalMode );
+//			CGReleaseAllDisplays();
 		}
 		[sWindowPixelFormat release];
 		sWindowPixelFormat = nil;
@@ -367,7 +367,7 @@ namespace os
 		return ( void* )sWindowRef;
 	}
 	
-	bool WindowOpenHw()
+	bool WindowOpenHw( WindowFormat& windowFormat )
 	{
 		bool gl3 = kBuildOpenGl3;
 		bool resizable = false;
@@ -392,7 +392,7 @@ namespace os
 				styleMask |= NSResizableWindowMask;
 			}
 		
-		sWindowRef = [[NSWindow alloc] initWithContentRect:NSMakeRect( 0, 0, sizeX, sizeY ) styleMask:styleMask backing:NSBackingStoreBuffered defer:NO];
+		sWindowRef = [[NSWindow alloc] initWithContentRect:NSMakeRect( 0, 0, windowFormat.mSizeX, windowFormat.mSizeY ) styleMask:styleMask backing:NSBackingStoreBuffered defer:NO];
 		[sWindowRef setContentView:[[CocoaContentView alloc] init]];
 		[sWindowRef setDelegate:sWindowDelegate];
 		[sWindowRef setAcceptsMouseMovedEvents:YES];
@@ -418,16 +418,16 @@ namespace os
 		}
 #endif /*MAC_OS_X_VERSION_MAX_ALLOWED*/
 		
-		ADD_ATTR2( NSOpenGLPFAColorSize, (rBits+gBits+bBits) );
+		ADD_ATTR2( NSOpenGLPFAColorSize, (windowFormat.mBitsR+windowFormat.mBitsG+windowFormat.mBitsB) );
 		
-		if( aBits > 0)
+		if( windowFormat.mBitsA > 0)
 		{
-			ADD_ATTR2( NSOpenGLPFAAlphaSize, aBits );
+			ADD_ATTR2( NSOpenGLPFAAlphaSize, windowFormat.mBitsA );
 		}
 		
-		if( zBits > 0)
+		if( windowFormat.mBitsZ > 0)
 		{
-			ADD_ATTR2( NSOpenGLPFADepthSize, zBits );
+			ADD_ATTR2( NSOpenGLPFADepthSize, windowFormat.mBitsZ );
 		}
 		
 		ADD_ATTR( 0 );
@@ -458,7 +458,7 @@ namespace os
 		WindowTick();
 		
 		// set title
-		const char *title = "felix";
+		const char *title = "lights";
 		[sWindowRef setTitle:[NSString stringWithCString:title encoding:NSISOLatin1StringEncoding]];
 		
 		// enable vsync

@@ -27,7 +27,7 @@ namespace os
 		}
 	}
 	
-	void OnMouseMove( s16 x, s16 y, s16 dx, s16 dy )
+	void OnMouseMove( s32 x, s32 y, s32 dx, s32 dy )
 	{
 		if( sLocked )
 		{

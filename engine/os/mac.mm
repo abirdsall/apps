@@ -59,7 +59,7 @@ namespace os
 	{
 		pthread_key_delete( sNsglThread );
 		
-		sNsglThread = nil;
+        sNsglThread = 0;//nil;
 		sNsglFramework = nil;
 	}
     
@@ -75,6 +75,8 @@ namespace os
         }
         
         os::FlowKill();
+        
+        return true;
     }
 	
 	bool InitHw()
