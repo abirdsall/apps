@@ -38,7 +38,7 @@ namespace fw
         MeshSetAttrib( sMesh, gs::eAttribTcoord, ( void* )( sizeof( f32 ) * (kVertexAttribSize + kTcoordAttribSize) ), kTcoordAttribSize );
         MeshFinalise( sMesh );
         
-#if kBuildOpenGles2
+#if kBuildOpenGles2 || kBuildOpenGles3
         
         String vShader = "attribute vec2 vertex_position;\n";
         vShader += "attribute vec4 vertex_colour;\n";

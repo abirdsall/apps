@@ -8,11 +8,16 @@
 #include "gsCanvas.h"
 #include "gsShader.h"
 
-#if kBuildIos
+#if kBuildOpenGles2
 
 #include <OpenGLES/ES2/gl.h>
+#include <OpenGLES/ES2/glext.h>
 
-#elif kBuildMac
+#elif kBuildOpenGles3
+
+#include <OpenGLES/ES3/gl.h>
+
+#elif kBuildOpenGl3
 
 #include <OpenGL/gl3.h>
 #include <OpenGL/gl3ext.h>

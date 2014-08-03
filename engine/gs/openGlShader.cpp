@@ -1,6 +1,6 @@
 #include "gsHw.h"
 
-#if kBuildOpenGl3
+#if kBuildOpenGl3 || kBuildOpenGles2 || kBuildOpenGles3
 
 namespace gs
 {
@@ -132,7 +132,12 @@ namespace gs
 			
 	void ShaderHwSetMat4( const ShaderHandle handle, const c8* name, const m4& m )
 	{
-		glUniformMatrix4fv( FindUniform( handle, ( GLchar* )name ), 1, true, ( GLfloat* )m );
+#if kBuildOpenGles2 || kBuildOpenGles3
+        m4 tm = transpose( m );
+        glUniformMatrix4fv( FindUniform( handle, ( GLchar* )name ), 1, false, ( GLfloat* )tm );
+#else
+        glUniformMatrix4fv( FindUniform( handle, ( GLchar* )name ), 1, true, ( GLfloat* )m );
+#endif
 	}
 }
 

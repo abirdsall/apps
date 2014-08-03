@@ -3,13 +3,7 @@
 
 #include "os.h"
 
-#if kBuildDirectX
-
-#elif kBuildOpenGles2
-
-#include "openGlTexture.h"
-
-#elif kBuildOpenGl3
+#if kBuildOpenGl3 || kBuildOpenGles2 || kBuildOpenGles3
 
 #include "openGlTexture.h"
 

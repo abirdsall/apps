@@ -1,6 +1,6 @@
 #include "gsHw.h"
 
-#if kBuildOpenGl3
+#if kBuildOpenGl3 || kBuildOpenGles2 || kBuildOpenGles3
 
 namespace gs
 {
@@ -10,44 +10,82 @@ namespace gs
 	const GLenum sHwTextureTarget[ TexTypeCount ] =
 	{
 		GL_TEXTURE_2D,//TexType2d,
+#if kBuildOpenGles2
+        GL_TEXTURE_2D,//TexType3d,
+#else
 		GL_TEXTURE_3D,//TexType3d,
+#endif
 		GL_TEXTURE_2D//TexTypeDepth,
 	};
 	
 	const GLint sHwTextureInternalFormat[ TexFormatCount ] =
 	{
-		GL_R8,//TexFormatR8,
-		GL_R16F,//TexFormatR16F,
-		GL_R32F,//TexFormatR32F,
-		GL_RG8,//TexFormatRG8,
-		GL_RG16F,//TexFormatRG16F,
-		GL_RG32F,//TexFormatRG32F,
-		GL_RGB8,//TexFormatRGB8,
-		GL_RGB16F,//TexFormatRGB16F,
-		GL_RGB32F,//TexFormatRGB32F,
-		GL_RGBA8,//TexFormatRGBA8,
-		GL_RGBA16F,//TexFormatRGBA16F,
-		GL_RGBA32F,//TexFormatRGBA32F,
-		GL_RGBA32UI,//TexFormatRGBA32U,
-		GL_DEPTH_COMPONENT//TexFormatDepth,
+#if kBuildOpenGles2
+        GL_LUMINANCE,//TexFormatR8,
+        GL_LUMINANCE,//TexFormatR16F,
+        GL_LUMINANCE,//TexFormatR32F,
+        GL_LUMINANCE_ALPHA,//TexFormatRG8,
+        GL_LUMINANCE_ALPHA,//TexFormatRG16F,
+        GL_LUMINANCE_ALPHA,//TexFormatRG32F,
+        GL_RGB,//TexFormatRGB8,
+        GL_RGB,//TexFormatRGB16F,
+        GL_RGB,//TexFormatRGB32F,
+        GL_RGBA,//TexFormatRGBA8,
+        GL_RGBA,//TexFormatRGBA16F,
+        GL_RGBA,//TexFormatRGBA32F,
+        GL_RGBA,//TexFormatRGBA32U,
+        GL_DEPTH_COMPONENT//TexFormatDepth,
+#else
+        GL_R8,//TexFormatR8,
+        GL_R16F,//TexFormatR16F,
+        GL_R32F,//TexFormatR32F,
+        GL_RG8,//TexFormatRG8,
+        GL_RG16F,//TexFormatRG16F,
+        GL_RG32F,//TexFormatRG32F,
+        GL_RGB8,//TexFormatRGB8,
+        GL_RGB16F,//TexFormatRGB16F,
+        GL_RGB32F,//TexFormatRGB32F,
+        GL_RGBA8,//TexFormatRGBA8,
+        GL_RGBA16F,//TexFormatRGBA16F,
+        GL_RGBA32F,//TexFormatRGBA32F,
+        GL_RGBA32UI,//TexFormatRGBA32U,
+        GL_DEPTH_COMPONENT//TexFormatDepth,
+#endif
 	};
 	
 	const GLint sHwTextureFormat[ TexFormatCount ] =
 	{
-		GL_RED,//TexFormatR8,
-		GL_RED,//TexFormatR16F,
-		GL_RED,//TexFormatR32F,
-		GL_RG,//TexFormatRG8,
-		GL_RG,//TexFormatRG16F,
-		GL_RG,//TexFormatRG32F,
-		GL_RGB,//TexFormatRGB8,
-		GL_RGB,//TexFormatRGB16F,
-		GL_RGB,//TexFormatRGB32F,
-		GL_RGBA,//TexFormatRGBA8,
-		GL_RGBA,//TexFormatRGBA16F,
-		GL_RGBA,//TexFormatRGBA32F,
-		GL_RGBA,//TexFormatRGBA32U,
-		GL_DEPTH_COMPONENT//TexFormatDepth,
+#if kBuildOpenGles2
+        GL_LUMINANCE,//TexFormatR8,
+        GL_LUMINANCE,//TexFormatR16F,
+        GL_LUMINANCE,//TexFormatR32F,
+        GL_LUMINANCE_ALPHA,//TexFormatRG8,
+        GL_LUMINANCE_ALPHA,//TexFormatRG16F,
+        GL_LUMINANCE_ALPHA,//TexFormatRG32F,
+        GL_RGB,//TexFormatRGB8,
+        GL_RGB,//TexFormatRGB16F,
+        GL_RGB,//TexFormatRGB32F,
+        GL_RGBA,//TexFormatRGBA8,
+        GL_RGBA,//TexFormatRGBA16F,
+        GL_RGBA,//TexFormatRGBA32F,
+        GL_RGBA,//TexFormatRGBA32U,
+        GL_DEPTH_COMPONENT//TexFormatDepth,
+#else
+        GL_RED,//TexFormatR8,
+        GL_RED,//TexFormatR16F,
+        GL_RED,//TexFormatR32F,
+        GL_RG,//TexFormatRG8,
+        GL_RG,//TexFormatRG16F,
+        GL_RG,//TexFormatRG32F,
+        GL_RGB,//TexFormatRGB8,
+        GL_RGB,//TexFormatRGB16F,
+        GL_RGB,//TexFormatRGB32F,
+        GL_RGBA,//TexFormatRGBA8,
+        GL_RGBA,//TexFormatRGBA16F,
+        GL_RGBA,//TexFormatRGBA32F,
+        GL_RGBA,//TexFormatRGBA32U,
+        GL_DEPTH_COMPONENT//TexFormatDepth,
+#endif
 	};
 	
 	const GLint sHwTextureType[ TexFormatCount ] =
@@ -80,7 +118,11 @@ namespace gs
 		glBindTexture( textureHw.mTarget,textureHw.mTexture );
 		if( texture.mSizeZ > 1 )
 		{
-			glTexImage3D( textureHw.mTarget, 0, textureHw.mInternalFormat, texture.mSizeX, texture.mSizeY, texture.mSizeZ, 0, textureHw.mFormat, textureHw.mType, texture.mData );
+#if kBuildOpenGles2
+            ASSERT(false);
+#else
+            glTexImage3D( textureHw.mTarget, 0, textureHw.mInternalFormat, texture.mSizeX, texture.mSizeY, texture.mSizeZ, 0, textureHw.mFormat, textureHw.mType, texture.mData );
+#endif
 		}
 		else
 		{
@@ -90,7 +132,11 @@ namespace gs
 		glTexParameteri( textureHw.mTarget, GL_TEXTURE_WRAP_T, texture.mFlags & TexFlagClampT ? GL_CLAMP_TO_EDGE : GL_REPEAT );
 		if( texture.mSizeZ > 1 )
 		{
-			glTexParameteri( textureHw.mTarget, GL_TEXTURE_WRAP_R, texture.mFlags & TexFlagClampR ? GL_CLAMP_TO_EDGE : GL_REPEAT );
+#if kBuildOpenGles2
+            ASSERT(false);
+#else
+            glTexParameteri( textureHw.mTarget, GL_TEXTURE_WRAP_R, texture.mFlags & TexFlagClampR ? GL_CLAMP_TO_EDGE : GL_REPEAT );
+#endif
 		}
 		glTexParameteri( textureHw.mTarget, GL_TEXTURE_MAG_FILTER, texture.mFlags & TexFlagNearest ? GL_NEAREST : GL_LINEAR);
 		if( texture.mFlags & TexFlagMipMap )

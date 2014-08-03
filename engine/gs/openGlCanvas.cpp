@@ -1,6 +1,6 @@
 #include "gsHw.h"
 
-#if kBuildOpenGl3
+#if kBuildOpenGl3 || kBuildOpenGles2 || kBuildOpenGles3
 
 namespace gs
 {
@@ -13,22 +13,26 @@ namespace gs
 	
 	static u32 sColorAttachmentMap[ kColorTextureLimit ] =
 	{
-		GL_COLOR_ATTACHMENT0,
-		GL_COLOR_ATTACHMENT1,
-		GL_COLOR_ATTACHMENT2,
-		GL_COLOR_ATTACHMENT3,
-		GL_COLOR_ATTACHMENT4,
-		GL_COLOR_ATTACHMENT5,
-		GL_COLOR_ATTACHMENT6,
-		GL_COLOR_ATTACHMENT7,
-		GL_COLOR_ATTACHMENT8,
-		GL_COLOR_ATTACHMENT9,
-		GL_COLOR_ATTACHMENT10,
-		GL_COLOR_ATTACHMENT11,
-		GL_COLOR_ATTACHMENT12,
-		GL_COLOR_ATTACHMENT13,
-		GL_COLOR_ATTACHMENT14,
-		GL_COLOR_ATTACHMENT15
+#if kBuildOpenGles2
+        GL_COLOR_ATTACHMENT0
+#else
+        GL_COLOR_ATTACHMENT0,
+        GL_COLOR_ATTACHMENT1,
+        GL_COLOR_ATTACHMENT2,
+        GL_COLOR_ATTACHMENT3,
+        GL_COLOR_ATTACHMENT4,
+        GL_COLOR_ATTACHMENT5,
+        GL_COLOR_ATTACHMENT6,
+        GL_COLOR_ATTACHMENT7,
+        GL_COLOR_ATTACHMENT8,
+        GL_COLOR_ATTACHMENT9,
+        GL_COLOR_ATTACHMENT10,
+        GL_COLOR_ATTACHMENT11,
+        GL_COLOR_ATTACHMENT12,
+        GL_COLOR_ATTACHMENT13,
+        GL_COLOR_ATTACHMENT14,
+        GL_COLOR_ATTACHMENT15
+#endif
 	};
 	
 	void CanvasHwNew( CanvasHandle handle )
@@ -53,7 +57,13 @@ namespace gs
 		{
 			if( texture.mSizeZ > 1 )
 			{
-				glFramebufferTexture3D( GL_FRAMEBUFFER, sColorAttachmentMap[ attachmentIndex ], textureHw.mTarget, textureHw.mTexture, 0, ( GLint )layer );
+#if kBuildOpenGles2
+                ASSERT(false);
+#elif kBuildOpenGles3
+                glFramebufferTextureLayer( GL_FRAMEBUFFER, sColorAttachmentMap[ attachmentIndex ], textureHw.mTexture, 0, ( GLint )layer );
+#else
+                glFramebufferTexture3D( GL_FRAMEBUFFER, sColorAttachmentMap[ attachmentIndex ], textureHw.mTarget, textureHw.mTexture, 0, ( GLint )layer );
+#endif
 			}
 			else
 			{
@@ -65,6 +75,16 @@ namespace gs
 	
 	void CanvasHwSet( const CanvasHandle handle, const u32 layer, const s32 lod )
 	{
+#if kBuildOpenGles2
+        if( handle != kCanvasInvalid )
+        {
+            glBindFramebuffer( GL_FRAMEBUFFER, sCanvasHw[ handle ].mCanvas );
+        }
+        else
+        {
+            glBindFramebuffer( GL_FRAMEBUFFER, 0 );
+        }
+#else
 		if( handle != kCanvasInvalid )
 		{
 			const Canvas& canvas = CanvasGet( handle );
@@ -77,7 +97,11 @@ namespace gs
 				const TextureHw& textureHw = TextureHwGet( canvas.mColorTexture[ i ] );
 				if( texture.mSizeZ > 1 )
 				{
-					glFramebufferTexture3D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, textureHw.mTarget, textureHw.mTexture, ( GLint )lod, ( GLint )layer );
+#if kBuildOpenGles3
+                    glFramebufferTextureLayer( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, textureHw.mTexture, ( GLint )lod, ( GLint )layer );
+#else
+                    glFramebufferTexture3D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, textureHw.mTarget, textureHw.mTexture, ( GLint )lod, ( GLint )layer );
+#endif
 				}
 				else
 				{
@@ -89,11 +113,15 @@ namespace gs
 		else
 		{
 			glBindFramebuffer( GL_FRAMEBUFFER, 0 );
-			glDrawBuffer( GL_BACK );
+#if kBuildOpenGles3
+            // ?
+#else
+            glDrawBuffer( GL_BACK );
+#endif
 		}
+#endif
 	}
 }
-
 
 #if 0
 s32 vp[4], sb[4], st;

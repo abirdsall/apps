@@ -1,6 +1,6 @@
 #include "gsHw.h"
 
-#if kBuildOpenGl3
+#if kBuildOpenGl3 || kBuildOpenGles2 || kBuildOpenGles3
 
 namespace gs
 {
@@ -8,11 +8,11 @@ namespace gs
 	{
 		GL_POINTS,			// ePrimPoints
 		GL_LINES,			// ePrimLines
-		GL_LINE_LOOP,		// 0 ePrimLineLoop
-		GL_LINE_STRIP,		// 0 ePrimLineStrip
-		GL_TRIANGLES,		// 0 ePrimTriangles
-		GL_TRIANGLE_FAN,	// 0 ePrimTriangleFan
-		GL_TRIANGLE_STRIP,	// 0 ePrimTriangleStrip
+		GL_LINE_LOOP,		// ePrimLineLoop
+		GL_LINE_STRIP,		// ePrimLineStrip
+		GL_TRIANGLES,		// ePrimTriangles
+		GL_TRIANGLE_FAN,	// ePrimTriangleFan
+		GL_TRIANGLE_STRIP,	// ePrimTriangleStrip
 	};
 	
 	void ErrorCheck()
@@ -35,10 +35,12 @@ namespace gs
 		glPixelStorei(GL_PACK_ALIGNMENT, 1);
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 		glEnable(GL_SCISSOR_TEST);
-		glDisable(GL_LINE_SMOOTH); // This causes shaders to run in software
-		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
+#if kBuildOpenGl3
+        glDisable(GL_LINE_SMOOTH); // This causes shaders to run in software
 		//glHint(GL_POLYGON_SMOOTH, GL_NICEST);
 		//glEnable(GL_POLYGON_SMOOTH);
+#endif
 	}
 	
 	void KillHw(void)
@@ -50,13 +52,21 @@ namespace gs
 		ErrorCheck();
 		if ( blend == eBlendMin )
 		{
-			glBlendFunc( GL_ONE, GL_ONE );
-			glBlendEquation( GL_MIN );
+#if kBuildOpenGles2
+            ASSERT(false);
+#else
+            glBlendFunc( GL_ONE, GL_ONE );
+            glBlendEquation( GL_MIN );
+#endif
 		}
 		else if ( blend == eBlendMax )
 		{
-			glBlendFunc( GL_ONE, GL_ONE );
-			glBlendEquation( GL_MAX );
+#if kBuildOpenGles2
+            ASSERT(false);
+#else
+            glBlendFunc( GL_ONE, GL_ONE );
+            glBlendEquation( GL_MAX );
+#endif
 		}
 		else
 		{
@@ -151,7 +161,11 @@ namespace gs
 	u32 NewVertexArrayHw()
 	{
 		GLuint va;
-		glGenVertexArrays( 1, &va );
+#if kBuildOpenGles2
+        glGenVertexArraysOES( 1, &va );
+#else
+        glGenVertexArrays( 1, &va );
+#endif
 		return ( u32 )va;
 	}
 	
@@ -171,7 +185,11 @@ namespace gs
 	
 	void SetVertexArrayHw( u32 va )
 	{
-		glBindVertexArray( ( GLuint )va );
+#if kBuildOpenGles2
+        glBindVertexArrayOES( ( GLuint )va );
+#else
+        glBindVertexArray( ( GLuint )va );
+#endif
 	}
 	
 	void SetVertexBufferHw( u32 vb )
@@ -206,7 +224,11 @@ namespace gs
 	
 	void DeleteVertexArrayHw( u32 va )
 	{
-		glDeleteVertexArrays( 1, ( GLuint* )&va );
+#if kBuildOpenGles2
+        glDeleteVertexArraysOES( 1, ( GLuint* )&va );
+#else
+        glDeleteVertexArrays( 1, ( GLuint* )&va );
+#endif
 	}
 	
 	void DeleteVertexBufferHw( u32 vb )
