@@ -10,7 +10,12 @@ int main( int argc, char *argv[] )
 //int main( int argc, char *const argv[] )
 {
 	return os::Main( argc, argv, &lightingInit, &lightingTick, kNull, &lightingDraw, kNull,
-                    os::WindowFormat( 512, 512, 8, 8, 8, 8, 24, false, false ) );
+#if kBuildIos
+                    os::WindowFormat()
+#else
+                    os::WindowFormat( 512, 512, 8, 8, 8, 8, 24, false, false )
+#endif
+                    );
 }
 
 #endif

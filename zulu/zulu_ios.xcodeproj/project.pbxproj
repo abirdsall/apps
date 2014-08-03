@@ -101,7 +101,6 @@
 		D6CEF615198D72FA0084B0DA /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = zulu_ios/Default.png; sourceTree = SOURCE_ROOT; };
 		D6CEF616198D72FA0084B0DA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "zulu_ios/Default@2x.png"; sourceTree = SOURCE_ROOT; };
 		D6CEF617198D72FA0084B0DA /* zulu_ios-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "zulu_ios-Info.plist"; path = "zulu_ios/zulu_ios-Info.plist"; sourceTree = SOURCE_ROOT; };
-		D6CEF618198D72FA0084B0DA /* zulu_ios-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "zulu_ios-Prefix.pch"; path = "zulu_ios/zulu_ios-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		D6CEF637198D79690084B0DA /* cAssert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cAssert.cpp; path = ../engine/c/cAssert.cpp; sourceTree = "<group>"; };
 		D6CEF638198D79690084B0DA /* cAssert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cAssert.h; path = ../engine/c/cAssert.h; sourceTree = "<group>"; };
 		D6CEF639198D79690084B0DA /* cMath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cMath.cpp; path = ../engine/c/cMath.cpp; sourceTree = "<group>"; };
@@ -246,7 +245,6 @@
 				D6CEF615198D72FA0084B0DA /* Default.png */,
 				D6CEF616198D72FA0084B0DA /* Default@2x.png */,
 				D6CEF617198D72FA0084B0DA /* zulu_ios-Info.plist */,
-				D6CEF618198D72FA0084B0DA /* zulu_ios-Prefix.pch */,
 			);
 			name = zulu_ios;
 			path = barebones;
@@ -597,7 +595,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "zulu_ios/zulu_ios-Prefix.pch";
+				GCC_PREFIX_HEADER = "";
 				"HEADER_SEARCH_PATHS[arch=*]" = "";
 				INFOPLIST_FILE = "$(SRCROOT)/zulu_ios/zulu_ios-Info.plist";
 				PRODUCT_NAME = zulu_ios;
@@ -612,7 +610,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "zulu_ios/zulu_ios-Prefix.pch";
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "$(SRCROOT)/zulu_ios/zulu_ios-Info.plist";
 				PRODUCT_NAME = zulu_ios;
 				PROVISIONING_PROFILE = "";

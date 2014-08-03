@@ -38,7 +38,7 @@ namespace fw
         MeshSetAttrib( sMesh, gs::eAttribTcoord, ( void* )( sizeof( f32 ) * (kVertexAttribSize + kTcoordAttribSize) ), kTcoordAttribSize );
         MeshFinalise( sMesh );
         
-#if kBuildOpenGles2 || kBuildOpenGles3
+#if kBuildOpenGles2
         
         String vShader = "attribute vec2 vertex_position;\n";
         vShader += "attribute vec4 vertex_colour;\n";
@@ -59,7 +59,11 @@ namespace fw
 		fShader += "}\n";
 #else
         
-		String vShader = "#version 150\n";
+#if kBuildOpenGles3
+        String vShader = "#version 300 es\n";
+#else //kBuildOpenGl3
+        String vShader = "#version 150\n";
+#endif
 		vShader = vShader + "in vec2 vertex_position;\n";
         vShader += "in vec4 vertex_colour;\n";
 		vShader += "in vec4 vertex_tcoord;\n";
@@ -72,7 +76,12 @@ namespace fw
 		vShader += "\tfragment_colour = vertex_colour;\n";
 		vShader += "}\n";
         
-		String fShader = "#version 150\n";
+#if kBuildOpenGles3
+        String fShader = "#version 300 es\n";
+        fShader += "precision highp float;\n";
+#else //kBuildOpenGl3
+        String fShader = "#version 150\n";
+#endif
 		fShader += "in vec4 fragment_colour;\n";
 		fShader += "out vec4 output_colour;\n";
 		fShader += "void main()\n";

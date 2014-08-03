@@ -2,6 +2,8 @@
 
 #if kBuildIos
 
+#include "ios.h"
+
 namespace os
 {
 	//extern void OnKey( const eKey key, const bool pressed );

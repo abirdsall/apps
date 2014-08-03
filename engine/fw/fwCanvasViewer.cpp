@@ -14,7 +14,11 @@ namespace fw
 	
 	ShaderHandle CanvasViewer::MakeShader( eChannel outR, eChannel outG, eChannel outB, bool is2d )
 	{
-		String vShader = "#version 150\n";
+#if kBuildOpenGl3
+        String vShader = "#version 150\n";
+#else
+        String vShader = "#version 300 es\n";
+#endif
 		vShader += "in vec2 vertex_position;\n";
         vShader += "in vec4 vertex_colour;\n";
 		if( is2d )
@@ -42,7 +46,13 @@ namespace fw
 		}
 		vShader += "}\n";
 		
-		String fShader = "#version 150\n";
+#if kBuildOpenGl3
+        String fShader = "#version 150\n";
+#else
+        String fShader = "#version 300 es\n";
+        fShader = fShader + "precision highp float;\n";
+        fShader = fShader + "precision mediump sampler3D;\n";
+#endif
 		if( is2d )
 		{
 			fShader += "in vec2 fragment_tcoord;\n";

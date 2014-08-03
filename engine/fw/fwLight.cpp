@@ -9,7 +9,7 @@ namespace fw
     
 	static const s32 kVoxelCountX = 256;
 	static const s32 kVoxelCountY = 256;
-	static const s32 kVoxelCountZ = 16;
+    static const s32 kVoxelCountZ = 8;//16;
 
 	static Light sLight[ kLightLimit ];
 	static u32 sLightActiveCount;
@@ -273,7 +273,11 @@ namespace fw
 	static ShaderHandle MakeBlurShader( int axis )
 	{
 		const c8* lookup = axis == 0 ? "offset[ i ], 0.0, 0.0": axis == 1 ? "0.0, offset[ i ], 0.0" : "0.0, 0.0, offset[ i ]";
+#if kBuildOpenGl3
 		fw::String vShader = "#version 150\n";
+#else
+        fw::String vShader = "#version 300 es\n";
+#endif
 		vShader = vShader + "in vec2 vertex_position;\n\
         in vec4 vertex_colour;\n\
 		in vec4 vertex_tcoord;\n\
@@ -285,7 +289,13 @@ namespace fw
 			gl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, 0, 1);\n\
 			fragment_tcoord = vertex_tcoord.xyz;\n\
 		}";
-		fw::String fShader = "#version 150\n";
+#if kBuildOpenGl3
+        fw::String fShader = "#version 150\n";
+#else
+        fw::String fShader = "#version 300 es\n";
+        fShader = fShader + "precision highp float;\n";
+        fShader = fShader + "precision mediump sampler3D;\n";
+#endif
 		fShader = fShader + "uniform sampler3D texture0;\n\
 		uniform float offset[ 5 ];\n\
 		uniform float weight[ 5 ];\n\
@@ -312,8 +322,12 @@ namespace fw
 		
 		// fragment_tcoord.x = object zmiddle
 		// fragment_tcoord.y = object zthickness
-		fw::String vShader = "#version 150\n\
-		in vec3 vertex_position;\n\
+#if kBuildOpenGl3
+        fw::String vShader = "#version 150\n";
+#else
+        fw::String vShader = "#version 300 es\n";
+#endif
+        vShader = vShader + "in vec3 vertex_position;\n\
 		in vec4 vertex_colour;\n\
 		in vec2 vertex_tcoord;\n\
 		out vec4 fragment_colour;\n\
@@ -324,11 +338,15 @@ namespace fw
 		{\n\
 		fragment_colour = vertex_colour; \n\
 		fragment_tcoord = vertex_tcoord; \n\
-		gl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, vertex_position.z, 1);\n\
+		gl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, vertex_position.z, 1.0);\n\
 		}";
-		fw::String fShader = "";
-		fShader = fShader + "#version 150\n\
-		uniform float zMin;\n\
+#if kBuildOpenGl3
+        fw::String fShader = "#version 150\n";
+#else
+        fw::String fShader = "#version 300 es\n";
+        fShader = fShader + "precision highp float;\n";
+#endif
+        fShader = fShader + "uniform float zMin;\n\
 		uniform float zStep;\n\
 		in vec4 fragment_colour;\n\
 		in vec2 fragment_tcoord;\n\
@@ -344,8 +362,12 @@ namespace fw
 		}";
 		sShaderVoxelise = ShaderNew( vShader.toStr(), fShader.toStr() );
 		
-		vShader = "#version 150\n\
-		in vec2 vertex_position;\n\
+#if kBuildOpenGl3
+        vShader = "#version 150\n";
+#else
+        vShader = "#version 300 es\n";
+#endif
+        vShader = vShader + "in vec2 vertex_position;\n\
         in vec4 vertex_colour;\n\
 		in vec4 vertex_tcoord;\n\
 		out vec2 fragment_tcoord;\n\
@@ -353,11 +375,17 @@ namespace fw
 		uniform mat4 projMatrix;\n\
 		void main()\n\
 		{\n\
-		gl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, 0, 1);\n\
+		gl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, 0.0, 1.0);\n\
 		fragment_tcoord = vertex_tcoord.xy;\n\
 		}";
-		fShader = "#version 150\n\
-		uniform sampler3D texture0;\n\
+#if kBuildOpenGl3
+        fShader = "#version 150\n";
+#else
+        fShader = "#version 300 es\n";
+        fShader = fShader + "precision highp float;\n";
+        fShader = fShader + "precision mediump sampler3D;\n";
+#endif
+        fShader = fShader + "uniform sampler3D texture0;\n\
 		uniform vec3 lightPos;\n\
 		uniform vec3 lightCol;\n\
 		uniform vec3 worldMin;\n\
@@ -371,7 +399,7 @@ namespace fw
 			vec3 lightVec = worldPos - lightPos;\n\
 			float lightDistance = length( lightVec );\n\
 			vec3 lightDir = normalize( lightVec );\n\
-			float attenuate = clamp( 1.0 - ( lightDistance / 32.0 ), 0, 1 );\n\
+			float attenuate = clamp( 1.0 - ( lightDistance / 32.0 ), 0.0, 1.0 );\n\
 			vec3 aopos = vec3( fragment_tcoord.x, fragment_tcoord.y, ( zWorld - worldMin.z ) / worldSize.z );\n\
 			vec3 aolightpos = ( lightPos - worldMin ) / worldSize;\n\
 			vec3 ff = aolightpos - aopos;\n\
@@ -385,8 +413,8 @@ namespace fw
 			for( int i = samples; i > 1; i--)\n\
 			{\n\
 				float samp = texture( texture0, aopos + ff.xyz * ( float(i) / float(samples) ) ).a;\n\
-				occ += clamp( samp, 0, 1);\n\
-				//occ += clamp( samp-last, 0, 1);\n\
+				occ += clamp( samp, 0.0, 1.0);\n\
+				//occ += clamp( samp-last, 0.0, 1.0);\n\
 				//last = samp;\n\
 			}\n\
 			attenuate *= clamp( 1.0 - occ*0.75, 0.0, 1.0);\n\
@@ -395,9 +423,12 @@ namespace fw
 		}";
 		// need to kill light dir if lightCol zero
 		sShaderLuminise = ShaderNew( vShader.toStr(), fShader.toStr() );
-		
-		vShader = "#version 150\n\
-		in vec3 vertex_position;\n\
+#if kBuildOpenGl3
+        vShader = "#version 150\n";
+#else
+        vShader = "#version 300 es\n";
+#endif
+        vShader = vShader + "in vec3 vertex_position;\n\
 		in vec3 vertex_normal;\n\
 		in vec4 vertex_colour;\n\
 		out vec4 fragment_normal;\n\
@@ -407,13 +438,19 @@ namespace fw
 		uniform mat4 projMatrix;\n\
 		void main()\n\
 		{\n\
-		gl_Position = projMatrix * viewMatrix * vec4( vertex_position, 1 );\n\
-		fragment_worldPos = vec4( vertex_position, 1 );\n\
-		fragment_normal = vec4( vertex_normal, 0);\n\
+		gl_Position = projMatrix * viewMatrix * vec4( vertex_position, 1.0 );\n\
+		fragment_worldPos = vec4( vertex_position, 1.0 );\n\
+		fragment_normal = vec4( vertex_normal, 0.0 );\n\
 		fragment_colour = vertex_colour;\n\
 		}";
-		fShader = "#version 150\n\
-		uniform sampler3D texture0;\n\
+#if kBuildOpenGl3
+        fShader = "#version 150\n";
+#else
+        fShader = "#version 300 es\n";
+        fShader = fShader + "precision highp float;\n";
+        fShader = fShader + "precision mediump sampler3D;\n";
+#endif
+        fShader = fShader + "uniform sampler3D texture0;\n\
 		uniform sampler3D texture1;\n\
 		uniform sampler3D texture2;\n\
 		uniform sampler3D texture3;\n\
@@ -428,7 +465,7 @@ namespace fw
 		vec3 worldPos = fragment_worldPos.xyz;// + fragment_normal.xyz;\n\
 		vec3 texturePos = ( worldPos - worldMin ) / worldSize;\n\
 		vec3 lightDir = texture( texture1, texturePos ).rgb;\n\
-		float attenuation = 0.0f + 1.0f * max(0, -dot( fragment_normal.xyz, lightDir ) );\n\
+		float attenuation = 0.0f + 1.0f * max(0.0, -dot( fragment_normal.xyz, lightDir ) );\n\
 		vec4 aonormal = fragment_normal;\n\
 		//aonormal.y += 0.75;\n\
 		vec3 worldPos2 = fragment_worldPos.xyz + aonormal.xyz * 1.0;\n\
@@ -453,16 +490,16 @@ namespace fw
 		ao += aocol1.a;\n\
 		ao += aocol2.a;\n\
 		ao += aocol3.a;\n\
-		ao = 1.0 - clamp( 0.25 * ao, 0, 1 );\n\
-		//aocol0.rgb = mix( vec3( 1, 1, 1 ), aocol0.rgb, aocol0.a );\n\
-		//aocol1.rgb = mix( vec3( 1, 1, 1 ), aocol1.rgb, aocol1.a );\n\
-		//aocol2.rgb = mix( vec3( 1, 1, 1 ), aocol2.rgb, aocol2.a );\n\
-		//aocol3.rgb = mix( vec3( 1, 1, 1 ), aocol3.rgb, aocol3.a );\n\
+		ao = 1.0 - clamp( 0.25 * ao, 0.0, 1.0 );\n\
+		//aocol0.rgb = mix( vec3( 1.0, 1.0, 1.0 ), aocol0.rgb, aocol0.a );\n\
+		//aocol1.rgb = mix( vec3( 1.0, 1.0, 1.0 ), aocol1.rgb, aocol1.a );\n\
+		//aocol2.rgb = mix( vec3( 1.0, 1.0, 1.0 ), aocol2.rgb, aocol2.a );\n\
+		//aocol3.rgb = mix( vec3( 1.0, 1.0, 1.0 ), aocol3.rgb, aocol3.a );\n\
 		vec3 amb = aocol0.rgb*aocol1.rgb*aocol2.rgb*aocol3.rgb;\n\
 		//amb = amb*amb*amb*amb*amb*amb*amb;\n\
 		//output_colour = vec4( amb, 1.0)*ao;\n\
-		//output_colour = clamp(fragment_colour, 0, 1) * vec4( amb, 1.0) * ao;\n\
-		output_colour = fragment_colour * ( vec4( amb.xyz * 0.5 * ao + 1.0 * ( col * attenuation ), 1.0 ) + vec4(0.1,0,0,1));\n\
+		//output_colour = clamp(fragment_colour, 0.0, 1.0) * vec4( amb, 1.0) * ao;\n\
+		output_colour = fragment_colour * ( vec4( amb.xyz * 0.5 * ao + 1.0 * ( col * attenuation ), 1.0 ) + vec4(0.1,0.0,0.0,1.0));\n\
 		}";
 		sShaderForward = ShaderNew( vShader.toStr(), fShader.toStr() );
 	}

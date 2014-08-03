@@ -3,6 +3,8 @@
 
 #if kBuildIos
 
+#include "ios.h"
+
 namespace os
 {
 	extern void OnMouseButton( const eMouseButton button, const bool pressed );
@@ -15,9 +17,6 @@ namespace os
 }
 
 using namespace gs;
-
-#import <UIKit/UIKit.h>
-#import <GLKit/GLKit.h>
 
 @interface ViewController : GLKViewController
 {
@@ -49,21 +48,15 @@ using namespace gs;
 -(void)dealloc
 {
     [EAGLContext setCurrentContext:nil];
-    
-    if(_resourceQueue)
-    {
-        dispatch_release(_resourceQueue);
-    }
-    
-    [_context release];
-    [_resourceContext release];
-    [super dealloc];
 }
 
 -(void)setup
 {
+#if kBuildOpenGles2
     _context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-    
+#else
+    _context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
+#endif
     if(!_context || ![EAGLContext setCurrentContext:_context])
     {
         NSLog(@"Could not create render context");
@@ -294,8 +287,6 @@ namespace os
 	
 	void WindowKillHw()
 	{
-        [sWindow release];
-        [sViewController release];
 	}
 	
 	void WindowTickHw()
