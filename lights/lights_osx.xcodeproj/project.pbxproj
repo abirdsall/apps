@@ -42,10 +42,6 @@
 		D648913B198D98DD001636B5 /* gsTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890F6198D98DD001636B5 /* gsTexture.cpp */; };
 		D648913C198D98DD001636B5 /* openGl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890F8198D98DD001636B5 /* openGl.cpp */; };
 		D648913D198D98DD001636B5 /* openGlCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890F9198D98DD001636B5 /* openGlCanvas.cpp */; };
-		D648913E198D98DD001636B5 /* openGles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890FA198D98DD001636B5 /* openGles.cpp */; };
-		D648913F198D98DD001636B5 /* openGlesCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890FB198D98DD001636B5 /* openGlesCanvas.cpp */; };
-		D6489140198D98DD001636B5 /* openGlesShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890FC198D98DD001636B5 /* openGlesShader.cpp */; };
-		D6489141198D98DD001636B5 /* openGlesTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890FD198D98DD001636B5 /* openGlesTexture.cpp */; };
 		D6489142198D98DD001636B5 /* openGlShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890FF198D98DD001636B5 /* openGlShader.cpp */; };
 		D6489143198D98DD001636B5 /* openGlTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6489100198D98DD001636B5 /* openGlTexture.cpp */; };
 		D6489144198D98DD001636B5 /* ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = D6489104198D98DD001636B5 /* ios.mm */; };
@@ -159,11 +155,6 @@
 		D64890F7198D98DD001636B5 /* gsTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gsTexture.h; sourceTree = "<group>"; };
 		D64890F8198D98DD001636B5 /* openGl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = openGl.cpp; sourceTree = "<group>"; };
 		D64890F9198D98DD001636B5 /* openGlCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = openGlCanvas.cpp; sourceTree = "<group>"; };
-		D64890FA198D98DD001636B5 /* openGles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = openGles.cpp; sourceTree = "<group>"; };
-		D64890FB198D98DD001636B5 /* openGlesCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = openGlesCanvas.cpp; sourceTree = "<group>"; };
-		D64890FC198D98DD001636B5 /* openGlesShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = openGlesShader.cpp; sourceTree = "<group>"; };
-		D64890FD198D98DD001636B5 /* openGlesTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = openGlesTexture.cpp; sourceTree = "<group>"; };
-		D64890FE198D98DD001636B5 /* openGlesTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = openGlesTexture.h; sourceTree = "<group>"; };
 		D64890FF198D98DD001636B5 /* openGlShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = openGlShader.cpp; sourceTree = "<group>"; };
 		D6489100198D98DD001636B5 /* openGlTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = openGlTexture.cpp; sourceTree = "<group>"; };
 		D6489101198D98DD001636B5 /* openGlTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = openGlTexture.h; sourceTree = "<group>"; };
@@ -330,11 +321,6 @@
 				D64890F7198D98DD001636B5 /* gsTexture.h */,
 				D64890F8198D98DD001636B5 /* openGl.cpp */,
 				D64890F9198D98DD001636B5 /* openGlCanvas.cpp */,
-				D64890FA198D98DD001636B5 /* openGles.cpp */,
-				D64890FB198D98DD001636B5 /* openGlesCanvas.cpp */,
-				D64890FC198D98DD001636B5 /* openGlesShader.cpp */,
-				D64890FD198D98DD001636B5 /* openGlesTexture.cpp */,
-				D64890FE198D98DD001636B5 /* openGlesTexture.h */,
 				D64890FF198D98DD001636B5 /* openGlShader.cpp */,
 				D6489100198D98DD001636B5 /* openGlTexture.cpp */,
 				D6489101198D98DD001636B5 /* openGlTexture.h */,
@@ -481,11 +467,8 @@
 				D6489120198D98DD001636B5 /* cTime.cpp in Sources */,
 				D6489147198D98DD001636B5 /* iosWindow.mm in Sources */,
 				D648911C198D98DD001636B5 /* cMath.cpp in Sources */,
-				D648913E198D98DD001636B5 /* openGles.cpp in Sources */,
 				D648914A198D98DD001636B5 /* macMouse.mm in Sources */,
-				D6489141198D98DD001636B5 /* openGlesTexture.cpp in Sources */,
 				D648914C198D98DD001636B5 /* os.cpp in Sources */,
-				D6489140198D98DD001636B5 /* openGlesShader.cpp in Sources */,
 				D648912D198D98DD001636B5 /* fwRect.cpp in Sources */,
 				D6489136198D98DD001636B5 /* plane.cpp in Sources */,
 				D6B4FAEB198D8DC400018556 /* cubeRenderer.cpp in Sources */,
@@ -518,7 +501,6 @@
 				D6489129198D98DD001636B5 /* fwLight.cpp in Sources */,
 				D6489131198D98DD001636B5 /* frustum.cpp in Sources */,
 				D648914E198D98DD001636B5 /* osMouse.cpp in Sources */,
-				D648913F198D98DD001636B5 /* openGlesCanvas.cpp in Sources */,
 				D648911D198D98DD001636B5 /* cMemory.cpp in Sources */,
 				D6489148198D98DD001636B5 /* mac.mm in Sources */,
 				D6489133198D98DD001636B5 /* intersect.cpp in Sources */,
