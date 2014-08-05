@@ -294,7 +294,7 @@ namespace fw
 #else
         fw::String fShader = "#version 300 es\n";
         fShader = fShader + "precision highp float;\n";
-        fShader = fShader + "precision mediump sampler3D;\n";
+        fShader = fShader + "precision highp sampler3D;\n";
 #endif
 		fShader = fShader + "uniform sampler3D texture0;\n\
 		uniform float offset[ 5 ];\n\
@@ -383,7 +383,7 @@ namespace fw
 #else
         fShader = "#version 300 es\n";
         fShader = fShader + "precision highp float;\n";
-        fShader = fShader + "precision mediump sampler3D;\n";
+        fShader = fShader + "precision highp sampler3D;\n";
 #endif
         fShader = fShader + "uniform sampler3D texture0;\n\
 		uniform vec3 lightPos;\n\
@@ -448,7 +448,7 @@ namespace fw
 #else
         fShader = "#version 300 es\n";
         fShader = fShader + "precision highp float;\n";
-        fShader = fShader + "precision mediump sampler3D;\n";
+        fShader = fShader + "precision highp sampler3D;\n";
 #endif
         fShader = fShader + "uniform sampler3D texture0;\n\
 		uniform sampler3D texture1;\n\

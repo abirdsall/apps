@@ -8,7 +8,11 @@ namespace gs
 	{
 		GLuint mCanvas;
 	};
-	
+
+    static GLuint sActiveBuffer = 0;
+    
+    static GLuint sBackBuffer = 0;
+    
 	static CanvasHw sCanvasHw[ kCanvasLimit ];
 	
 	static u32 sColorAttachmentMap[ kColorTextureLimit ] =
@@ -35,6 +39,17 @@ namespace gs
 #endif
 	};
 	
+    void LocateBackBuffer()
+    {
+        if(sActiveBuffer == sBackBuffer)
+        {
+            GLint backBuffer;
+            glGetIntegerv(GL_FRAMEBUFFER_BINDING, &backBuffer);
+            sActiveBuffer = backBuffer;
+            sBackBuffer = backBuffer;
+        }
+    }
+    
 	void CanvasHwNew( CanvasHandle handle )
 	{
 		glGenFramebuffers( 1, &sCanvasHw[ handle ].mCanvas );
@@ -47,13 +62,17 @@ namespace gs
 
 	void CanvasHwAdd( const CanvasHandle canvasHandle, const TextureHandle textureHandle, const u32 attachmentIndex, const u32 layer )
 	{
-		CanvasHw canvasHw = sCanvasHw[ canvasHandle ];
+        LocateBackBuffer();
+
+        CanvasHw canvasHw = sCanvasHw[ canvasHandle ];
 		const Texture& texture = TextureGet( textureHandle );
 		const TextureHw& textureHw = TextureHwGet( textureHandle );
 		
 		glBindFramebuffer( GL_FRAMEBUFFER, canvasHw.mCanvas );
+        
 		glBindTexture( textureHw.mTarget, textureHw.mTexture );
-		if( texture.mType != TexTypeDepth )
+		
+        if( texture.mType != TexTypeDepth )
 		{
 			if( texture.mSizeZ > 1 )
 			{
@@ -70,32 +89,44 @@ namespace gs
 				glFramebufferTexture2D( GL_FRAMEBUFFER, sColorAttachmentMap[ attachmentIndex ], textureHw.mTarget, textureHw.mTexture, 0 );
 			}
 		}
-		glBindFramebuffer( GL_FRAMEBUFFER, 0 );
+        
+		glBindFramebuffer( GL_FRAMEBUFFER, sActiveBuffer );
 	}
 	
 	void CanvasHwSet( const CanvasHandle handle, const u32 layer, const s32 lod )
 	{
+        LocateBackBuffer();
+        
 #if kBuildOpenGles2
         if( handle != kCanvasInvalid )
         {
             glBindFramebuffer( GL_FRAMEBUFFER, sCanvasHw[ handle ].mCanvas );
+            
+            sActiveBuffer = sCanvasHw[ handle ].mCanvas;
         }
         else
         {
-            glBindFramebuffer( GL_FRAMEBUFFER, 0 );
+            glBindFramebuffer( GL_FRAMEBUFFER, sBackBuffer );
+            
+            sActiveBuffer = sBackBuffer;
         }
 #else
 		if( handle != kCanvasInvalid )
 		{
 			const Canvas& canvas = CanvasGet( handle );
+            
 			CanvasHw canvasHw = sCanvasHw[ handle ];
-			glBindFramebuffer( GL_FRAMEBUFFER, canvasHw.mCanvas );
-			// todo only reattach textures when changing lod?
+			
+            glBindFramebuffer( GL_FRAMEBUFFER, canvasHw.mCanvas );
+            
+            // todo only reattach textures when changing lod?
 			for( int i = 0; i < canvas.mColorTextureCount; i++ )
 			{
 				const Texture& texture = TextureGet( canvas.mColorTexture[ i ] );
+                
 				const TextureHw& textureHw = TextureHwGet( canvas.mColorTexture[ i ] );
-				if( texture.mSizeZ > 1 )
+				
+                if( texture.mSizeZ > 1 )
 				{
 #if kBuildOpenGles3
                     glFramebufferTextureLayer( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, textureHw.mTexture, ( GLint )lod, ( GLint )layer );
@@ -108,16 +139,20 @@ namespace gs
 					glFramebufferTexture2D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, textureHw.mTarget, textureHw.mTexture, ( GLint )lod );
 				}
 			}
+            
 			glDrawBuffers( canvas.mColorTextureCount, sColorAttachmentMap );
+            
+            sActiveBuffer = canvasHw.mCanvas;
 		}
 		else
 		{
-			glBindFramebuffer( GL_FRAMEBUFFER, 0 );
+            glBindFramebuffer( GL_FRAMEBUFFER, sBackBuffer );
+            
 #if kBuildOpenGles3
-            // ?
 #else
             glDrawBuffer( GL_BACK );
 #endif
+            sActiveBuffer = sBackBuffer;
 		}
 #endif
 	}

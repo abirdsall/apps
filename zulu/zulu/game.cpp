@@ -1,9 +1,14 @@
 #include "fw.h"
 #include "gs.h"
 #include "game.h"
+#include "cubeRenderer.h"
 
 using namespace fw; //Test
 using namespace gs;
+
+static gs::ShaderHandle sFillShader;
+
+CubeRenderer mCubeRenderer;
 
 static fw::CameraHandle sCameraHandle;
 
@@ -363,6 +368,45 @@ void gameInit()
     fw::Init();
 	
     sCameraHandle = fw::CameraNew( fw::Rect(0.0f, 0.0f, ( f32 )os::WindowSizeX(), ( f32 )os::WindowSizeY()), &gameDraw );
+
+    //fw::CameraSetFocus( sCameraHandle, v3( 0.0f, 0.0f, 0.0f ) );
+
+    mCubeRenderer.Init( 128 );
+
+    mCubeRenderer.Add( fw::CubeComponent( v3( 0.0f, 0.0f, -50.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ) ) );
+    mCubeRenderer.Add( fw::CubeComponent( v3( 0.0f, 0.0f, 50.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ) ) );
+    
+#if kBuildOpenGles3
+    String vShader = "#version 300 es\n";
+#else //kBuildOpenGl3
+    String vShader = "#version 150\n";
+#endif
+    vShader = vShader + "in vec3 vertex_position;\n";
+    vShader += "in vec4 vertex_colour;\n";
+    vShader += "in vec4 vertex_tcoord;\n";
+    vShader += "out vec4 fragment_colour;\n";
+    vShader += "uniform mat4 viewMatrix;\n";
+    vShader += "uniform mat4 projMatrix;\n";
+    vShader += "void main()\n";
+    vShader += "{\n";
+    vShader = vShader + "\tgl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, vertex_position.z, 1);\n";
+    vShader += "\tfragment_colour = vertex_colour;\n";
+    vShader += "}\n";
+    
+#if kBuildOpenGles3
+    String fShader = "#version 300 es\n";
+    fShader += "precision highp float;\n";
+#else //kBuildOpenGl3
+    String fShader = "#version 150\n";
+#endif
+    fShader += "in vec4 fragment_colour;\n";
+    fShader += "out vec4 output_colour;\n";
+    fShader += "void main()\n";
+    fShader += "{\n";
+    fShader += "\toutput_colour = fragment_colour;\n";
+    fShader += "}\n";
+    
+    sFillShader = gs::ShaderNew( vShader.toStr(), fShader.toStr() );
 }
 
 void gameTick( f32 dt )
@@ -406,6 +450,19 @@ void gameTouch( const os::Touch* touches, s32 touchCount )
 void gameDraw()
 {
     sGarden.Draw();
+
+    gs::Put();
+    
+    gs::ShaderSet(sFillShader);
+    gs::SetCull(gs::eCullNone);
+    gs::SetWrite(gs::eWriteRgb);
+    gs::SetBlend(gs::eBlendRgba);
+    gs::SetDepth(gs::eDepthNone);
+    
+    mCubeRenderer.Draw( gs::ePrimLineLoop, false );
+    
+    gs::Pop();
+
 }
 
 void gameKill()

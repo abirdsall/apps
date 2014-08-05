@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D622FE06198EEB2B006D4A83 /* cubeRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D622FE04198EEB2B006D4A83 /* cubeRenderer.cpp */; };
+		D622FE09198EEB71006D4A83 /* renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D622FE07198EEB71006D4A83 /* renderer.cpp */; };
 		D69DF17E17B81C2800FE1FCC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D69DF17D17B81C2800FE1FCC /* UIKit.framework */; };
 		D69DF18017B81C2800FE1FCC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D69DF17F17B81C2800FE1FCC /* Foundation.framework */; };
 		D69DF18217B81C2800FE1FCC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D69DF18117B81C2800FE1FCC /* CoreGraphics.framework */; };
@@ -72,6 +74,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D622FE04198EEB2B006D4A83 /* cubeRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cubeRenderer.cpp; path = zulu/cubeRenderer.cpp; sourceTree = "<group>"; };
+		D622FE05198EEB2B006D4A83 /* cubeRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cubeRenderer.h; path = zulu/cubeRenderer.h; sourceTree = "<group>"; };
+		D622FE07198EEB71006D4A83 /* renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = renderer.cpp; path = zulu/renderer.cpp; sourceTree = "<group>"; };
+		D622FE08198EEB71006D4A83 /* renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = renderer.h; path = zulu/renderer.h; sourceTree = "<group>"; };
 		D69DF17A17B81C2800FE1FCC /* zulu_ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = zulu_ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D69DF17D17B81C2800FE1FCC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D69DF17F17B81C2800FE1FCC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -253,6 +259,10 @@
 		D6CEF613198D72CC0084B0DA /* zulu */ = {
 			isa = PBXGroup;
 			children = (
+				D622FE07198EEB71006D4A83 /* renderer.cpp */,
+				D622FE08198EEB71006D4A83 /* renderer.h */,
+				D622FE04198EEB2B006D4A83 /* cubeRenderer.cpp */,
+				D622FE05198EEB2B006D4A83 /* cubeRenderer.h */,
 				D6B2B812186DEAD600BCBEB8 /* game.cpp */,
 				D6B2B813186DEAD600BCBEB8 /* game.h */,
 				D6E9D57F18670B2300B92918 /* main.mm */,
@@ -477,6 +487,7 @@
 				D6CEF6C0198D79C70084B0DA /* osTouch.cpp in Sources */,
 				D6CEF671198D799D0084B0DA /* fwCubeComponent.cpp in Sources */,
 				D6CEF643198D79690084B0DA /* cAssert.cpp in Sources */,
+				D622FE09198EEB71006D4A83 /* renderer.cpp in Sources */,
 				D6B4FADC198D8A9300018556 /* frustum.cpp in Sources */,
 				D6CEF645198D79690084B0DA /* cMemory.cpp in Sources */,
 				D6B4FAE2198D8A9300018556 /* vector.cpp in Sources */,
@@ -500,6 +511,7 @@
 				D6CEF67A198D799D0084B0DA /* fwString.cpp in Sources */,
 				D6CEF696198D79B70084B0DA /* openGlCanvas.cpp in Sources */,
 				D6CEF6B7198D79C70084B0DA /* iosMouse.mm in Sources */,
+				D622FE06198EEB2B006D4A83 /* cubeRenderer.cpp in Sources */,
 				D6CEF691198D79B70084B0DA /* gs.cpp in Sources */,
 				D6CEF670198D799D0084B0DA /* fwCube.cpp in Sources */,
 				D6CEF694198D79B70084B0DA /* gsTexture.cpp in Sources */,

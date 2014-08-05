@@ -21,20 +21,20 @@ namespace gs
 	u32 NewVertexArrayHw();
 	u32 NewVertexBufferHw();
 	u32 NewElementBufferHw();
-	void SetVertexArrayHw(u32 va);
-	void SetVertexBufferHw(u32 vb);
-	void SetElementBufferHw(u32 eb);
+	void SetVertexArrayHw( u32 va );
+	void SetVertexBufferHw( u32 vb );
+	void SetElementBufferHw( u32 eb );
 	void FillVertexBufferHw( const void* data, s32 dataSize, bool dynamic );
 	void FillElementBufferHw( const void* data, s32 dataSize, bool dynamic );
 	void UpdateVertexBufferHw( const void* data, s32 dataSize, s32 dataOffset );
 	void UpdateElementBufferHw( const void* data, s32 dataSize, s32 dataOffset );
-	void DeleteVertexArrayHw(u32 va);
-	void DeleteVertexBufferHw(u32 vb);
-	void DeleteElementBufferHw(u32 eb);
-	void SetArrayHw(const eAttrib attrib, const u32 size, const u32 stride, const void* pointer);
-	void UnsetArrayHw(const eAttrib attrib);
-	void DrawArrayHw(const ePrim primitive, const u32 num);
-	void DrawElementsHw(const ePrim primitive, const u32 num);
+	void DeleteVertexArrayHw( u32 va );
+	void DeleteVertexBufferHw( u32 vb );
+	void DeleteElementBufferHw( u32 eb );
+	void SetArrayHw( const eAttrib attrib, const u32 size, const u32 stride, const void* pointer );
+	void UnsetArrayHw( const eAttrib attrib );
+	void DrawArrayHw( const ePrim primitive, const u32 num );
+	void DrawElementsHw( const ePrim primitive, const u32 num );
 }
 
 #endif
