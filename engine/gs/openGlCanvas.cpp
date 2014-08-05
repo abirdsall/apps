@@ -78,10 +78,8 @@ namespace gs
 			{
 #if kBuildOpenGles2
                 ASSERT(false);
-#elif kBuildOpenGles3
-                glFramebufferTextureLayer( GL_FRAMEBUFFER, sColorAttachmentMap[ attachmentIndex ], textureHw.mTexture, 0, ( GLint )layer );
 #else
-                glFramebufferTexture3D( GL_FRAMEBUFFER, sColorAttachmentMap[ attachmentIndex ], textureHw.mTarget, textureHw.mTexture, 0, ( GLint )layer );
+                glFramebufferTextureLayer( GL_FRAMEBUFFER, sColorAttachmentMap[ attachmentIndex ], textureHw.mTexture, 0, ( GLint )layer );
 #endif
 			}
 			else
@@ -96,13 +94,37 @@ namespace gs
 	void CanvasHwSet( const CanvasHandle handle, const u32 layer, const s32 lod )
 	{
         LocateBackBuffer();
-        
-#if kBuildOpenGles2
+
         if( handle != kCanvasInvalid )
         {
-            glBindFramebuffer( GL_FRAMEBUFFER, sCanvasHw[ handle ].mCanvas );
+            CanvasHw canvasHw = sCanvasHw[ handle ];
             
-            sActiveBuffer = sCanvasHw[ handle ].mCanvas;
+            glBindFramebuffer( GL_FRAMEBUFFER, canvasHw.mCanvas );
+            
+            sActiveBuffer = canvasHw.mCanvas;
+            
+#if !kBuildOpenGles2
+            const Canvas& canvas = CanvasGet( handle );
+            
+            // todo only reattach textures when changing lod?
+            for( int i = 0; i < canvas.mColorTextureCount; i++ )
+            {
+                const Texture& texture = TextureGet( canvas.mColorTexture[ i ] );
+                
+                const TextureHw& textureHw = TextureHwGet( canvas.mColorTexture[ i ] );
+                
+                if( texture.mSizeZ > 1 )
+                {
+                    glFramebufferTextureLayer( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, textureHw.mTexture, ( GLint )lod, ( GLint )layer );
+                }
+                else
+                {
+                    glFramebufferTexture2D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, textureHw.mTarget, textureHw.mTexture, ( GLint )lod );
+                }
+            }
+            
+            glDrawBuffers( canvas.mColorTextureCount, sColorAttachmentMap );
+#endif
         }
         else
         {
@@ -110,51 +132,6 @@ namespace gs
             
             sActiveBuffer = sBackBuffer;
         }
-#else
-		if( handle != kCanvasInvalid )
-		{
-			const Canvas& canvas = CanvasGet( handle );
-            
-			CanvasHw canvasHw = sCanvasHw[ handle ];
-			
-            glBindFramebuffer( GL_FRAMEBUFFER, canvasHw.mCanvas );
-            
-            // todo only reattach textures when changing lod?
-			for( int i = 0; i < canvas.mColorTextureCount; i++ )
-			{
-				const Texture& texture = TextureGet( canvas.mColorTexture[ i ] );
-                
-				const TextureHw& textureHw = TextureHwGet( canvas.mColorTexture[ i ] );
-				
-                if( texture.mSizeZ > 1 )
-				{
-#if kBuildOpenGles3
-                    glFramebufferTextureLayer( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, textureHw.mTexture, ( GLint )lod, ( GLint )layer );
-#else
-                    glFramebufferTexture3D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, textureHw.mTarget, textureHw.mTexture, ( GLint )lod, ( GLint )layer );
-#endif
-				}
-				else
-				{
-					glFramebufferTexture2D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, textureHw.mTarget, textureHw.mTexture, ( GLint )lod );
-				}
-			}
-            
-			glDrawBuffers( canvas.mColorTextureCount, sColorAttachmentMap );
-            
-            sActiveBuffer = canvasHw.mCanvas;
-		}
-		else
-		{
-            glBindFramebuffer( GL_FRAMEBUFFER, sBackBuffer );
-            
-#if kBuildOpenGles3
-#else
-            glDrawBuffer( GL_BACK );
-#endif
-            sActiveBuffer = sBackBuffer;
-		}
-#endif
 	}
 }
 
