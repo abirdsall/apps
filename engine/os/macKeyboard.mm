@@ -77,10 +77,10 @@ namespace os
 			case 0x1A : OnKey( eKey7, pressed ); break;
 			case 0x1C : OnKey( eKey8, pressed ); break;
 			case 0x19 : OnKey( eKey9, pressed ); break;
-			case 0x7B : OnKey( eKeyUp, pressed ); break;
-			case 0x7C : OnKey( eKeyDown, pressed ); break;
-			case 0x7E : OnKey( eKeyLeft, pressed ); break;
-			case 0x7D : OnKey( eKeyRight, pressed ); break;
+			case 0x7E : OnKey( eKeyUp, pressed ); break;
+			case 0x7D : OnKey( eKeyDown, pressed ); break;
+			case 0x7B : OnKey( eKeyLeft, pressed ); break;
+			case 0x7C : OnKey( eKeyRight, pressed ); break;
 			case 0x3B : OnKey( eKeyCtrl, pressed ); break;
 			case 0x38 : OnKey( eKeyShift, pressed ); break;
 			case 0x24 : OnKey( eKeyEnter, pressed ); break;

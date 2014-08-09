@@ -73,6 +73,55 @@ CubeRenderer mCubeRenderer;
 
 void lightingTick( f32 dt )
 {
+    mCanvasViewer.Tick();
+
+    /*
+    if( os::KeyUp( os::eKeyUp ) )
+    {
+        printf("up UP\n");
+    }
+    if( os::KeyUp( os::eKeyDown ) )
+    {
+        printf("dn UP\n");
+    }
+    if( os::KeyUp( os::eKeyLeft ) )
+    {
+        printf("lf UP\n");
+    }
+    if( os::KeyUp( os::eKeyRight ) )
+    {
+        printf("rt UP\n");
+    }
+    
+    if( os::KeyUp( os::eKeyA ) )
+    {
+        printf("a UP\n");
+    }
+
+
+    if( os::KeyHeld( os::eKeyUp ) )
+    {
+        printf("up held\n");
+    }
+    if( os::KeyHeld( os::eKeyDown ) )
+    {
+        printf("dn held\n");
+    }
+    if( os::KeyHeld( os::eKeyLeft ) )
+    {
+        printf("lf held\n");
+    }
+    if( os::KeyHeld( os::eKeyRight ) )
+    {
+        printf("rt held\n");
+    }
+    
+    if( os::KeyHeld( os::eKeyA ) )
+    {
+        printf("a held\n");
+    }
+    
+    */
 	v3 worldSize = fw::LightGetBounds().mMax - fw::LightGetBounds().mMin;
 	v3 lightMove( 0.0f, 0.0f, 0.0f );
     
@@ -177,11 +226,8 @@ void lightingDraw()
     
 	gs::Pop();
 */
-    
-    if( mCanvasViewer.Active() )
-	{
-		mCanvasViewer.Draw();
-	}	
+
+    mCanvasViewer.Draw();
 }
 
 void lightingInit()

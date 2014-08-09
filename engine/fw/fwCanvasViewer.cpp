@@ -141,6 +141,105 @@ namespace fw
 		// switch canvas
 		// switch lod
 		// switch channel?
+        
+        if( mActive )
+        {
+            CanvasHandle canvases[ kCanvasLimit ];
+            u32 canvasCount = CanvasActiveGet( canvases );
+
+            // todo if leaf navlevel then left right adjust mipmap level
+            
+            
+            if( os::KeyUp( os::eKeyUp ) )
+            {
+                if( mNavLevel > eNavLevelCanvas )
+                {
+                    mNavLevel = eNavLevel(s32(mNavLevel) - 1);
+                }
+            }
+            
+            if( os::KeyUp( os::eKeyDown ) )
+            {
+                if( mNavLevel < eNavLevelLayer )
+                {
+                    mNavLevel = eNavLevel(s32(mNavLevel) + 1);
+                    mNavIndex[ mNavLevel ] = 0;
+                }
+            }
+            
+            if( os::KeyUp( os::eKeyLeft ) )
+            {
+                if( mNavIndex[ mNavLevel ] > 0 )
+                {
+                    mNavIndex[ mNavLevel ]--;
+                }
+            }
+            
+            if( os::KeyUp( os::eKeyRight ) )
+            {
+                switch( mNavLevel )
+                {
+                    case eNavLevelCanvas:
+                    {
+                        if( mNavIndex[ mNavLevel ] < ( canvasCount - 1 ) )
+                        {
+                            mNavIndex[ mNavLevel ]++;
+                        }
+                        break;
+                    }
+                    case eNavLevelTexture:
+                    {
+                        const Canvas& canvas = CanvasGet( canvases[ mNavIndex[ eNavLevelCanvas ] ] );
+                        if( mNavIndex[ mNavLevel ] < ( canvas.mColorTextureCount - 1 ) )
+                        {
+                            mNavIndex[ mNavLevel ]++;
+                        }
+                        break;
+                    }
+                    case eNavLevelLayer:
+                    {
+                        const Canvas& canvas = CanvasGet( canvases[ mNavIndex[ eNavLevelCanvas ] ] );
+                        const Texture& texture = TextureGet( canvas.mColorTexture[ mNavIndex[ eNavLevelTexture ] ] );
+                        if( mNavIndex[ mNavLevel ] < ( texture.mSizeZ - 1 ) )
+                        {
+                            mNavIndex[ mNavLevel ]++;
+                        }
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
+                }
+            }
+            
+            
+            
+            
+            
+            
+            if( os::KeyUp( os::eKeyUp ) )
+            {
+                printf("up UP\n");
+            }
+            if( os::KeyUp( os::eKeyDown ) )
+            {
+                printf("dn UP\n");
+            }
+            if( os::KeyUp( os::eKeyLeft ) )
+            {
+                printf("lf UP\n");
+            }
+            if( os::KeyUp( os::eKeyRight ) )
+            {
+                printf("rt UP\n");
+            }
+            
+            if( os::KeyUp( os::eKeyA ) )
+            {
+                printf("a UP\n");
+            }
+        }
 	}
 
 	void CanvasViewer::Draw()
@@ -195,71 +294,6 @@ namespace fw
 				default:
 				{
 					break;
-				}
-			}
-			
-			// todo if leaf navlevel then left right adjust mipmap level
-			
-			if( os::KeyUp( os::eKeyUp ) )
-			{
-				if( mNavLevel > eNavLevelCanvas )
-				{
-					mNavLevel = eNavLevel(s32(mNavLevel) - 1);
-				}
-			}
-			
-			if( os::KeyUp( os::eKeyDown ) )
-			{
-				if( mNavLevel < eNavLevelLayer )
-				{
-                    mNavLevel = eNavLevel(s32(mNavLevel) + 1);
-					mNavIndex[ mNavLevel ] = 0;
-				}
-			}
-			
-			if( os::KeyUp( os::eKeyLeft ) )
-			{
-				if( mNavIndex[ mNavLevel ] > 0 )
-				{
-					mNavIndex[ mNavLevel ]--;
-				}
-			}
-			
-			if( os::KeyUp( os::eKeyRight ) )
-			{
-				switch( mNavLevel )
-				{
-					case eNavLevelCanvas:
-					{
-						if( mNavIndex[ mNavLevel ] < ( canvasCount - 1 ) )
-						{
-							mNavIndex[ mNavLevel ]++;
-						}
-						break;
-					}
-					case eNavLevelTexture:
-					{
-						const Canvas& canvas = CanvasGet( canvases[ mNavIndex[ eNavLevelCanvas ] ] );
-						if( mNavIndex[ mNavLevel ] < ( canvas.mColorTextureCount - 1 ) )
-						{
-							mNavIndex[ mNavLevel ]++;
-						}
-						break;
-					}
-					case eNavLevelLayer:
-					{
-						const Canvas& canvas = CanvasGet( canvases[ mNavIndex[ eNavLevelCanvas ] ] );
-						const Texture& texture = TextureGet( canvas.mColorTexture[ mNavIndex[ eNavLevelTexture ] ] );
-						if( mNavIndex[ mNavLevel ] < ( texture.mSizeZ - 1 ) )
-						{
-							mNavIndex[ mNavLevel ]++;
-						}
-						break;
-					}
-					default:
-					{
-						break;
-					}
 				}
 			}
 		}

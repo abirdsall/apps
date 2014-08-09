@@ -105,7 +105,7 @@ namespace gs
 	
 	void CanvasSet( const CanvasHandle handle )
 	{
-		CanvasSet( handle, 0, -1 );
+        CanvasSet( handle, 0, -1 );
 	}
 	
 	u32 CanvasSizeX()
