@@ -91,7 +91,7 @@ namespace gs
 		glBindFramebuffer( GL_FRAMEBUFFER, sActiveBuffer );
 	}
 	
-	void CanvasHwSet( const CanvasHandle handle, const u32 layer, const s32 lod )
+	void CanvasHwSet( const CanvasHandle handle, const s32 layer, const s32 lod )
 	{
         ErrorCheck();
 
@@ -115,6 +115,7 @@ namespace gs
             const Canvas& canvas = CanvasGet( handle );
             
             // todo only reattach textures when changing lod?
+            
             for( int i = 0; i < canvas.mColorTextureCount; i++ )
             {
                 const Texture& texture = TextureGet( canvas.mColorTexture[ i ] );
@@ -122,12 +123,17 @@ namespace gs
                 const TextureHw& textureHw = TextureHwGet( canvas.mColorTexture[ i ] );
                 
                 ErrorCheck();
-
+                
                 if( texture.mSizeZ > 1 )
                 {
-                    //glFramebufferTextureLayer( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, textureHw.mTexture, ( GLint )lod, ( GLint )i );
-
-                    glFramebufferTextureLayer( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, textureHw.mTexture, ( GLint )lod, ( GLint )layer );
+                    if( layer >= 0 )
+                    {
+                        glFramebufferTextureLayer( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, textureHw.mTexture, ( GLint )lod, ( GLint )layer );
+                    }
+                    else
+                    {
+                        glFramebufferTextureLayer( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, textureHw.mTexture, ( GLint )lod, ( GLint )i );
+                    }
                 }
                 else
                 {
@@ -135,15 +141,13 @@ namespace gs
                 }
                 
                 ErrorCheck();
-
             }
-            
+
             ErrorCheck();
 
             glDrawBuffers( canvas.mColorTextureCount, sColorAttachmentMap );
             
             ErrorCheck();
-
 #endif
         }
         else

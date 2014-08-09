@@ -34,9 +34,9 @@ namespace fw
     
     //static ShaderHandle sFillShader;
 
-	static ShaderHandle sShaderBlurX;
-	static ShaderHandle sShaderBlurY;
-	static ShaderHandle sShaderBlurZ;
+	static ShaderHandle sShaderBlurX[ kVoxelCountZ / 2 ];
+	static ShaderHandle sShaderBlurY[ kVoxelCountZ / 2 ];
+	static ShaderHandle sShaderBlurZ[ kVoxelCountZ / 2 ];
 	static ShaderHandle sShaderVoxelise;
 	static ShaderHandle sShaderLuminise;
 	static ShaderHandle sShaderForward;
@@ -126,12 +126,15 @@ namespace fw
 		SetBlend( eBlendNone );
 		SetDepth( eDepthNone );
 		SetCull( eCullNone );
+        
+        // Question... where is our destination? the kVoxelCountZ layered texture is split between 2 canvases,
+        // yet the following code doesn't appear to consider that
 		for( int i = 0; i < dstSizeZ; i++ )
 		{
 			f32 tz = ( f32( i ) + 0.5f ) / f32( dstSizeZ );
 			CanvasSet( canvasX, i, dstLod );
 			Set2d();
-			ShaderSet( sShaderBlurX );
+			ShaderSet( sShaderBlurX[ i ] );
 			TextureSet( "texture0", textureX );
 			ShaderSetFloat( "lod", f32( srcLod ) );
 			ShaderSetFloatArray( "offset" , xOffsets, 5 );
@@ -140,7 +143,7 @@ namespace fw
 			
 			CanvasSet( canvasY, i, dstLod );
 			Set2d();
-			ShaderSet( sShaderBlurY );
+			ShaderSet( sShaderBlurY[ i ] );
 			TextureSet( "texture0", textureY );
 			ShaderSetFloat( "lod", f32( dstLod ) );
 			ShaderSetFloatArray( "offset" , yOffsets, 5 );
@@ -152,7 +155,7 @@ namespace fw
 			f32 tz = ( f32( i ) + 0.5f ) / f32( dstSizeZ );
 			CanvasSet( canvasZ, i, dstLod );
 			Set2d();
-			ShaderSet( sShaderBlurZ );
+			ShaderSet( sShaderBlurZ[ i ] );
 			TextureSet( "texture0", textureZ );
 			ShaderSetFloat( "lod", f32( dstLod ) );
 			ShaderSetFloatArray( "offset" , zOffsets, 5 );
@@ -273,11 +276,11 @@ namespace fw
 		}
 	}
 	
-	static ShaderHandle MakeBlurShader( int axis )
+	static ShaderHandle MakeBlurShader( s32 axis, s32 layer )
 	{
 		const c8* lookup = axis == 0 ? "offset[ i ], 0.0, 0.0": axis == 1 ? "0.0, offset[ i ], 0.0" : "0.0, 0.0, offset[ i ]";
 #if kBuildOpenGl3
-		fw::String vShader = "#version 150\n";
+		fw::String vShader = "#version 410\n";
 #else
         fw::String vShader = "#version 300 es\n";
 #endif
@@ -293,12 +296,13 @@ namespace fw
 			fragment_tcoord = vertex_tcoord.xyz;\n\
 		}";
 #if kBuildOpenGl3
-        fw::String fShader = "#version 150\n";
+        fw::String fShader = "#version 410\n";
 #else
         fw::String fShader = "#version 300 es\n";
         fShader = fShader + "precision highp float;\n";
         fShader = fShader + "precision highp sampler3D;\n";
 #endif
+        fShader = fShader + "layout(location = " + layer + ") out vec4 fs_layer;\n";
 		fShader = fShader + "uniform sampler3D texture0;\n\
 		uniform float offset[ 5 ];\n\
 		uniform float weight[ 5 ];\n\
@@ -307,11 +311,11 @@ namespace fw
 		out vec4 output_colour;\n\
 		void main()\n\
 		{\n\
-			output_colour = textureLod( texture0, fragment_tcoord, lod ) * weight[ 0 ];\n\
+			fs_layer = textureLod( texture0, fragment_tcoord, lod ) * weight[ 0 ];\n\
 			for( int i = 1; i < 5; i++ )\n\
 			{\n\
-				output_colour += textureLod( texture0, ( fragment_tcoord + vec3( " + lookup + " ) ), lod ) * weight[ i ];\n\
-				output_colour += textureLod( texture0, ( fragment_tcoord - vec3( " + lookup + " ) ), lod ) * weight[ i ];\n\
+				fs_layer += textureLod( texture0, ( fragment_tcoord + vec3( " + lookup + " ) ), lod ) * weight[ i ];\n\
+				fs_layer += textureLod( texture0, ( fragment_tcoord - vec3( " + lookup + " ) ), lod ) * weight[ i ];\n\
 			}\n\
 		}";
 		return ShaderNew( vShader.toStr(), fShader.toStr() );
@@ -319,14 +323,17 @@ namespace fw
 	
 	static void InitShaders()
 	{
-		sShaderBlurX = MakeBlurShader( 0 );
-		sShaderBlurY = MakeBlurShader( 1 );
-		sShaderBlurZ = MakeBlurShader( 2 );
+        for( s32 i = 0; i < kVoxelCountZ / 2; i++ )
+        {
+            sShaderBlurX[ i ] = MakeBlurShader( 0, i );
+            sShaderBlurY[ i ] = MakeBlurShader( 1, i );
+            sShaderBlurZ[ i ] = MakeBlurShader( 2, i );
+        }
 		
 		// fragment_tcoord.x = object zmiddle
 		// fragment_tcoord.y = object zthickness
 #if kBuildOpenGl3
-        fw::String vShader = "#version 150\n";
+        fw::String vShader = "#version 410 core\n";
 #else
         fw::String vShader = "#version 300 es\n";
 #endif
@@ -345,39 +352,22 @@ namespace fw
 		}";
         
 #if kBuildOpenGl3
-        fw::String fShader = "#version 150\n";
-        fShader = fShader + "uniform float zMin;\n\
-        uniform float zStep;\n\
-        in vec4 fragment_colour;\n\
-        in vec2 fragment_tcoord;\n\
-        out vec4 output_colour[" + ( kVoxelCountZ / 2 ) + "];\n\
-        void main()\n\
-        {\n\
-        float zBase = zMin;\n\
-        for( int i = 0; i < " + ( kVoxelCountZ / 2 ) + "; i++ )\n\
-        {\n\
-        output_colour[ i ] = vec4( fragment_colour.x, fragment_colour.y, fragment_colour.z, clamp( ( fragment_tcoord.y - abs( zBase - fragment_tcoord.x ) ) / zStep, 0.0, 1.0 ) );\n\
-        zBase += zStep;\n\
-        }\n\
-        }";
+        fw::String fShader = "#version 410 core\n";
 #else
         fw::String fShader = "#version 300 es\n";
         fShader = fShader + "precision highp float;\n";
-        fShader = fShader + "\
-        layout(location = 0) out vec4 fs_0;\n\
-        layout(location = 1) out vec4 fs_1;\n\
-        layout(location = 2) out vec4 fs_2;\n\
-        layout(location = 3) out vec4 fs_3;\n";
-
+#endif
         fShader = fShader + "uniform float zMin;\n\
         uniform float zStep;\n\
         in vec4 fragment_colour;\n\
         in vec2 fragment_tcoord;\n\
+        layout(location = 0) out vec4 fs_0;\n\
+        layout(location = 1) out vec4 fs_1;\n\
+        layout(location = 2) out vec4 fs_2;\n\
+        layout(location = 3) out vec4 fs_3;\n\
         void main()\n\
         {\n\
-        float zBase = zMin;\n";
-
-        fShader = fShader + "\
+        float zBase = zMin;\n\
         fs_0 = vec4( fragment_colour.x, fragment_colour.y, fragment_colour.z, clamp( ( fragment_tcoord.y - abs( zBase - fragment_tcoord.x ) ) / zStep, 0.0, 1.0 ) );\n\
         zBase += zStep;\n\
         fs_1 = vec4( fragment_colour.x, fragment_colour.y, fragment_colour.z, clamp( ( fragment_tcoord.y - abs( zBase - fragment_tcoord.x ) ) / zStep, 0.0, 1.0 ) );\n\
@@ -387,7 +377,6 @@ namespace fw
         fs_3 = vec4( fragment_colour.x, fragment_colour.y, fragment_colour.z, clamp( ( fragment_tcoord.y - abs( zBase - fragment_tcoord.x ) ) / zStep, 0.0, 1.0 ) );\n\
         zBase += zStep;\n\
         }";
-#endif
 
 		sShaderVoxelise = ShaderNew( vShader.toStr(), fShader.toStr() );
 		

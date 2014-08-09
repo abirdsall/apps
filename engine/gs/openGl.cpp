@@ -17,7 +17,7 @@ namespace gs
 	
 	void ErrorCheck()
 	{
-        return;
+        //return;
 		u32 error = glGetError();
 		switch(error)
 		{

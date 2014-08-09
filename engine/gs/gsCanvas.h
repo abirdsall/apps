@@ -28,7 +28,7 @@ namespace gs
 	CanvasHandle CanvasNew( const TextureHandle textureHandle );
 	void CanvasDelete( const CanvasHandle handle );
 	void CanvasAdd( const CanvasHandle canvasHandle, const TextureHandle textureHandle, const u32 layer = 0 );
-	void CanvasSet( const CanvasHandle handle, const u32 layer, const s32 lod = -1 );
+	void CanvasSet( const CanvasHandle handle, const s32 layer, const s32 lod );
 	void CanvasSet( const CanvasHandle handle );
 	u32 CanvasSizeX();
 	u32 CanvasSizeY();
