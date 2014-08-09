@@ -125,6 +125,8 @@ namespace gs
 
                 if( texture.mSizeZ > 1 )
                 {
+                    //glFramebufferTextureLayer( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, textureHw.mTexture, ( GLint )lod, ( GLint )i );
+
                     glFramebufferTextureLayer( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, textureHw.mTexture, ( GLint )lod, ( GLint )layer );
                 }
                 else

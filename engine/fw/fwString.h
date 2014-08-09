@@ -8,17 +8,22 @@ namespace fw
 	class String
 	{
 	private:
+        
 		static const u32 kSizeLimit = 4096;
 
 		c8 mData[ kSizeLimit + 1 ]; // +1 to allow space for null when toStr() called
-		u32 mSize;
+
+        u32 mSize;
 
 		void Append( const c8* s )
 		{
 			u32 size = os::strlen( s );
+            
 			ASSERT( ( mSize + size ) < kSizeLimit );
-			os::strcpy( mData + mSize, s, size );
-			mSize += size;
+			
+            os::strcpy( mData + mSize, s, size );
+			
+            mSize += size;
 		}
 		
 	public:
@@ -34,18 +39,21 @@ namespace fw
 		const c8* toStr()
 		{
 			mData[ mSize ] = '\0';
+            
 			return mData;
 		}
 			
 		inline String& operator += ( const c8* s )
 		{
 			Append( s );
+            
 			return *this;
 		}
 		
 		inline String& operator + ( const c8* s )
 		{
 			*this += s;
+            
 			return *this;
 		}
 		
@@ -58,14 +66,15 @@ namespace fw
 			else
 			{
 				bool neg = false;
+                
 				if( value < 0 )
 				{
 					neg = true;
 					value = -value;
 				}
 				
-				int digits = 0;
-				int tmp = value;
+				s32 digits = 0;
+				s32 tmp = value;
 				
 				while( tmp > 0 )
 				{
@@ -73,27 +82,34 @@ namespace fw
 					tmp /= 10;
 				}
 				
-				int digs[ digits ];
+				s32 digs[ digits ];
+                
 				c8 chrs[ digits + 1];
 				
 				for( tmp = digits; value > 0; tmp--)
 				{
 					digs[ tmp ] = value % 10;
-					value /= 10;
+				
+                    value /= 10;
 				}
 				
-				int i = 0;
-				if( neg )
+				s32 i = 0;
+				
+                if( neg )
 				{
 					chrs[ i++ ] = '-';
 				}
-				for (tmp = 1; tmp <= digits; tmp++)
+                
+				for( tmp = 1; tmp <= digits; tmp++ )
 				{
-					chrs[ i++ ] = (char)(digs[tmp] + 48);
+					chrs[ i++ ] = ( c8 )(digs[ tmp ] + 48);
 				}
+                
 				chrs[ i ] = '\0';
-				Append(chrs);
+				
+                Append( chrs );
 			}
+            
 			return *this;
 		}
 	};
