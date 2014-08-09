@@ -9,6 +9,7 @@ namespace os
 	{
 		if ( !success )
 		{
+            int y = 0; y++;
 #if 0
 			osString reason( "assert\nfile %s\nline %d\npress c to continue\npress q to quit", fileName, lineNumber );
 			

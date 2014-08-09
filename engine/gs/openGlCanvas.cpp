@@ -63,15 +63,13 @@ namespace gs
 	void CanvasHwAdd( const CanvasHandle canvasHandle, const TextureHandle textureHandle, const u32 attachmentIndex, const u32 layer )
 	{
         LocateBackBuffer();
-
+        
         CanvasHw canvasHw = sCanvasHw[ canvasHandle ];
 		const Texture& texture = TextureGet( textureHandle );
 		const TextureHw& textureHw = TextureHwGet( textureHandle );
 		
 		glBindFramebuffer( GL_FRAMEBUFFER, canvasHw.mCanvas );
-        
-		glBindTexture( textureHw.mTarget, textureHw.mTexture );
-		
+
         if( texture.mType != TexTypeDepth )
 		{
 			if( texture.mSizeZ > 1 )
@@ -87,20 +85,30 @@ namespace gs
 				glFramebufferTexture2D( GL_FRAMEBUFFER, sColorAttachmentMap[ attachmentIndex ], textureHw.mTarget, textureHw.mTexture, 0 );
 			}
 		}
+
+        ASSERT( glCheckFramebufferStatus( GL_FRAMEBUFFER ) == GL_FRAMEBUFFER_COMPLETE);
         
 		glBindFramebuffer( GL_FRAMEBUFFER, sActiveBuffer );
 	}
 	
 	void CanvasHwSet( const CanvasHandle handle, const u32 layer, const s32 lod )
 	{
+        ErrorCheck();
+
         LocateBackBuffer();
+
+        ErrorCheck();
 
         if( handle != kCanvasInvalid )
         {
             CanvasHw canvasHw = sCanvasHw[ handle ];
             
+            ErrorCheck();
+
             glBindFramebuffer( GL_FRAMEBUFFER, canvasHw.mCanvas );
-            
+
+            ErrorCheck();
+
             sActiveBuffer = canvasHw.mCanvas;
             
 #if !kBuildOpenGles2
@@ -113,6 +121,8 @@ namespace gs
                 
                 const TextureHw& textureHw = TextureHwGet( canvas.mColorTexture[ i ] );
                 
+                ErrorCheck();
+
                 if( texture.mSizeZ > 1 )
                 {
                     glFramebufferTextureLayer( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, textureHw.mTexture, ( GLint )lod, ( GLint )layer );
@@ -121,26 +131,42 @@ namespace gs
                 {
                     glFramebufferTexture2D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, textureHw.mTarget, textureHw.mTexture, ( GLint )lod );
                 }
+                
+                ErrorCheck();
+
             }
             
+            ErrorCheck();
+
             glDrawBuffers( canvas.mColorTextureCount, sColorAttachmentMap );
+            
+            ErrorCheck();
+
 #endif
         }
         else
         {
+            ErrorCheck();
+
             glBindFramebuffer( GL_FRAMEBUFFER, sBackBuffer );
-            
+
+            ErrorCheck();
+
             sActiveBuffer = sBackBuffer;
         }
+        
+        ErrorCheck();
+
+#if 0
+        s32 vp[4], sb[4], st;
+        glGetIntegerv( GL_SCISSOR_BOX, sb );
+        glGetIntegerv( GL_SCISSOR_TEST, &st );
+        glGetIntegerv( GL_VIEWPORT, vp );
+        printf("vp %d %d %d %d sb %d %d %d %d st %d\n", vp[0], vp[1], vp[2], vp[3], sb[0], sb[1], sb[2], sb[3], st);
+#endif
 	}
 }
 
-#if 0
-s32 vp[4], sb[4], st;
-glGetIntegerv( GL_SCISSOR_BOX, sb );
-glGetIntegerv( GL_SCISSOR_TEST, &st );
-glGetIntegerv( GL_VIEWPORT, vp );
-printf("vp %d %d %d %d sb %d %d %d %d st %d\n", vp[0], vp[1], vp[2], vp[3], sb[0], sb[1], sb[2], sb[3], st);
-#endif
+
 
 #endif

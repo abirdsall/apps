@@ -31,6 +31,9 @@ namespace fw
 	static TextureHandle sLightTextureColour;
 	static TextureHandle sLightTextureDirection;
 	
+    
+    //static ShaderHandle sFillShader;
+
 	static ShaderHandle sShaderBlurX;
 	static ShaderHandle sShaderBlurY;
 	static ShaderHandle sShaderBlurZ;
@@ -170,12 +173,12 @@ namespace fw
 				Set2d();
 				SetWrite( eWriteRgba );
 				SetBlend( eBlendNone );
-				fw::FillRect( fw::Rect( 0.0f, 0.0f, f32( kVoxelCountX ), f32( kVoxelCountY ) ), v4( 1.0f, 1.0f, 1.0f, 0.0f ) );
+				fw::Fill4Rect( fw::Rect( 0.0f, 0.0f, f32( kVoxelCountX ), f32( kVoxelCountY ) ), v4( 1.0f, 1.0f, 1.0f, 0.0f ) );
 				CanvasSet( sVoxelCanvasHdPassB );
 				Set2d();
 				SetWrite( eWriteRgba );
 				SetBlend( eBlendNone );
-				fw::FillRect( fw::Rect( 0.0f, 0.0f, f32( kVoxelCountX ), f32( kVoxelCountY ) ), v4( 1.0f, 1.0f, 1.0f, 0.0f ) );
+				fw::Fill4Rect( fw::Rect( 0.0f, 0.0f, f32( kVoxelCountX ), f32( kVoxelCountY ) ), v4( 1.0f, 1.0f, 1.0f, 0.0f ) );
 				Pop();
 				f32 zStep = ( sBounds.mMax.z - sBounds.mMin.z ) / f32( kVoxelCountZ );
 				f32 zMin = sBounds.mMin.z + ( zStep / 2.0f );
@@ -340,26 +343,52 @@ namespace fw
 		fragment_tcoord = vertex_tcoord; \n\
 		gl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, vertex_position.z, 1.0);\n\
 		}";
+        
 #if kBuildOpenGl3
         fw::String fShader = "#version 150\n";
+        fShader = fShader + "uniform float zMin;\n\
+        uniform float zStep;\n\
+        in vec4 fragment_colour;\n\
+        in vec2 fragment_tcoord;\n\
+        out vec4 output_colour[" + ( kVoxelCountZ / 2 ) + "];\n\
+        void main()\n\
+        {\n\
+        float zBase = zMin;\n\
+        for( int i = 0; i < " + ( kVoxelCountZ / 2 ) + "; i++ )\n\
+        {\n\
+        output_colour[ i ] = vec4( fragment_colour.x, fragment_colour.y, fragment_colour.z, clamp( ( fragment_tcoord.y - abs( zBase - fragment_tcoord.x ) ) / zStep, 0.0, 1.0 ) );\n\
+        zBase += zStep;\n\
+        }\n\
+        }";
 #else
         fw::String fShader = "#version 300 es\n";
         fShader = fShader + "precision highp float;\n";
-#endif
+        fShader = fShader + "\
+        layout(location = 0) out vec4 fs_0;\n\
+        layout(location = 1) out vec4 fs_1;\n\
+        layout(location = 2) out vec4 fs_2;\n\
+        layout(location = 3) out vec4 fs_3;\n";
+
         fShader = fShader + "uniform float zMin;\n\
-		uniform float zStep;\n\
-		in vec4 fragment_colour;\n\
-		in vec2 fragment_tcoord;\n\
-		out vec4 output_colour[" + ( kVoxelCountZ / 2 ) + "];\n\
-		void main()\n\
-		{\n\
-		float zBase = zMin;\n\
-		for( int i = 0; i < " + ( kVoxelCountZ / 2 ) + "; i++ )\n\
-		{\n\
-			output_colour[ i ] = vec4( fragment_colour.x, fragment_colour.y, fragment_colour.z, clamp( ( fragment_tcoord.y - abs( zBase - fragment_tcoord.x ) ) / zStep, 0.0, 1.0 ) );\n\
-			zBase += zStep;\n\
-		}\n\
-		}";
+        uniform float zStep;\n\
+        in vec4 fragment_colour;\n\
+        in vec2 fragment_tcoord;\n\
+        void main()\n\
+        {\n\
+        float zBase = zMin;\n";
+
+        fShader = fShader + "\
+        fs_0 = vec4( fragment_colour.x, fragment_colour.y, fragment_colour.z, clamp( ( fragment_tcoord.y - abs( zBase - fragment_tcoord.x ) ) / zStep, 0.0, 1.0 ) );\n\
+        zBase += zStep;\n\
+        fs_1 = vec4( fragment_colour.x, fragment_colour.y, fragment_colour.z, clamp( ( fragment_tcoord.y - abs( zBase - fragment_tcoord.x ) ) / zStep, 0.0, 1.0 ) );\n\
+        zBase += zStep;\n\
+        fs_2 = vec4( fragment_colour.x, fragment_colour.y, fragment_colour.z, clamp( ( fragment_tcoord.y - abs( zBase - fragment_tcoord.x ) ) / zStep, 0.0, 1.0 ) );\n\
+        zBase += zStep;\n\
+        fs_3 = vec4( fragment_colour.x, fragment_colour.y, fragment_colour.z, clamp( ( fragment_tcoord.y - abs( zBase - fragment_tcoord.x ) ) / zStep, 0.0, 1.0 ) );\n\
+        zBase += zStep;\n\
+        }";
+#endif
+
 		sShaderVoxelise = ShaderNew( vShader.toStr(), fShader.toStr() );
 		
 #if kBuildOpenGl3
@@ -380,10 +409,14 @@ namespace fw
 		}";
 #if kBuildOpenGl3
         fShader = "#version 150\n";
+        fShader = fShader + "out vec4 output_colour[2];\n";
 #else
         fShader = "#version 300 es\n";
         fShader = fShader + "precision highp float;\n";
         fShader = fShader + "precision highp sampler3D;\n";
+        fShader = fShader + "\
+        layout(location = 0) out vec4 fs_0;\n\
+        layout(location = 1) out vec4 fs_1;\n";
 #endif
         fShader = fShader + "uniform sampler3D texture0;\n\
 		uniform vec3 lightPos;\n\
@@ -392,7 +425,6 @@ namespace fw
 		uniform vec3 worldSize;\n\
 		uniform float zWorld;\n\
 		in vec2 fragment_tcoord;\n\
-		out vec4 output_colour[2];\n\
 		void main()\n\
 		{\n\
 			vec3 worldPos = vec3( worldMin.x + fragment_tcoord.x * worldSize.x, worldMin.y + fragment_tcoord.y * worldSize.y, zWorld );\n\
@@ -417,10 +449,17 @@ namespace fw
 				//occ += clamp( samp-last, 0.0, 1.0);\n\
 				//last = samp;\n\
 			}\n\
-			attenuate *= clamp( 1.0 - occ*0.75, 0.0, 1.0);\n\
-			output_colour[0].rgb = lightCol * attenuate;\n\
-			output_colour[1].rgb = lightDir;\n\
-		}";
+			attenuate *= clamp( 1.0 - occ*0.75, 0.0, 1.0);\n";
+#if kBuildOpenGl3
+        fShader = fShader + "\
+        output_colour[0].rgb = lightCol * attenuate;\n\
+        output_colour[1].rgb = lightDir;\n}";
+#else
+        fShader = fShader + "\
+        fs_0.rgb = lightCol * attenuate;\n\
+        fs_1.rgb = lightDir;\n}";
+#endif
+        
 		// need to kill light dir if lightCol zero
 		sShaderLuminise = ShaderNew( vShader.toStr(), fShader.toStr() );
 #if kBuildOpenGl3
@@ -526,16 +565,51 @@ namespace fw
 		sVoxelTextureHdScratch = TextureNew( TexType3d, TexFormatRGBA8, kVoxelCountX, kVoxelCountY, kVoxelCountZ, TexFlagClamp, kNull );
 		sVoxelCanvasHdScratch = CanvasNew( sVoxelTextureHdScratch );
 		sVoxelCanvasHdPassA = CanvasNew();
-		for( u32 i = 0; i < 8; i++ )
+		for( u32 i = 0; i < kVoxelCountZ / 2; i++ )
 		{
 			CanvasAdd( sVoxelCanvasHdPassA, sVoxelTextureHdScratch, i );
 		}
 		sVoxelCanvasHdPassB = CanvasNew();
-		for( u32 i = 8; i < 16; i++ )
+		for( u32 i = kVoxelCountZ / 2; i < kVoxelCountZ; i++ )
 		{
 			CanvasAdd( sVoxelCanvasHdPassB, sVoxelTextureHdScratch, i );
 		}
 		InitShaders();
+        
+        
+        /*
+#if kBuildOpenGles3
+        fw::String vShader = "#version 300 es\n";
+#else //kBuildOpenGl3
+        fw::String vShader = "#version 150\n";
+#endif
+        vShader = vShader + "in vec3 vertex_position;\n";
+        vShader += "in vec4 vertex_colour;\n";
+        vShader += "in vec4 vertex_tcoord;\n";
+        vShader += "out vec4 fragment_colour;\n";
+        vShader += "uniform mat4 viewMatrix;\n";
+        vShader += "uniform mat4 projMatrix;\n";
+        vShader += "void main()\n";
+        vShader += "{\n";
+        vShader = vShader + "\tgl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, vertex_position.z, 1);\n";
+        vShader += "\tfragment_colour = vertex_colour;\n";
+        vShader += "}\n";
+        
+#if kBuildOpenGles3
+        fw::String fShader = "#version 300 es\n";
+        fShader += "precision highp float;\n";
+#else //kBuildOpenGl3
+        fw::String fShader = "#version 150\n";
+#endif
+        fShader += "in vec4 fragment_colour;\n";
+        fShader += "out vec4 output_colour;\n";
+        fShader += "void main()\n";
+        fShader += "{\n";
+        fShader += "\toutput_colour = fragment_colour;\n";
+        fShader += "}\n";
+        
+        sFillShader = gs::ShaderNew( vShader.toStr(), fShader.toStr() );
+         */
 	}
 	
 	void KillLights()

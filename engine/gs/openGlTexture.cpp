@@ -99,7 +99,11 @@ namespace gs
 		GL_FLOAT,//TexFormatRGB8,
 		GL_FLOAT,//TexFormatRGB16F,
 		GL_FLOAT,//TexFormatRGB32F,
+#if kBuildOpenGles2 || kBuildOpenGles3
+        GL_UNSIGNED_BYTE,//TexFormatRGBA8,
+#else
 		GL_FLOAT,//TexFormatRGBA8,
+#endif
 		GL_FLOAT,//TexFormatRGBA16F,
 		GL_FLOAT,//TexFormatRGBA32F,
 		GL_UNSIGNED_INT,//TexFormatRGBA32U,
@@ -126,8 +130,9 @@ namespace gs
 		}
 		else
 		{
-			glTexImage2D( textureHw.mTarget, 0, textureHw.mInternalFormat, texture.mSizeX, texture.mSizeY, 0, textureHw.mFormat, textureHw.mType, texture.mData );
+            glTexImage2D( textureHw.mTarget, 0, textureHw.mInternalFormat, texture.mSizeX, texture.mSizeY, 0, textureHw.mFormat, textureHw.mType, texture.mData );
 		}
+
 		glTexParameteri( textureHw.mTarget, GL_TEXTURE_WRAP_S, texture.mFlags & TexFlagClampS ? GL_CLAMP_TO_EDGE : GL_REPEAT );
 		glTexParameteri( textureHw.mTarget, GL_TEXTURE_WRAP_T, texture.mFlags & TexFlagClampT ? GL_CLAMP_TO_EDGE : GL_REPEAT );
 		if( texture.mSizeZ > 1 )
@@ -148,6 +153,8 @@ namespace gs
 		{
 			glTexParameteri( textureHw.mTarget, GL_TEXTURE_MIN_FILTER, texture.mFlags & TexFlagNearest ? GL_NEAREST : GL_LINEAR );
 		}
+
+        glBindTexture(GL_TEXTURE_2D, 0);
 	}
 	
 	void TextureHwDelete( const TextureHandle handle )

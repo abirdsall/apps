@@ -22,7 +22,8 @@ namespace fw
 	void DrawWireCube( const v3& vertex, const v3& radius, const v4& uniform );
 	
 	void FillRect( const Rect& vertices, const v4& colour );
-	void FillWireRect( const Rect& vertices, const v4& colour );
+    void Fill4Rect( const Rect& vertices, const v4& colour );
+    void FillWireRect( const Rect& vertices, const v4& colour );
     
     void BatchBegin();
     void BatchEnd( gs::ePrim primitive );

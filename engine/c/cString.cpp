@@ -23,14 +23,21 @@ namespace os
 	
 	u32 strlen( const c8* s )
 	{
-		const c8* c = s;
-		
-		while( *c != '\0' )
-		{
-			c++;
-		}
-		
-		return ( u32 )( c - s );
+        if(s == kNull)
+        {
+            return 0;
+        }
+        else
+        {
+            const c8* c = s;
+            
+            while( *c != '\0' )
+            {
+                c++;
+            }
+            
+            return ( u32 )( c - s );
+        }
 	}
 	
 	s32 strcmp( const c8* s1, const c8* s2 )

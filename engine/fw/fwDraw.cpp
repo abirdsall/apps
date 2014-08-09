@@ -16,6 +16,7 @@ namespace fw
     static const s32 kAttribSize = kVertexAttribSize + kColourAttribSize + kTcoordAttribSize;
 
 	static gs::ShaderHandle sFillShader;
+    static gs::ShaderHandle sFill4Shader;
 
 	void DrawInit()
 	{
@@ -91,6 +92,37 @@ namespace fw
 #endif
         
 		sFillShader = gs::ShaderNew( vShader.toStr(), fShader.toStr() );
+
+#if kBuildOpenGles3
+        vShader = "#version 300 es\n";
+        vShader = vShader + "in vec2 vertex_position;\n";
+        vShader += "in vec4 vertex_colour;\n";
+        vShader += "out vec4 fragment_colour;\n";
+        vShader += "uniform mat4 viewMatrix;\n";
+        vShader += "uniform mat4 projMatrix;\n";
+        vShader += "void main()\n";
+        vShader += "{\n";
+        vShader = vShader + "\tgl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, 0, 1);\n";
+        vShader += "\tfragment_colour = vertex_colour;\n";
+        vShader += "}\n";
+        
+        fShader = "#version 300 es\n";
+        fShader += "precision highp float;\n";
+        fShader += "layout(location = 0) out vec4 fs_0;\n";
+        fShader += "layout(location = 1) out vec4 fs_1;\n";
+        fShader += "layout(location = 2) out vec4 fs_2;\n";
+        fShader += "layout(location = 3) out vec4 fs_3;\n";
+        fShader += "in vec4 fragment_colour;\n";
+        fShader += "void main()\n";
+        fShader += "{\n";
+        fShader += "\tfs_0 = fragment_colour;\n";
+        fShader += "\tfs_1 = fragment_colour;\n";
+        fShader += "\tfs_2 = fragment_colour;\n";
+        fShader += "\tfs_3 = fragment_colour;\n";
+        fShader += "}\n";
+        
+        sFill4Shader = gs::ShaderNew( vShader.toStr(), fShader.toStr() );
+#endif
 	}
 	
 	void DrawKill()
@@ -235,6 +267,19 @@ namespace fw
         }
 		DrawRect( vertices, colour );
 	}
+    
+    void Fill4Rect( const Rect& vertices, const v4& colour )
+    {
+        if( !sBatching )
+        {
+#if kBuildOpenGles3
+            gs::ShaderSet( sFill4Shader );
+#else
+            gs::ShaderSet( sFillShader );
+#endif
+        }
+        DrawRect( vertices, colour );
+    }
 	
 	void FillWireRect( const Rect& vertices, const v4& colour )
 	{

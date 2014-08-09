@@ -14,6 +14,43 @@ namespace fw
 	
 	ShaderHandle CanvasViewer::MakeShader( eChannel outR, eChannel outG, eChannel outB, bool is2d )
 	{
+#if kBuildOpenGles2
+        
+        String vShader = "attribute vec2 vertex_position;\n";
+        
+        vShader += "attribute vec4 vertex_colour;\n";
+        vShader += "attribute vec4 vertex_tcoord;\n";
+        
+        vShader += "varying lowp vec2 fragment_tcoord;\n";
+        
+        vShader += "varying lowp vec4 fragment_colour;\n";
+
+        vShader += "uniform mat4 viewMatrix;\n";
+        vShader += "uniform mat4 projMatrix;\n";
+        
+        vShader += "void main()\n";
+        vShader += "{\n";
+        vShader += "\tgl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, 0, 1);\n";
+        vShader += "\tfragment_colour = vertex_colour;\n";
+        vShader += "\tfragment_tcoord = vertex_tcoord.xy;\n";
+        vShader += "}\n";
+        
+        String fShader = "varying lowp vec4 fragment_colour;\n";
+        
+        fShader += "varying lowp vec2 fragment_tcoord;\n";
+        fShader += "uniform lowp sampler2D texture0;\n";
+        fShader += "void main()\n";
+        fShader += "{\n";
+        fShader += "\tlowp vec4 sample = texture2D(texture0, fragment_tcoord);\n";
+        fShader += "\tgl_FragColor = vec4(";
+        fShader = fShader + sChannelLookupNames[ outR ] + ",";
+        fShader = fShader + sChannelLookupNames[ outG ] + ",";
+        fShader = fShader + sChannelLookupNames[ outB ] + ",";
+        fShader += "1);\n";
+        fShader += "}\n";
+
+#else
+        
 #if kBuildOpenGl3
         String vShader = "#version 150\n";
 #else
@@ -51,7 +88,7 @@ namespace fw
 #else
         String fShader = "#version 300 es\n";
         fShader = fShader + "precision highp float;\n";
-        fShader = fShader + "precision mediump sampler3D;\n";
+        fShader = fShader + "precision highp sampler3D;\n";
 #endif
 		if( is2d )
 		{
@@ -74,6 +111,7 @@ namespace fw
 		fShader = fShader + sChannelLookupNames[ outB ] + ",";
 		fShader += "1);\n";
 		fShader += "}\n";
+#endif
 		return ShaderNew( vShader.toStr(), fShader.toStr(), false );
 	}
 	
@@ -258,7 +296,9 @@ namespace fw
 			ShaderHandle shaderHandle = mTexture2dShaders[ shaderIndex ];
 			ShaderSet( shaderHandle );
 			TextureSet( "texture0", textureHandle );
+#if !kBuildOpenGles2
 			ShaderSetFloat( "lod", f32( lodIndex ) );///4.0f );
+#endif
 			DrawRect( rect, Rect( 0.0f, 1.0f, 1.0f, 0.0f ) );
 		}
 		else

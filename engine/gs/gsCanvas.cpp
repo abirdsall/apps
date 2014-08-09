@@ -92,7 +92,12 @@ namespace gs
 	
 	void CanvasSet( const CanvasHandle handle, const u32 layer, const s32 lod )
 	{
-		CanvasHwSet( handle, layer, lod );
+        // TODO - Why do I set lod to -1?
+#if kBuildOpenGl3
+        CanvasHwSet( handle, layer, lod );
+#else
+		CanvasHwSet( handle, layer, lod < 0 ? 0 : lod );
+#endif
 		sCanvasActive = handle;
 		sCanvasActiveLod = lod < 0 ? 0 : lod;
 		gs::SetViewport( 0, 0, CanvasSizeX(), CanvasSizeY() );
