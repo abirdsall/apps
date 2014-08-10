@@ -112,6 +112,17 @@ namespace fw
             
 			return *this;
 		}
+        
+        inline String& operator + ( f32 value )
+        {
+            c8 chrs[ 256 ];
+
+            snprintf( chrs, 256, "%f", value );
+            
+            Append( chrs );
+            
+            return *this;
+        }
 	};
 }
 #endif
