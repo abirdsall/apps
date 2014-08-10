@@ -1,10 +1,6 @@
 #ifndef FW_CANVAS_VIEWER
 #define FW_CANVAS_VIEWER
 
-#include "os.h"
-#include "gs.h"
-#include "fwRect.h"
-
 namespace fw
 {
 	class CanvasViewer

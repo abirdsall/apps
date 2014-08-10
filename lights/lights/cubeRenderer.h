@@ -1,9 +1,6 @@
 #ifndef CUBE_RENDERER
 #define CUBE_RENDERER
 
-#include "gs.h"
-#include "renderer.h"
-
 class CubeRenderer : public Renderer
 {
 protected:

@@ -1,13 +1,6 @@
 #ifndef FW_DRAW
 #define FW_DRAW
 
-#include "os.h"
-#include "gs.h"
-#include "fwDrawLines.h"
-#include "fwRect.h"
-
-class rect;
-
 namespace fw
 {
 	void DrawInit();

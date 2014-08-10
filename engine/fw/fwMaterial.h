@@ -1,8 +1,6 @@
 #ifndef FW_MATERIAL
 #define FW_MATERIAL
 
-#include "os.h"
-
 namespace fw
 {
 	class Material

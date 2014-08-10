@@ -1,9 +1,6 @@
 #ifndef FW_OBJECT
 #define FW_OBJECT
 
-#include "os.h"
-#include "fwComponent.h"
-
 namespace fw
 {
     typedef u32 ObjectHandle;

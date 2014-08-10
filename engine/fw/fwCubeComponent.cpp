@@ -1,4 +1,4 @@
-#include "fwCubeComponent.h"
+#include "fw.h"
 
 namespace fw
 {

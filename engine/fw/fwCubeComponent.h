@@ -1,10 +1,6 @@
 #ifndef FW_CUBE_COMPONENT
 #define FW_CUBE_COMPONENT
 
-#include "fwMaterial.h"
-#include "fwComponent.h"
-#include "fwCube.h"
-
 namespace fw
 {
 	class CubeComponent : public Component

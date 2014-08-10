@@ -1,8 +1,6 @@
 #ifndef FW_STRING
 #define FW_STRING
 
-#include "os.h"
-
 namespace fw
 {
 	class String

@@ -1,11 +1,6 @@
 #ifndef FW_LINE_RENDERER
 #define FW_LINE_RENDERER
 
-#include "os.h"
-#include "gs.h"
-
-class rect;
-
 namespace fw
 {
 	void DrawLinesInit();

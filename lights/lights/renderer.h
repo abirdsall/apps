@@ -1,11 +1,6 @@
 #ifndef RENDERER
 #define RENDERER
 
-#include "gs.h"
-#include "fwMesh.h"
-#include "fwRenderer.h"
-#include "fwComponent.h"
-
 class Renderer : public fw::Renderer
 {
 public:

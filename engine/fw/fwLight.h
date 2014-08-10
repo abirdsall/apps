@@ -1,10 +1,6 @@
 #ifndef FW_LIGHT
 #define FW_LIGHT
 
-#include "os.h"
-#include "gs.h"
-#include "aabb.h"
-
 namespace fw
 {
 	typedef ::u32 LightHandle;

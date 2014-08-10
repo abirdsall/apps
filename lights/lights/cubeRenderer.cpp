@@ -1,6 +1,6 @@
+#include "fw.h"
+#include "renderer.h"
 #include "cubeRenderer.h"
-#include "fwCubeComponent.h"
-#include "fwMesh.h"
 
 void CubeRenderer::InitVoxeliser()
 {	

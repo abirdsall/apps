@@ -1,7 +1,4 @@
-#include "fwDrawLines.h"
-#include "fwMesh.h"
-#include "fwString.h"
-#include "gs.h"
+#include "fw.h"
 
 namespace fw
 {

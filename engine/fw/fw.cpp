@@ -10,5 +10,6 @@ namespace fw
     void Kill()
     {
         DrawKill();
-    }
+    }    
 }
+

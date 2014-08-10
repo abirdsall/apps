@@ -1,4 +1,4 @@
-#include "fwObjectFactory.h"
+#include "fw.h"
 
 namespace fw
 {

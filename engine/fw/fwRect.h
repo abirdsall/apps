@@ -1,11 +1,6 @@
 #ifndef FW_RECT
 #define FW_RECT
 
-#include "fwObject.h"
-#include "os.h"
-#include "cMath.h"
-#include "vector.h"
-
 namespace fw
 {
 	class Rect

@@ -1,4 +1,4 @@
-#include "fwRect.h"
+#include "fw.h"
 
 namespace fw
 {

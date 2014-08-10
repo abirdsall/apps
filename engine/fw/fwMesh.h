@@ -1,8 +1,6 @@
 #ifndef FW_MESH
 #define FW_MESH
 
-#include "gs.h"
-
 namespace fw
 {
 	struct Mesh

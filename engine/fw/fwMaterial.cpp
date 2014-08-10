@@ -1,4 +1,4 @@
-#include "fwMaterial.h"
+#include "fw.h"
 
 namespace fw
 {

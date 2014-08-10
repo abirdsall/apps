@@ -1,3 +1,4 @@
+#include "fw.h"
 #include "renderer.h"
 
 void Renderer::Init( s32 limit )

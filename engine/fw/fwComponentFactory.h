@@ -1,9 +1,6 @@
 #ifndef FW_COMPONENT_FACTORY
 #define FW_COMPONENT_FACTORY
 
-#include "os.h"
-#include "fwComponent.h"
-
 namespace fw
 {	
 	class ComponentFactory

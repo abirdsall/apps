@@ -1,7 +1,4 @@
-#include "fwCanvasViewer.h"
-#include "fwString.h"
-#include "fwDraw.h"
-#include "fwRect.h"
+#include "fw.h"
 
 using namespace gs;
 

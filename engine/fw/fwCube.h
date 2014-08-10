@@ -1,11 +1,6 @@
 #ifndef FW_CUBE
 #define FW_CUBE
 
-#include "fwObject.h"
-#include "os.h"
-#include "cMath.h"
-#include "vector.h"
-
 namespace fw
 {
 	class Cube

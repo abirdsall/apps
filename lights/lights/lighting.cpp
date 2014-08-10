@@ -54,14 +54,9 @@
  
  
 */
-#include "gs.h"
-#include "intersect.h"
-#include "fwDraw.h"
-#include "fwMesh.h"
-#include "fwRect.h"
-#include "fwString.h"
+#include "fw.h"
 #include "lighting.h"
-#include "fwCubeComponent.h"
+#include "renderer.h"
 #include "cubeRenderer.h"
 
 fw::CanvasViewer mCanvasViewer;
@@ -230,7 +225,7 @@ void lightingInit()
     
 	fw::InitLights( aabb( v3( 0.0f, 0.0f, 0.0f ), v3( 32.0f, 32.0f, 8.0f ) ) );
 	
-    mLightHandle = fw::LightNew( v3( 5.0f, 5.0f, 5.0f ), v3( 1.0f, 1.0f, 1.0f ) * 0.5f );
+    mLightHandle = fw::LightNew( v3( 5.0f, 5.0f, 5.0f ), v3( 1.0f, 1.0f, 1.0f ) * 0.0f );
 	//mLightHandle2 = fw::LightNew( v3( 5.0f, 4.5f, 5.0f ), v3( 1.0f, 0.4f, 0.0f ) );
 
 	mCameraHandle = fw::CameraNew( fw::Rect(0.0f, 0.0f, ( f32 )os::WindowSizeX(), ( f32 )os::WindowSizeY()), &lightingDraw );

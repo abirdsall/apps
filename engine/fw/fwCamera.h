@@ -1,13 +1,6 @@
 #ifndef FW_CAMERA
 #define FW_CAMERA
 
-#include "os.h"
-#include "vector.h"
-#include "matrix.h"
-#include "frustum.h"
-#include "aabb.h"
-#include "fwRect.h"
-
 namespace fw
 {
 	typedef ::u32 CameraHandle;

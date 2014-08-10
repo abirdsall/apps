@@ -1,9 +1,6 @@
 #ifndef FW_OBJECT_FACTORY
 #define FW_OBJECT_FACTORY
 
-#include "os.h"
-#include "fwObject.h"
-
 namespace fw
 {	
 	class ObjectFactory

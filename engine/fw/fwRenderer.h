@@ -1,10 +1,6 @@
 #ifndef FW_RENDERER
 #define FW_RENDERER
 
-#include "os.h"
-#include "fwMesh.h"
-#include "fwComponentFactory.h"
-
 namespace fw
 {
 	class Renderer : public ComponentFactory

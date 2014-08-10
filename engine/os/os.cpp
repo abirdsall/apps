@@ -1,7 +1,7 @@
 #include "os.h"
 #include "gs.h"
 #include "cMath.h"
-#include "fwCamera.h"
+#include "fw.h"
 
 namespace os
 {

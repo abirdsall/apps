@@ -1,7 +1,4 @@
-#include "fwLight.h"
-#include "fwString.h"
-#include "fwRect.h"
-#include "fwDraw.h"
+#include "fw.h"
 
 namespace fw
 {

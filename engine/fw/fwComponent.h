@@ -1,8 +1,6 @@
 #ifndef FW_COMPONENT
 #define FW_COMPONENT
 
-#include "os.h"
-
 namespace fw
 {
     enum eComponent
