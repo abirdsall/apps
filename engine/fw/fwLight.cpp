@@ -9,7 +9,7 @@ namespace fw
     
 	static const s32 kVoxelCountX = 256;
 	static const s32 kVoxelCountY = 256;
-    static const s32 kVoxelCountZ = 8;//16;
+    static const s32 kVoxelCountZ = 8;
 
 	static Light sLight[ kLightLimit ];
 	static u32 sLightActiveCount;
@@ -17,8 +17,6 @@ namespace fw
 	static aabb sBounds;
 	
 	static CanvasHandle sVoxelCanvasHd;
-	static CanvasHandle sVoxelCanvasHdPassA;
-	static CanvasHandle sVoxelCanvasHdPassB;
 	static CanvasHandle sVoxelCanvasHdScratch;
 	static CanvasHandle sVoxelCanvasSd;
 	static CanvasHandle sVoxelCanvasSdScratch;
@@ -30,13 +28,12 @@ namespace fw
 	static TextureHandle sVoxelTextureSdScratch;
 	static TextureHandle sLightTextureColour;
 	static TextureHandle sLightTextureDirection;
-	
     
     //static ShaderHandle sFillShader;
 
-	static ShaderHandle sShaderBlurX[ kVoxelCountZ / 2 ];
-	static ShaderHandle sShaderBlurY[ kVoxelCountZ / 2 ];
-	static ShaderHandle sShaderBlurZ[ kVoxelCountZ / 2 ];
+	static ShaderHandle sShaderBlurX[ kVoxelCountZ ];
+	static ShaderHandle sShaderBlurY[ kVoxelCountZ ];
+	static ShaderHandle sShaderBlurZ[ kVoxelCountZ ];
 	static ShaderHandle sShaderVoxelise;
 	static ShaderHandle sShaderLuminise;
 	static ShaderHandle sShaderForward;
@@ -169,60 +166,151 @@ namespace fw
 	{
 		switch( phase )
 		{
-			case DrawPhasePreVoxelPassA:
+			case DrawPhasePreVoxelPass:
 			{
+                // Clear 
 				Put();
-				CanvasSet( sVoxelCanvasHdPassA );
-				Set2d();
+                
+				CanvasSet( sVoxelCanvasHdScratch );
+				
+                Set2d();
 				SetWrite( eWriteRgba );
 				SetBlend( eBlendNone );
 				fw::Fill4Rect( fw::Rect( 0.0f, 0.0f, f32( kVoxelCountX ), f32( kVoxelCountY ) ), v4( 1.0f, 1.0f, 1.0f, 0.0f ) );
-				CanvasSet( sVoxelCanvasHdPassB );
-				Set2d();
-				SetWrite( eWriteRgba );
-				SetBlend( eBlendNone );
-				fw::Fill4Rect( fw::Rect( 0.0f, 0.0f, f32( kVoxelCountX ), f32( kVoxelCountY ) ), v4( 1.0f, 1.0f, 1.0f, 0.0f ) );
-				Pop();
+                
+                Pop();
+                
+                
 				f32 zStep = ( sBounds.mMax.z - sBounds.mMin.z ) / f32( kVoxelCountZ );
 				f32 zMin = sBounds.mMin.z + ( zStep / 2.0f );
+                
 				Put();
-				CanvasSet( sVoxelCanvasHdPassA );
-				SetDepth( eDepthNone );
-				ShaderSet( sShaderVoxelise );
+				
+                CanvasSet( sVoxelCanvasHdScratch );
+				
+                SetDepth( eDepthNone );
+				
+                ShaderSet( sShaderVoxelise );
 				ShaderSetFloat( "zMin", zMin );
 				ShaderSetFloat( "zStep", zStep );
-				SetWrite( eWriteRgba );
+				
+                SetWrite( eWriteRgba );
 				SetBlend( eBlendMixRgbAddA );
 				SetCull( eCullBack );
-				break;
+				
+                break;
 			}
-			case DrawPhasePreVoxelPassB:
-			{
-				Pop();
-				f32 zStep = ( sBounds.mMax.z - sBounds.mMin.z ) / f32( kVoxelCountZ );
-				f32 zMin = sBounds.mMin.z + ( zStep / 2.0f ) + f32( kVoxelCountZ / 2 ) * zStep; // todo fix hardcoded
-				Put();
-				CanvasSet( sVoxelCanvasHdPassB );
-				SetDepth( eDepthNone );
-				ShaderSet( sShaderVoxelise );
-				ShaderSetFloat( "zMin", zMin );
-				ShaderSetFloat( "zStep", zStep );
-				SetWrite( eWriteRgba );
-				SetBlend( eBlendMixRgbAddA );
-				SetCull( eCullBack );
-				break;
-			}
+                
 			case DrawPhaseMake:
 			{
 				Pop();
-				BlurLayers( sVoxelTextureHdScratch, sVoxelCanvasHd, sVoxelTextureHd, sVoxelCanvasHdScratch,
-						    sVoxelTextureHdScratch, sVoxelCanvasHd, 0, 0, kVoxelCountX, kVoxelCountY, kVoxelCountZ, 0.5f );
-				BlurLayers( sVoxelTextureHd, sVoxelCanvasSd, sVoxelTextureSd, sVoxelCanvasSdScratch,
-							sVoxelTextureSdScratch, sVoxelCanvasSd, 0, 0, kVoxelCountX / 2, kVoxelCountY / 2, kVoxelCountZ, 1.0f );
-				BlurLayers( sVoxelTextureSd, sVoxelCanvasSdScratch, sVoxelTextureSdScratch, sVoxelCanvasSd,
-						    sVoxelTextureSd, sVoxelCanvasSdScratch, 0, 1, kVoxelCountX / 4, kVoxelCountY / 4, kVoxelCountZ / 2, 1.0f );
-				BlurLayers( sVoxelTextureSdScratch, sVoxelCanvasSd, sVoxelTextureSd, sVoxelCanvasSdScratch,
-						    sVoxelTextureSdScratch, sVoxelCanvasSd, 1, 2, kVoxelCountX / 8, kVoxelCountY / 8, kVoxelCountZ / 4, 1.0f );
+                
+				BlurLayers(
+                           sVoxelTextureHdScratch, //textureX
+                           
+                           sVoxelCanvasHd,//canvasX
+                           
+                           sVoxelTextureHd,//textureY
+                           
+                           sVoxelCanvasHdScratch,//canvasY
+                        
+                           sVoxelTextureHdScratch,//textureZ
+                           
+                           sVoxelCanvasHd,//canvasZ
+                           
+                           0,//srcLod
+                           
+                           0,//dstLod
+                           
+                           kVoxelCountX,//dstSizeX
+                           
+                           kVoxelCountY,//dstSizeY
+                           
+                           kVoxelCountZ,//dstSizeZ
+                           
+                           0.5f//zBlur
+                           
+                           );
+				BlurLayers(
+                           sVoxelTextureHd, //textureX
+                           
+                           sVoxelCanvasSd, //canvasX
+                           
+                           sVoxelTextureSd, //textureY
+                           
+                           sVoxelCanvasSdScratch, //canvasY
+							
+                           sVoxelTextureSdScratch, //textureZ
+                           
+                           sVoxelCanvasSd, //canvasZ
+                           
+                           0,
+                           
+                           0,
+                           
+                           kVoxelCountX / 2, //dstSizeX
+                           
+                           kVoxelCountY / 2, //dstSizeY
+                           
+                           kVoxelCountZ, //dstSizeZ
+                           
+                           1.0f//zBlur
+                           
+                           );
+                    
+				BlurLayers(
+                           sVoxelTextureSd,
+                           
+                           sVoxelCanvasSdScratch,
+                           
+                           sVoxelTextureSdScratch,
+                           
+                           sVoxelCanvasSd,
+                        
+                           sVoxelTextureSd,
+                           
+                           sVoxelCanvasSdScratch,
+                           
+                           0,
+                           
+                           1,
+                           
+                           kVoxelCountX / 4,
+                           
+                           kVoxelCountY / 4,
+                           
+                           kVoxelCountZ / 2,
+                           
+                           1.0f
+                           
+                           );
+                    
+				BlurLayers(
+                           sVoxelTextureSdScratch,
+                           
+                           sVoxelCanvasSd,
+                           
+                           sVoxelTextureSd,
+                           
+                           sVoxelCanvasSdScratch,
+						   
+                           sVoxelTextureSdScratch,
+                           
+                           sVoxelCanvasSd,
+                           
+                           1,
+                           
+                           2,
+                           
+                           kVoxelCountX / 8,
+                           
+                           kVoxelCountY / 8,
+                           
+                           kVoxelCountZ / 4,
+                           
+                           1.0f
+                           
+                           );
 				Put();
 				SetWrite( eWriteRgb );
 				SetBlend( eBlendNone );
@@ -360,23 +448,22 @@ namespace fw
         fShader = fShader + "uniform float zMin;\n\
         uniform float zStep;\n\
         in vec4 fragment_colour;\n\
-        in vec2 fragment_tcoord;\n\
-        layout(location = 0) out vec4 fs_0;\n\
-        layout(location = 1) out vec4 fs_1;\n\
-        layout(location = 2) out vec4 fs_2;\n\
-        layout(location = 3) out vec4 fs_3;\n\
-        void main()\n\
+        in vec2 fragment_tcoord;\n";
+        
+        for(s32 i = 0; i < kVoxelCountZ; i++)
+        {
+            fShader = fShader + "layout(location = " + i + ") out vec4 fs_" + i + ";\n";
+        }
+        
+        fShader = fShader + "void main()\n\
         {\n\
-        float zBase = zMin;\n\
-        fs_0 = vec4( fragment_colour.x, fragment_colour.y, fragment_colour.z, clamp( ( fragment_tcoord.y - abs( zBase - fragment_tcoord.x ) ) / zStep, 0.0, 1.0 ) );\n\
-        zBase += zStep;\n\
-        fs_1 = vec4( fragment_colour.x, fragment_colour.y, fragment_colour.z, clamp( ( fragment_tcoord.y - abs( zBase - fragment_tcoord.x ) ) / zStep, 0.0, 1.0 ) );\n\
-        zBase += zStep;\n\
-        fs_2 = vec4( fragment_colour.x, fragment_colour.y, fragment_colour.z, clamp( ( fragment_tcoord.y - abs( zBase - fragment_tcoord.x ) ) / zStep, 0.0, 1.0 ) );\n\
-        zBase += zStep;\n\
-        fs_3 = vec4( fragment_colour.x, fragment_colour.y, fragment_colour.z, clamp( ( fragment_tcoord.y - abs( zBase - fragment_tcoord.x ) ) / zStep, 0.0, 1.0 ) );\n\
-        zBase += zStep;\n\
-        }";
+        float zBase = zMin;\n";
+        for(s32 i = 0; i < kVoxelCountZ; i++)
+        {
+            fShader = fShader + "fs_" + i + "= vec4( fragment_colour.x, fragment_colour.y, fragment_colour.z, clamp( ( fragment_tcoord.y - abs( zBase - fragment_tcoord.x ) ) / zStep, 0.0, 1.0 ) );\n\
+            zBase += zStep;\n";
+        }
+        fShader = fShader + "}";
 
 		sShaderVoxelise = ShaderNew( vShader.toStr(), fShader.toStr() );
 		
@@ -535,35 +622,81 @@ namespace fw
 	void InitLights( const aabb& bounds )
 	{
 		sBounds = bounds;
+        
 		for( u32 i = 0; i < kLightLimit; i++ )
 		{
 			sLight[ i ].mActive = false;
 		}
-		sLightActiveCount = 0;
+		
+        sLightActiveCount = 0;
+        
+        
+        
+        /*
+        sVoxelTextureSdScratch = TextureNew( TexType3d, TexFormatRGBA8, kVoxelCountX / 2, kVoxelCountY / 2, kVoxelCountZ, TexFlags( TexFlagClamp | TexFlagMipMap ), kNull );
+        
+        sVoxelCanvasSdScratch = CanvasNew();
+        
+        for(s32 i = 0; i < kVoxelCountZ; i++)
+        {
+            CanvasAdd( sVoxelCanvasSdScratch, sVoxelTextureSdScratch, i );
+        }
+        
+        
+        sVoxelTextureSd = TextureNew( TexType3d, TexFormatRGBA8, kVoxelCountX / 2, kVoxelCountY / 2, kVoxelCountZ, TexFlags( TexFlagClamp | TexFlagMipMap ), kNull );
+        
+        sVoxelCanvasSd = CanvasNew();
+        
+        for(s32 i = 0; i < kVoxelCountZ; i++)
+        {
+            CanvasAdd( sVoxelCanvasSd, sVoxelTextureSd, i );
+        }
+        */
+        
+        
 		sVoxelTextureSdScratch = TextureNew( TexType3d, TexFormatRGBA8, kVoxelCountX / 2, kVoxelCountY / 2, kVoxelCountZ, TexFlags( TexFlagClamp | TexFlagMipMap ), kNull );
-		sVoxelCanvasSdScratch = CanvasNew( sVoxelTextureSdScratch );
-		sVoxelTextureSd = TextureNew( TexType3d, TexFormatRGBA8, kVoxelCountX / 2, kVoxelCountY / 2, kVoxelCountZ, TexFlags( TexFlagClamp | TexFlagMipMap ), kNull );
-		sVoxelCanvasSd = CanvasNew( sVoxelTextureSd );
-		sLightTextureColour = TextureNew( TexType3d, TexFormatRGB16F, kVoxelCountX / 2, kVoxelCountY / 2, kVoxelCountZ / 2, TexFlagClamp );
-		sLightTextureDirection = TextureNew( TexType3d, TexFormatRGB16F, kVoxelCountX / 2, kVoxelCountY / 2, kVoxelCountZ / 2, TexFlagClamp );
-		sLightCanvas = CanvasNew();
-		CanvasAdd( sLightCanvas, sLightTextureColour );
-		CanvasAdd( sLightCanvas, sLightTextureDirection );
-		sVoxelTextureHd = TextureNew( TexType3d, TexFormatRGBA8, kVoxelCountX, kVoxelCountY, kVoxelCountZ, TexFlagClamp, kNull );
-		sVoxelCanvasHd = CanvasNew( sVoxelTextureHd );
-		sVoxelTextureHdScratch = TextureNew( TexType3d, TexFormatRGBA8, kVoxelCountX, kVoxelCountY, kVoxelCountZ, TexFlagClamp, kNull );
-		sVoxelCanvasHdScratch = CanvasNew( sVoxelTextureHdScratch );
-		sVoxelCanvasHdPassA = CanvasNew();
-		for( u32 i = 0; i < kVoxelCountZ / 2; i++ )
-		{
-			CanvasAdd( sVoxelCanvasHdPassA, sVoxelTextureHdScratch, i );
-		}
-		sVoxelCanvasHdPassB = CanvasNew();
-		for( u32 i = kVoxelCountZ / 2; i < kVoxelCountZ; i++ )
-		{
-			CanvasAdd( sVoxelCanvasHdPassB, sVoxelTextureHdScratch, i );
-		}
-		InitShaders();
+		
+        sVoxelCanvasSdScratch = CanvasNew( sVoxelTextureSdScratch );
+		
+        
+        sVoxelTextureSd = TextureNew( TexType3d, TexFormatRGBA8, kVoxelCountX / 2, kVoxelCountY / 2, kVoxelCountZ, TexFlags( TexFlagClamp | TexFlagMipMap ), kNull );
+		
+        sVoxelCanvasSd = CanvasNew( sVoxelTextureSd );
+		
+        
+        
+        sLightTextureColour = TextureNew( TexType3d, TexFormatRGB16F, kVoxelCountX / 2, kVoxelCountY / 2, kVoxelCountZ / 2, TexFlagClamp );
+		
+        sLightTextureDirection = TextureNew( TexType3d, TexFormatRGB16F, kVoxelCountX / 2, kVoxelCountY / 2, kVoxelCountZ / 2, TexFlagClamp );
+		
+        sLightCanvas = CanvasNew();
+		
+        CanvasAdd( sLightCanvas, sLightTextureColour );
+		
+        CanvasAdd( sLightCanvas, sLightTextureDirection );
+        
+        
+		
+        sVoxelTextureHd = TextureNew( TexType3d, TexFormatRGBA8, kVoxelCountX, kVoxelCountY, kVoxelCountZ, TexFlagClamp, kNull );
+		
+        sVoxelCanvasHd = CanvasNew();
+		
+        for(s32 i = 0; i < kVoxelCountZ; i++)
+        {
+            CanvasAdd( sVoxelCanvasHd, sVoxelTextureHd, i );
+        }
+
+        
+        sVoxelTextureHdScratch = TextureNew( TexType3d, TexFormatRGBA8, kVoxelCountX, kVoxelCountY, kVoxelCountZ, TexFlagClamp, kNull );
+		
+        sVoxelCanvasHdScratch = CanvasNew();
+        
+        for(s32 i = 0; i < kVoxelCountZ; i++)
+        {
+            CanvasAdd( sVoxelCanvasHdScratch, sVoxelTextureHdScratch, i );
+        }
+		
+        InitShaders();
         
         
         /*

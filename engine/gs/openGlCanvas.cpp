@@ -62,6 +62,7 @@ namespace gs
 
 	void CanvasHwAdd( const CanvasHandle canvasHandle, const TextureHandle textureHandle, const u32 attachmentIndex, const u32 layer )
 	{
+        /*
         LocateBackBuffer();
         
         CanvasHw canvasHw = sCanvasHw[ canvasHandle ];
@@ -88,7 +89,7 @@ namespace gs
 
         ASSERT( glCheckFramebufferStatus( GL_FRAMEBUFFER ) == GL_FRAMEBUFFER_COMPLETE);
         
-		glBindFramebuffer( GL_FRAMEBUFFER, sActiveBuffer );
+		glBindFramebuffer( GL_FRAMEBUFFER, sActiveBuffer );*/
 	}
 	
 	void CanvasHwSet( const CanvasHandle handle, const s32 layer, const s32 lod )
@@ -128,16 +129,16 @@ namespace gs
                 {
                     if( layer >= 0 )
                     {
-                        glFramebufferTextureLayer( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, textureHw.mTexture, ( GLint )lod, ( GLint )layer );
+                        glFramebufferTextureLayer( GL_FRAMEBUFFER, sColorAttachmentMap[ i ], textureHw.mTexture, ( GLint )lod, ( GLint )layer );
                     }
                     else
                     {
-                        glFramebufferTextureLayer( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, textureHw.mTexture, ( GLint )lod, ( GLint )i );
+                        glFramebufferTextureLayer( GL_FRAMEBUFFER, sColorAttachmentMap[ i ], textureHw.mTexture, ( GLint )lod, ( GLint )i );
                     }
                 }
                 else
                 {
-                    glFramebufferTexture2D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, textureHw.mTarget, textureHw.mTexture, ( GLint )lod );
+                    glFramebufferTexture2D( GL_FRAMEBUFFER, sColorAttachmentMap[ i ], textureHw.mTarget, textureHw.mTexture, ( GLint )lod );
                 }
                 
                 ErrorCheck();

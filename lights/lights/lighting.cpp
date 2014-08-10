@@ -151,7 +151,7 @@ void lightingTick( f32 dt )
 	}
 	
 	fw::LightSetPosition( mLightHandle, clamp( fw::LightGetPosition( mLightHandle ) + lightMove, fw::LightGetBounds().mMin, fw::LightGetBounds().mMax ));
-	fw::LightSetPosition( mLightHandle2, clamp( fw::LightGetPosition( mLightHandle2 ) - lightMove, fw::LightGetBounds().mMin, fw::LightGetBounds().mMax ));
+	//fw::LightSetPosition( mLightHandle2, clamp( fw::LightGetPosition( mLightHandle2 ) - lightMove, fw::LightGetBounds().mMin, fw::LightGetBounds().mMax ));
 	
 	if( os::KeyUp( os::eKeyZ ) )            
 	{
@@ -188,21 +188,15 @@ void lightingDraw()
 
     //gs::Put();
     
-	fw::DrawLights( fw::DrawPhasePreVoxelPassA );
+	fw::DrawLights( fw::DrawPhasePreVoxelPass );
 
 	setStageMatrices(true);
 	
-	mCubeRenderer.Draw( gs::ePrimTriangles, true );
-
-	fw::DrawLights( fw::DrawPhasePreVoxelPassB );
-
-	setStageMatrices(true);
-
 	mCubeRenderer.Draw( gs::ePrimTriangles, true );
 
 	fw::DrawLights( fw::DrawPhaseMake );
 	
-	setStageMatrices( false );
+	//setStageMatrices( false );
 	
 	mCubeRenderer.Draw( gs::ePrimTriangles, false );
 	
@@ -236,8 +230,8 @@ void lightingInit()
     
 	fw::InitLights( aabb( v3( 0.0f, 0.0f, 0.0f ), v3( 32.0f, 32.0f, 8.0f ) ) );
 	
-    mLightHandle = fw::LightNew( v3( 5.0f, 5.0f, 5.0f ), v3( 1.0f, 1.0f, 1.0f ) * 0.1f );
-	mLightHandle2 = fw::LightNew( v3( 5.0f, 4.5f, 5.0f ), v3( 1.0f, 0.4f, 0.0f ) );
+    mLightHandle = fw::LightNew( v3( 5.0f, 5.0f, 5.0f ), v3( 1.0f, 1.0f, 1.0f ) * 0.5f );
+	//mLightHandle2 = fw::LightNew( v3( 5.0f, 4.5f, 5.0f ), v3( 1.0f, 0.4f, 0.0f ) );
 
 	mCameraHandle = fw::CameraNew( fw::Rect(0.0f, 0.0f, ( f32 )os::WindowSizeX(), ( f32 )os::WindowSizeY()), &lightingDraw );
 
@@ -258,7 +252,7 @@ void lightingInit()
 	mCubeRenderer.Add( fw::CubeComponent( v3( 8.0f, 4.0f, 3.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 0.3f, 0.3f, 0.3f, 1.0f ) ) );
 	mCubeRenderer.Add( fw::CubeComponent( v3( 12.0f, 2.0f, 3.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 0.2f, 0.2f, 0.2f, 1.0f ) ) );
 	mCubeRenderer.Add( fw::CubeComponent( v3( 16.0f, 6.0f, 3.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ) ) );
-	mCubeRenderer.Add( fw::CubeComponent( v3( 20.0f, 10.0f, 3.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 0.0f, 0.5f, 0.0f, 1.0f ) ) );
+	mCubeRenderer.Add( fw::CubeComponent( v3( 20.0f, 10.0f, 5.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 0.0f, 0.5f, 0.0f, 1.0f ) ) );
 	mCubeRenderer.Add( fw::CubeComponent( v3( 24.0f, 8.0f, 3.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 0.0f, 0.3f, 0.5f, 1.0f ) ) );
 
 	mCubeRenderer.Add( fw::CubeComponent( v3( 8.0f, 22.0f, 3.0f ), v3( 1.0f, 3.0f, 1.0f ), v4( 0.6f, 0.8f, 0.7f, 1.0f ) ) );

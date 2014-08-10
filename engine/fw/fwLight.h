@@ -21,8 +21,7 @@ namespace fw
 	
 	enum DrawPhase
 	{
-		DrawPhasePreVoxelPassA,
-		DrawPhasePreVoxelPassB,
+		DrawPhasePreVoxelPass,
 		DrawPhaseMake,
 		DrawPhaseFinal
 	};
