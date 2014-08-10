@@ -239,27 +239,26 @@ void lightingInit()
 	
 	mCubeRenderer.Init( 128 );
 
-	mCubeRenderer.Add( fw::CubeComponent( v3( 16.0f, 16.0f, 0.0f ), v3( 16.0f, 16.0f, 0.05f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ) ) );
-	mCubeRenderer.Add( fw::CubeComponent( v3( 16.0f, 0.0f, 4.0f ), v3( 15.5f, 1.0f, 4.0f ), v4( 1.0f, 0.8f, 0.6f, 1.0f ) ) );
-	mCubeRenderer.Add( fw::CubeComponent( v3( 0.0f, 16.0f, 4.0f ), v3( 0.5f, 16.0f, 4.0f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ) ) );
-	mCubeRenderer.Add( fw::CubeComponent( v3( 32.0f, 16.0f, 4.0f ), v3( 0.5f, 16.0f, 4.0f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ) ) );
+	mCubeRenderer.Add( fw::CubeComponent( v3( 16.0f, 16.0f, 0.0f - 0.0f ), v3( 16.0f, 16.0f, 0.05f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ) ) );
+	mCubeRenderer.Add( fw::CubeComponent( v3( 16.0f, 0.0f, 4.0f - 0.0f ), v3( 15.5f, 1.0f, 4.0f ), v4( 1.0f, 0.8f, 0.6f, 1.0f ) ) );
+	mCubeRenderer.Add( fw::CubeComponent( v3( 0.0f, 16.0f, 4.0f - 0.0f ), v3( 0.5f, 16.0f, 4.0f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ) ) );
+	mCubeRenderer.Add( fw::CubeComponent( v3( 32.0f, 16.0f, 4.0f - 0.0f ), v3( 0.5f, 16.0f, 4.0f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ) ) );
 
-	mCubeRenderer.Add( fw::CubeComponent( v3( 2.5f, 4.0f, 2.5f ), v3( 1.0f, 1.0f, 1.0f ), v4( 1.0f, 0.5f, 0.0f, 1.0f ) ) );
-	mCubeRenderer.Add( fw::CubeComponent( v3( 26.0f, 8.2f, 4.25f ), v3( 3.5f, 6.0f, 2.5f ), v4( 0.6f, 0.8f, 1.0f, 1.0f ) ) );
-	mCubeRenderer.Add( fw::CubeComponent( v3( 4.0f, 28.0f, 3.5f ), v3( 2.0f, 2.0f, 2.0f ), v4( 1.0f, 0.0f, 0.0f, 1.0f ) ) );
-	mCubeRenderer.Add( fw::CubeComponent( v3( 28.0f, 28.0f, 3.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 0.0f, 1.0f, 0.5f, 1.0f ) ) );
+	mCubeRenderer.Add( fw::CubeComponent( v3( 0.0f, 4.0f, 8.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 1.0f, 0.0f, 0.0f, 1.0f ) ) );
+    mCubeRenderer.Add( fw::CubeComponent( v3( 4.0f, 4.0f, 7.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 1.0f, 0.0f, 0.0f, 1.0f ) ) );
+    mCubeRenderer.Add( fw::CubeComponent( v3( 8.0f, 4.0f, 6.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 1.0f, 0.0f, 0.0f, 1.0f ) ) );
+    mCubeRenderer.Add( fw::CubeComponent( v3( 12.0f, 4.0f, 5.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 1.0f, 0.0f, 0.0f, 1.0f ) ) );
+    mCubeRenderer.Add( fw::CubeComponent( v3( 16.0f, 4.0f, 4.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 1.0f, 0.0f, 1.0f, 1.0f ) ) );
+    mCubeRenderer.Add( fw::CubeComponent( v3( 20.0f, 4.0f, 3.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 0.0f, 0.0f, 1.0f, 1.0f ) ) );
+    mCubeRenderer.Add( fw::CubeComponent( v3( 24.0f, 4.0f, 2.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 0.0f, 0.0f, 1.0f, 1.0f ) ) );
+    mCubeRenderer.Add( fw::CubeComponent( v3( 28.0f, 4.0f, 1.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 0.0f, 0.0f, 1.0f, 1.0f ) ) );
+    //mCubeRenderer.Add( fw::CubeComponent( v3( 32.0f, 4.0f, 0.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 0.0f, 0.0f, 1.0f, 1.0f ) ) );
 
-	mCubeRenderer.Add( fw::CubeComponent( v3( 8.0f, 4.0f, 3.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 0.3f, 0.3f, 0.3f, 1.0f ) ) );
-	mCubeRenderer.Add( fw::CubeComponent( v3( 12.0f, 2.0f, 3.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 0.2f, 0.2f, 0.2f, 1.0f ) ) );
-	mCubeRenderer.Add( fw::CubeComponent( v3( 16.0f, 6.0f, 3.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ) ) );
-	mCubeRenderer.Add( fw::CubeComponent( v3( 20.0f, 10.0f, 5.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 0.0f, 0.5f, 0.0f, 1.0f ) ) );
-	mCubeRenderer.Add( fw::CubeComponent( v3( 24.0f, 8.0f, 3.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 0.0f, 0.3f, 0.5f, 1.0f ) ) );
-
-	mCubeRenderer.Add( fw::CubeComponent( v3( 8.0f, 22.0f, 3.0f ), v3( 1.0f, 3.0f, 1.0f ), v4( 0.6f, 0.8f, 0.7f, 1.0f ) ) );
-	mCubeRenderer.Add( fw::CubeComponent( v3( 12.0f, 22.0f, 3.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 0.6f, 0.7f, 0.9f, 1.0f ) ) );
-	mCubeRenderer.Add( fw::CubeComponent( v3( 16.0f, 22.0f, 3.0f ), v3( 1.0f, 2.5f, 1.0f ), v4( 0.4f, 0.6f, 0.8f, 1.0f ) ) );
-	mCubeRenderer.Add( fw::CubeComponent( v3( 20.0f, 22.0f, 3.0f ), v3( 1.0f, 2.0f, 1.0f ), v4( 0.9f, 0.8f, 0.7f, 1.0f ) ) );
-	mCubeRenderer.Add( fw::CubeComponent( v3( 24.0f, 22.0f, 3.0f ), v3( 1.0f, 1.5f, 1.0f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ) ) );
+//	mCubeRenderer.Add( fw::CubeComponent( v3( 8.0f, 22.0f, 8.0f - 4.0f ), v3( 1.0f, 3.0f, 1.0f ), v4( 0.6f, 0.8f, 0.7f, 1.0f ) ) );
+//	mCubeRenderer.Add( fw::CubeComponent( v3( 12.0f, 22.0f, 7.0f - 4.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 0.6f, 0.7f, 0.9f, 1.0f ) ) );
+//	mCubeRenderer.Add( fw::CubeComponent( v3( 16.0f, 22.0f, 6.0f - 4.0f ), v3( 1.0f, 2.5f, 1.0f ), v4( 0.4f, 0.6f, 0.8f, 1.0f ) ) );
+//	mCubeRenderer.Add( fw::CubeComponent( v3( 20.0f, 22.0f, 5.0f - 4.0f ), v3( 1.0f, 2.0f, 1.0f ), v4( 0.9f, 0.8f, 0.7f, 1.0f ) ) );
+//	mCubeRenderer.Add( fw::CubeComponent( v3( 24.0f, 22.0f, 4.0f - 4.0f ), v3( 1.0f, 1.5f, 1.0f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ) ) );
 
 	mCanvasViewer.Init();
 }
