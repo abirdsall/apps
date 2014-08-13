@@ -13,6 +13,7 @@
 #include "vector.h"
 
 #include "fwRect.h"
+#include "fwPool.h"
 #include "fwString.h"
 
 #include "fwComponent.h"

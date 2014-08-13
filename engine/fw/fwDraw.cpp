@@ -12,6 +12,7 @@ namespace fw
 	static const s32 kTcoordAttribSize = 4;
     static const s32 kAttribSize = kVertexAttribSize + kColourAttribSize + kTcoordAttribSize;
 
+    static gs::ShaderHandle sTextureShader;
 	static gs::ShaderHandle sFillShader;
     static gs::ShaderHandle sFill4Shader;
 
@@ -120,6 +121,42 @@ namespace fw
         
         sFill4Shader = gs::ShaderNew( vShader.toStr(), fShader.toStr() );
 #endif
+        
+#if kBuildOpenGles3
+        vShader = "#version 300 es\n";
+#else //kBuildOpenGl3
+        vShader = "#version 410\n";
+#endif
+        vShader = vShader + "in vec2 vertex_position;\n";
+        vShader += "in vec4 vertex_colour;\n";
+        vShader += "in vec2 vertex_tcoord;\n";
+        vShader += "out vec4 fragment_colour;\n";
+        vShader += "out vec2 fragment_tcoord;\n";
+        vShader += "uniform mat4 viewMatrix;\n";
+        vShader += "uniform mat4 projMatrix;\n";
+        vShader += "void main()\n";
+        vShader += "{\n";
+        vShader = vShader + "\tgl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, 0, 1);\n";
+        vShader += "\tfragment_colour = vertex_colour;\n";
+        vShader += "\tfragment_tcoord = vertex_tcoord;\n";
+        vShader += "}\n";
+        
+#if kBuildOpenGles3
+        fShader = "#version 300 es\n";
+        fShader += "precision highp float;\n";
+#else //kBuildOpenGl3
+        fShader = "#version 410\n";
+#endif
+        fShader += "uniform sampler2D texture0;\n";
+        fShader += "in vec4 fragment_colour;\n";
+        fShader += "in vec2 fragment_tcoord;\n";
+        fShader += "out vec4 output_colour;\n";
+        fShader += "void main()\n";
+        fShader += "{\n";
+        fShader += "\toutput_colour = texture(texture0, fragment_tcoord) * fragment_colour;\n";
+        fShader += "}\n";
+        
+        sTextureShader = gs::ShaderNew( vShader.toStr(), fShader.toStr() );
 	}
 	
 	void DrawKill()
@@ -232,6 +269,32 @@ namespace fw
         }
 	}
 	
+    void DrawRect( const Rect& vertices, const Rect& tcoords, const v4& colour )
+    {
+        if( sBatching )
+        {
+            u16* elementData = ( u16* )MeshGetElementData( sMesh, sBatchSize * 6 );
+            f32* vertexData = ( f32* )MeshGetVertexData( sMesh, sBatchSize * 4 );
+            GenerateElements( elementData, sBatchSize * 4 );
+            GenerateVertices( vertexData, kAttribSize, vertices );
+            GenerateUniforms( vertexData + kVertexAttribSize, kAttribSize, colour );
+            GenerateUniforms( vertexData + kVertexAttribSize + kColourAttribSize, kAttribSize, tcoords );
+            sBatchSize++;
+        }
+        else
+        {
+            u16* elementData = ( u16* )MeshGetElementData( sMesh, 0 );
+            f32* vertexData = ( f32* )MeshGetVertexData( sMesh, 0 );
+            MeshSetElementCount( sMesh, 6 );
+            MeshSetVertexCount( sMesh, 4 );
+            GenerateElements( elementData, 0 );
+            GenerateVertices( vertexData, kAttribSize, vertices );
+            GenerateUniforms( vertexData + kVertexAttribSize, kAttribSize, colour );
+            GenerateUniforms( vertexData + kVertexAttribSize + kColourAttribSize, kAttribSize, tcoords );
+            MeshDraw( sMesh, gs::ePrimTriangles );
+        }
+    }
+    
 	void DrawRect( const Rect& vertices, const Rect& tcoords )
 	{
 		u16* elementData = ( u16* )MeshGetElementData( sMesh, 0 );
@@ -255,7 +318,7 @@ namespace fw
         GenerateUniforms( vertexData + (kVertexAttribSize + kColourAttribSize), kAttribSize, tcoords, uniform );
         MeshDraw( sMesh, gs::ePrimTriangles );
 	}
-
+    
 	void FillRect( const Rect& vertices, const v4& colour )
 	{
         if( !sBatching )
@@ -284,10 +347,19 @@ namespace fw
 		DrawWireRect( vertices, colour );
 	}
     
-    void BatchBegin()
+    void TextureRect( const Rect& vertices, const Rect& tcoords, const v4& colour )
+    {
+        if( !sBatching )
+        {
+            gs::ShaderSet( sTextureShader );
+        }
+        DrawRect( vertices, tcoords, colour );
+    }
+    
+    void BatchBegin( bool textured )
     {
         // should be triangles not triangle strip
-        gs::ShaderSet( sFillShader );
+        gs::ShaderSet( textured ? sTextureShader : sFillShader );
 
         sBatching = true;
         sBatchSize = 0;

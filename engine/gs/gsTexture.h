@@ -50,7 +50,7 @@ namespace gs
 		u32 mSizeZ;
 		u32 mLodMax;
 		TexFlags mFlags;
-		const f32* mData;
+		void* mData;
 		bool mActive;
 	};
 
@@ -62,9 +62,9 @@ namespace gs
 	void InitTextures();
 	void KillTextures();
 	
-	TextureHandle TextureNew( const TexType type, const TexFormat format, const u32 sizeX, const u32 sizeY, const u32 sizeZ, const TexFlags flags, const f32* data = kNull );
-	TextureHandle TextureNew3d( const TexFormat format, const u32 sizeX, const u32 sizeY, const u32 sizeZ, const f32* data = kNull );
-	TextureHandle TextureNew2d( const TexFormat format, const u32 sizeX, const u32 sizeY, const f32* data = kNull );
+	TextureHandle TextureNew( const TexType type, const TexFormat format, const u32 sizeX, const u32 sizeY, const u32 sizeZ, const TexFlags flags, void* data = kNull );
+	TextureHandle TextureNew3d( const TexFormat format, const u32 sizeX, const u32 sizeY, const u32 sizeZ, void* data = kNull );
+	TextureHandle TextureNew2d( const TexFormat format, const u32 sizeX, const u32 sizeY, void* data = kNull );
 	TextureHandle TextureNewDepth( const TexFormat format, const u32 sizeX, const u32 sizeY );
 
 	void TextureDelete( const TextureHandle handle );

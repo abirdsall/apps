@@ -20,7 +20,7 @@ namespace gs
 		}
 	}
 
-	TextureHandle TextureNew( const TexType type, const TexFormat format, const u32 sizeX, const u32 sizeY, const u32 sizeZ, const TexFlags flags, const f32* data )
+	TextureHandle TextureNew( const TexType type, const TexFormat format, const u32 sizeX, const u32 sizeY, const u32 sizeZ, const TexFlags flags, void* data )
 	{
 		for( int i = 0; i < kTextureLimit; i++ )
 		{
@@ -59,12 +59,12 @@ namespace gs
 		return kTextureInvalid;
 	}
 			
-	TextureHandle TextureNew3d( const TexFormat format, const u32 sizeX, const u32 sizeY, const u32 sizeZ, const f32* data )
+	TextureHandle TextureNew3d( const TexFormat format, const u32 sizeX, const u32 sizeY, const u32 sizeZ, void* data )
 	{
 		return TextureNew( TexType3d, format, sizeX, sizeY, sizeZ, TexFlagNone, data );
 	}
 
-	TextureHandle TextureNew2d( const TexFormat format, const u32 sizeX, const u32 sizeY, const f32* data )
+	TextureHandle TextureNew2d( const TexFormat format, const u32 sizeX, const u32 sizeY, void* data )
 	{
 		return TextureNew( TexType2d, format, sizeX, sizeY, 1, TexFlagNone, data );
 	}

@@ -99,11 +99,7 @@ namespace gs
 		GL_FLOAT,//TexFormatRGB8,
 		GL_FLOAT,//TexFormatRGB16F,
 		GL_FLOAT,//TexFormatRGB32F,
-#if kBuildOpenGles2 || kBuildOpenGles3
-        GL_UNSIGNED_BYTE,//TexFormatRGBA8,
-#else
-		GL_FLOAT,//TexFormatRGBA8,
-#endif
+        GL_UNSIGNED_BYTE,//TexFormatRGBA8, // Was GL_FLOAT
 		GL_FLOAT,//TexFormatRGBA16F,
 		GL_FLOAT,//TexFormatRGBA32F,
 		GL_UNSIGNED_INT,//TexFormatRGBA32U,

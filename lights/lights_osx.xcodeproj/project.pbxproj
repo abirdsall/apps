@@ -197,6 +197,7 @@
 		D6B4FAE8198D8DC400018556 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = lights/main.cpp; sourceTree = SOURCE_ROOT; };
 		D6B4FAE9198D8DC400018556 /* renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = renderer.cpp; path = lights/renderer.cpp; sourceTree = SOURCE_ROOT; };
 		D6B4FAEA198D8DC400018556 /* renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = renderer.h; path = lights/renderer.h; sourceTree = SOURCE_ROOT; };
+		D6CEAA28199BF707001A4BB1 /* fwPool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fwPool.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -276,6 +277,7 @@
 				D64890D1198D98DD001636B5 /* fwObject.h */,
 				D64890D2198D98DD001636B5 /* fwObjectFactory.cpp */,
 				D64890D3198D98DD001636B5 /* fwObjectFactory.h */,
+				D6CEAA28199BF707001A4BB1 /* fwPool.h */,
 				D64890D4198D98DD001636B5 /* fwRect.cpp */,
 				D64890D5198D98DD001636B5 /* fwRect.h */,
 				D64890D6198D98DD001636B5 /* fwRenderer.cpp */,

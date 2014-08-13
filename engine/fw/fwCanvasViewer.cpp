@@ -343,6 +343,13 @@ namespace fw
 			DrawRect( rect, Rect( 0.0f, 1.0f, 1.0f, 0.0f ), zMin + zStep * f32( layerIndex ) );
 		}
 		Pop();
+
+        Put();
+        Set2d();
+        SetWrite(eWriteRgb);
+        SetBlend(eBlendRgba);
+        SystemFontDraw(String("hello HELLO"), rect.Min(), v4(1,0,0,1));
+        Pop();
 	}
 
 	void CanvasViewer::Kill()

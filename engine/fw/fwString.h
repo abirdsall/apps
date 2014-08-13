@@ -3,44 +3,59 @@
 
 namespace fw
 {
+    enum StringCapacity
+    {
+        StringCapacity16,
+        StringCapacity256,
+        StringCapacity4096
+    };
+    
+    // enum for diff sizes.. allocs memory from a pool
 	class String
 	{
 	private:
+        c8* _data;
+        s32 _dataSize;
+        s32 _size;
+        StringCapacity _capacity;
+
+        void Alloc();
+        void Free();
         
-		static const u32 kSizeLimit = 4096;
-
-		c8 mData[ kSizeLimit + 1 ]; // +1 to allow space for null when toStr() called
-
-        u32 mSize;
-
-		void Append( const c8* s )
-		{
-			u32 size = os::strlen( s );
-            
-			ASSERT( ( mSize + size ) < kSizeLimit );
-			
-            os::strcpy( mData + mSize, s, size );
-			
-            mSize += size;
-		}
+        void Append( const c8* s );
 		
 	public:
-		String() : mSize( 0 )
+
+        String( StringCapacity capacity = StringCapacity4096 );
+        String( const c8* s, StringCapacity capacity = StringCapacity4096 );
+        ~String();
+        
+        inline s32 Size()
+        {
+            return _size;
+        }
+        
+        inline c8 operator [] ( const s32 i )
+        {
+            return _data[ i ];
+        }
+        
+		inline const c8* toStr()
 		{
-		}
-		
-		String( const c8* s ) : mSize( 0 )
-		{
-			Append( s );
-		}
-		
-		const c8* toStr()
-		{
-			mData[ mSize ] = '\0';
+			_data[ _size ] = '\0';
             
-			return mData;
+			return _data;
 		}
-			
+        
+        inline String& operator = ( const c8* s )
+        {
+            _size = 0;
+            
+            Append( s );
+            
+            return *this;
+        }
+        
 		inline String& operator += ( const c8* s )
 		{
 			Append( s );
@@ -123,4 +138,5 @@ namespace fw
         }
 	};
 }
+
 #endif

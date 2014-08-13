@@ -5,6 +5,7 @@ namespace fw
     void Init()
     {
         DrawInit();
+        SystemFontInit();
     }
     
     void Kill()

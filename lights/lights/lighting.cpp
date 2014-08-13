@@ -181,6 +181,14 @@ void setStageMatrices( bool tracing )
 void lightingDraw()
 {
 
+    gs::Put();
+    gs::Set2d();
+    
+    fw::SystemFontDraw( fw::String("0123456789abcdefghijklmnopqrstuvwxyz"), v2( 100, 100 ), v4(1.0f, 1.0f, 1.0f, 1.0f ) );
+    
+    gs::Pop();
+    //return;
+    
     //gs::Put();
     
 	fw::DrawLights( fw::DrawPhasePreVoxelPass );
@@ -221,7 +229,7 @@ void lightingDraw()
 
 void lightingInit()
 {
-	fw::DrawInit();
+	fw::Init();
     
 	fw::InitLights( aabb( v3( 0.0f, 0.0f, 0.0f ), v3( 32.0f, 32.0f, 8.0f ) ) );
 	

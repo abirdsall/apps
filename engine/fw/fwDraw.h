@@ -7,6 +7,7 @@ namespace fw
 	void DrawKill();
 	
 	void DrawRect( const Rect& vertices, const v4& colour );
+    void DrawRect( const Rect& vertices, const Rect& tcoords, const v4& colour );
 	void DrawRect( const Rect& vertices, const Rect& tcoords );
 	void DrawRect( const Rect& vertices, const Rect& tcoords, const f32 uniform );
 	void DrawCube( const v3& vertex, const v3& radius, const v2& uniform );
@@ -18,7 +19,9 @@ namespace fw
     void Fill4Rect( const Rect& vertices, const v4& colour );
     void FillWireRect( const Rect& vertices, const v4& colour );
     
-    void BatchBegin();
+    void TextureRect( const Rect& vertices, const Rect& tcoords, const v4& colour );
+    
+    void BatchBegin( bool textured );
     void BatchEnd( gs::ePrim primitive );
 }
 
