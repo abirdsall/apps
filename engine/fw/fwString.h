@@ -3,51 +3,128 @@
 
 namespace fw
 {
-    enum StringCapacity
+    class StringData
     {
-        StringCapacity16,
-        StringCapacity256,
-        StringCapacity4096
+    protected:
+        
+        c8* _data;
+
+    public:
+        
+        inline c8* Data()
+        {
+            return _data;
+        }
+
+        virtual void Alloc() = 0;
+        
+        virtual void Free() = 0;
+        
+        virtual s32 Size() = 0;
     };
     
-    // enum for diff sizes.. allocs memory from a pool
-	class String
-	{
-	private:
-        c8* _data;
-        s32 _dataSize;
-        s32 _size;
-        StringCapacity _capacity;
-
+    class StringData16 : public StringData
+    {
+    public:
+        
         void Alloc();
+        
         void Free();
         
-        void Append( const c8* s );
-		
-	public:
-
-        String( StringCapacity capacity = StringCapacity4096 );
-        String( const c8* s, StringCapacity capacity = StringCapacity4096 );
-        ~String();
+        inline s32 Size()
+        {
+            return 16;
+        }
+    };
+    
+    class StringData256 : public StringData
+    {
+    public:
+        
+        void Alloc();
+        
+        void Free();
         
         inline s32 Size()
+        {
+            return 256;
+        }
+    };
+    
+    class StringData4096 : public StringData
+    {
+    public:
+        
+        void Alloc();
+        
+        void Free();
+        
+        inline s32 Size()
+        {
+            return 4096;
+        }
+    };
+
+	template <class T> class StringT
+	{
+	private:
+        
+        T _data;
+        
+        s32 _size;
+        
+        void Append( const c8* s )
+        {
+            u32 size = os::strlen( s );
+            
+            ASSERT( ( _size + size ) < _data.Size() );
+            
+            os::strcpy( _data.Data() + _size, s, size );
+            
+            _size += size;
+        }
+        
+	public:
+        
+        StringT()
+        {
+            _size = 0;
+            
+            _data.Alloc();
+        }
+        
+        StringT( const c8* s )
+        {
+            _size = 0;
+            
+            _data.Alloc();
+            
+            Append( s );
+        }
+        
+        ~StringT()
+        {
+            _data.Free();
+        }
+
+        s32 Size()
         {
             return _size;
         }
         
-        inline c8 operator [] ( const s32 i )
+        c8 operator [] ( const s32 i )
         {
-            return _data[ i ];
+            return _data.Data()[ i ];
         }
         
-		inline const c8* toStr()
+		const c8* toStr()
 		{
-			_data[ _size ] = '\0';
+			_data.Data()[ _size ] = '\0';
             
-			return _data;
+			return _data.Data();
 		}
         
-        inline String& operator = ( const c8* s )
+        StringT<T>& operator = ( const c8* s )
         {
             _size = 0;
             
@@ -56,21 +133,21 @@ namespace fw
             return *this;
         }
         
-		inline String& operator += ( const c8* s )
+		StringT<T>& operator += ( const c8* s )
 		{
 			Append( s );
             
 			return *this;
 		}
 		
-		inline String& operator + ( const c8* s )
+		StringT<T>& operator + ( const c8* s )
 		{
 			*this += s;
             
 			return *this;
 		}
 		
-		inline String& operator + ( s32 value )
+		StringT<T>& operator + ( s32 value )
 		{
 			if( value == 0 )
 			{
@@ -126,7 +203,7 @@ namespace fw
 			return *this;
 		}
         
-        inline String& operator + ( f32 value )
+        StringT<T>& operator + ( f32 value )
         {
             c8 chrs[ 256 ];
 
@@ -137,6 +214,11 @@ namespace fw
             return *this;
         }
 	};
+
+    typedef StringT<StringData16> String16;
+    typedef StringT<StringData256> String256;
+    typedef StringT<StringData4096> String4096;
+    typedef StringT<StringData4096> String;
 }
 
 #endif
