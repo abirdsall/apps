@@ -95,12 +95,7 @@ typedef u64 hwInt;
 #undef min
 #undef max
 
-#include "cAssert.h"
-#include "cMath.h"
-#include "cMemory.h"
-#include "cOutput.h"
-#include "cString.h"
-#include "cTime.h"
+#include "core.h"
 
 #include "osHw.h"
 

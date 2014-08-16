@@ -1,6 +1,6 @@
 #include "os.h"
 
-namespace os
+namespace core
 {
 	c8* strstr( const c8* s1, const c8* s2 )
 	{
@@ -11,7 +11,7 @@ namespace os
 		
 		while ( size1-- >= size2 )
 		{
-			if ( !memory::compare( s1, s2, size2 ) )
+			if ( !core::compare( s1, s2, size2 ) )
 			{
 				return ( c8* )s1;
 			}

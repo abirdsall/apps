@@ -13,7 +13,7 @@ namespace fw
 	{
 #if kBuildOpenGles2
         
-        String vShader = "attribute vec2 vertex_position;\n";
+        core::String vShader = "attribute vec2 vertex_position;\n";
         
         vShader += "attribute vec4 vertex_colour;\n";
         vShader += "attribute vec4 vertex_tcoord;\n";
@@ -32,7 +32,7 @@ namespace fw
         vShader += "\tfragment_tcoord = vertex_tcoord.xy;\n";
         vShader += "}\n";
         
-        String fShader = "varying lowp vec4 fragment_colour;\n";
+        core::String fShader = "varying lowp vec4 fragment_colour;\n";
         
         fShader += "varying lowp vec2 fragment_tcoord;\n";
         fShader += "uniform lowp sampler2D texture0;\n";
@@ -49,9 +49,9 @@ namespace fw
 #else
         
 #if kBuildOpenGl3
-        String vShader = "#version 150\n";
+        core::String vShader = "#version 150\n";
 #else
-        String vShader = "#version 300 es\n";
+        core::String vShader = "#version 300 es\n";
 #endif
 		vShader += "in vec2 vertex_position;\n";
         vShader += "in vec4 vertex_colour;\n";
@@ -81,9 +81,9 @@ namespace fw
 		vShader += "}\n";
 		
 #if kBuildOpenGl3
-        String fShader = "#version 150\n";
+        core::String fShader = "#version 150\n";
 #else
-        String fShader = "#version 300 es\n";
+        core::String fShader = "#version 300 es\n";
         fShader = fShader + "precision highp float;\n";
         fShader = fShader + "precision highp sampler3D;\n";
 #endif
@@ -348,7 +348,7 @@ namespace fw
         Set2d();
         SetWrite(eWriteRgb);
         SetBlend(eBlendRgba);
-        SystemFontDraw(String("hello HELLO"), rect.Min(), v4(1,0,0,1));
+        SystemFontDraw(core::String("hello HELLO"), rect.Min(), v4(1,0,0,1));
         Pop();
 	}
 

@@ -20,7 +20,7 @@ f32 intersect(const line& line, const v3& v)
 	v3	p2		= line.getEnd();
 	f32	size	= ::distance(p1, p2);
 	f32	u		= dot(v - p1, p2 - p1) / (size * size);
-	v3  pos		= p1 + (p2 - p1) * math::clamp(u, 0.0f, 1.0f);
+	v3  pos		= p1 + (p2 - p1) * core::clamp(u, 0.0f, 1.0f);
 	return distance(v, pos);
 }
 
@@ -39,13 +39,13 @@ f32 intersect(const line& line1, const line& line2)
 	f32	d4343	= dot(p43, p43);
 	f32	d2121	= dot(p21, p21);
 	f32	denom	= d2121 * d4343 - d4321 * d4321;
-	if(math::abs(denom) > 1e-5f && math::abs(d4343) > 1e-5f)		// avoid divide by zero
+	if(core::abs(denom) > 1e-5f && core::abs(d4343) > 1e-5f)		// avoid divide by zero
 	{
 		f32	numer	= d1343 * d4321 - d1321 * d4343;
 		f32 mua		= numer / denom;					// distance along line 1
 		f32 mub		= (d1343 + d4321 * (mua)) / d4343;	// distance along line 2
-		mua			= math::clamp(mua, 0.0f, 1.0f);
-		mub			= math::clamp(mub, 0.0f, 1.0f);
+		mua			= core::clamp(mua, 0.0f, 1.0f);
+		mub			= core::clamp(mub, 0.0f, 1.0f);
 		v3	rp1		= p1 + p21 * mua;
 		v3	rp2		= p3 + p43 * mub;
 		return distance(rp1, rp2);

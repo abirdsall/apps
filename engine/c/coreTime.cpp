@@ -1,7 +1,8 @@
 #include "os.h"
+
 #include <sys/sysctl.h> // required for gettimeofday
 
-namespace os
+namespace core
 {
 	static u64 sMilliseconds;
 	

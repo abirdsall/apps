@@ -7,7 +7,7 @@ namespace fw
 		mCount = 0;
 		mLimit = limit;
 		
-		mObjects = ( Object* )memory::alloc( ObjectSize() * limit );
+		mObjects = ( Object* )core::alloc( ObjectSize() * limit );
 	}
 	
 	ObjectHandle ObjectFactory::Add( const Object& object )
@@ -25,7 +25,7 @@ namespace fw
 	{
 		if( mObjects )
 		{
-			memory::free( mObjects );
+			core::free( mObjects );
 			mObjects = kNull;
 		}
 	}

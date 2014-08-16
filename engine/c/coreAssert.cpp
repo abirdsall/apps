@@ -1,9 +1,8 @@
 #include "os.h"
-//#include "gs.h"
 
 #if kEnableAssert || kEnablePanic
 
-namespace os
+namespace core
 {
 	void Assert( const c8* fileName, s32 lineNumber, bool success, bool fatal )
 	{

@@ -1,7 +1,7 @@
-#ifndef OS_ASSERT
-#define OS_ASSERT
+#ifndef CORE_ASSERT
+#define CORE_ASSERT
 
-namespace os
+namespace core
 {
 #if kEnableAssert || kEnablePanic
 	
@@ -12,7 +12,7 @@ namespace os
 	
 #if kEnableAssert
 	
-#define ASSERT( success ) os::Assert( __FILE__, __LINE__, ( success ), false )
+#define ASSERT( success ) core::Assert( __FILE__, __LINE__, ( success ), false )
 	
 #else
 	
@@ -23,7 +23,7 @@ namespace os
 	
 #if kEnablePanic
 	
-#define PANIC( success ) os::Assert( __FILE__, __LINE__, ( success ), true )
+#define PANIC( success ) core::Assert( __FILE__, __LINE__, ( success ), true )
 	
 #else
 	

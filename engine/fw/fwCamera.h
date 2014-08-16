@@ -76,8 +76,8 @@ namespace fw
  f32 distanceToTarget = mOrbitDistance - targetDistance;
  if(distanceToTarget > 0.0f)
  {
- f32 frustrumWidthAtTarget = distanceToTarget * (2.0f * math::tan(mFovX * 0.5f));
- f32 distanceToTargetRequired = frustrumWidthAtTarget / (2.0f * math::tan(fov * 0.5f));
+ f32 frustrumWidthAtTarget = distanceToTarget * (2.0f * core::tan(mFovX * 0.5f));
+ f32 distanceToTargetRequired = frustrumWidthAtTarget / (2.0f * core::tan(fov * 0.5f));
  f32 newZoom = targetDistance + distanceToTargetRequired;
  if(newZoom > targetDistance)
  {

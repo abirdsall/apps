@@ -78,7 +78,7 @@ namespace fw
         return Rect( x1, 0.0f, x2, _systemCharFractionY );
     }
     
-    void SystemFontDraw( String text, v2 position, v4 colour )
+    void SystemFontDraw( core::String text, v2 position, v4 colour )
     {
         BatchBegin( true );
 

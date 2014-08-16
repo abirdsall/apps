@@ -9,12 +9,9 @@
 #include "matrix.h"
 #include "frustum.h"
 #include "aabb.h"
-#include "cMath.h"
 #include "vector.h"
 
 #include "fwRect.h"
-#include "fwPool.h"
-#include "fwString.h"
 
 #include "fwComponent.h"
 #include "fwObject.h"

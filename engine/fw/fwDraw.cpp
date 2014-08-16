@@ -30,8 +30,8 @@ namespace fw
 		s32 vertexSize = sizeof( f32 ) * kAttribSize;
 		
 		MeshInit( sMesh );
-		MeshSetElementData( sMesh, memory::alloc( elementSize * elementLimit ), elementSize, 0, elementLimit, true );
-		MeshSetVertexData( sMesh, memory::alloc( vertexSize * vertexLimit ), vertexSize, 0, vertexLimit, true );
+		MeshSetElementData( sMesh, core::alloc( elementSize * elementLimit ), elementSize, 0, elementLimit, true );
+		MeshSetVertexData( sMesh, core::alloc( vertexSize * vertexLimit ), vertexSize, 0, vertexLimit, true );
 		MeshSetAttrib( sMesh, gs::eAttribVertex, ( void* )( sizeof( f32 ) * 0 ), kVertexAttribSize );
         MeshSetAttrib( sMesh, gs::eAttribColour, ( void* )( sizeof( f32 ) * kVertexAttribSize ), kColourAttribSize );
         MeshSetAttrib( sMesh, gs::eAttribTcoord, ( void* )( sizeof( f32 ) * (kVertexAttribSize + kTcoordAttribSize) ), kTcoordAttribSize );
@@ -39,7 +39,7 @@ namespace fw
         
 #if kBuildOpenGles2
         
-        String vShader = "attribute vec2 vertex_position;\n";
+        core::String vShader = "attribute vec2 vertex_position;\n";
         vShader += "attribute vec4 vertex_colour;\n";
 		vShader += "attribute vec4 vertex_tcoord;\n";
 		vShader += "varying lowp vec4 fragment_colour;\n";
@@ -59,9 +59,9 @@ namespace fw
 #else
         
 #if kBuildOpenGles3
-        String vShader = "#version 300 es\n";
+        core::String vShader = "#version 300 es\n";
 #else //kBuildOpenGl3
-        String vShader = "#version 150\n";
+        core::String vShader = "#version 150\n";
 #endif
 		vShader = vShader + "in vec2 vertex_position;\n";
         vShader += "in vec4 vertex_colour;\n";
@@ -76,10 +76,10 @@ namespace fw
 		vShader += "}\n";
         
 #if kBuildOpenGles3
-        String fShader = "#version 300 es\n";
+        core::String fShader = "#version 300 es\n";
         fShader += "precision highp float;\n";
 #else //kBuildOpenGl3
-        String fShader = "#version 150\n";
+        core::String fShader = "#version 150\n";
 #endif
 		fShader += "in vec4 fragment_colour;\n";
 		fShader += "out vec4 output_colour;\n";

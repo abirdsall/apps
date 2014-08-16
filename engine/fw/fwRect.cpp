@@ -41,7 +41,7 @@ namespace fw
 	
 	Rect Rect::Fix() const
 	{
-		return Rect( math::min( mXMin, mXMax ), math::min( mYMin, mYMax ), math::max( mYMin, mYMax ), math::max( mXMin, mXMax ) );
+		return Rect( core::min( mXMin, mXMax ), core::min( mYMin, mYMax ), core::max( mYMin, mYMax ), core::max( mXMin, mXMax ) );
 	}
     
     v4 Rect::v4() const
@@ -52,7 +52,7 @@ namespace fw
 	void Rect::Subdivide( Rect* rects, u32 count ) const
 	{
 		ASSERT( count > 0 );
-		u32 xCount = math::sqrt( count );
+		u32 xCount = core::sqrt( count );
 		u32 yCount = xCount;
 		if( ( xCount * xCount ) < count )
 		{

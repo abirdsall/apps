@@ -1,7 +1,7 @@
-#ifndef kMathBaseH
-#define kMathBaseH
+#ifndef CORE_MATH
+#define CORE_MATH
 
-namespace math
+namespace core
 {
 	bool init();
 	bool kill();

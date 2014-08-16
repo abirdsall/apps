@@ -362,9 +362,9 @@ namespace fw
 	{
 		const c8* lookup = axis == 0 ? "offset[ j ], 0.0, 0.0": axis == 1 ? "0.0, offset[ j ], 0.0" : "0.0, 0.0, offset[ j ]";
 #if kBuildOpenGl3
-		fw::String vShader = "#version 410\n";
+		core::String vShader = "#version 410\n";
 #else
-        fw::String vShader = "#version 300 es\n";
+        core::String vShader = "#version 300 es\n";
 #endif
 		vShader = vShader + "in vec2 vertex_position;\n\
         in vec4 vertex_colour;\n\
@@ -378,9 +378,9 @@ namespace fw
 			fragment_tcoord = vertex_tcoord.xyz;\n\
 		}";
 #if kBuildOpenGl3
-        fw::String fShader = "#version 410\n";
+        core::String fShader = "#version 410\n";
 #else
-        fw::String fShader = "#version 300 es\n";
+        core::String fShader = "#version 300 es\n";
         fShader = fShader + "precision highp float;\n";
         fShader = fShader + "precision highp sampler3D;\n";
 #endif
@@ -435,9 +435,9 @@ namespace fw
 		// fragment_tcoord.x = object zmiddle
 		// fragment_tcoord.y = object zthickness
 #if kBuildOpenGl3
-        fw::String vShader = "#version 410 core\n";
+        core::String vShader = "#version 410 core\n";
 #else
-        fw::String vShader = "#version 300 es\n";
+        core::String vShader = "#version 300 es\n";
 #endif
         vShader = vShader + "in vec3 vertex_position;\n\
 		in vec4 vertex_colour;\n\
@@ -454,9 +454,9 @@ namespace fw
 		}";
         
 #if kBuildOpenGl3
-        fw::String fShader = "#version 410 core\n";
+        core::String fShader = "#version 410 core\n";
 #else
-        fw::String fShader = "#version 300 es\n";
+        core::String fShader = "#version 300 es\n";
         fShader = fShader + "precision highp float;\n";
 #endif
         fShader = fShader + "uniform float zMin;\n\
@@ -737,9 +737,9 @@ namespace fw
         
         /*
 #if kBuildOpenGles3
-        fw::String vShader = "#version 300 es\n";
+        core::String vShader = "#version 300 es\n";
 #else //kBuildOpenGl3
-        fw::String vShader = "#version 150\n";
+        core::String vShader = "#version 150\n";
 #endif
         vShader = vShader + "in vec3 vertex_position;\n";
         vShader += "in vec4 vertex_colour;\n";
@@ -754,10 +754,10 @@ namespace fw
         vShader += "}\n";
         
 #if kBuildOpenGles3
-        fw::String fShader = "#version 300 es\n";
+        core::String fShader = "#version 300 es\n";
         fShader += "precision highp float;\n";
 #else //kBuildOpenGl3
-        fw::String fShader = "#version 150\n";
+        core::String fShader = "#version 150\n";
 #endif
         fShader += "in vec4 fragment_colour;\n";
         fShader += "out vec4 output_colour;\n";

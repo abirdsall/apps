@@ -1,7 +1,7 @@
-#ifndef FW_POOL
-#define FW_POOL
+#ifndef CORE_POOL
+#define CORE_POOL
 
-namespace fw
+namespace core
 {
     template <class T> class Pool
     {
@@ -16,8 +16,8 @@ namespace fw
         {
             _dataSize = size;
             _freeSize = size;
-            _data = (T*)memory::alloc(sizeof(T) * _dataSize);
-            _free = (T**)memory::alloc(sizeof(void*) * _dataSize);
+            _data = (T*)core::alloc(sizeof(T) * _dataSize);
+            _free = (T**)core::alloc(sizeof(void*) * _dataSize);
             
             for( s32 i = 0; i < _dataSize; i++ )
             {

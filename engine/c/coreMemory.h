@@ -1,9 +1,7 @@
-#ifndef OS_MEMORY
-#define OS_MEMORY
+#ifndef CORE_MEMORY
+#define CORE_MEMORY
 
-#include "os.h"
-
-namespace memory
+namespace core
 {
 	void* alloc(size_t size);
 	void free(void* ptr);

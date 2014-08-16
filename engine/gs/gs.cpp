@@ -35,7 +35,7 @@ namespace gs
 		SetScissorHw( stateActive.mScissor );
 		SetViewportHw( stateActive.mViewport );
 		
-		memory::copy( &sStateApplied, &sState[ sStateActive ], sizeof( state ) );
+		core::copy( &sStateApplied, &sState[ sStateActive ], sizeof( state ) );
 	}
 	
 	void ApplyState()
@@ -78,14 +78,14 @@ namespace gs
 			ShaderSetMat4( "projMatrix", stateActive.mMatrixP );
 		}
 
-		memory::copy( &sStateApplied, &sState[ sStateActive ], sizeof( state ) );
+		core::copy( &sStateApplied, &sState[ sStateActive ], sizeof( state ) );
 	}
 	
 	void Put()
 	{
 		sStateActive++;
 		ASSERT( sStateActive < kStateLimit );
-		memory::copy( &sState[ sStateActive ], &sState[ sStateActive - 1 ], sizeof( state ) );
+		core::copy( &sState[ sStateActive ], &sState[ sStateActive - 1 ], sizeof( state ) );
 	}
 	
 	void Pop()

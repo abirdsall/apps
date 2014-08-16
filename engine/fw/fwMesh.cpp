@@ -165,13 +165,13 @@ namespace fw
 		
 		if( mesh.mElementData )
 		{
-			memory::free( mesh.mElementData );
+			core::free( mesh.mElementData );
 			mesh.mElementData = kNull;
 		}
 		
 		if( mesh.mVertexData )
 		{
-			memory::free( mesh.mVertexData );
+			core::free( mesh.mVertexData );
 			mesh.mVertexData = kNull;
 		}		
 	}

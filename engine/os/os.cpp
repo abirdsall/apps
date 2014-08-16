@@ -1,6 +1,5 @@
 #include "os.h"
 #include "gs.h"
-#include "cMath.h"
 #include "fw.h"
 
 namespace os
@@ -52,9 +51,9 @@ namespace os
     {
         InitHw();
 		
-		math::init();
+		core::init();
 		
-		TimeInit();
+        core::TimeInit();
 		WindowInit();
 		KeyboardInit();
 		MouseInit();
@@ -78,7 +77,7 @@ namespace os
     
     void FlowTick()
     {
-        f32 dt = TimeTick();
+        f32 dt = core::TimeTick();
         
         WindowTick();
         
@@ -135,7 +134,7 @@ namespace os
 			gs::Kill();
         }
         
-        math::kill();
+        core::kill();
 		
 		KillHw();
     }

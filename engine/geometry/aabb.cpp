@@ -1,5 +1,4 @@
 #include "aabb.h"
-#include "cMath.h"
 
 aabb :: aabb(void){}
 aabb :: aabb(const v3& min, const v3& max)
@@ -60,7 +59,7 @@ plane::eSide aabb :: planeSide(const plane& plane) const
 
 f32 aabb :: getRadiusInDirection(const v3& dir) const
 {
-	return 0.5f * (	math::abs(dir.x * (mMax.x - mMin.x)) +
-					math::abs(dir.y * (mMax.y - mMin.y)) +
-					math::abs(dir.z * (mMax.z - mMin.z)) );
+	return 0.5f * (	core::abs(dir.x * (mMax.x - mMin.x)) +
+					core::abs(dir.y * (mMax.y - mMin.y)) +
+					core::abs(dir.z * (mMax.z - mMin.z)) );
 }

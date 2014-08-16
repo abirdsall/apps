@@ -184,7 +184,7 @@ void lightingDraw()
     gs::Put();
     gs::Set2d();
     
-    fw::SystemFontDraw( fw::String("0123456789abcdefghijklmnopqrstuvwxyz"), v2( 100, 100 ), v4(1.0f, 1.0f, 1.0f, 1.0f ) );
+    fw::SystemFontDraw( core::String("0123456789abcdefghijklmnopqrstuvwxyz"), v2( 100, 100 ), v4(1.0f, 1.0f, 1.0f, 1.0f ) );
     
     gs::Pop();
     //return;
@@ -270,9 +270,9 @@ void lightingInit()
 
 /*
  #if kBuildOpenGles3
- fw::String vShader = "#version 300 es\n";
+ core::String vShader = "#version 300 es\n";
  #else //kBuildOpenGl3
- fw::String vShader = "#version 150\n";
+ core::String vShader = "#version 150\n";
  #endif
  vShader = vShader + "in vec3 vertex_position;\n";
  vShader += "in vec4 vertex_colour;\n";
@@ -287,10 +287,10 @@ void lightingInit()
  vShader += "}\n";
  
  #if kBuildOpenGles3
- fw::String fShader = "#version 300 es\n";
+ core::String fShader = "#version 300 es\n";
  fShader += "precision highp float;\n";
  #else //kBuildOpenGl3
- fw::String fShader = "#version 150\n";
+ core::String fShader = "#version 150\n";
  #endif
  fShader += "in vec4 fragment_colour;\n";
  fShader += "out vec4 output_colour;\n";

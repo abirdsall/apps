@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		D639B0781997B6100036741C /* fwFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D639B0771997B6100036741C /* fwFont.cpp */; };
-		D648911B198D98DD001636B5 /* cAssert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890AD198D98DD001636B5 /* cAssert.cpp */; };
-		D648911C198D98DD001636B5 /* cMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890AF198D98DD001636B5 /* cMath.cpp */; };
-		D648911D198D98DD001636B5 /* cMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890B1198D98DD001636B5 /* cMemory.cpp */; };
-		D648911E198D98DD001636B5 /* cOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890B3198D98DD001636B5 /* cOutput.cpp */; };
-		D648911F198D98DD001636B5 /* cString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890B5198D98DD001636B5 /* cString.cpp */; };
-		D6489120198D98DD001636B5 /* cTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890B7198D98DD001636B5 /* cTime.cpp */; };
+		D648911B198D98DD001636B5 /* coreAssert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890AD198D98DD001636B5 /* coreAssert.cpp */; };
+		D648911C198D98DD001636B5 /* coreMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890AF198D98DD001636B5 /* coreMath.cpp */; };
+		D648911D198D98DD001636B5 /* coreMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890B1198D98DD001636B5 /* coreMemory.cpp */; };
+		D648911E198D98DD001636B5 /* coreOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890B3198D98DD001636B5 /* coreOutput.cpp */; };
+		D648911F198D98DD001636B5 /* coreString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890B5198D98DD001636B5 /* coreString.cpp */; };
+		D6489120198D98DD001636B5 /* coreTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890B7198D98DD001636B5 /* coreTime.cpp */; };
 		D6489121198D98DD001636B5 /* fw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890BA198D98DD001636B5 /* fw.cpp */; };
 		D6489122198D98DD001636B5 /* fwCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890BC198D98DD001636B5 /* fwCamera.cpp */; };
 		D6489123198D98DD001636B5 /* fwCanvasViewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890BE198D98DD001636B5 /* fwCanvasViewer.cpp */; };
@@ -28,7 +28,6 @@
 		D648912C198D98DD001636B5 /* fwObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890D2198D98DD001636B5 /* fwObjectFactory.cpp */; };
 		D648912D198D98DD001636B5 /* fwRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890D4198D98DD001636B5 /* fwRect.cpp */; };
 		D648912E198D98DD001636B5 /* fwRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890D6198D98DD001636B5 /* fwRenderer.cpp */; };
-		D648912F198D98DD001636B5 /* fwString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890D8198D98DD001636B5 /* fwString.cpp */; };
 		D6489130198D98DD001636B5 /* aabb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890DB198D98DD001636B5 /* aabb.cpp */; };
 		D6489131198D98DD001636B5 /* frustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890DD198D98DD001636B5 /* frustum.cpp */; };
 		D6489132198D98DD001636B5 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890DF198D98DD001636B5 /* geometry.cpp */; };
@@ -62,6 +61,7 @@
 		D66858B416FB452C007C002F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D66858B316FB452C007C002F /* OpenGL.framework */; };
 		D674325416FB4C1C005B905C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D674325316FB4C1C005B905C /* IOKit.framework */; };
 		D674325E16FB4CE4005B905C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D674325D16FB4CE4005B905C /* Cocoa.framework */; };
+		D6AE8266199FF0BA008956C2 /* coreStringData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6AE8265199FF0BA008956C2 /* coreStringData.cpp */; };
 		D6B4FAEB198D8DC400018556 /* cubeRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B4FAE4198D8DC400018556 /* cubeRenderer.cpp */; };
 		D6B4FAEC198D8DC400018556 /* lighting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B4FAE6198D8DC400018556 /* lighting.cpp */; };
 		D6B4FAED198D8DC400018556 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B4FAE8198D8DC400018556 /* main.cpp */; };
@@ -84,18 +84,18 @@
 /* Begin PBXFileReference section */
 		D639B0771997B6100036741C /* fwFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fwFont.cpp; sourceTree = "<group>"; };
 		D639B0791997DB380036741C /* fwFont.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fwFont.h; sourceTree = "<group>"; };
-		D64890AD198D98DD001636B5 /* cAssert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cAssert.cpp; sourceTree = "<group>"; };
-		D64890AE198D98DD001636B5 /* cAssert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cAssert.h; sourceTree = "<group>"; };
-		D64890AF198D98DD001636B5 /* cMath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cMath.cpp; sourceTree = "<group>"; };
-		D64890B0198D98DD001636B5 /* cMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cMath.h; sourceTree = "<group>"; };
-		D64890B1198D98DD001636B5 /* cMemory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cMemory.cpp; sourceTree = "<group>"; };
-		D64890B2198D98DD001636B5 /* cMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cMemory.h; sourceTree = "<group>"; };
-		D64890B3198D98DD001636B5 /* cOutput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cOutput.cpp; sourceTree = "<group>"; };
-		D64890B4198D98DD001636B5 /* cOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cOutput.h; sourceTree = "<group>"; };
-		D64890B5198D98DD001636B5 /* cString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cString.cpp; sourceTree = "<group>"; };
-		D64890B6198D98DD001636B5 /* cString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cString.h; sourceTree = "<group>"; };
-		D64890B7198D98DD001636B5 /* cTime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cTime.cpp; sourceTree = "<group>"; };
-		D64890B8198D98DD001636B5 /* cTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cTime.h; sourceTree = "<group>"; };
+		D64890AD198D98DD001636B5 /* coreAssert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreAssert.cpp; sourceTree = "<group>"; };
+		D64890AE198D98DD001636B5 /* coreAssert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreAssert.h; sourceTree = "<group>"; };
+		D64890AF198D98DD001636B5 /* coreMath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreMath.cpp; sourceTree = "<group>"; };
+		D64890B0198D98DD001636B5 /* coreMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreMath.h; sourceTree = "<group>"; };
+		D64890B1198D98DD001636B5 /* coreMemory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreMemory.cpp; sourceTree = "<group>"; };
+		D64890B2198D98DD001636B5 /* coreMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreMemory.h; sourceTree = "<group>"; };
+		D64890B3198D98DD001636B5 /* coreOutput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreOutput.cpp; sourceTree = "<group>"; };
+		D64890B4198D98DD001636B5 /* coreOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreOutput.h; sourceTree = "<group>"; };
+		D64890B5198D98DD001636B5 /* coreString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreString.cpp; sourceTree = "<group>"; };
+		D64890B6198D98DD001636B5 /* coreString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreString.h; sourceTree = "<group>"; };
+		D64890B7198D98DD001636B5 /* coreTime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreTime.cpp; sourceTree = "<group>"; };
+		D64890B8198D98DD001636B5 /* coreTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreTime.h; sourceTree = "<group>"; };
 		D64890BA198D98DD001636B5 /* fw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fw.cpp; sourceTree = "<group>"; };
 		D64890BB198D98DD001636B5 /* fw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fw.h; sourceTree = "<group>"; };
 		D64890BC198D98DD001636B5 /* fwCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fwCamera.cpp; sourceTree = "<group>"; };
@@ -126,8 +126,6 @@
 		D64890D5198D98DD001636B5 /* fwRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fwRect.h; sourceTree = "<group>"; };
 		D64890D6198D98DD001636B5 /* fwRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fwRenderer.cpp; sourceTree = "<group>"; };
 		D64890D7198D98DD001636B5 /* fwRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fwRenderer.h; sourceTree = "<group>"; };
-		D64890D8198D98DD001636B5 /* fwString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fwString.cpp; sourceTree = "<group>"; };
-		D64890D9198D98DD001636B5 /* fwString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fwString.h; sourceTree = "<group>"; };
 		D64890DB198D98DD001636B5 /* aabb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aabb.cpp; sourceTree = "<group>"; };
 		D64890DC198D98DD001636B5 /* aabb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aabb.h; sourceTree = "<group>"; };
 		D64890DD198D98DD001636B5 /* frustum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = frustum.cpp; sourceTree = "<group>"; };
@@ -190,6 +188,11 @@
 		D66858B316FB452C007C002F /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = ../../../../../../../System/Library/Frameworks/OpenGL.framework; sourceTree = "<group>"; };
 		D674325316FB4C1C005B905C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = ../../../../../../../System/Library/Frameworks/IOKit.framework; sourceTree = "<group>"; };
 		D674325D16FB4CE4005B905C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = ../../../../../../../System/Library/Frameworks/Cocoa.framework; sourceTree = "<group>"; };
+		D6AE8261199FED7B008956C2 /* corePool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = corePool.h; sourceTree = "<group>"; };
+		D6AE8262199FED8F008956C2 /* coreStringData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = coreStringData.h; sourceTree = "<group>"; };
+		D6AE8263199FED9F008956C2 /* coreStringObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = coreStringObject.h; sourceTree = "<group>"; };
+		D6AE8264199FEDDD008956C2 /* core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = core.h; sourceTree = "<group>"; };
+		D6AE8265199FF0BA008956C2 /* coreStringData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreStringData.cpp; sourceTree = "<group>"; };
 		D6B4FAE4198D8DC400018556 /* cubeRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cubeRenderer.cpp; path = lights/cubeRenderer.cpp; sourceTree = SOURCE_ROOT; };
 		D6B4FAE5198D8DC400018556 /* cubeRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cubeRenderer.h; path = lights/cubeRenderer.h; sourceTree = SOURCE_ROOT; };
 		D6B4FAE6198D8DC400018556 /* lighting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lighting.cpp; path = lights/lighting.cpp; sourceTree = SOURCE_ROOT; };
@@ -197,7 +200,6 @@
 		D6B4FAE8198D8DC400018556 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = lights/main.cpp; sourceTree = SOURCE_ROOT; };
 		D6B4FAE9198D8DC400018556 /* renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = renderer.cpp; path = lights/renderer.cpp; sourceTree = SOURCE_ROOT; };
 		D6B4FAEA198D8DC400018556 /* renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = renderer.h; path = lights/renderer.h; sourceTree = SOURCE_ROOT; };
-		D6CEAA28199BF707001A4BB1 /* fwPool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fwPool.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,18 +232,23 @@
 		D64890AC198D98DD001636B5 /* c */ = {
 			isa = PBXGroup;
 			children = (
-				D64890AD198D98DD001636B5 /* cAssert.cpp */,
-				D64890AE198D98DD001636B5 /* cAssert.h */,
-				D64890AF198D98DD001636B5 /* cMath.cpp */,
-				D64890B0198D98DD001636B5 /* cMath.h */,
-				D64890B1198D98DD001636B5 /* cMemory.cpp */,
-				D64890B2198D98DD001636B5 /* cMemory.h */,
-				D64890B3198D98DD001636B5 /* cOutput.cpp */,
-				D64890B4198D98DD001636B5 /* cOutput.h */,
-				D64890B5198D98DD001636B5 /* cString.cpp */,
-				D64890B6198D98DD001636B5 /* cString.h */,
-				D64890B7198D98DD001636B5 /* cTime.cpp */,
-				D64890B8198D98DD001636B5 /* cTime.h */,
+				D64890AD198D98DD001636B5 /* coreAssert.cpp */,
+				D64890AE198D98DD001636B5 /* coreAssert.h */,
+				D64890AF198D98DD001636B5 /* coreMath.cpp */,
+				D64890B0198D98DD001636B5 /* coreMath.h */,
+				D64890B1198D98DD001636B5 /* coreMemory.cpp */,
+				D64890B2198D98DD001636B5 /* coreMemory.h */,
+				D64890B3198D98DD001636B5 /* coreOutput.cpp */,
+				D64890B4198D98DD001636B5 /* coreOutput.h */,
+				D64890B5198D98DD001636B5 /* coreString.cpp */,
+				D64890B6198D98DD001636B5 /* coreString.h */,
+				D64890B7198D98DD001636B5 /* coreTime.cpp */,
+				D64890B8198D98DD001636B5 /* coreTime.h */,
+				D6AE8264199FEDDD008956C2 /* core.h */,
+				D6AE8261199FED7B008956C2 /* corePool.h */,
+				D6AE8265199FF0BA008956C2 /* coreStringData.cpp */,
+				D6AE8262199FED8F008956C2 /* coreStringData.h */,
+				D6AE8263199FED9F008956C2 /* coreStringObject.h */,
 			);
 			path = c;
 			sourceTree = "<group>";
@@ -277,13 +284,10 @@
 				D64890D1198D98DD001636B5 /* fwObject.h */,
 				D64890D2198D98DD001636B5 /* fwObjectFactory.cpp */,
 				D64890D3198D98DD001636B5 /* fwObjectFactory.h */,
-				D6CEAA28199BF707001A4BB1 /* fwPool.h */,
 				D64890D4198D98DD001636B5 /* fwRect.cpp */,
 				D64890D5198D98DD001636B5 /* fwRect.h */,
 				D64890D6198D98DD001636B5 /* fwRenderer.cpp */,
 				D64890D7198D98DD001636B5 /* fwRenderer.h */,
-				D64890D8198D98DD001636B5 /* fwString.cpp */,
-				D64890D9198D98DD001636B5 /* fwString.h */,
 			);
 			path = fw;
 			sourceTree = "<group>";
@@ -465,15 +469,15 @@
 				D6489145198D98DD001636B5 /* iosKeyboard.mm in Sources */,
 				D6489125198D98DD001636B5 /* fwCube.cpp in Sources */,
 				D6489139198D98DD001636B5 /* gsCanvas.cpp in Sources */,
-				D648912F198D98DD001636B5 /* fwString.cpp in Sources */,
-				D648911E198D98DD001636B5 /* cOutput.cpp in Sources */,
+				D648911E198D98DD001636B5 /* coreOutput.cpp in Sources */,
+				D6AE8266199FF0BA008956C2 /* coreStringData.cpp in Sources */,
 				D6489124198D98DD001636B5 /* fwComponentFactory.cpp in Sources */,
 				D6489126198D98DD001636B5 /* fwCubeComponent.cpp in Sources */,
 				D6489132198D98DD001636B5 /* geometry.cpp in Sources */,
 				D6B4FAEC198D8DC400018556 /* lighting.cpp in Sources */,
-				D6489120198D98DD001636B5 /* cTime.cpp in Sources */,
+				D6489120198D98DD001636B5 /* coreTime.cpp in Sources */,
 				D6489147198D98DD001636B5 /* iosWindow.mm in Sources */,
-				D648911C198D98DD001636B5 /* cMath.cpp in Sources */,
+				D648911C198D98DD001636B5 /* coreMath.cpp in Sources */,
 				D648914A198D98DD001636B5 /* macMouse.mm in Sources */,
 				D648914C198D98DD001636B5 /* os.cpp in Sources */,
 				D648912D198D98DD001636B5 /* fwRect.cpp in Sources */,
@@ -491,7 +495,7 @@
 				D6489138198D98DD001636B5 /* gs.cpp in Sources */,
 				D648912C198D98DD001636B5 /* fwObjectFactory.cpp in Sources */,
 				D648914D198D98DD001636B5 /* osKeyboard.cpp in Sources */,
-				D648911B198D98DD001636B5 /* cAssert.cpp in Sources */,
+				D648911B198D98DD001636B5 /* coreAssert.cpp in Sources */,
 				D648912B198D98DD001636B5 /* fwMesh.cpp in Sources */,
 				D648914B198D98DD001636B5 /* macWindow.mm in Sources */,
 				D648913A198D98DD001636B5 /* gsShader.cpp in Sources */,
@@ -509,13 +513,13 @@
 				D6489129198D98DD001636B5 /* fwLight.cpp in Sources */,
 				D6489131198D98DD001636B5 /* frustum.cpp in Sources */,
 				D648914E198D98DD001636B5 /* osMouse.cpp in Sources */,
-				D648911D198D98DD001636B5 /* cMemory.cpp in Sources */,
+				D648911D198D98DD001636B5 /* coreMemory.cpp in Sources */,
 				D6489148198D98DD001636B5 /* mac.mm in Sources */,
 				D6489133198D98DD001636B5 /* intersect.cpp in Sources */,
 				D6489128198D98DD001636B5 /* fwDrawLines.cpp in Sources */,
 				D6489143198D98DD001636B5 /* openGlTexture.cpp in Sources */,
 				D648914F198D98DD001636B5 /* osTouch.cpp in Sources */,
-				D648911F198D98DD001636B5 /* cString.cpp in Sources */,
+				D648911F198D98DD001636B5 /* coreString.cpp in Sources */,
 				D6489149198D98DD001636B5 /* macKeyboard.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

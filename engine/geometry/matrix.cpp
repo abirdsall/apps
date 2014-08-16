@@ -41,8 +41,8 @@ m4 scale(const f32 x, const f32 y, const f32 z)
 
 m4 rotateX(const f32 angle)
 {
-	f32 cosA = math::cos(angle);
-	f32 sinA = math::sin(angle);
+	f32 cosA = core::cos(angle);
+	f32 sinA = core::sin(angle);
 	return m4(	1.0f, 0.0f, 0.0f, 0.0f,
 				0.0f, cosA,-sinA, 0.0f,
 				0.0f, sinA, cosA, 0.0f,
@@ -51,8 +51,8 @@ m4 rotateX(const f32 angle)
 
 m4 rotateY(const f32 angle)
 {
-	f32 cosA = math::cos(angle);
-	f32 sinA = math::sin(angle);
+	f32 cosA = core::cos(angle);
+	f32 sinA = core::sin(angle);
 	return m4(	cosA, 0.0f,-sinA, 0.0f,
 				0.0f, 1.0f, 0.0f, 0.0f,
 				sinA, 0.0f, cosA, 0.0f,
@@ -61,8 +61,8 @@ m4 rotateY(const f32 angle)
 
 m4 rotateZ(const f32 angle)
 {
-	f32 cosA = math::cos(angle);
-	f32 sinA = math::sin(angle);
+	f32 cosA = core::cos(angle);
+	f32 sinA = core::sin(angle);
 	return m4(	cosA,-sinA, 0.0f, 0.0f,
 				sinA, cosA, 0.0f, 0.0f,
 				0.0f, 0.0f, 1.0f, 0.0f,
@@ -71,8 +71,8 @@ m4 rotateZ(const f32 angle)
 
 m4 rotateXY(const f32 angleX, const f32 angleY)
 {
-	f32 cosX = math::cos(angleX), sinX = math::sin(angleX);
-	f32 cosY = math::cos(angleY), sinY = math::sin(angleY);
+	f32 cosX = core::cos(angleX), sinX = core::sin(angleX);
+	f32 cosY = core::cos(angleY), sinY = core::sin(angleY);
 	return m4(			cosY, 0.0f,		   -sinY, 0.0f,
 				-sinX * sinY, cosX, -sinX * cosY, 0.0f,
 				 cosX * sinY, sinX,  cosX * cosY, 0.0f,
@@ -81,12 +81,12 @@ m4 rotateXY(const f32 angleX, const f32 angleY)
 
 m4 rotateZXY(const f32 angleX, const f32 angleY, const f32 angleZ)
 {
-	f32 cosX = math::cos(angleX);
-	f32 sinX = math::sin(angleX);
-	f32 cosY = math::cos(angleY);
-	f32 sinY = math::sin(angleY);
-	f32 cosZ = math::cos(angleZ);
-	f32 sinZ = math::sin(angleZ);
+	f32 cosX = core::cos(angleX);
+	f32 sinX = core::sin(angleX);
+	f32 cosY = core::cos(angleY);
+	f32 sinY = core::sin(angleY);
+	f32 cosZ = core::cos(angleZ);
+	f32 sinZ = core::sin(angleZ);
 	return m4(
 		cosY * cosZ + sinX * sinY * sinZ,   -cosX * sinZ,    sinX * cosY * sinZ - sinY * cosZ,  0,
 		cosY * sinZ - sinX * sinY * cosZ,    cosX * cosZ,   -sinY * sinZ - sinX * cosY * cosZ,  0,
@@ -105,7 +105,7 @@ m4 identity4(void)
 
 m4 projection(const f32 fovX, const f32 zNear, const f32 zFar)
 {
-	f32 x = math::cos(0.5f * fovX) / math::sin(0.5f * fovX);
+	f32 x = core::cos(0.5f * fovX) / core::sin(0.5f * fovX);
 	f32 y = x / os::WindowAspect();
 
 	//f32 x = 1.0f / fovX;
@@ -269,7 +269,7 @@ r4::r4(const v3& a, const v3& b, const f32 c)
 	f32 d = dot(a, b);
 	if(d < 1.0f)
 	{
-		roll(normalise(cross(b, a)), math::acos(d) * c);
+		roll(normalise(cross(b, a)), core::acos(d) * c);
 	}
 	else
 	{
@@ -283,8 +283,8 @@ r4::r4(const v3& a, const v3& b, const f32 c)
 
 void r4::roll(const v3& a, const f32 b)
 {
-	f32 c = math::cos(b);
-	f32 s = math::sin(b);
+	f32 c = core::cos(b);
+	f32 s = core::sin(b);
 	f32 v = 1.0f - c;
 	f32 vxx = v * a.x * a.x;
 	f32 vxy = v * a.x * a.y;

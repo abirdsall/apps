@@ -7,7 +7,7 @@ namespace fw
 		mCount = 0;
 		mLimit = limit;
 		
-		mComponents = ( Component* )memory::alloc( ComponentSize() * limit );
+		mComponents = ( Component* )core::alloc( ComponentSize() * limit );
 	}
 	
 	ComponentHandle ComponentFactory::Add( const Component& component )
@@ -25,7 +25,7 @@ namespace fw
 	{
 		if( mComponents )
 		{
-			memory::free( mComponents );
+			core::free( mComponents );
 			mComponents = kNull;
 		}
 	}

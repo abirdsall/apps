@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-namespace memory
+namespace core
 {
 	void* alloc(size_t size)
 	{

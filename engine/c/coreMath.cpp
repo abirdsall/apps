@@ -5,7 +5,7 @@
 #define kSinTableSize 0x800
 #define kSinTableMask 0x7ff
 
-namespace math
+namespace core
 {
 	static u64 sRandomSeed = 0x0000000021454a53;
 	static f32 sSinTable[kSinTableSize];

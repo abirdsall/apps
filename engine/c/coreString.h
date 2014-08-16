@@ -1,7 +1,7 @@
-#ifndef OS_STRING
-#define OS_STRING
+#ifndef CORE_STRING
+#define CORE_STRING
 
-namespace os
+namespace core
 {
 	c8* strstr( const c8* s1, const c8* s2 );
 	u32 strlen( const c8* s );
