@@ -4,7 +4,6 @@
 #include "os.h"
 #include "plane.h"
 
-struct v3;
 struct plane;
 struct aabb
 {

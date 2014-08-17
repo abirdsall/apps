@@ -3,9 +3,6 @@
 
 #include "core.h"
 
-#include "vector.h"
-#include "matrix.h"
-
 #include "osHw.h"
 
 #include "osKeyboard.h"

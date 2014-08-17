@@ -7,9 +7,9 @@ class line
 {
 public:
 				line(void) :
-					mPos(kV3Zero),
-					mDir(kV3Zero),
-					mEnd(kV3Zero)
+					mPos(V3Zero),
+					mDir(V3Zero),
+					mEnd(V3Zero)
 				{
 				}
 

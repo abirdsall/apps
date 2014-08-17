@@ -107,5 +107,9 @@ typedef u64 hwInt;
 #include "coreStringData.h"
 #include "coreStringObject.h"
 #include "coreTime.h"
+#include "coreVector.h"
+#include "coreMatrix.h"
+
+using namespace core;
 
 #endif

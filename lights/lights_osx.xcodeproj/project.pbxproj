@@ -27,9 +27,7 @@
 		D6489132198D98DD001636B5 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890DF198D98DD001636B5 /* geometry.cpp */; };
 		D6489133198D98DD001636B5 /* intersect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890E1198D98DD001636B5 /* intersect.cpp */; };
 		D6489134198D98DD001636B5 /* line.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890E3198D98DD001636B5 /* line.cpp */; };
-		D6489135198D98DD001636B5 /* matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890E5198D98DD001636B5 /* matrix.cpp */; };
 		D6489136198D98DD001636B5 /* plane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890E7198D98DD001636B5 /* plane.cpp */; };
-		D6489137198D98DD001636B5 /* vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890E9198D98DD001636B5 /* vector.cpp */; };
 		D6489138198D98DD001636B5 /* gs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890EC198D98DD001636B5 /* gs.cpp */; };
 		D6489139198D98DD001636B5 /* gsCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890EE198D98DD001636B5 /* gsCanvas.cpp */; };
 		D648913A198D98DD001636B5 /* gsShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890F4198D98DD001636B5 /* gsShader.cpp */; };
@@ -124,12 +122,8 @@
 		D64890E2198D98DD001636B5 /* intersect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = intersect.h; sourceTree = "<group>"; };
 		D64890E3198D98DD001636B5 /* line.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = line.cpp; sourceTree = "<group>"; };
 		D64890E4198D98DD001636B5 /* line.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = line.h; sourceTree = "<group>"; };
-		D64890E5198D98DD001636B5 /* matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = matrix.cpp; sourceTree = "<group>"; };
-		D64890E6198D98DD001636B5 /* matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrix.h; sourceTree = "<group>"; };
 		D64890E7198D98DD001636B5 /* plane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = plane.cpp; sourceTree = "<group>"; };
 		D64890E8198D98DD001636B5 /* plane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plane.h; sourceTree = "<group>"; };
-		D64890E9198D98DD001636B5 /* vector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vector.cpp; sourceTree = "<group>"; };
-		D64890EA198D98DD001636B5 /* vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vector.h; sourceTree = "<group>"; };
 		D64890EC198D98DD001636B5 /* gs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gs.cpp; sourceTree = "<group>"; };
 		D64890ED198D98DD001636B5 /* gs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gs.h; sourceTree = "<group>"; };
 		D64890EE198D98DD001636B5 /* gsCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gsCanvas.cpp; sourceTree = "<group>"; };
@@ -199,6 +193,8 @@
 		D6B4FAE8198D8DC400018556 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = lights/main.cpp; sourceTree = SOURCE_ROOT; };
 		D6B4FAE9198D8DC400018556 /* renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = renderer.cpp; path = lights/renderer.cpp; sourceTree = SOURCE_ROOT; };
 		D6B4FAEA198D8DC400018556 /* renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = renderer.h; path = lights/renderer.h; sourceTree = SOURCE_ROOT; };
+		D6BED42319A0DBD5006F1175 /* coreVector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = coreVector.h; sourceTree = "<group>"; };
+		D6BED42419A0DEC6006F1175 /* coreMatrix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = coreMatrix.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -280,12 +276,8 @@
 				D64890E2198D98DD001636B5 /* intersect.h */,
 				D64890E3198D98DD001636B5 /* line.cpp */,
 				D64890E4198D98DD001636B5 /* line.h */,
-				D64890E5198D98DD001636B5 /* matrix.cpp */,
-				D64890E6198D98DD001636B5 /* matrix.h */,
 				D64890E7198D98DD001636B5 /* plane.cpp */,
 				D64890E8198D98DD001636B5 /* plane.h */,
-				D64890E9198D98DD001636B5 /* vector.cpp */,
-				D64890EA198D98DD001636B5 /* vector.h */,
 			);
 			path = geometry;
 			sourceTree = "<group>";
@@ -384,6 +376,7 @@
 				D673D00D19A0D01A00243153 /* coreAssert.h */,
 				D673D00E19A0D01A00243153 /* coreMath.cpp */,
 				D673D00F19A0D01A00243153 /* coreMath.h */,
+				D6BED42419A0DEC6006F1175 /* coreMatrix.h */,
 				D673D01019A0D01A00243153 /* coreMemory.cpp */,
 				D673D01119A0D01A00243153 /* coreMemory.h */,
 				D673D01419A0D01A00243153 /* corePool.h */,
@@ -394,6 +387,7 @@
 				D673D01919A0D01A00243153 /* coreStringObject.h */,
 				D673D01A19A0D01A00243153 /* coreTime.cpp */,
 				D673D01B19A0D01A00243153 /* coreTime.h */,
+				D6BED42319A0DBD5006F1175 /* coreVector.h */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -484,7 +478,6 @@
 				D673D01E19A0D01A00243153 /* coreMemory.cpp in Sources */,
 				D639B0781997B6100036741C /* fwFont.cpp in Sources */,
 				D648913C198D98DD001636B5 /* openGl.cpp in Sources */,
-				D6489135198D98DD001636B5 /* matrix.cpp in Sources */,
 				D648913D198D98DD001636B5 /* openGlCanvas.cpp in Sources */,
 				D648912E198D98DD001636B5 /* fwRenderer.cpp in Sources */,
 				D6489150198D98DD001636B5 /* osWindow.cpp in Sources */,
@@ -504,7 +497,6 @@
 				D6489142198D98DD001636B5 /* openGlShader.cpp in Sources */,
 				D648912A198D98DD001636B5 /* fwMaterial.cpp in Sources */,
 				D6489134198D98DD001636B5 /* line.cpp in Sources */,
-				D6489137198D98DD001636B5 /* vector.cpp in Sources */,
 				D6489146198D98DD001636B5 /* iosMouse.mm in Sources */,
 				D6489129198D98DD001636B5 /* fwLight.cpp in Sources */,
 				D6489131198D98DD001636B5 /* frustum.cpp in Sources */,

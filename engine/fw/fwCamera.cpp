@@ -33,7 +33,7 @@ namespace fw
             if(core::abs(vel.x) > 0.00f || core::abs(vel.y) > 0.00f)
 			{
 				camera.mMatrixModel.setPosition(v3(0.0f, 0.0f, 0.0f));
-				if(core::abs(vel.x) > 0.0f) camera.mMatrixModel = multiply33(camera.mMatrixModel, r4(kYAxis, dt * 5e2f * vel.x));
+				if(core::abs(vel.x) > 0.0f) camera.mMatrixModel = multiply33(camera.mMatrixModel, r4(V3UnitY, dt * 5e2f * vel.x));
 				if(core::abs(vel.y) > 0.0f) camera.mMatrixModel = multiply33(camera.mMatrixModel, r4(camera.mMatrixModel.rows[0].xyz(), dt * 5e2f * -vel.y));
 				camera.mMatrixModel.stabilise();
 			}
@@ -53,11 +53,11 @@ namespace fw
 			if( os::MouseButtonHeld( os::eMouseButtonLeft ) )
 			{
 				v2 vel = os::MouseVelocity();
-				camera.mMatrixModel = multiply33(camera.mMatrixModel, r4(kYAxis, -4.0f * vel.x));
+				camera.mMatrixModel = multiply33(camera.mMatrixModel, r4(V3UnitY, -4.0f * vel.x));
 				camera.mMatrixModel = multiply33(camera.mMatrixModel, r4(camera.mMatrixModel.rows[0].xyz(), -4.0f * vel.y));
-				if(dot(camera.mMatrixModel.rows[1].xyz(), kYAxis) < 0.0f)
+				if(dot(camera.mMatrixModel.rows[1].xyz(), V3UnitY) < 0.0f)
 				{
-					v3 limit = dot(camera.mMatrixModel.rows[2].xyz(), kYAxis) > 0.0f ? kYAxis : -kYAxis;
+					v3 limit = dot(camera.mMatrixModel.rows[2].xyz(), V3UnitY) > 0.0f ? V3UnitY : -V3UnitY;
 					camera.mMatrixModel = multiply33(camera.mMatrixModel, r4(limit, camera.mMatrixModel.rows[2].xyz()));
 				}
 			}
@@ -193,7 +193,7 @@ namespace fw
 	{
 		Camera& camera = sCamera[ handle ];
 		camera.mFovX = fov;
-		camera.mMatrixProject = projection(fov, kZNear, kZFar);
+		camera.mMatrixProject = projection(fov, os::WindowAspect(), kZNear, kZFar);
 	}
 	
 	void CameraSetFocalLength(const CameraHandle handle, const f32 focalLength)

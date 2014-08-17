@@ -2,8 +2,6 @@
 #define GS
 
 #include "os.h"
-#include "matrix.h"
-
 #include "gsTexture.h"
 #include "gsCanvas.h"
 #include "gsShader.h"

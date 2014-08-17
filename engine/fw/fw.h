@@ -5,11 +5,8 @@
 #include "gs.h"
 
 #include "intersect.h"
-#include "vector.h"
-#include "matrix.h"
 #include "frustum.h"
 #include "aabb.h"
-#include "vector.h"
 
 #include "fwRect.h"
 
