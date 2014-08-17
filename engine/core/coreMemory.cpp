@@ -1,6 +1,4 @@
-#include "os.h"
-
-#include <stdlib.h>
+#include "core.h"
 
 namespace core
 {

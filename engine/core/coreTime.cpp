@@ -1,6 +1,4 @@
-#include "os.h"
-
-#include <sys/sysctl.h> // required for gettimeofday
+#include "core.h"
 
 namespace core
 {

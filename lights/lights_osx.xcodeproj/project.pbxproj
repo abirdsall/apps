@@ -8,12 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		D639B0781997B6100036741C /* fwFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D639B0771997B6100036741C /* fwFont.cpp */; };
-		D648911B198D98DD001636B5 /* coreAssert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890AD198D98DD001636B5 /* coreAssert.cpp */; };
-		D648911C198D98DD001636B5 /* coreMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890AF198D98DD001636B5 /* coreMath.cpp */; };
-		D648911D198D98DD001636B5 /* coreMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890B1198D98DD001636B5 /* coreMemory.cpp */; };
-		D648911E198D98DD001636B5 /* coreOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890B3198D98DD001636B5 /* coreOutput.cpp */; };
-		D648911F198D98DD001636B5 /* coreString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890B5198D98DD001636B5 /* coreString.cpp */; };
-		D6489120198D98DD001636B5 /* coreTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890B7198D98DD001636B5 /* coreTime.cpp */; };
 		D6489121198D98DD001636B5 /* fw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890BA198D98DD001636B5 /* fw.cpp */; };
 		D6489122198D98DD001636B5 /* fwCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890BC198D98DD001636B5 /* fwCamera.cpp */; };
 		D6489123198D98DD001636B5 /* fwCanvasViewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890BE198D98DD001636B5 /* fwCanvasViewer.cpp */; };
@@ -59,9 +53,15 @@
 		D6489150198D98DD001636B5 /* osWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6489119198D98DD001636B5 /* osWindow.cpp */; };
 		D668581716FB4445007C002F /* lights_osx.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = D668581616FB4445007C002F /* lights_osx.1 */; };
 		D66858B416FB452C007C002F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D66858B316FB452C007C002F /* OpenGL.framework */; };
+		D673D01C19A0D01A00243153 /* coreAssert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D673D00C19A0D01A00243153 /* coreAssert.cpp */; };
+		D673D01D19A0D01A00243153 /* coreMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D673D00E19A0D01A00243153 /* coreMath.cpp */; };
+		D673D01E19A0D01A00243153 /* coreMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D673D01019A0D01A00243153 /* coreMemory.cpp */; };
+		D673D02019A0D01A00243153 /* coreString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D673D01519A0D01A00243153 /* coreString.cpp */; };
+		D673D02119A0D01A00243153 /* coreStringData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D673D01719A0D01A00243153 /* coreStringData.cpp */; };
+		D673D02219A0D01A00243153 /* coreTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D673D01A19A0D01A00243153 /* coreTime.cpp */; };
+		D673D02419A0D08F00243153 /* core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D673D02319A0D08F00243153 /* core.cpp */; };
 		D674325416FB4C1C005B905C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D674325316FB4C1C005B905C /* IOKit.framework */; };
 		D674325E16FB4CE4005B905C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D674325D16FB4CE4005B905C /* Cocoa.framework */; };
-		D6AE8266199FF0BA008956C2 /* coreStringData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6AE8265199FF0BA008956C2 /* coreStringData.cpp */; };
 		D6B4FAEB198D8DC400018556 /* cubeRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B4FAE4198D8DC400018556 /* cubeRenderer.cpp */; };
 		D6B4FAEC198D8DC400018556 /* lighting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B4FAE6198D8DC400018556 /* lighting.cpp */; };
 		D6B4FAED198D8DC400018556 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B4FAE8198D8DC400018556 /* main.cpp */; };
@@ -84,18 +84,6 @@
 /* Begin PBXFileReference section */
 		D639B0771997B6100036741C /* fwFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fwFont.cpp; sourceTree = "<group>"; };
 		D639B0791997DB380036741C /* fwFont.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fwFont.h; sourceTree = "<group>"; };
-		D64890AD198D98DD001636B5 /* coreAssert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreAssert.cpp; sourceTree = "<group>"; };
-		D64890AE198D98DD001636B5 /* coreAssert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreAssert.h; sourceTree = "<group>"; };
-		D64890AF198D98DD001636B5 /* coreMath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreMath.cpp; sourceTree = "<group>"; };
-		D64890B0198D98DD001636B5 /* coreMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreMath.h; sourceTree = "<group>"; };
-		D64890B1198D98DD001636B5 /* coreMemory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreMemory.cpp; sourceTree = "<group>"; };
-		D64890B2198D98DD001636B5 /* coreMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreMemory.h; sourceTree = "<group>"; };
-		D64890B3198D98DD001636B5 /* coreOutput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreOutput.cpp; sourceTree = "<group>"; };
-		D64890B4198D98DD001636B5 /* coreOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreOutput.h; sourceTree = "<group>"; };
-		D64890B5198D98DD001636B5 /* coreString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreString.cpp; sourceTree = "<group>"; };
-		D64890B6198D98DD001636B5 /* coreString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreString.h; sourceTree = "<group>"; };
-		D64890B7198D98DD001636B5 /* coreTime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreTime.cpp; sourceTree = "<group>"; };
-		D64890B8198D98DD001636B5 /* coreTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreTime.h; sourceTree = "<group>"; };
 		D64890BA198D98DD001636B5 /* fw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fw.cpp; sourceTree = "<group>"; };
 		D64890BB198D98DD001636B5 /* fw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fw.h; sourceTree = "<group>"; };
 		D64890BC198D98DD001636B5 /* fwCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fwCamera.cpp; sourceTree = "<group>"; };
@@ -186,13 +174,24 @@
 		D668581016FB4445007C002F /* lights_osx */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = lights_osx; sourceTree = BUILT_PRODUCTS_DIR; };
 		D668581616FB4445007C002F /* lights_osx.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = lights_osx.1; sourceTree = "<group>"; };
 		D66858B316FB452C007C002F /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = ../../../../../../../System/Library/Frameworks/OpenGL.framework; sourceTree = "<group>"; };
+		D673D00B19A0D01A00243153 /* core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = core.h; sourceTree = "<group>"; };
+		D673D00C19A0D01A00243153 /* coreAssert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreAssert.cpp; sourceTree = "<group>"; };
+		D673D00D19A0D01A00243153 /* coreAssert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreAssert.h; sourceTree = "<group>"; };
+		D673D00E19A0D01A00243153 /* coreMath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreMath.cpp; sourceTree = "<group>"; };
+		D673D00F19A0D01A00243153 /* coreMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreMath.h; sourceTree = "<group>"; };
+		D673D01019A0D01A00243153 /* coreMemory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreMemory.cpp; sourceTree = "<group>"; };
+		D673D01119A0D01A00243153 /* coreMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreMemory.h; sourceTree = "<group>"; };
+		D673D01419A0D01A00243153 /* corePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = corePool.h; sourceTree = "<group>"; };
+		D673D01519A0D01A00243153 /* coreString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreString.cpp; sourceTree = "<group>"; };
+		D673D01619A0D01A00243153 /* coreString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreString.h; sourceTree = "<group>"; };
+		D673D01719A0D01A00243153 /* coreStringData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreStringData.cpp; sourceTree = "<group>"; };
+		D673D01819A0D01A00243153 /* coreStringData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreStringData.h; sourceTree = "<group>"; };
+		D673D01919A0D01A00243153 /* coreStringObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreStringObject.h; sourceTree = "<group>"; };
+		D673D01A19A0D01A00243153 /* coreTime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreTime.cpp; sourceTree = "<group>"; };
+		D673D01B19A0D01A00243153 /* coreTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreTime.h; sourceTree = "<group>"; };
+		D673D02319A0D08F00243153 /* core.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = core.cpp; sourceTree = "<group>"; };
 		D674325316FB4C1C005B905C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = ../../../../../../../System/Library/Frameworks/IOKit.framework; sourceTree = "<group>"; };
 		D674325D16FB4CE4005B905C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = ../../../../../../../System/Library/Frameworks/Cocoa.framework; sourceTree = "<group>"; };
-		D6AE8261199FED7B008956C2 /* corePool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = corePool.h; sourceTree = "<group>"; };
-		D6AE8262199FED8F008956C2 /* coreStringData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = coreStringData.h; sourceTree = "<group>"; };
-		D6AE8263199FED9F008956C2 /* coreStringObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = coreStringObject.h; sourceTree = "<group>"; };
-		D6AE8264199FEDDD008956C2 /* core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = core.h; sourceTree = "<group>"; };
-		D6AE8265199FF0BA008956C2 /* coreStringData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreStringData.cpp; sourceTree = "<group>"; };
 		D6B4FAE4198D8DC400018556 /* cubeRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cubeRenderer.cpp; path = lights/cubeRenderer.cpp; sourceTree = SOURCE_ROOT; };
 		D6B4FAE5198D8DC400018556 /* cubeRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cubeRenderer.h; path = lights/cubeRenderer.h; sourceTree = SOURCE_ROOT; };
 		D6B4FAE6198D8DC400018556 /* lighting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lighting.cpp; path = lights/lighting.cpp; sourceTree = SOURCE_ROOT; };
@@ -219,7 +218,7 @@
 		D64890AB198D98DD001636B5 /* engine */ = {
 			isa = PBXGroup;
 			children = (
-				D64890AC198D98DD001636B5 /* c */,
+				D673D00A19A0D01A00243153 /* core */,
 				D64890B9198D98DD001636B5 /* fw */,
 				D64890DA198D98DD001636B5 /* geometry */,
 				D64890EB198D98DD001636B5 /* gs */,
@@ -227,30 +226,6 @@
 			);
 			name = engine;
 			path = ../engine;
-			sourceTree = "<group>";
-		};
-		D64890AC198D98DD001636B5 /* c */ = {
-			isa = PBXGroup;
-			children = (
-				D64890AD198D98DD001636B5 /* coreAssert.cpp */,
-				D64890AE198D98DD001636B5 /* coreAssert.h */,
-				D64890AF198D98DD001636B5 /* coreMath.cpp */,
-				D64890B0198D98DD001636B5 /* coreMath.h */,
-				D64890B1198D98DD001636B5 /* coreMemory.cpp */,
-				D64890B2198D98DD001636B5 /* coreMemory.h */,
-				D64890B3198D98DD001636B5 /* coreOutput.cpp */,
-				D64890B4198D98DD001636B5 /* coreOutput.h */,
-				D64890B5198D98DD001636B5 /* coreString.cpp */,
-				D64890B6198D98DD001636B5 /* coreString.h */,
-				D64890B7198D98DD001636B5 /* coreTime.cpp */,
-				D64890B8198D98DD001636B5 /* coreTime.h */,
-				D6AE8264199FEDDD008956C2 /* core.h */,
-				D6AE8261199FED7B008956C2 /* corePool.h */,
-				D6AE8265199FF0BA008956C2 /* coreStringData.cpp */,
-				D6AE8262199FED8F008956C2 /* coreStringData.h */,
-				D6AE8263199FED9F008956C2 /* coreStringObject.h */,
-			);
-			path = c;
 			sourceTree = "<group>";
 		};
 		D64890B9198D98DD001636B5 /* fw */ = {
@@ -400,6 +375,29 @@
 			path = zhangshufeng;
 			sourceTree = "<group>";
 		};
+		D673D00A19A0D01A00243153 /* core */ = {
+			isa = PBXGroup;
+			children = (
+				D673D02319A0D08F00243153 /* core.cpp */,
+				D673D00B19A0D01A00243153 /* core.h */,
+				D673D00C19A0D01A00243153 /* coreAssert.cpp */,
+				D673D00D19A0D01A00243153 /* coreAssert.h */,
+				D673D00E19A0D01A00243153 /* coreMath.cpp */,
+				D673D00F19A0D01A00243153 /* coreMath.h */,
+				D673D01019A0D01A00243153 /* coreMemory.cpp */,
+				D673D01119A0D01A00243153 /* coreMemory.h */,
+				D673D01419A0D01A00243153 /* corePool.h */,
+				D673D01519A0D01A00243153 /* coreString.cpp */,
+				D673D01619A0D01A00243153 /* coreString.h */,
+				D673D01719A0D01A00243153 /* coreStringData.cpp */,
+				D673D01819A0D01A00243153 /* coreStringData.h */,
+				D673D01919A0D01A00243153 /* coreStringObject.h */,
+				D673D01A19A0D01A00243153 /* coreTime.cpp */,
+				D673D01B19A0D01A00243153 /* coreTime.h */,
+			);
+			path = core;
+			sourceTree = "<group>";
+		};
 		D6B4FAE3198D8DB400018556 /* lights */ = {
 			isa = PBXGroup;
 			children = (
@@ -469,15 +467,11 @@
 				D6489145198D98DD001636B5 /* iosKeyboard.mm in Sources */,
 				D6489125198D98DD001636B5 /* fwCube.cpp in Sources */,
 				D6489139198D98DD001636B5 /* gsCanvas.cpp in Sources */,
-				D648911E198D98DD001636B5 /* coreOutput.cpp in Sources */,
-				D6AE8266199FF0BA008956C2 /* coreStringData.cpp in Sources */,
 				D6489124198D98DD001636B5 /* fwComponentFactory.cpp in Sources */,
 				D6489126198D98DD001636B5 /* fwCubeComponent.cpp in Sources */,
 				D6489132198D98DD001636B5 /* geometry.cpp in Sources */,
 				D6B4FAEC198D8DC400018556 /* lighting.cpp in Sources */,
-				D6489120198D98DD001636B5 /* coreTime.cpp in Sources */,
 				D6489147198D98DD001636B5 /* iosWindow.mm in Sources */,
-				D648911C198D98DD001636B5 /* coreMath.cpp in Sources */,
 				D648914A198D98DD001636B5 /* macMouse.mm in Sources */,
 				D648914C198D98DD001636B5 /* os.cpp in Sources */,
 				D648912D198D98DD001636B5 /* fwRect.cpp in Sources */,
@@ -485,7 +479,9 @@
 				D6B4FAEB198D8DC400018556 /* cubeRenderer.cpp in Sources */,
 				D6489121198D98DD001636B5 /* fw.cpp in Sources */,
 				D6489130198D98DD001636B5 /* aabb.cpp in Sources */,
+				D673D02219A0D01A00243153 /* coreTime.cpp in Sources */,
 				D6489123198D98DD001636B5 /* fwCanvasViewer.cpp in Sources */,
+				D673D01E19A0D01A00243153 /* coreMemory.cpp in Sources */,
 				D639B0781997B6100036741C /* fwFont.cpp in Sources */,
 				D648913C198D98DD001636B5 /* openGl.cpp in Sources */,
 				D6489135198D98DD001636B5 /* matrix.cpp in Sources */,
@@ -495,11 +491,11 @@
 				D6489138198D98DD001636B5 /* gs.cpp in Sources */,
 				D648912C198D98DD001636B5 /* fwObjectFactory.cpp in Sources */,
 				D648914D198D98DD001636B5 /* osKeyboard.cpp in Sources */,
-				D648911B198D98DD001636B5 /* coreAssert.cpp in Sources */,
 				D648912B198D98DD001636B5 /* fwMesh.cpp in Sources */,
 				D648914B198D98DD001636B5 /* macWindow.mm in Sources */,
 				D648913A198D98DD001636B5 /* gsShader.cpp in Sources */,
 				D648913B198D98DD001636B5 /* gsTexture.cpp in Sources */,
+				D673D01C19A0D01A00243153 /* coreAssert.cpp in Sources */,
 				D6489122198D98DD001636B5 /* fwCamera.cpp in Sources */,
 				D6B4FAEE198D8DC400018556 /* renderer.cpp in Sources */,
 				D6489127198D98DD001636B5 /* fwDraw.cpp in Sources */,
@@ -513,13 +509,15 @@
 				D6489129198D98DD001636B5 /* fwLight.cpp in Sources */,
 				D6489131198D98DD001636B5 /* frustum.cpp in Sources */,
 				D648914E198D98DD001636B5 /* osMouse.cpp in Sources */,
-				D648911D198D98DD001636B5 /* coreMemory.cpp in Sources */,
 				D6489148198D98DD001636B5 /* mac.mm in Sources */,
 				D6489133198D98DD001636B5 /* intersect.cpp in Sources */,
+				D673D02119A0D01A00243153 /* coreStringData.cpp in Sources */,
+				D673D02019A0D01A00243153 /* coreString.cpp in Sources */,
 				D6489128198D98DD001636B5 /* fwDrawLines.cpp in Sources */,
+				D673D01D19A0D01A00243153 /* coreMath.cpp in Sources */,
 				D6489143198D98DD001636B5 /* openGlTexture.cpp in Sources */,
 				D648914F198D98DD001636B5 /* osTouch.cpp in Sources */,
-				D648911F198D98DD001636B5 /* coreString.cpp in Sources */,
+				D673D02419A0D08F00243153 /* core.cpp in Sources */,
 				D6489149198D98DD001636B5 /* macKeyboard.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
