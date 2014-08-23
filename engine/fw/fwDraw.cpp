@@ -186,20 +186,10 @@ namespace fw
 	f32* GenerateVertices( f32* p, u32 stride, const fw::Rect& rect )
 	{
 		stride -= 2;
-        *p ++= rect.MinX(); *p ++= rect.MinY(); p += stride;
-		*p ++= rect.MinX(); *p ++= rect.MaxY(); p += stride;
-		*p ++= rect.MaxX(); *p ++= rect.MinY(); p += stride;
-		*p ++= rect.MaxX(); *p ++= rect.MaxY(); p += stride;
-		return p;
-	}
-    
-    f32* GenerateWireVertices( f32* p, u32 stride, const fw::Rect& rect )
-	{
-		stride -= 2;
-        *p ++= rect.MinX(); *p ++= rect.MinY(); p += stride;
-		*p ++= rect.MinX(); *p ++= rect.MaxY(); p += stride;
-		*p ++= rect.MaxX(); *p ++= rect.MaxY(); p += stride;
-		*p ++= rect.MaxX(); *p ++= rect.MinY(); p += stride;
+        *p ++= rect.Min().x; *p ++= rect.Min().y; p += stride;
+		*p ++= rect.Min().x; *p ++= rect.Max().y; p += stride;
+		*p ++= rect.Max().x; *p ++= rect.Min().y; p += stride;
+		*p ++= rect.Max().x; *p ++= rect.Max().y; p += stride;
 		return p;
 	}
     
@@ -216,20 +206,10 @@ namespace fw
     f32* GenerateUniforms( f32* p, s32 stride, const fw::Rect& rect )
 	{
 		stride -= 2;
-        *p++ = rect.MinX(); *p++ = rect.MinY(); p += stride;
-        *p++ = rect.MinX(); *p++ = rect.MaxY(); p += stride;
-        *p++ = rect.MaxX(); *p++ = rect.MinY(); p += stride;
-        *p++ = rect.MaxX(); *p++ = rect.MaxY(); p += stride;
-        return p;
-	}
-    
-    f32* GenerateUniforms( f32* p, s32 stride, const fw::Rect& rect, const f32 u )
-	{
-		stride -= 3;
-        *p++ = rect.MinX(); *p++ = rect.MinY(); *p++ = u; p += stride;
-        *p++ = rect.MinX(); *p++ = rect.MaxY(); *p++ = u; p += stride;
-        *p++ = rect.MaxX(); *p++ = rect.MinY(); *p++ = u; p += stride;
-        *p++ = rect.MaxX(); *p++ = rect.MaxY(); *p++ = u; p += stride;
+        *p++ = rect.Min().x; *p++ = rect.Min().y; p += stride;
+        *p++ = rect.Min().x; *p++ = rect.Max().y; p += stride;
+        *p++ = rect.Max().x; *p++ = rect.Min().y; p += stride;
+        *p++ = rect.Max().x; *p++ = rect.Max().y; p += stride;
         return p;
 	}
 
@@ -240,7 +220,7 @@ namespace fw
         MeshSetElementCount( sMesh, 6 );
         MeshSetVertexCount( sMesh, 4 );
 		GenerateElements( elementData, 0 );
-		GenerateWireVertices( vertexData, kAttribSize, vertices );
+		GenerateVertices( vertexData, kAttribSize, vertices );
         GenerateUniforms( vertexData + kVertexAttribSize, kAttribSize, colour );
         MeshDraw( sMesh, gs::ePrimLineLoop );
 	}
@@ -304,18 +284,6 @@ namespace fw
 		GenerateElements( elementData, 0 );
 		GenerateVertices( vertexData, kAttribSize, vertices );
         GenerateUniforms( vertexData + (kVertexAttribSize + kColourAttribSize), kAttribSize, tcoords );
-        MeshDraw( sMesh, gs::ePrimTriangles );
-	}
-	
-	void DrawRect( const Rect& vertices, const Rect& tcoords, const f32 uniform )
-	{
-		u16* elementData = ( u16* )MeshGetElementData( sMesh, 0 );
-		f32* vertexData = ( f32* )MeshGetVertexData( sMesh, 0 );
-        MeshSetElementCount( sMesh, 6 );
-        MeshSetVertexCount( sMesh, 4 );
-		GenerateElements( elementData, 0 );
-		GenerateVertices( vertexData, kAttribSize, vertices );
-        GenerateUniforms( vertexData + (kVertexAttribSize + kColourAttribSize), kAttribSize, tcoords, uniform );
         MeshDraw( sMesh, gs::ePrimTriangles );
 	}
     

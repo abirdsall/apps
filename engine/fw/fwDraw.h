@@ -9,7 +9,6 @@ namespace fw
 	void DrawRect( const Rect& vertices, const v4& colour );
     void DrawRect( const Rect& vertices, const Rect& tcoords, const v4& colour );
 	void DrawRect( const Rect& vertices, const Rect& tcoords );
-	void DrawRect( const Rect& vertices, const Rect& tcoords, const f32 uniform );
 	void DrawCube( const v3& vertex, const v3& radius, const v2& uniform );
 	void DrawCube( const v3& vertex, const v3& radius, const v4& colour );
 	void DrawCube( const v3& vertex, const v3& radius, const v4& colour, const v2& uniform );

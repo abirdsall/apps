@@ -387,7 +387,7 @@ namespace gs
         
         ErrorCheck();
 
-		glDrawElements( sPrimMap[ primitive ], ( GLsizei )num, GL_UNSIGNED_SHORT, 0 );
+		glDrawElements( sPrimMap[ primitive ], ( GLsizei )num, GL_UNSIGNED_SHORT, ( const GLvoid* )0 );
         
         ErrorCheck();
 	}

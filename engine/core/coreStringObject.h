@@ -153,10 +153,10 @@ namespace core
         }
     };
     
-    typedef StringObject<StringData16> String16;
-    typedef StringObject<StringData256> String256;
-    typedef StringObject<StringData4096> String4096;
-    typedef StringObject<StringData4096> String;
+    typedef StringObject<StringData16> StringToken;
+    typedef StringObject<StringData256> StringLine;
+    typedef StringObject<StringData4096> StringParagraph;
+    typedef StringParagraph String;
 }
 
 #endif

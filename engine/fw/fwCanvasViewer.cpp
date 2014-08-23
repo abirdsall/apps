@@ -55,29 +55,14 @@ namespace fw
 #endif
 		vShader += "in vec2 vertex_position;\n";
         vShader += "in vec4 vertex_colour;\n";
-		if( is2d )
-		{
-			vShader += "in vec4 vertex_tcoord;\n";
-			vShader += "out vec2 fragment_tcoord;\n";
-		}
-		else
-		{
-			vShader += "in vec4 vertex_tcoord;\n";
-			vShader += "out vec3 fragment_tcoord;\n";
-		}
+        vShader += "in vec4 vertex_tcoord;\n";
+        vShader += "out vec2 fragment_tcoord;\n";
 		vShader += "uniform mat4 viewMatrix;\n";
 		vShader += "uniform mat4 projMatrix;\n";
 		vShader += "void main()\n";
 		vShader += "{\n";
 		vShader += "\tgl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, 0, 1);\n";
-        if( is2d )
-		{
-            vShader += "\tfragment_tcoord = vertex_tcoord.xy;\n";
-		}
-		else
-		{
-            vShader += "\tfragment_tcoord = vertex_tcoord.xyz;\n";
-		}
+        vShader += "\tfragment_tcoord = vertex_tcoord.xy;\n";
 		vShader += "}\n";
 		
 #if kBuildOpenGl3
@@ -87,21 +72,32 @@ namespace fw
         fShader = fShader + "precision highp float;\n";
         fShader = fShader + "precision highp sampler3D;\n";
 #endif
+        fShader += "in vec2 fragment_tcoord;\n";
 		if( is2d )
 		{
-			fShader += "in vec2 fragment_tcoord;\n";
 			fShader += "uniform sampler2D texture0;\n";
 		}
 		else
 		{
-			fShader += "in vec3 fragment_tcoord;\n";
 			fShader += "uniform sampler3D texture0;\n";
 		}
 		fShader += "uniform float lod;\n";
+        if( !is2d )
+        {
+            fShader += "uniform float layer;\n";
+        }
 		fShader += "out vec4 output_colour;\n";
 		fShader += "void main()\n";
 		fShader += "{\n";
-		fShader += "\tvec4 sample = textureLod(texture0, fragment_tcoord, lod);\n";
+        if( is2d )
+        {
+            fShader += "\tvec4 sample = textureLod(texture0, fragment_tcoord, lod);\n";
+        }
+        else
+        {
+            fShader += "\tvec3 tcoord = vec3(fragment_tcoord.x, fragment_tcoord.y, layer);\n";
+            fShader += "\tvec4 sample = textureLod(texture0, tcoord, lod);\n";
+        }
 		fShader += "\toutput_colour = vec4(";
 		fShader = fShader + sChannelLookupNames[ outR ] + ",";
 		fShader = fShader + sChannelLookupNames[ outG ] + ",";
@@ -337,10 +333,11 @@ namespace fw
 			ShaderHandle shaderHandle = mTexture3dShaders[ shaderIndex ];
 			ShaderSet( shaderHandle );
 			TextureSet( "texture0", textureHandle );
-			ShaderSetFloat( "lod", f32( lodIndex ) );///4.0f );
-			f32 zStep = 1.0f / f32( texture.mSizeZ );
-			f32 zMin = zStep / 2.0f;
-			DrawRect( rect, Rect( 0.0f, 1.0f, 1.0f, 0.0f ), zMin + zStep * f32( layerIndex ) );
+            f32 zStep = 1.0f / f32( texture.mSizeZ );
+            f32 zMin = zStep / 2.0f;
+			ShaderSetFloat( "lod", f32( lodIndex ) );
+            ShaderSetFloat( "layer", zMin + zStep * f32( layerIndex ) );
+			DrawRect( rect, Rect( 0.0f, 1.0f, 1.0f, 0.0f ) );
 		}
 		Pop();
 

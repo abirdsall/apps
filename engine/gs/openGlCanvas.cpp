@@ -47,6 +47,8 @@ namespace gs
             glGetIntegerv(GL_FRAMEBUFFER_BINDING, &backBuffer);
             sActiveBuffer = backBuffer;
             sBackBuffer = backBuffer;
+            
+            printf("AXXA %d\n", backBuffer);
         }
     }
     

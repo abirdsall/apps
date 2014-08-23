@@ -12,10 +12,24 @@ namespace core
         s32 _freeSize;
         
     public:
-        Pool( s32 size )
+        Pool( s32 size = 0 )
         {
+            _data = kNull;
+            _free = kNull;
+
+            if( size > 0)
+            {
+                Init( size );
+            }
+        }
+        
+        void Init( s32 size )
+        {
+            ASSERT( _data == kNull );
+            
             _dataSize = size;
             _freeSize = size;
+            
             _data = (T*)core::alloc(sizeof(T) * _dataSize);
             _free = (T**)core::alloc(sizeof(void*) * _dataSize);
             

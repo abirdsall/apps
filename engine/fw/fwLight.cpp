@@ -132,7 +132,7 @@ namespace fw
         ShaderSetFloat( "lod", f32( srcLod ) );
         ShaderSetFloatArray( "offset" , xOffsets, 5 );
         ShaderSetFloatArray( "weight" , weights, 5 );
-        fw::DrawRect( fw::Rect( 0, 0, f32( dstSizeX ), f32( dstSizeY ) ), fw::Rect( 0.0f, 1.0f, 1.0f, 0.0f ), 0.0f );
+        fw::DrawRect( fw::Rect( 0, 0, f32( dstSizeX ), f32( dstSizeY ) ), fw::Rect( 0.0f, 1.0f, 1.0f, 0.0f ) );
         
         CanvasSet( canvasY, -1, dstLod );
         Set2d();
@@ -141,7 +141,7 @@ namespace fw
         ShaderSetFloat( "lod", f32( dstLod ) );
         ShaderSetFloatArray( "offset" , yOffsets, 5 );
         ShaderSetFloatArray( "weight" , weights, 5 );
-        fw::DrawRect( fw::Rect( 0, 0, f32( dstSizeX ), f32( dstSizeY ) ), fw::Rect( 0.0f, 1.0f, 1.0f, 0.0f ), 0.0f );
+        fw::DrawRect( fw::Rect( 0, 0, f32( dstSizeX ), f32( dstSizeY ) ), fw::Rect( 0.0f, 1.0f, 1.0f, 0.0f ) );
         
         CanvasSet( canvasZ, -1, dstLod );
         Set2d();
@@ -150,7 +150,7 @@ namespace fw
         ShaderSetFloat( "lod", f32( dstLod ) );
         ShaderSetFloatArray( "offset" , zOffsets, 5 );
         ShaderSetFloatArray( "weight" , weights, 5 );
-        fw::DrawRect( fw::Rect( 0, 0, f32( dstSizeX ), f32( dstSizeY ) ), fw::Rect( 0.0f, 1.0f, 1.0f, 0.0f ), 0.0f );
+        fw::DrawRect( fw::Rect( 0, 0, f32( dstSizeX ), f32( dstSizeY ) ), fw::Rect( 0.0f, 1.0f, 1.0f, 0.0f ) );
 
         Pop();
 	}

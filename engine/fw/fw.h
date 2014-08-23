@@ -25,7 +25,13 @@
 #include "fwLight.h"
 #include "fwMesh.h"
 #include "fwObjectFactory.h"
+
 #include "fwRenderer.h"
+
+#include "fwShader.h"
+#include "fwDrawBatch.h"
+#include "fwQuad2d.h"
+#include "fwQuad2dBatch.h"
 
 namespace fw
 {

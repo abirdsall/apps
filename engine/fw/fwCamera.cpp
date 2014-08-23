@@ -215,7 +215,7 @@ namespace fw
 		Camera& camera = sCamera[ handle ];
 		plane* p = camera.mFrustum.mPlanes;
 		line* l = camera.mFrustum.mLines;
-		Rect w = window.Fix();
+		Rect w = window.Corrected();
 		v2 wMin = w.Min();
 		v2 wMid = w.Mid();
 		v2 wMax = w.Max();

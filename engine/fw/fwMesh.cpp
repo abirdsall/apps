@@ -91,11 +91,15 @@ namespace fw
 		gs::SetVertexArray( mesh.mVertexArrayId );
 		gs::SetElementBuffer( mesh.mElementBufferId );
 		gs::FillElementBuffer( mesh.mElementData, mesh.mElementSize * mesh.mElementLimit, mesh.mElementDataDynamic );
-
+        gs::SetElementBuffer( 0 );
+        gs::SetVertexArray( 0 );
+        
 		mesh.mVertexBufferId = gs::NewVertexBuffer();
 		gs::SetVertexArray( mesh.mVertexArrayId );
 		gs::SetVertexBuffer( mesh.mVertexBufferId );
 		gs::FillVertexBuffer( mesh.mVertexData, mesh.mVertexSize * mesh.mVertexLimit, mesh.mVertexDataDynamic );
+        gs::SetVertexBuffer( 0 );
+        gs::SetVertexArray( 0 );
 		
 		mesh.mFinalised = true;
 	}
@@ -113,7 +117,8 @@ namespace fw
 		if( mesh.mVertexDataDirty )
 		{
 			mesh.mVertexDataDirty = false;
-			gs::UpdateVertexBuffer( mesh.mVertexData, mesh.mVertexSize * mesh.mVertexLimit, 0 );
+            gs::FillVertexBuffer( mesh.mVertexData, mesh.mVertexSize * mesh.mVertexLimit, false );
+			//gs::UpdateVertexBuffer( mesh.mVertexData, mesh.mVertexSize * mesh.mVertexLimit, 0 );
 		}
 		
 		for( s32 i = 0; i < gs::eAttribCount; i++ )
@@ -129,7 +134,8 @@ namespace fw
 		if( mesh.mElementDataDirty )
 		{
 			mesh.mElementDataDirty = false;
-			gs::UpdateElementBuffer( mesh.mElementData, mesh.mElementSize * mesh.mElementCount, 0 );
+			gs::FillElementBuffer( mesh.mElementData, mesh.mElementSize * mesh.mElementCount, false );
+            //gs::UpdateElementBuffer( mesh.mElementData, mesh.mElementSize * mesh.mElementCount, 0 );
 		}
 		
 		gs::DrawElements( primitive, mesh.mElementCount );
@@ -145,6 +151,8 @@ namespace fw
 		}
 		
 		gs::SetVertexBuffer( 0 );
+        
+        gs::SetVertexArray( 0 );
 	}
 	
 	void MeshKill( Mesh& mesh )
