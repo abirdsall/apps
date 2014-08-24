@@ -10,11 +10,11 @@
 
 #define kBuildWindows     ( 0							)
 #define kBuildLinux       ( 0							)
-#define kBuildMac         ( 1                           )
-#define kBuildIos         ( 0                           )
+#define kBuildMac         ( 0                           )
+#define kBuildIos         ( 1                           )
 
-#define kBuildOpenGles2   ( kBuildIos && 0              )
-#define kBuildOpenGles3   ( kBuildIos && 1              )
+#define kBuildOpenGles2   ( kBuildIos && 1              )
+#define kBuildOpenGles3   ( kBuildIos && 0              )
 #define kBuildOpenGl3     ( kBuildMac					)
 
 #define kBuild32bit       ( 0							)

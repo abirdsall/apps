@@ -2,9 +2,7 @@
 #define RENDERER
 
 #include "gs.h"
-#include "fwMesh.h"
-#include "fwRenderer.h"
-#include "fwComponent.h"
+#include "fw.h"
 
 class Renderer : public fw::Renderer
 {

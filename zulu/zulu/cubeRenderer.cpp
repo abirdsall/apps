@@ -11,8 +11,8 @@ void CubeRenderer::InitVoxeliser()
 	s32 vertexSize = sizeof( f32 ) * 9;
 	
 	fw::MeshInit( mVoxeliser );
-	fw::MeshSetElementData( mVoxeliser, memory::alloc( elementSize * elementLimit ), elementSize, 0, elementLimit, false );
-	fw::MeshSetVertexData( mVoxeliser, memory::alloc( vertexSize * vertexLimit ), vertexSize, 0, vertexLimit, false );
+	fw::MeshSetElementData( mVoxeliser, core::alloc( elementSize * elementLimit ), elementSize, 0, elementLimit, false );
+	fw::MeshSetVertexData( mVoxeliser, core::alloc( vertexSize * vertexLimit ), vertexSize, 0, vertexLimit, false );
 	fw::MeshSetAttrib( mVoxeliser, gs::eAttribVertex, ( void* )( sizeof( f32 ) * 0 ), 3 );
 	fw::MeshSetAttrib( mVoxeliser, gs::eAttribColour, ( void* )( sizeof( f32 ) * 3 ), 4 );
 	fw::MeshSetAttrib( mVoxeliser, gs::eAttribTcoord, ( void* )( sizeof( f32 ) * 7 ), 2 );
@@ -27,8 +27,8 @@ void CubeRenderer::InitRenderer()
 	s32 vertexSize = sizeof( f32 ) * 10;
 	
 	fw::MeshInit( mRenderer );
-	fw::MeshSetElementData( mRenderer, memory::alloc( elementSize * elementLimit ), elementSize, 0, elementLimit, false );
-	fw::MeshSetVertexData( mRenderer, memory::alloc( vertexSize * vertexLimit ), vertexSize, 0, vertexLimit, false );
+	fw::MeshSetElementData( mRenderer, core::alloc( elementSize * elementLimit ), elementSize, 0, elementLimit, false );
+	fw::MeshSetVertexData( mRenderer, core::alloc( vertexSize * vertexLimit ), vertexSize, 0, vertexLimit, false );
 	fw::MeshSetAttrib( mRenderer, gs::eAttribVertex, ( void* )( sizeof( f32 ) * 0 ), 3 );
 	fw::MeshSetAttrib( mRenderer, gs::eAttribNormal, ( void* )( sizeof( f32 ) * 3 ), 3 );
 	fw::MeshSetAttrib( mRenderer, gs::eAttribColour, ( void* )( sizeof( f32 ) * 6 ), 4 );

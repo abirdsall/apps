@@ -226,7 +226,7 @@ namespace fw
         }
         else
         {
-#if KBuildOpenGles2
+#if kBuildOpenGles2
             tmp = "gl_FragColor";
 #else
             tmp = "output_colour";
@@ -239,7 +239,7 @@ namespace fw
         }
         else if( !colour && tcoords )
         {
-#if KBuildOpenGles2
+#if kBuildOpenGles2
             fShader = fShader + tmp + " = texture2D(texture0, fragment_tcoord);\n";
 #else
             fShader = fShader + tmp + " = texture(texture0, fragment_tcoord);\n";
@@ -247,7 +247,7 @@ namespace fw
         }
         else if( colour && tcoords )
         {
-#if KBuildOpenGles2
+#if kBuildOpenGles2
             fShader = fShader + tmp + " = texture2D(texture0, fragment_tcoord) * fragment_colour;\n";
 #else
             fShader = fShader + tmp + " = texture(texture0, fragment_tcoord) * fragment_colour;\n";

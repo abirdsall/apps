@@ -99,7 +99,7 @@ struct Garden
 
         f32 xStep = area.Size().x / f32( _pointCountX - 1 );
         f32 yStep = area.Size().y / f32( _pointCountY - 1 );
-        f32 step = math::min( xStep, yStep );
+        f32 step = core::min( xStep, yStep );
         
         f32 x = area.Min().x;
         f32 y = area.Min().y;
@@ -149,7 +149,7 @@ struct Garden
         gs::SetCull(gs::eCullNone);
         gs::Set2d();
         
-        fw::BatchBegin();
+        fw::BatchQuad2dBegin( fw::Quad2dShaderFilled, gs::InvalidTextureHandle );
         for( s32 i = 0; i < _pointCountX; i++ )
         {
             for( s32 j = 0; j < _pointCountY; j++ )
@@ -157,16 +157,16 @@ struct Garden
                 s32 pointIndex = j * _pointCountX + i;
                 
                 GardenPoint& point = _points[ pointIndex ];
-                
-                fw::FillRect( fw::Rect(
-                                       point.x - 4.0f,
-                                       point.y - 4.0f,
-                                       point.x + 4.0f,
-                                       point.y + 4.0f), v4( 1.0f, 1.0f, 1.0f, 0.25f ) );
+
+                fw::BatchQuad2d( fw::Rect(
+                                          point.x - 4.0f,
+                                          point.y - 4.0f,
+                                          point.x + 4.0f,
+                                          point.y + 4.0f), v4( 1.0f, 1.0f, 1.0f, 0.25f ) );
             }
         }
-        fw::BatchEnd( gs::ePrimTriangles );
-        
+        fw::BatchQuad2dEnd( gs::ePrimTriangles );
+        /*
         fw::DrawLinesBegin();
         for( s32 i = 0; i < _lineCount; i++ )
         {
@@ -188,7 +188,7 @@ struct Garden
         }
         
         fw::DrawLinesEnd();
-    
+    */
         gs::Pop();
         
         if( _activePoint != -1 )
@@ -201,13 +201,13 @@ struct Garden
             gs::SetDepth(gs::eDepthNone);
             gs::SetCull(gs::eCullNone);
             gs::Set2d();
-            fw::BatchBegin();
-            fw::FillRect( fw::Rect(
+            fw::BatchQuad2dBegin( fw::Quad2dShaderFilled, gs::InvalidTextureHandle );
+            fw::BatchQuad2d( fw::Rect(
                                    point.x - 4.0f,
                                    point.y - 4.0f,
                                    point.x + 4.0f,
                                    point.y + 4.0f), v4( 1.0f, 1.0f, 1.0f, 1.0f ) );
-            fw::BatchEnd( gs::ePrimTriangles );
+            fw::BatchQuad2dEnd( gs::ePrimTriangles );
             gs::Pop();
         }
     }
@@ -331,7 +331,7 @@ struct Garden
         
         if(movementSq > TouchDistancePerFrameLimitSq)
         {
-            f32 slice = TouchDistancePerFrameLimit / math::sqrt( movementSq );
+            f32 slice = TouchDistancePerFrameLimit / core::sqrt( movementSq );
             
             for( f32 fraction = slice; fraction < 1.0f; fraction += slice )
             {
@@ -375,7 +375,7 @@ void gameInit()
 
     mCubeRenderer.Add( fw::CubeComponent( v3( 0.0f, 0.0f, -50.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ) ) );
     mCubeRenderer.Add( fw::CubeComponent( v3( 0.0f, 0.0f, 50.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ) ) );
-    
+    /*
 #if kBuildOpenGles3
     String vShader = "#version 300 es\n";
 #else //kBuildOpenGl3
@@ -407,6 +407,7 @@ void gameInit()
     fShader += "}\n";
     
     sFillShader = gs::ShaderNew( vShader.toStr(), fShader.toStr() );
+     */
 }
 
 void gameTick( f32 dt )
@@ -450,7 +451,7 @@ void gameTouch( const os::Touch* touches, s32 touchCount )
 void gameDraw()
 {
     sGarden.Draw();
-
+/*
     gs::Put();
     
     gs::ShaderSet(sFillShader);
@@ -462,6 +463,8 @@ void gameDraw()
     mCubeRenderer.Draw( gs::ePrimLineLoop, false );
     
     gs::Pop();
+ 
+ */
 
 }
 
