@@ -4,14 +4,14 @@ namespace fw
 {
     // 1 3
     // 0 2
-    // 012
+    // 201 //012
     // 132
 
     u16* Quad2dGenElements( u16* p, u16 offset )
     {
+        *p ++= 2 + offset;
         *p ++= 0 + offset;
         *p ++= 1 + offset;
-        *p ++= 2 + offset;
         *p ++= 1 + offset;
         *p ++= 3 + offset;
         *p ++= 2 + offset;

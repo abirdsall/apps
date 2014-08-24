@@ -7,5 +7,6 @@ namespace fw
         eShaderPrecisionHigh
     } eShaderPrecision;
     
-    gs::ShaderHandle ShaderMake2d( bool colour, bool tcoords, s32 outputCount );
+    gs::ShaderHandle ShaderMake2d( bool colour, bool tcoords );
+    gs::ShaderHandle ShaderMake2d( bool colour, bool tcoords, s32 locationBegin, s32 locationEnd );
 }

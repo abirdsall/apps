@@ -55,6 +55,8 @@ namespace gs
 	};
 
 	typedef ::u32 TextureHandle;
+    
+    const TextureHandle InvalidTextureHandle = kMaxU32;
 	
 	const u32 kTextureInvalid = kMaxU32;
 	const int kTextureLimit = 256;

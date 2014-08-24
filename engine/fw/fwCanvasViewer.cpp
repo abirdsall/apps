@@ -300,7 +300,7 @@ namespace fw
 		SetDepth(eDepthNone);
 		SetCull(eCullNone);
 		Set2d();
-		FillWireRect( rect, v4( 1.0, 0.0, 1.0, 1.0 ) );
+		DrawQuad2d( Quad2dShaderFilled, rect, v4( 1.0, 0.0, 1.0, 1.0 ), true );
 		Pop();
 	}
 		
@@ -326,7 +326,7 @@ namespace fw
 #if !kBuildOpenGles2
 			ShaderSetFloat( "lod", f32( lodIndex ) );///4.0f );
 #endif
-			DrawRect( rect, Rect( 0.0f, 1.0f, 1.0f, 0.0f ) );
+			DrawQuad2d( Quad2dShaderTexturedCustom, rect, Rect( 0.0f, 1.0f, 1.0f, 0.0f ) );
 		}
 		else
 		{
@@ -337,7 +337,7 @@ namespace fw
             f32 zMin = zStep / 2.0f;
 			ShaderSetFloat( "lod", f32( lodIndex ) );
             ShaderSetFloat( "layer", zMin + zStep * f32( layerIndex ) );
-			DrawRect( rect, Rect( 0.0f, 1.0f, 1.0f, 0.0f ) );
+			DrawQuad2d( Quad2dShaderTexturedCustom, rect, Rect( 0.0f, 1.0f, 1.0f, 0.0f ) );
 		}
 		Pop();
 

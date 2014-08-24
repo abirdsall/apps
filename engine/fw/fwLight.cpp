@@ -38,6 +38,7 @@ namespace fw
 	static ShaderHandle sShaderVoxelise;
 	static ShaderHandle sShaderLuminise;
 	static ShaderHandle sShaderForward;
+    static ShaderHandle sShaderFillZ;
 
 	const aabb& LightGetBounds()
 	{
@@ -132,7 +133,7 @@ namespace fw
         ShaderSetFloat( "lod", f32( srcLod ) );
         ShaderSetFloatArray( "offset" , xOffsets, 5 );
         ShaderSetFloatArray( "weight" , weights, 5 );
-        fw::DrawRect( fw::Rect( 0, 0, f32( dstSizeX ), f32( dstSizeY ) ), fw::Rect( 0.0f, 1.0f, 1.0f, 0.0f ) );
+        fw::DrawQuad2d( Quad2dShaderTexturedCustom, fw::Rect( 0, 0, f32( dstSizeX ), f32( dstSizeY ) ), fw::Rect( 0.0f, 1.0f, 1.0f, 0.0f ) );
         
         CanvasSet( canvasY, -1, dstLod );
         Set2d();
@@ -141,7 +142,7 @@ namespace fw
         ShaderSetFloat( "lod", f32( dstLod ) );
         ShaderSetFloatArray( "offset" , yOffsets, 5 );
         ShaderSetFloatArray( "weight" , weights, 5 );
-        fw::DrawRect( fw::Rect( 0, 0, f32( dstSizeX ), f32( dstSizeY ) ), fw::Rect( 0.0f, 1.0f, 1.0f, 0.0f ) );
+        fw::DrawQuad2d( Quad2dShaderTexturedCustom, fw::Rect( 0, 0, f32( dstSizeX ), f32( dstSizeY ) ), fw::Rect( 0.0f, 1.0f, 1.0f, 0.0f ) );
         
         CanvasSet( canvasZ, -1, dstLod );
         Set2d();
@@ -150,7 +151,7 @@ namespace fw
         ShaderSetFloat( "lod", f32( dstLod ) );
         ShaderSetFloatArray( "offset" , zOffsets, 5 );
         ShaderSetFloatArray( "weight" , weights, 5 );
-        fw::DrawRect( fw::Rect( 0, 0, f32( dstSizeX ), f32( dstSizeY ) ), fw::Rect( 0.0f, 1.0f, 1.0f, 0.0f ) );
+        fw::DrawQuad2d( Quad2dShaderTexturedCustom, fw::Rect( 0, 0, f32( dstSizeX ), f32( dstSizeY ) ), fw::Rect( 0.0f, 1.0f, 1.0f, 0.0f ) );
 
         Pop();
 	}
@@ -163,31 +164,23 @@ namespace fw
 			{
                 // Clear 
 				Put();
-                
 				CanvasSet( sVoxelCanvasHdScratch );
-				
                 Set2d();
 				SetWrite( eWriteRgba );
 				SetBlend( eBlendNone );
-				fw::Fill4Rect( fw::Rect( 0.0f, 0.0f, f32( kVoxelCountX ), f32( kVoxelCountY ) ), v4( 1.0f, 1.0f, 1.0f, 0.0f ) );
-                
+                ShaderSet( sShaderFillZ );
+                DrawQuad2d( Quad2dShaderFilledCustom, fw::Rect( 0.0f, 0.0f, f32( kVoxelCountX ), f32( kVoxelCountY ) ), v4( 1.0f, 1.0f, 1.0f, 0.0f ) );
                 Pop();
-                
                 
 				f32 zStep = ( sBounds.mMax.z - sBounds.mMin.z ) / f32( kVoxelCountZ );
 				f32 zMin = sBounds.mMin.z + ( zStep / 2.0f );
                 
-                
 				Put();
-				
                 CanvasSet( sVoxelCanvasHdScratch );
-				
                 SetDepth( eDepthNone );
-				
                 ShaderSet( sShaderVoxelise );
 				ShaderSetFloat( "zMin", zMin );
 				ShaderSetFloat( "zStep", zStep );
-				
                 SetWrite( eWriteRgba );
 				SetBlend( eBlendMixRgbAddA );
 				SetCull( eCullBack );
@@ -328,7 +321,7 @@ namespace fw
 							ShaderSetVec3( "worldMin", sBounds.mMin );
 							ShaderSetVec3( "worldSize", sBounds.mMax - sBounds.mMin );
 							ShaderSetFloat( "zWorld", zMin + zStep * f32( i ) );
-							fw::DrawRect( fw::Rect( 0, 0, f32( kVoxelCountX / 2 ), f32( kVoxelCountY / 2 ) ), fw::Rect(0.0f, 1.0f, 1.0f, 0.0f) );
+                            DrawQuad2d( Quad2dShaderTexturedCustom, fw::Rect( 0, 0, f32( kVoxelCountX / 2 ), f32( kVoxelCountY / 2 ) ), fw::Rect(0.0f, 1.0f, 1.0f, 0.0f) );
 						}
 						SetBlend( eBlendAddRgb ); // set to add rgb for subsequent lights
 						//break;
@@ -425,6 +418,8 @@ namespace fw
 	
 	static void InitShaders()
 	{
+        sShaderFillZ = fw::ShaderMake2d( true, false, 0, 7 );
+        
         for( s32 i = 0; i < kVoxelCountZ; i++ )
         {
             sShaderBlurX[ i + 1 ] = MakeBlurShader( 0, i + 1 );

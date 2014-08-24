@@ -7,7 +7,6 @@ namespace fw
         InitDrawBatches();
         InitQuad2dBatches();
         
-        DrawInit();
         SystemFontInit();
     }
     
@@ -15,8 +14,6 @@ namespace fw
     {
         KillQuad2dBatches();
         KillDrawBatches();
-        
-        DrawKill();
-    }    
+    }
 }
 

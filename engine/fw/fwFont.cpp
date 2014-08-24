@@ -80,9 +80,7 @@ namespace fw
     
     void SystemFontDraw( core::String text, v2 position, v4 colour )
     {
-        BatchBegin( true );
-
-        gs::TextureSet( "texture0", _systemFontTexture );
+        BatchQuad2dBegin( Quad2dShaderTinted, _systemFontTexture );
 
         f32 x1 = position.x;
         f32 y1 = position.y;
@@ -97,13 +95,13 @@ namespace fw
                 
                 Rect tcoords = SystemCharTexCoords( text[ i ] );
                 
-                TextureRect( vertices, tcoords, colour );
+                BatchQuad2d( vertices, tcoords, colour );
             }
             
             x1 += f32( SystemCharSizeX * 1 ) + 1;
             x2 += f32( SystemCharSizeX * 1 ) + 1;
         }
         
-        BatchEnd( gs::ePrimTriangles );
+        BatchQuad2dEnd( gs::ePrimTriangles );
     }
 }

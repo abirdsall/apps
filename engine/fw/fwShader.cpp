@@ -94,7 +94,7 @@ namespace fw
         shader = shader + index;
         shader += ") ";
         AppendPrecision( shader, precision );
-        shader += "vec4 output_colour";
+        shader += "out vec4 output_colour";
         shader = shader + index;
         shader += ";\n";
 #endif
@@ -143,8 +143,13 @@ namespace fw
         shader += name;
         shader += ";\n";
     }
+
+    gs::ShaderHandle ShaderMake2d( bool colour, bool tcoords )
+    {
+        return ShaderMake2d( colour, tcoords, 0, 0 );
+    }
     
-    gs::ShaderHandle ShaderMake2d( bool colour, bool tcoords, s32 outputCount )
+    gs::ShaderHandle ShaderMake2d( bool colour, bool tcoords, s32 locationBegin, s32 locationEnd )
     {
         core::String vShader = "";
         
@@ -160,7 +165,7 @@ namespace fw
         
         if( tcoords )
         {
-            AppendVertexInput( vShader, "vec4", "vertex_tcoord" );
+            AppendVertexInput( vShader, "vec2", "vertex_tcoord" );
             AppendVertexOutput( vShader, "vec2", "fragment_tcoord", eShaderPrecisionLow );
         }
         
@@ -178,7 +183,7 @@ namespace fw
         
         if( tcoords )
         {
-            vShader += "fragment_tcoord = vertex_tcoord.xy;\n";
+            vShader += "fragment_tcoord = vertex_tcoord;\n";
         }
         
         AppendFunctionEnd( vShader );
@@ -198,9 +203,9 @@ namespace fw
             AppendFragmentUniform( fShader, "sampler2D", "texture0", eShaderPrecisionLow );
         }
 
-        if( outputCount > 1 )
+        if( locationEnd > 0 )
         {
-            for( s32 i = 0; i < outputCount; i++ )
+            for( s32 i = locationBegin; i <= locationEnd; i++ )
             {
                 AppendFragmentOutput( fShader, i, eShaderPrecisionLow );
             }
@@ -214,7 +219,7 @@ namespace fw
         
         const c8* tmp;
         
-        if( outputCount > 1 )
+        if( locationEnd > 0 )
         {
             tmp = "tmp";
             AppendVariable( fShader, "vec4", "tmp", eShaderPrecisionLow );
@@ -249,9 +254,9 @@ namespace fw
 #endif
         }
         
-        if( outputCount > 1 )
+        if( locationEnd > 0 )
         {
-            for( s32 i = 0; i < outputCount; i++ )
+            for( s32 i = locationBegin; i <= locationEnd; i++ )
             {
                 fShader += "output_colour";
                 fShader = fShader + i;

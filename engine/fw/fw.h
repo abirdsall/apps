@@ -9,6 +9,7 @@
 #include "aabb.h"
 
 #include "fwRect.h"
+#include "fwShader.h"
 
 #include "fwComponent.h"
 #include "fwObject.h"
@@ -19,8 +20,6 @@
 #include "fwComponentFactory.h"
 #include "fwCube.h"
 #include "fwCubeComponent.h"
-#include "fwDraw.h"
-#include "fwDrawLines.h"
 #include "fwFont.h"
 #include "fwLight.h"
 #include "fwMesh.h"
@@ -28,7 +27,6 @@
 
 #include "fwRenderer.h"
 
-#include "fwShader.h"
 #include "fwDrawBatch.h"
 #include "fwQuad2d.h"
 #include "fwQuad2dBatch.h"
