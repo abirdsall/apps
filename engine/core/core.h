@@ -10,8 +10,8 @@
 
 #define kBuildWindows     ( 0							)
 #define kBuildLinux       ( 0							)
-#define kBuildMac         ( 0                           )
-#define kBuildIos         ( 1                           )
+#define kBuildMac         ( 1                           )
+#define kBuildIos         ( 0                           )
 
 #define kBuildOpenGles2   ( kBuildIos && 1              )
 #define kBuildOpenGles3   ( kBuildIos && 0              )
@@ -102,10 +102,9 @@ typedef u64 hwInt;
 #include "coreAssert.h"
 #include "coreMath.h"
 #include "coreMemory.h"
+#include "coreArray.h"
 #include "corePool.h"
 #include "coreString.h"
-#include "coreStringData.h"
-#include "coreStringObject.h"
 #include "coreTime.h"
 #include "coreVector.h"
 #include "coreMatrix.h"

@@ -191,7 +191,7 @@ namespace fw
     {
         BatchQuad2dBegin( shader, gs::InvalidTextureHandle );
         BatchQuad2d( vcoords, colour );
-        BatchQuad2dEnd( wireframe ? gs::ePrimLines : gs::ePrimTriangles);
+        BatchQuad2dEnd( wireframe ? gs::ePrimLineStrip : gs::ePrimTriangles);
     }
     
     void DrawQuad2d( Quad2dShader shader, const Rect& vcoords, const Rect& tcoords )

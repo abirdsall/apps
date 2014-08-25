@@ -31,6 +31,8 @@
 #include "fwQuad2d.h"
 #include "fwQuad2dBatch.h"
 
+#include "fwSceneNode.h"
+
 namespace fw
 {
     void Init();

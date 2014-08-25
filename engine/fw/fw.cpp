@@ -4,6 +4,7 @@ namespace fw
 {
     void Init()
     {
+        InitSceneNodes();
         InitDrawBatches();
         InitQuad2dBatches();
         
@@ -12,6 +13,7 @@ namespace fw
     
     void Kill()
     {
+        KillSceneNodes();
         KillQuad2dBatches();
         KillDrawBatches();
     }

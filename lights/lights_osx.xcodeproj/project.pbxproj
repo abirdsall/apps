@@ -10,6 +10,8 @@
 		D61CBED219A2CF0E00CF7DAD /* fwDrawBatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D61CBED119A2CF0E00CF7DAD /* fwDrawBatch.cpp */; };
 		D61CBED519A693A400CF7DAD /* fwQuad2dBatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D61CBED419A693A400CF7DAD /* fwQuad2dBatch.cpp */; };
 		D61CBED719A693BD00CF7DAD /* fwQuad2dBatch.h in Sources */ = {isa = PBXBuildFile; fileRef = D61CBED619A693BD00CF7DAD /* fwQuad2dBatch.h */; };
+		D6315A6F19AA25570045B472 /* fwSceneNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6315A6E19AA25570045B472 /* fwSceneNode.cpp */; };
+		D6315A7319AA661C0045B472 /* coreArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6315A7219AA661C0045B472 /* coreArray.cpp */; };
 		D639B0781997B6100036741C /* fwFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D639B0771997B6100036741C /* fwFont.cpp */; };
 		D6489121198D98DD001636B5 /* fw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890BA198D98DD001636B5 /* fw.cpp */; };
 		D6489122198D98DD001636B5 /* fwCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890BC198D98DD001636B5 /* fwCamera.cpp */; };
@@ -55,7 +57,6 @@
 		D673D01D19A0D01A00243153 /* coreMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D673D00E19A0D01A00243153 /* coreMath.cpp */; };
 		D673D01E19A0D01A00243153 /* coreMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D673D01019A0D01A00243153 /* coreMemory.cpp */; };
 		D673D02019A0D01A00243153 /* coreString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D673D01519A0D01A00243153 /* coreString.cpp */; };
-		D673D02119A0D01A00243153 /* coreStringData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D673D01719A0D01A00243153 /* coreStringData.cpp */; };
 		D673D02219A0D01A00243153 /* coreTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D673D01A19A0D01A00243153 /* coreTime.cpp */; };
 		D673D02419A0D08F00243153 /* core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D673D02319A0D08F00243153 /* core.cpp */; };
 		D674325416FB4C1C005B905C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D674325316FB4C1C005B905C /* IOKit.framework */; };
@@ -86,6 +87,10 @@
 		D61CBED319A2CF2A00CF7DAD /* fwDrawBatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fwDrawBatch.h; sourceTree = "<group>"; };
 		D61CBED419A693A400CF7DAD /* fwQuad2dBatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fwQuad2dBatch.cpp; sourceTree = "<group>"; };
 		D61CBED619A693BD00CF7DAD /* fwQuad2dBatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fwQuad2dBatch.h; sourceTree = "<group>"; };
+		D6315A6E19AA25570045B472 /* fwSceneNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fwSceneNode.cpp; sourceTree = "<group>"; };
+		D6315A7019AA25650045B472 /* fwSceneNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fwSceneNode.h; sourceTree = "<group>"; };
+		D6315A7119AA61EE0045B472 /* coreArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = coreArray.h; sourceTree = "<group>"; };
+		D6315A7219AA661C0045B472 /* coreArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreArray.cpp; sourceTree = "<group>"; };
 		D639B0771997B6100036741C /* fwFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fwFont.cpp; sourceTree = "<group>"; };
 		D639B0791997DB380036741C /* fwFont.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fwFont.h; sourceTree = "<group>"; };
 		D64890BA198D98DD001636B5 /* fw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fw.cpp; sourceTree = "<group>"; };
@@ -179,9 +184,6 @@
 		D673D01419A0D01A00243153 /* corePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = corePool.h; sourceTree = "<group>"; };
 		D673D01519A0D01A00243153 /* coreString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreString.cpp; sourceTree = "<group>"; };
 		D673D01619A0D01A00243153 /* coreString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreString.h; sourceTree = "<group>"; };
-		D673D01719A0D01A00243153 /* coreStringData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreStringData.cpp; sourceTree = "<group>"; };
-		D673D01819A0D01A00243153 /* coreStringData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreStringData.h; sourceTree = "<group>"; };
-		D673D01919A0D01A00243153 /* coreStringObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreStringObject.h; sourceTree = "<group>"; };
 		D673D01A19A0D01A00243153 /* coreTime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coreTime.cpp; sourceTree = "<group>"; };
 		D673D01B19A0D01A00243153 /* coreTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreTime.h; sourceTree = "<group>"; };
 		D673D02319A0D08F00243153 /* core.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = core.cpp; sourceTree = "<group>"; };
@@ -265,6 +267,8 @@
 				D64890D5198D98DD001636B5 /* fwRect.h */,
 				D64890D6198D98DD001636B5 /* fwRenderer.cpp */,
 				D64890D7198D98DD001636B5 /* fwRenderer.h */,
+				D6315A6E19AA25570045B472 /* fwSceneNode.cpp */,
+				D6315A7019AA25650045B472 /* fwSceneNode.h */,
 				D6D1E94819A8DD5D00FE2541 /* fwShader.cpp */,
 				D6D1E94A19A8DD7600FE2541 /* fwShader.h */,
 			);
@@ -380,6 +384,8 @@
 			children = (
 				D673D02319A0D08F00243153 /* core.cpp */,
 				D673D00B19A0D01A00243153 /* core.h */,
+				D6315A7219AA661C0045B472 /* coreArray.cpp */,
+				D6315A7119AA61EE0045B472 /* coreArray.h */,
 				D673D00C19A0D01A00243153 /* coreAssert.cpp */,
 				D673D00D19A0D01A00243153 /* coreAssert.h */,
 				D673D00E19A0D01A00243153 /* coreMath.cpp */,
@@ -390,9 +396,6 @@
 				D673D01419A0D01A00243153 /* corePool.h */,
 				D673D01519A0D01A00243153 /* coreString.cpp */,
 				D673D01619A0D01A00243153 /* coreString.h */,
-				D673D01719A0D01A00243153 /* coreStringData.cpp */,
-				D673D01819A0D01A00243153 /* coreStringData.h */,
-				D673D01919A0D01A00243153 /* coreStringObject.h */,
 				D673D01A19A0D01A00243153 /* coreTime.cpp */,
 				D673D01B19A0D01A00243153 /* coreTime.h */,
 				D6BED42319A0DBD5006F1175 /* coreVector.h */,
@@ -491,6 +494,7 @@
 				D6D1E94619A80F1900FE2541 /* fwQuad2d.cpp in Sources */,
 				D6489150198D98DD001636B5 /* osWindow.cpp in Sources */,
 				D6489138198D98DD001636B5 /* gs.cpp in Sources */,
+				D6315A6F19AA25570045B472 /* fwSceneNode.cpp in Sources */,
 				D648912C198D98DD001636B5 /* fwObjectFactory.cpp in Sources */,
 				D648914D198D98DD001636B5 /* osKeyboard.cpp in Sources */,
 				D648912B198D98DD001636B5 /* fwMesh.cpp in Sources */,
@@ -512,7 +516,7 @@
 				D648914E198D98DD001636B5 /* osMouse.cpp in Sources */,
 				D6489148198D98DD001636B5 /* mac.mm in Sources */,
 				D6489133198D98DD001636B5 /* intersect.cpp in Sources */,
-				D673D02119A0D01A00243153 /* coreStringData.cpp in Sources */,
+				D6315A7319AA661C0045B472 /* coreArray.cpp in Sources */,
 				D6D1E94919A8DD5D00FE2541 /* fwShader.cpp in Sources */,
 				D673D02019A0D01A00243153 /* coreString.cpp in Sources */,
 				D61CBED219A2CF0E00CF7DAD /* fwDrawBatch.cpp in Sources */,

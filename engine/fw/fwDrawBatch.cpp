@@ -16,11 +16,11 @@ namespace fw
         s32 _attribSize;
     };
  
-    static Pool<DrawBatch> sBatches;
+    static Pool<DrawBatch> _batches;
 
     void InitDrawBatches()
     {
-        sBatches.Init( 16 );
+        _batches.Init( 16 );
     }
     
     void KillDrawBatches()
@@ -37,7 +37,7 @@ namespace fw
                                  s32 tcoordAttribSize
     )
     {
-        DrawBatch* batch = sBatches.Alloc();
+        DrawBatch* batch = _batches.Alloc();
         
         batch->_size = 0;
         batch->_capacity = capacity;
@@ -97,7 +97,7 @@ namespace fw
         
         MeshKill( batch->_mesh );
         
-        sBatches.Free( batch );
+        _batches.Free( batch );
     }
 
     u16* DrawBatchElementPtr( DrawBatchHandle handle )
