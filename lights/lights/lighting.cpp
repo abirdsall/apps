@@ -61,10 +61,11 @@
 
 fw::CanvasViewer mCanvasViewer;
 fw::CameraHandle mCameraHandle;
-fw::LightHandle mLightHandle;
-fw::LightHandle mLightHandle2;
-
 CubeRenderer mCubeRenderer;
+
+fw::LightHandle _lightHandleA;
+fw::LightHandle _lightHandleB;
+fw::RadiosityRenderer _renderer;
 
 void lightingTick( f32 dt )
 {
@@ -117,7 +118,7 @@ void lightingTick( f32 dt )
     }
     
     */
-	v3 worldSize = fw::LightGetBounds().mMax - fw::LightGetBounds().mMin;
+    v3 worldSize = _renderer.Bounds().mMax - _renderer.Bounds().mMin;
 	v3 lightMove( 0.0f, 0.0f, 0.0f );
     
 	if( os::KeyHeld( os::eKeyA ) )
@@ -145,8 +146,9 @@ void lightingTick( f32 dt )
 		lightMove.z = worldSize.z * dt;
 	}
 	
-	fw::LightSetPosition( mLightHandle, clamp( fw::LightGetPosition( mLightHandle ) + lightMove, fw::LightGetBounds().mMin, fw::LightGetBounds().mMax ));
-	//fw::LightSetPosition( mLightHandle2, clamp( fw::LightGetPosition( mLightHandle2 ) - lightMove, fw::LightGetBounds().mMin, fw::LightGetBounds().mMax ));
+    
+	fw::LightSetPosition( _lightHandleA, clamp( fw::LightPosition( _lightHandleA ) + lightMove, _renderer.Bounds().mMin, _renderer.Bounds().mMax ));
+	//fw::LightSetPosition( _lightHandleB, clamp( fw::LightPosition( _lightHandleB ) - lightMove, _renderer.Bounds().mMin, _renderer.Bounds().mMax ));
 	
 	if( os::KeyUp( os::eKeyZ ) )            
 	{
@@ -163,7 +165,7 @@ void lightingTick( f32 dt )
 
 void setStageMatrices( bool tracing )
 {
-	aabb bounds = fw::LightGetBounds();
+	aabb bounds = _renderer.Bounds();
 	m4 mp = orthogonal(
 					   bounds.mMin.x, bounds.mMax.x,
 					   bounds.mMax.y, bounds.mMin.y,
@@ -187,42 +189,8 @@ void lightingDraw()
     fw::SystemFontDraw( core::String("0123456789abcdefghijklmnopqrstuvwxyz"), v2( 100, 100 ), v4(1.0f, 1.0f, 1.0f, 1.0f ) );
     
     gs::Pop();
-    //return;
     
-    //gs::Put();
-    
-	fw::DrawLights( fw::DrawPhasePreVoxelPass );
-
-	setStageMatrices(true);
-	
-	mCubeRenderer.Draw( gs::ePrimTriangles, true );
-
-	fw::DrawLights( fw::DrawPhaseMake );
-	
-	//setStageMatrices( false );
-	
-	mCubeRenderer.Draw( gs::ePrimTriangles, false );
-	
-	fw::DrawLights( fw::DrawPhaseFinal );
-    
-    //gs::Pop();
-
-/*
-	// debug
-	gs::Put();
-    gs::ShaderSet( sFillShader );
-	gs::SetCull(gs::eCullNone);
-	gs::SetWrite(gs::eWriteRgb);
-    gs::SetBlend(gs::eBlendRgba);
-	gs::SetDepth(gs::eDepthNone);//Lequal);
-    gs::SetMatrixM( identity4() );
-
-	setStageMatrices(false);
-
-    mCubeRenderer.Draw( gs::ePrimLineLoop, false );
-    
-	gs::Pop();
-*/
+    _renderer.Render();
 
     mCanvasViewer.Draw();
 }
@@ -230,11 +198,13 @@ void lightingDraw()
 void lightingInit()
 {
 	fw::Init();
-    
-	fw::InitLights( aabb( v3( 0.0f, 0.0f, 0.0f ), v3( 32.0f, 32.0f, 8.0f ) ) );
 	
-    mLightHandle = fw::LightNew( v3( 5.0f, 5.0f, 5.0f ), v3( 1.0f, 1.0f, 1.0f ) * 0.0f );
-	//mLightHandle2 = fw::LightNew( v3( 5.0f, 4.5f, 5.0f ), v3( 1.0f, 0.4f, 0.0f ) );
+    _lightHandleA = fw::LightNew( v3( 5.0f, 5.0f, 5.0f ), v3( 1.0f, 1.0f, 1.0f ) * 0.0f );
+	_lightHandleB = fw::LightNew( v3( 5.0f, 4.5f, 5.0f ), v3( 1.0f, 0.4f, 0.0f ) );
+
+    _renderer.Init( aabb( v3( 0.0f, 0.0f, 0.0f ), v3( 32.0f, 32.0f, 8.0f ) ), 256, 256, 8 );
+    _renderer._lights.Add( _lightHandleA );
+    //_renderer._lights.Add( _lightHandleB );
 
 	mCameraHandle = fw::CameraNew( fw::Rect(0.0f, 0.0f, ( f32 )os::WindowSizeX(), ( f32 )os::WindowSizeY()), &lightingDraw );
 

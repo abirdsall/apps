@@ -1,3 +1,6 @@
+#ifndef FW_DRAW_BATCH
+#define FW_DRAW_BATCH
+
 namespace fw
 {
     typedef ::hwInt DrawBatchHandle;
@@ -26,3 +29,5 @@ namespace fw
     void DrawBatchIncrement( DrawBatchHandle handle );
     void DrawBatchFlush( DrawBatchHandle handle, gs::ePrim prim );
 }
+
+#endif

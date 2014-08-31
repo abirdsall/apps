@@ -1,3 +1,6 @@
+#ifndef FW_QUAD2D
+#define FW_QUAD2D
+
 namespace fw
 {
     u16* Quad2dGenElements( u16* p, u16 offset );
@@ -7,3 +10,5 @@ namespace fw
     f32* Quad2dGenVertices( f32* p, const fw::Rect& vcoords, const fw::Rect& tcoords, const v4& colour );
     f32* Quad2dGenVertices( f32* p, const fw::Rect& vcoords, const v4& colour );
 }
+
+#endif

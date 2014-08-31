@@ -27,11 +27,14 @@
 
 #include "fwRenderer.h"
 
+#include "fwSceneNode.h"
+
+#include "fwXenderer.h"
+#include "fwRadiosityRenderer.h"
+
 #include "fwDrawBatch.h"
 #include "fwQuad2d.h"
 #include "fwQuad2dBatch.h"
-
-#include "fwSceneNode.h"
 
 namespace fw
 {

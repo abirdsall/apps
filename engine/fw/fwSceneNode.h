@@ -1,3 +1,6 @@
+#ifndef FW_SCENE_NODE
+#define FW_SCENE_NODE
+
 namespace fw
 {
     typedef ::hwInt SceneNodeHandle;
@@ -61,3 +64,5 @@ namespace fw
         }
     };
 }
+
+#endif

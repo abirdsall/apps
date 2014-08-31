@@ -1,40 +1,28 @@
-#ifndef FW_LIGHT
-#define FW_LIGHT
+#ifndef FWX_LIGHT
+#define FWX_LIGHT
 
 namespace fw
 {
-	typedef ::u32 LightHandle;
-	
-	const u32 kLightInvalid = kMaxU32;
-	const u32 kLightLimit = 64;
-	
-	struct Light
-	{
-		v3 mPosition;
-		v3 mColour;
-		bool mActive;
-	};
-	
-	enum DrawPhase
-	{
-		DrawPhasePreVoxelPass,
-		DrawPhaseMake,
-		DrawPhaseFinal
-	};
+    typedef ::hwInt LightHandle;
+    
+    static const ::hwInt InvalidLightHandle = ( LightHandle )kNull;
 
-	const aabb& LightGetBounds();
-	
-	void DrawLights( DrawPhase phase );
-	void InitLights( const aabb& bounds );
-	void KillLights();
-	
-	LightHandle LightNew( const v3& position, const v3& colour );
-	void LightDelete( LightHandle handle );
-	void LightSetPosition( LightHandle handle, const v3& position );
-	const v3& LightGetPosition( LightHandle handle );
-	const v3& LightGetColour( LightHandle handle );
-	s32 LightActiveCount();
-	s32 LightActiveGet( LightHandle array[ kLightLimit ] );
+    struct Light
+    {
+        v3 _position;
+        v3 _colour;
+        bool _active;
+    };
+    
+    void InitLights();
+    void KillLights();
+    
+    LightHandle LightNew( const v3& position, const v3& colour );
+    
+    void LightDelete( LightHandle handle );
+    
+    const v3& LightPosition( LightHandle handle );
+    void LightSetPosition( LightHandle handle, const v3& position );
 }
 
 #endif

@@ -1,3 +1,6 @@
+#ifndef FW_QUAD2D_BATCH
+#define FW_QUAD2D_BATCH
+
 namespace fw
 {
     enum Quad2dShader
@@ -23,3 +26,5 @@ namespace fw
     void DrawQuad2d( Quad2dShader shader, const Rect& vcoords, const Rect& tcoords );
     void DrawQuad2d( Quad2dShader shader, const Rect& vcoords, const Rect& tcoords, const v4& colour );
 }
+
+#endif
