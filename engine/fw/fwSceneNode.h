@@ -3,22 +3,19 @@
 
 namespace fw
 {
-    typedef ::hwInt SceneNodeHandle;
-    
-    static const ::hwInt InvalidSceneNodeHandle = ( SceneNodeHandle )kNull;
-    
+    struct SceneNode;
+
     void InitSceneNodes();
     void KillSceneNodes();
-    
-    SceneNodeHandle SceneNodeNew();
-    
-    void SceneNodeDelete( SceneNodeHandle handle );
+    SceneNode* SceneNodeNew();
+    void SceneNodeDelete( SceneNode* node );
 
     struct SceneNode
     {
-        SceneNodeHandle _parent;
-        
-        Array<SceneNodeHandle> _children;
+        SceneNode* _parent;
+
+        Array<SceneNodeComponent*> _components;
+        Array<SceneNode*> _children;
 
         m4 _worldTransform;
         
@@ -28,25 +25,35 @@ namespace fw
         
         SceneNode()
         {
-            _parent = InvalidSceneNodeHandle;
+            _parent = kNull;
         }
         
         ~SceneNode()
         {
+            for( s32 i = 0; i < _components.Count(); i++ )
+            {
+                _components[ i ]->Delete();
+            }
+
             for( s32 i = 0; i < _children.Count(); i++ )
             {
                 SceneNodeDelete( _children[ i ] );
             }
         }
-        
-        void AddChild( SceneNodeHandle child )
+
+        void AddComponent( SceneNodeComponent* component )
+        {
+            _components.Add( component );
+        }
+
+        void AddChild( SceneNode* child )
         {
             _children.Add( child );
         }
         
         void Tick( float dt )
         {
-            if( _parent != InvalidSceneNodeHandle )
+            if( _parent != kNull )
             {
                 SceneNode* parent = ( SceneNode* )_parent;
                 _worldTransform = parent->_worldTransform * _localTransform;
@@ -56,10 +63,27 @@ namespace fw
                 _worldTransform = _localTransform;
             }
             
+            for( s32 i = 0; i < _components.Count(); i++ )
+            {
+                _components[ i ]->Tick( dt );
+            }
+            
             for( s32 i = 0; i < _children.Count(); i++ )
             {
-                SceneNode* child = ( SceneNode* )_children[ i ];
-                child->Tick( dt );
+                _children[ i ]->Tick( dt );
+            }
+        }
+        
+        void Render( Renderer& renderer )
+        {
+            for( s32 i = 0; i < _components.Count(); i++ )
+            {
+                _components[ i ]->Render( renderer );
+            }
+            
+            for( s32 i = 0; i < _children.Count(); i++ )
+            {
+                _children[ i ]->Render( renderer );
             }
         }
     };

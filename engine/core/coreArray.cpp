@@ -43,23 +43,23 @@ namespace core
             }
             case eBytePool32:
             {
-                return ( u8* )_bytePool32.Alloc();
+                return ( u8* )_bytePool32.New();
             }
             case eBytePool128:
             {
-                return ( u8* )_bytePool128.Alloc();
+                return ( u8* )_bytePool128.New();
             }
             case eBytePool512:
             {
-                return ( u8* )_bytePool512.Alloc();
+                return ( u8* )_bytePool512.New();
             }
             case eBytePool2048:
             {
-                return ( u8* )_bytePool2048.Alloc();
+                return ( u8* )_bytePool2048.New();
             }
             case eBytePool8192:
             {
-                return ( u8* )_bytePool8192.Alloc();
+                return ( u8* )_bytePool8192.New();
             }
         }
     }
@@ -74,27 +74,27 @@ namespace core
             }
             case eBytePool32:
             {
-                _bytePool32.Free( ( Bx32* )data );
+                _bytePool32.Delete( ( Bx32* )data );
                 break;
             }
             case eBytePool128:
             {
-                _bytePool128.Free( ( Bx128* )data );
+                _bytePool128.Delete( ( Bx128* )data );
                 break;
             }
             case eBytePool512:
             {
-                _bytePool512.Free( ( Bx512* )data );
+                _bytePool512.Delete( ( Bx512* )data );
                 break;
             }
             case eBytePool2048:
             {
-                _bytePool2048.Free( ( Bx2048* )data );
+                _bytePool2048.Delete( ( Bx2048* )data );
                 break;
             }
             case eBytePool8192:
             {
-                _bytePool8192.Free( ( Bx8192* )data );
+                _bytePool8192.Delete( ( Bx8192* )data );
                 break;
             }
         }

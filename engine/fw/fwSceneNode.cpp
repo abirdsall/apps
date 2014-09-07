@@ -14,17 +14,13 @@ namespace fw
         
     }
     
-    SceneNodeHandle SceneNodeNew()
+    SceneNode* SceneNodeNew()
     {
-        SceneNode* node = _sceneNodes.Alloc();
-
-        return ( SceneNodeHandle )node;
+        return _sceneNodes.New();
     }
     
-    void SceneNodeDelete( SceneNodeHandle handle )
+    void SceneNodeDelete( SceneNode* node )
     {
-        SceneNode* node = ( SceneNode* )handle;
-        
-        _sceneNodes.Free( node );
+        _sceneNodes.Delete( node );
     }
 }

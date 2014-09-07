@@ -3,24 +3,14 @@
 
 namespace fw
 {
-	class Renderer : public ComponentFactory
-	{
-	public:
-		virtual void Init( s32 limit );
-		virtual ComponentHandle Add( const Component& component );
-		virtual void Draw( gs::ePrim primitive );
-		virtual void Kill();
-		
-	protected:
-		fw::Mesh mRenderer;
-
-		virtual bool RequiresFinalising();
-		virtual void InitRenderer() = 0;
-		virtual void AddToRenderer( const Component& component ) = 0;
-		
-	private:
-		bool mFinalised;
-	};
+    struct Renderer
+    {
+        virtual void Render() = 0;
+        
+        Array<LightHandle> _lights;
+        
+        SceneNode* _scene;
+    };
 }
 
 #endif

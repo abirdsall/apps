@@ -11,26 +11,25 @@
 #include "fwRect.h"
 #include "fwShader.h"
 
-#include "fwComponent.h"
-#include "fwObject.h"
-#include "fwMaterial.h"
-
 #include "fwCamera.h"
 #include "fwCanvasViewer.h"
-#include "fwComponentFactory.h"
-#include "fwCube.h"
-#include "fwCubeComponent.h"
 #include "fwFont.h"
-#include "fwLight.h"
 #include "fwMesh.h"
-#include "fwObjectFactory.h"
+#include "fwLight.h"
 
-#include "fwRenderer.h"
+namespace fw
+{
+    struct Renderer;
+}
 
+#include "fwSceneNodeComponent.h"
 #include "fwSceneNode.h"
 
-#include "fwXenderer.h"
+#include "fwRenderer.h"
+#include "fwCube.h"
+#include "fwCubeBatch.h"
 #include "fwRadiosityRenderer.h"
+#include "fwRadiosityCube.h"
 
 #include "fwDrawBatch.h"
 #include "fwQuad2d.h"

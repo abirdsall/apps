@@ -1,6 +1,8 @@
 #ifndef CORE_POOL
 #define CORE_POOL
 
+#include <new>
+
 namespace core
 {
     template <class T> class Pool
@@ -39,16 +41,17 @@ namespace core
             }
         }
         
-        T* Alloc()
+        T* New()
         {
             ASSERT( _freeSize > 0);
-            return _free[ --_freeSize ];
+            return new( _free[ --_freeSize ] )T();
         }
         
-        void Free( T* object )
+        void Delete( T* object )
         {
             ASSERT( _freeSize < _dataSize );
             ASSERT( hwInt( object ) >= hwInt( _data ) && hwInt( object ) <= hwInt( &_data[_dataSize - 1] ));
+            object->~T();
             _free[ _freeSize++ ] = object;
         }
     };

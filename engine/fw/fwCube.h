@@ -3,25 +3,10 @@
 
 namespace fw
 {
-	class Cube
-	{
-	public:
-		v3 mPosition;
-		v3 mRadius;
-		
-		Cube(){}
-		Cube( v3 position, v3 radius );
-		
-		inline const v3& Position() const
-		{
-			return mPosition;
-		}
-		
-		inline const v3& Radius() const
-		{
-			return mRadius;
-		}
-	};
+    u16* CubeGenElements( u16* p, u16 offset );
+    f32* CubeGenVertices( f32* p, const v3& position, const v3& radius, const v4& colour );
+    f32* CubeGenVerticesRadiosity( f32* p, const v3& position, const v3& radius, const v4& colour );
+    f32* CubeGenVerticesRadiosityMono( f32* p, const v3& position, const v3& radius );
 }
 
 #endif

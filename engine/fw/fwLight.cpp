@@ -16,7 +16,7 @@ namespace fw
     
     LightHandle LightNew( const v3& position, const v3& colour )
     {
-        Light* light = _lights.Alloc();
+        Light* light = _lights.New();
         
         light->_position = position;
         light->_colour = colour;
@@ -29,7 +29,7 @@ namespace fw
     {
         Light* light = ( Light* )handle;
         
-        _lights.Free( light );
+        _lights.Delete( light );
     }
     
     const v3& LightPosition( LightHandle handle )

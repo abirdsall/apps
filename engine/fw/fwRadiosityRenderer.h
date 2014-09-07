@@ -3,9 +3,11 @@
 
 namespace fw
 {
-    struct RadiosityRenderer : Xenderer
+    struct RadiosityRenderer : Renderer
     {
         aabb _bounds;
+        
+        bool _voxelising;
         
         s32 _voxelCountX;
         s32 _voxelCountY;
@@ -72,6 +74,11 @@ namespace fw
         const aabb Bounds()
         {
             return _bounds;
+        }
+        
+        bool Voxelising()
+        {
+            return _voxelising;
         }
     };
 }

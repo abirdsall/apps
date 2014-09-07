@@ -221,6 +221,7 @@ namespace fw
         
         // need to kill light dir if lightCol zero
         _shaderLuminise = ShaderNew( vShader.toStr(), fShader.toStr() );
+        
 #if kBuildOpenGl3
         vShader = "#version 150\n";
 #else
@@ -393,7 +394,9 @@ namespace fw
         SetCull( eCullBack );
         
         SetStageMatrices( true );
-        //mCubeRenderer.Draw( gs::ePrimTriangles, true );
+        
+        _voxelising = true;
+        _scene->Render( *this );
         
         // Make
         Pop();
@@ -498,7 +501,9 @@ namespace fw
             }
         }
         Pop();
+        
         CanvasSet( kCanvasInvalid );
+        
         Put();
         SetCull(eCullBack);
         SetBlend(eBlendNone);
@@ -512,7 +517,10 @@ namespace fw
         ShaderSetVec3( "worldMin", _bounds.mMin );
         ShaderSetVec3( "worldSize", _bounds.mMax - _bounds.mMin );
         
-        //mCubeRenderer.Draw( gs::ePrimTriangles, false );
+        //SetStageMatrices( false );
+
+        _voxelising = false;
+        _scene->Render( *this );
         
         Pop();
     }

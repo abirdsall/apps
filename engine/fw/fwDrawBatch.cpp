@@ -37,7 +37,7 @@ namespace fw
                                  s32 tcoordAttribSize
     )
     {
-        DrawBatch* batch = _batches.Alloc();
+        DrawBatch* batch = _batches.New();
         
         batch->_size = 0;
         batch->_capacity = capacity;
@@ -47,7 +47,7 @@ namespace fw
         batch->_normalAttribSize = normalAttribSize;
         batch->_colourAttribSize = colourAttribSize;
         batch->_tcoordAttribSize = tcoordAttribSize;
-        batch->_attribSize = batch->_vertexAttribSize + batch->_colourAttribSize + batch->_tcoordAttribSize;
+        batch->_attribSize = batch->_vertexAttribSize + batch->_normalAttribSize + batch->_colourAttribSize + batch->_tcoordAttribSize;
         
         s32 elementLimit = batch->_capacity * elementsPerPrimitive;
         s32 elementSize = sizeof( u16 );
@@ -67,7 +67,7 @@ namespace fw
         {
             MeshSetAttrib( batch->_mesh,
                           gs::eAttribNormal,
-                          ( void* )( sizeof( f32 ) * batch->_vertexAttribSize ),
+                          ( void* )( sizeof( f32 ) * ( batch->_vertexAttribSize ) ),
                           batch->_normalAttribSize );
         }
         
@@ -75,14 +75,14 @@ namespace fw
         {
             MeshSetAttrib( batch->_mesh,
                           gs::eAttribColour,
-                          ( void* )( sizeof( f32 ) * batch->_vertexAttribSize + batch->_normalAttribSize ),
+                          ( void* )( sizeof( f32 ) * ( batch->_vertexAttribSize + batch->_normalAttribSize ) ),
                           batch->_colourAttribSize );
         }
         
         if(tcoordAttribSize > 0)
         {
             MeshSetAttrib( batch->_mesh, gs::eAttribTcoord,
-                          ( void* )( sizeof( f32 ) * (batch->_vertexAttribSize + batch->_normalAttribSize + batch->_colourAttribSize) ),
+                          ( void* )( sizeof( f32 ) * ( batch->_vertexAttribSize + batch->_normalAttribSize + batch->_colourAttribSize ) ),
                           batch->_tcoordAttribSize );
         }
         
@@ -97,7 +97,7 @@ namespace fw
         
         MeshKill( batch->_mesh );
         
-        _batches.Free( batch );
+        _batches.Delete( batch );
     }
 
     u16* DrawBatchElementPtr( DrawBatchHandle handle )

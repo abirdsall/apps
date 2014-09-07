@@ -7,17 +7,21 @@ namespace fw
         InitSceneNodes();
         InitLights();
         InitDrawBatches();
+        InitCubeBatches();
         InitQuad2dBatches();
+        InitRadiosityCubes();
         
         SystemFontInit();
     }
     
     void Kill()
     {
-        KillSceneNodes();
-        KillLights();
+        KillRadiosityCubes();
         KillQuad2dBatches();
+        KillCubeBatches();
         KillDrawBatches();
+        KillLights();
+        KillSceneNodes();
     }
 }
 
