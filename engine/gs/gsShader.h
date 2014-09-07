@@ -5,9 +5,9 @@ namespace gs
 {
 	typedef ::u32 ShaderHandle;
 
-    const ShaderHandle InvalidShaderHandle = kMaxU32;
+    const ShaderHandle InvalidShaderHandle = MaxU32;
 
-	const u32 kShaderInvalid = kMaxU32;
+	const u32 kShaderInvalid = MaxU32;
 	const u32 kShaderLimit = 256 + 64;
 	
 	struct Shader

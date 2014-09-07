@@ -50,7 +50,7 @@ f32 intersect(const line& line1, const line& line2)
 		v3	rp2		= p3 + p43 * mub;
 		return distance(rp1, rp2);
 	}
-	return kMaxF32;
+	return MaxF32;
 }
 
 bool intersect(const line& line, const plane& plane, f32& distance, const bool infinite)
@@ -88,7 +88,7 @@ bool intersect(const line& l, const frustum& frustum, f32& hitLen1, f32& hitLen2
 	v3				pointA;
 	v3				pointB;
 	v3				hit1 = l.getPos();
-	v3				hit2 = l.getPos() + l.getDir() * kMaxF32;
+	v3				hit2 = l.getPos() + l.getDir() * MaxF32;
 	f32				angle;
 	s32				i;
 

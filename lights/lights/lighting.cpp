@@ -115,14 +115,16 @@ void lightingTick( f32 dt )
 
 void lightingDraw()
 {
+    _renderer.Render();
+
     gs::Put();
     gs::Set2d();
+    
+    gs::SetBlend(gs::eBlendRgba);
     
     fw::SystemFontDraw( core::String("0123456789abcdefghijklmnopqrstuvwxyz"), v2( 100, 100 ), v4(1.0f, 1.0f, 1.0f, 1.0f ) );
     
     gs::Pop();
-    
-    _renderer.Render();
 
     mCanvasViewer.Draw();
 }

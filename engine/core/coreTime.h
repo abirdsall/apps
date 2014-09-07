@@ -4,6 +4,7 @@
 namespace core
 {
 	void TimeInit();
+    void TimeKill();
 	f32 TimeTick();
 }
 

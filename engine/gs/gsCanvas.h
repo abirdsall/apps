@@ -5,7 +5,7 @@ namespace gs
 {
 	typedef ::u32 CanvasHandle;
 	
-	const u32 kCanvasInvalid = kMaxU32;
+	const u32 kCanvasInvalid = MaxU32;
 	const u32 kCanvasLimit = 64;
 	const u32 kColorTextureLimit = 16;
 	const u32 kDepthTextureLimit = 1;

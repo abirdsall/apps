@@ -25,7 +25,7 @@ namespace fw
         
         SceneNode()
         {
-            _parent = kNull;
+            _parent = Null;
         }
         
         ~SceneNode()
@@ -53,7 +53,7 @@ namespace fw
         
         void Tick( float dt )
         {
-            if( _parent != kNull )
+            if( _parent != Null )
             {
                 SceneNode* parent = ( SceneNode* )_parent;
                 _worldTransform = parent->_worldTransform * _localTransform;

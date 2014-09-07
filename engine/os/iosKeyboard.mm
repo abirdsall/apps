@@ -1,6 +1,6 @@
 #include "os.h"
 
-#if kBuildIos
+#if OsIos
 
 #include "ios.h"
 

@@ -2,27 +2,26 @@
 
 #include <math.h>
 
-#define kSinTableSize 0x800
-#define kSinTableMask 0x7ff
+#define SinTableSize 0x800
+#define SinTableMask 0x7ff
 
 namespace core
 {
-	static u64 sRandomSeed = 0x0000000021454a53;
-	static f32 sSinTable[kSinTableSize];
+	static u64 _randomSeed = 0x0000000021454a53;
+	static f32 _sinTable[ SinTableSize ];
 	
-	bool init(void)
+	void MathInit()
 	{
-		s32 i = kSinTableSize;
+		s32 i = SinTableSize;
+        
 		while(--i >= 0)
 		{
-			sSinTable[i] = sinf(kPiMul2 * (((f32)i) / (f32)kSinTableSize));
+			_sinTable[i] = sinf(PiMul2 * (((f32)i) / (f32)SinTableSize));
 		}
-		return true;
 	}
 	
-	bool kill(void)
+	void MathKill()
 	{
-		return true;
 	}
 	
 	f32 sin(f32 a)
@@ -35,14 +34,14 @@ namespace core
 		return cosf(a);
 	}
 
-	f32 sintable(f32 a)
+	f32 SinTable(f32 a)
 	{
-		return sSinTable[((s32)(((((f32)kSinTableSize) / kPiMul2) * a) + 0.5f)) & kSinTableMask];
+		return _sinTable[((s32)(((((f32)SinTableSize) / PiMul2) * a) + 0.5f)) & SinTableMask];
 	}
 	
 	f32 costable(f32 a)
 	{
-		return sSinTable[(((s32)(((((f32)kSinTableSize) / kPiMul2) * a) + 0.5f)) + (kSinTableSize / 4)) & kSinTableMask];
+		return _sinTable[(((s32)(((((f32)SinTableSize) / PiMul2) * a) + 0.5f)) + (SinTableSize / 4)) & SinTableMask];
 	}
 	
 	f32 tan(f32 a)
@@ -77,12 +76,12 @@ namespace core
 	
 	u32 random()
 	{
-		return (u32)(((sRandomSeed = ((u64)214013) * sRandomSeed + ((u64)2531011))));
+		return (u32)(((_randomSeed = ((u64)214013) * _randomSeed + ((u64)2531011))));
 	}
 	
 	f32 randomfraction()
 	{
-		return (f32)random() / (f32)kMaxU32;
+		return (f32)random() / (f32)MaxU32;
 	}
 	
 	f32 randomrange(const f32 a, const f32 b)
@@ -92,6 +91,6 @@ namespace core
 	
 	void randomseed(const u32 a)
 	{
-		sRandomSeed = a;
+		_randomSeed = a;
 	}
 }

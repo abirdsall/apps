@@ -5,7 +5,7 @@ namespace fw
 {
     typedef ::hwInt LightHandle;
     
-    static const ::hwInt InvalidLightHandle = ( LightHandle )kNull;
+    static const ::hwInt InvalidLightHandle = ( LightHandle )Null;
 
     struct Light
     {

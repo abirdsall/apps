@@ -4,9 +4,9 @@ namespace fw
 {
     void AppendHeader( String& shader )
     {
-#if kBuildOpenGles2
+#if GsOpenGles2
         return;
-#elif kBuildOpenGles3
+#elif GsOpenGles3
         shader += "#version 300 es\n";
 #else
         shader += "#version 410 core\n";
@@ -15,7 +15,7 @@ namespace fw
     
     void AppendPrecision( String& shader, eShaderPrecision precision )
     {
-#if kBuildOpenGles2 || kBuildOpenGles3
+#if GsOpenGles2 || GsOpenGles3
         switch( precision )
         {
             case eShaderPrecisionLow:
@@ -39,7 +39,7 @@ namespace fw
     
     void AppendVertexInput( String& shader, const c8* type, const c8* name )
     {
-#if kBuildOpenGles2
+#if GsOpenGles2
         shader += "attribute ";
 #else
         shader += "in ";
@@ -52,7 +52,7 @@ namespace fw
     
     void AppendVertexOutput( String& shader, const c8* type, const c8* name, eShaderPrecision precision )
     {
-#if kBuildOpenGles2
+#if GsOpenGles2
         shader += "varying ";
 #else
         shader += "out ";
@@ -75,7 +75,7 @@ namespace fw
     
     void AppendFragmentInput( String& shader, const c8* type, const c8* name, eShaderPrecision precision )
     {
-#if kBuildOpenGles2
+#if GsOpenGles2
         shader += "varying ";
 #else
         shader += "in ";
@@ -89,7 +89,7 @@ namespace fw
     
     void AppendFragmentOutput( String& shader, s32 index, eShaderPrecision precision )
     {
-#if !kBuildOpenGles2
+#if !GsOpenGles2
         shader += "layout(location = ";
         shader = shader + index;
         shader += ") ";
@@ -102,7 +102,7 @@ namespace fw
 
     void AppendFragmentOutput( String& shader, eShaderPrecision precision )
     {
-#if !kBuildOpenGles2
+#if !GsOpenGles2
         shader += "out ";
         AppendPrecision( shader, precision );
         shader += "vec4 output_colour;\n";
@@ -226,7 +226,7 @@ namespace fw
         }
         else
         {
-#if kBuildOpenGles2
+#if GsOpenGles2
             tmp = "gl_FragColor";
 #else
             tmp = "output_colour";
@@ -239,7 +239,7 @@ namespace fw
         }
         else if( !colour && tcoords )
         {
-#if kBuildOpenGles2
+#if GsOpenGles2
             fShader = fShader + tmp + " = texture2D(texture0, fragment_tcoord);\n";
 #else
             fShader = fShader + tmp + " = texture(texture0, fragment_tcoord);\n";
@@ -247,7 +247,7 @@ namespace fw
         }
         else if( colour && tcoords )
         {
-#if kBuildOpenGles2
+#if GsOpenGles2
             fShader = fShader + tmp + " = texture2D(texture0, fragment_tcoord) * fragment_colour;\n";
 #else
             fShader = fShader + tmp + " = texture(texture0, fragment_tcoord) * fragment_colour;\n";

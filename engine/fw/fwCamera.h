@@ -5,7 +5,7 @@ namespace fw
 {
 	typedef ::u32 CameraHandle;
 	
-	const u32 kCameraInvalid = kMaxU32;
+	const u32 kCameraInvalid = MaxU32;
 	const u32 kCameraLimit = 4;
 	
 	struct Camera
@@ -61,7 +61,7 @@ namespace fw
  if(osKeyboard().getKeyHeld(OS_KEY_LEFT))
  {
  fov += 1.0f * dt;
- if(fov > kPi) fov = kPi;
+ if(fov > Pi) fov = Pi;
  }
  else if(osKeyboard().getKeyHeld(OS_KEY_RIGHT))
  {
@@ -107,7 +107,7 @@ namespace fw
  gsFillText(rect(0.0f, 0.0f, osWindow().sizeX(), osWindow().sizeY()), GS_ALIGN_BOTTOM | GS_ALIGN_LEFT, v4(1.0f, 1.0f, 1.0f, 1.0f), v4(0.0f, 0.0f, 0.0f, 1.0f),
  osString( "focal length = %.0fmm\nfov = %.0fdeg\n%fm",
  viewManager::get()->getFocalLength(viewManager::get()->getHandle(this)),
- mFovX * (180.0f / kPi),
+ mFovX * (180.0f / Pi),
  mOrbitDistance ).getString(),
  1.0f);
  gs::Pop();

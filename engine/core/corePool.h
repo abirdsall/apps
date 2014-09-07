@@ -16,8 +16,8 @@ namespace core
     public:
         Pool( s32 size = 0 )
         {
-            _data = kNull;
-            _free = kNull;
+            _data = Null;
+            _free = Null;
 
             if( size > 0)
             {
@@ -27,7 +27,7 @@ namespace core
         
         void Init( s32 size )
         {
-            ASSERT( _data == kNull );
+            ASSERT( _data == Null );
             
             _dataSize = size;
             _freeSize = size;

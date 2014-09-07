@@ -1,6 +1,6 @@
 #include "gsHw.h"
 
-#if kBuildOpenGl3 || kBuildOpenGles2 || kBuildOpenGles3
+#if GsOpenGl3 || GsOpenGles2 || GsOpenGles3
 
 namespace gs
 {
@@ -17,7 +17,7 @@ namespace gs
 	
 	static u32 sColorAttachmentMap[ kColorTextureLimit ] =
 	{
-#if kBuildOpenGles2
+#if GsOpenGles2
         GL_COLOR_ATTACHMENT0
 #else
         GL_COLOR_ATTACHMENT0,
@@ -77,7 +77,7 @@ namespace gs
 		{
 			if( texture.mSizeZ > 1 )
 			{
-#if kBuildOpenGles2
+#if GsOpenGles2
                 ASSERT(false);
 #else
                 glFramebufferTextureLayer( GL_FRAMEBUFFER, sColorAttachmentMap[ attachmentIndex ], textureHw.mTexture, 0, ( GLint )layer );
@@ -114,7 +114,7 @@ namespace gs
 
             sActiveBuffer = canvasHw.mCanvas;
             
-#if !kBuildOpenGles2
+#if !GsOpenGles2
             const Canvas& canvas = CanvasGet( handle );
             
             // todo only reattach textures when changing lod?

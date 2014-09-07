@@ -1,6 +1,6 @@
 #include "gsHw.h"
 
-#if kBuildOpenGl3 || kBuildOpenGles2 || kBuildOpenGles3
+#if GsOpenGl3 || GsOpenGles2 || GsOpenGles3
 
 namespace gs
 {
@@ -25,8 +25,8 @@ namespace gs
 		shaderHw.mShaderV = glCreateShader( GL_VERTEX_SHADER );
 		shaderHw.mShaderF = glCreateShader( GL_FRAGMENT_SHADER );
 		
-		glShaderSource( shaderHw.mShaderV, 1, &vShader, kNull );
-		glShaderSource( shaderHw.mShaderF, 1, &fShader, kNull );
+		glShaderSource( shaderHw.mShaderV, 1, &vShader, Null );
+		glShaderSource( shaderHw.mShaderF, 1, &fShader, Null );
 		
 		glCompileShader( shaderHw.mShaderV );
 		glCompileShader( shaderHw.mShaderF );
@@ -36,13 +36,13 @@ namespace gs
 		
 		if( !vSuccess )
 		{
-			glGetShaderInfoLog( shaderHw.mShaderV, sizeof( logBuffer ), kNull, logBuffer );
+			glGetShaderInfoLog( shaderHw.mShaderV, sizeof( logBuffer ), Null, logBuffer );
 			printf( "VS Error\n%s", logBuffer );
 		}
 
 		if( !fSuccess )
 		{
-			glGetShaderInfoLog( shaderHw.mShaderF, sizeof( logBuffer ), kNull, logBuffer );
+			glGetShaderInfoLog( shaderHw.mShaderF, sizeof( logBuffer ), Null, logBuffer );
 			printf( "FS Error\n%s", logBuffer );
 		}
 		
@@ -60,7 +60,7 @@ namespace gs
 			glGetProgramiv(shaderHw.mProgram, GL_LINK_STATUS, (int *)&lSuccess);
 			if(!lSuccess)
 			{
-				glGetProgramInfoLog( shaderHw.mProgram, sizeof( logBuffer ), kNull, logBuffer );
+				glGetProgramInfoLog( shaderHw.mProgram, sizeof( logBuffer ), Null, logBuffer );
 				printf( "Link Error\n%s", logBuffer );
 				glDetachShader( shaderHw.mProgram, shaderHw.mShaderV );
 				glDetachShader( shaderHw.mProgram, shaderHw.mShaderF );
@@ -132,7 +132,7 @@ namespace gs
 			
 	void ShaderHwSetMat4( const ShaderHandle handle, const c8* name, const m4& m )
 	{
-#if kBuildOpenGles2
+#if GsOpenGles2
         m4 tm = transpose( m );
         glUniformMatrix4fv( FindUniform( handle, ( GLchar* )name ), 1, false, ( GLfloat* )tm );
 #else

@@ -1,6 +1,6 @@
 #include "gsHw.h"
 
-#if kBuildOpenGl3 || kBuildOpenGles2 || kBuildOpenGles3
+#if GsOpenGl3 || GsOpenGles2 || GsOpenGles3
 
 namespace gs
 {
@@ -10,7 +10,7 @@ namespace gs
 	const GLenum sHwTextureTarget[ TexTypeCount ] =
 	{
 		GL_TEXTURE_2D,//TexType2d,
-#if kBuildOpenGles2
+#if GsOpenGles2
         GL_TEXTURE_2D,//TexType3d,
 #else
 		GL_TEXTURE_3D,//TexType3d,
@@ -20,7 +20,7 @@ namespace gs
 	
 	const GLint sHwTextureInternalFormat[ TexFormatCount ] =
 	{
-#if kBuildOpenGles2
+#if GsOpenGles2
         GL_LUMINANCE,//TexFormatR8,
         GL_LUMINANCE,//TexFormatR16F,
         GL_LUMINANCE,//TexFormatR32F,
@@ -55,7 +55,7 @@ namespace gs
 	
 	const GLint sHwTextureFormat[ TexFormatCount ] =
 	{
-#if kBuildOpenGles2
+#if GsOpenGles2
         GL_LUMINANCE,//TexFormatR8,
         GL_LUMINANCE,//TexFormatR16F,
         GL_LUMINANCE,//TexFormatR32F,
@@ -118,7 +118,7 @@ namespace gs
 		glBindTexture( textureHw.mTarget,textureHw.mTexture );
 		if( texture.mSizeZ > 1 )
 		{
-#if kBuildOpenGles2
+#if GsOpenGles2
             ASSERT(false);
 #else
             glTexImage3D( textureHw.mTarget, 0, textureHw.mInternalFormat, texture.mSizeX, texture.mSizeY, texture.mSizeZ, 0, textureHw.mFormat, textureHw.mType, texture.mData );
@@ -133,7 +133,7 @@ namespace gs
 		glTexParameteri( textureHw.mTarget, GL_TEXTURE_WRAP_T, texture.mFlags & TexFlagClampT ? GL_CLAMP_TO_EDGE : GL_REPEAT );
 		if( texture.mSizeZ > 1 )
 		{
-#if kBuildOpenGles2
+#if GsOpenGles2
             ASSERT(false);
 #else
             glTexParameteri( textureHw.mTarget, GL_TEXTURE_WRAP_R, texture.mFlags & TexFlagClampR ? GL_CLAMP_TO_EDGE : GL_REPEAT );

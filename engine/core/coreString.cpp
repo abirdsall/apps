@@ -18,12 +18,12 @@ namespace core
 			s1++;
 		}
 		
-		return kNull;
+		return Null;
 	}
 	
 	u32 strlen( const c8* s )
 	{
-        if(s == kNull)
+        if(s == Null)
         {
             return 0;
         }

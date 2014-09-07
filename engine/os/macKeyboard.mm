@@ -1,6 +1,6 @@
 #include "os.h"
 
-#if kBuildMac
+#if OsOsx
 
 namespace os
 {

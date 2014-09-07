@@ -7,7 +7,7 @@ namespace core
 	static u64 TimeMilliseconds()
 	{
 		struct timeval tv;
-		gettimeofday( &tv, kNull );
+		gettimeofday( &tv, Null );
 		u64 seconds = tv.tv_sec;
 		u64 milliseconds = tv.tv_usec / 1000; // usec is microseconds
 		return seconds * 1000 + milliseconds;
@@ -18,6 +18,11 @@ namespace core
 		sMilliseconds = TimeMilliseconds();
 	}
 	
+    void TimeKill()
+    {
+        
+    }
+    
 	f32 TimeTick()
 	{
 		u64 oldMilliseconds = sMilliseconds;

@@ -1,7 +1,7 @@
 #include "os.h"
 #include "gs.h"
 
-#if kBuildIos
+#if OsIos
 
 #include "ios.h"
 
@@ -52,7 +52,7 @@ using namespace gs;
 
 -(void)setup
 {
-#if kBuildOpenGles2
+#if GsOpenGles2
     _context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
 #else
     _context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];

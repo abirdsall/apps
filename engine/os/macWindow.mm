@@ -1,7 +1,7 @@
 #include "os.h"
 #include "gs.h"
 
-#if kBuildMac
+#if OsOsx
 
 #include "mac.h"
 
@@ -369,7 +369,7 @@ namespace os
 	
 	bool WindowOpenHw( WindowFormat& windowFormat )
 	{
-		bool gl3 = kBuildOpenGl3;
+		bool gl3 = GsOpenGl3;
 		bool resizable = false;
 		
 		if( !initializeAppKit() )

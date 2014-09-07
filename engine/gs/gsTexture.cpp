@@ -71,7 +71,7 @@ namespace gs
 	
 	TextureHandle TextureNewDepth( const TexFormat format, const u32 sizeX, const u32 sizeY )
 	{
-		return TextureNew( TexTypeDepth, format, sizeX, sizeY, 1, TexFlagNone, kNull );
+		return TextureNew( TexTypeDepth, format, sizeX, sizeY, 1, TexFlagNone, Null );
 	}
 	
 	void TextureDelete( const TextureHandle handle )

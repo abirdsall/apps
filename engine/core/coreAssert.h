@@ -3,14 +3,14 @@
 
 namespace core
 {
-#if kEnableAssert || kEnablePanic
+#if DebugOsAssert || DebugOsPanic
 	
 	void Assert( const c8* fileName, s32 lineNumber, bool success, bool fatal );
 	
 #endif
 }
 	
-#if kEnableAssert
+#if DebugOsAssert
 	
 #define ASSERT( success ) core::Assert( __FILE__, __LINE__, ( success ), false )
 	
@@ -21,7 +21,7 @@ namespace core
 #endif
 	
 	
-#if kEnablePanic
+#if DebugOsPanic
 	
 #define PANIC( success ) core::Assert( __FILE__, __LINE__, ( success ), true )
 	

@@ -3,7 +3,7 @@
 
 #include "os.h"
 
-#if kBuildOpenGl3 || kBuildOpenGles2 || kBuildOpenGles3
+#if GsOpenGl3 || GsOpenGles2 || GsOpenGles3
 
 #include "openGlTexture.h"
 

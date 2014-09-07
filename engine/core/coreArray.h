@@ -30,7 +30,7 @@ namespace core
         
         Array()
         {
-            _data = kNull;
+            _data = Null;
             
             _count = 0;
             
@@ -39,7 +39,7 @@ namespace core
         
         Array( s32 capacity )
         {
-            _data = kNull;
+            _data = Null;
             
             _count = 0;
             

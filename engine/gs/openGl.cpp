@@ -1,6 +1,6 @@
 #include "gsHw.h"
 
-#if kBuildOpenGl3 || kBuildOpenGles2 || kBuildOpenGles3
+#if GsOpenGl3 || GsOpenGles2 || GsOpenGles3
 
 namespace gs
 {
@@ -14,10 +14,10 @@ namespace gs
 		GL_TRIANGLE_FAN,	// ePrimTriangleFan
 		GL_TRIANGLE_STRIP,	// ePrimTriangleStrip
 	};
-	
+
+#ifdef DebugGs
 	void ErrorCheck()
 	{
-        //return;
 		u32 error = glGetError();
 		switch(error)
 		{
@@ -29,7 +29,8 @@ namespace gs
 			default: ASSERT(0);break;
 		}
 	}
-	
+#endif
+    
 	void InitHw(void)
 	{
 		glFrontFace(GL_CCW);
@@ -38,7 +39,7 @@ namespace gs
 		glEnable(GL_SCISSOR_TEST);
         glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
 
-#if kBuildOpenGl3
+#if GsOpenGl3
         glDisable(GL_LINE_SMOOTH); // This causes shaders to run in software
 		//glHint(GL_POLYGON_SMOOTH, GL_NICEST);
 		//glEnable(GL_POLYGON_SMOOTH);
@@ -57,7 +58,7 @@ namespace gs
         
 		if ( blend == eBlendMin )
 		{
-#if kBuildOpenGles2
+#if GsOpenGles2
             ASSERT(false);
 #else
             glBlendFunc( GL_ONE, GL_ONE );
@@ -66,7 +67,7 @@ namespace gs
 		}
 		else if ( blend == eBlendMax )
 		{
-#if kBuildOpenGles2
+#if GsOpenGles2
             ASSERT(false);
 #else
             glBlendFunc( GL_ONE, GL_ONE );
@@ -210,7 +211,7 @@ namespace gs
         
         ErrorCheck();
 
-#if kBuildOpenGles2
+#if GsOpenGles2
         glGenVertexArraysOES( 1, &va );
 #else
         glGenVertexArrays( 1, &va );
@@ -251,7 +252,7 @@ namespace gs
 	{
         ErrorCheck();
 
-#if kBuildOpenGles2
+#if GsOpenGles2
         glBindVertexArrayOES( ( GLuint )va );
 #else
         glBindVertexArray( ( GLuint )va );
@@ -317,7 +318,7 @@ namespace gs
 	{
         ErrorCheck();
 
-#if kBuildOpenGles2
+#if GsOpenGles2
         glDeleteVertexArraysOES( 1, ( GLuint* )&va );
 #else
         glDeleteVertexArrays( 1, ( GLuint* )&va );

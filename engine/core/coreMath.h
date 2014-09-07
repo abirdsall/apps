@@ -3,12 +3,12 @@
 
 namespace core
 {
-	bool init();
-	bool kill();
+	void MathInit();
+	void MathKill();
 	
 	f32 sin(f32 a);
 	f32 cos(f32 a);
-	f32 sintable(f32 a);
+	f32 SinTable(f32 a);
 	f32 costable(f32 a);
 	f32 tan(f32 a);
 	f32 acos(f32 a);

@@ -6,16 +6,16 @@
 #include "gsCanvas.h"
 #include "gsShader.h"
 
-#if kBuildOpenGles2
+#if GsOpenGles2
 
 #include <OpenGLES/ES2/gl.h>
 #include <OpenGLES/ES2/glext.h>
 
-#elif kBuildOpenGles3
+#elif GsOpenGles3
 
 #include <OpenGLES/ES3/gl.h>
 
-#elif kBuildOpenGl3
+#elif GsOpenGl3
 
 #include <OpenGL/gl3.h>
 #include <OpenGL/gl3ext.h>

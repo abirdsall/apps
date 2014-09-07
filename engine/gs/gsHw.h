@@ -5,8 +5,12 @@
 
 namespace gs
 {
+#ifdef DebugGs
 	extern void ErrorCheck();
-	
+#else    
+#define ErrorCheck
+#endif
+    
 	void InitHw(void);
 	void KillHw(void);
 	

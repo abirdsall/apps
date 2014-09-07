@@ -176,7 +176,7 @@ namespace core
     
     inline v3 rotate(const v3& a, const v3& b, const f32 c)
     {
-        f32	sa = core::sintable(c * 0.5f);
+        f32	sa = core::SinTable(c * 0.5f);
         f32	ca = core::costable(c * 0.5f);
         v4	q = v4(b.x * sa, b.y * sa, b.z * sa, ca);
         f32 x = a.x * q.w - a.y * q.z + a.z * q.y;
@@ -208,18 +208,18 @@ namespace core
     
     inline v3 rndDir(void)
     {
-        f32 p = core::randomfraction() * kPiMul2;
+        f32 p = core::randomfraction() * PiMul2;
         f32 z = core::randomrange(-1.0f, 1.0f);
         f32 r = core::sqrt(1.0f - z * z);
-        return v3(core::sintable(p) * r, core::costable(p) * r, z);
+        return v3(core::SinTable(p) * r, core::costable(p) * r, z);
     }
     
     inline v3 rndDir(const v3& vz, const f32 minRotx, const f32 maxRotx, const f32 minRotz, const f32 maxRotz)
     {
-        f32 a  = core::randomrange(minRotz, maxRotz) * kPiMul2;
+        f32 a  = core::randomrange(minRotz, maxRotz) * PiMul2;
         f32 z  = core::randomrange(minRotx, maxRotx);
         f32 r  = core::sqrt(1.0f - z * z);
-        f32	x  = core::sintable(a) * r;
+        f32	x  = core::SinTable(a) * r;
         f32	y  = core::costable(a) * r;
         v3	vx = normalise(perp(vz));
         v3	vy = cross(vx, vz);

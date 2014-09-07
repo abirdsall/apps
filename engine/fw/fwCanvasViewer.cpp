@@ -11,7 +11,7 @@ namespace fw
 	
 	ShaderHandle CanvasViewer::MakeShader( eChannel outR, eChannel outG, eChannel outB, bool is2d )
 	{
-#if kBuildOpenGles2
+#if GsOpenGles2
         
         core::String vShader = "attribute vec2 vertex_position;\n";
         
@@ -48,7 +48,7 @@ namespace fw
 
 #else
         
-#if kBuildOpenGl3
+#if GsOpenGl3
         core::String vShader = "#version 150\n";
 #else
         core::String vShader = "#version 300 es\n";
@@ -65,7 +65,7 @@ namespace fw
         vShader += "\tfragment_tcoord = vertex_tcoord.xy;\n";
 		vShader += "}\n";
 		
-#if kBuildOpenGl3
+#if GsOpenGl3
         core::String fShader = "#version 150\n";
 #else
         core::String fShader = "#version 300 es\n";
@@ -323,7 +323,7 @@ namespace fw
 			ShaderHandle shaderHandle = mTexture2dShaders[ shaderIndex ];
 			ShaderSet( shaderHandle );
 			TextureSet( "texture0", textureHandle );
-#if !kBuildOpenGles2
+#if !GsOpenGles2
 			ShaderSetFloat( "lod", f32( lodIndex ) );///4.0f );
 #endif
 			DrawQuad2d( Quad2dShaderTexturedCustom, rect, Rect( 0.0f, 1.0f, 1.0f, 0.0f ) );

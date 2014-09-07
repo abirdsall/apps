@@ -1,6 +1,6 @@
 #include "core.h"
 
-#if kEnableAssert || kEnablePanic
+#if DebugOsAssert || DebugOsPanic
 
 namespace core
 {

@@ -56,17 +56,17 @@ namespace gs
 
 	typedef ::u32 TextureHandle;
     
-    const TextureHandle InvalidTextureHandle = kMaxU32;
+    const TextureHandle InvalidTextureHandle = MaxU32;
 	
-	const u32 kTextureInvalid = kMaxU32;
+	const u32 kTextureInvalid = MaxU32;
 	const int kTextureLimit = 256;
 	
 	void InitTextures();
 	void KillTextures();
 	
-	TextureHandle TextureNew( const TexType type, const TexFormat format, const u32 sizeX, const u32 sizeY, const u32 sizeZ, const TexFlags flags, void* data = kNull );
-	TextureHandle TextureNew3d( const TexFormat format, const u32 sizeX, const u32 sizeY, const u32 sizeZ, void* data = kNull );
-	TextureHandle TextureNew2d( const TexFormat format, const u32 sizeX, const u32 sizeY, void* data = kNull );
+	TextureHandle TextureNew( const TexType type, const TexFormat format, const u32 sizeX, const u32 sizeY, const u32 sizeZ, const TexFlags flags, void* data = Null );
+	TextureHandle TextureNew3d( const TexFormat format, const u32 sizeX, const u32 sizeY, const u32 sizeZ, void* data = Null );
+	TextureHandle TextureNew2d( const TexFormat format, const u32 sizeX, const u32 sizeY, void* data = Null );
 	TextureHandle TextureNewDepth( const TexFormat format, const u32 sizeX, const u32 sizeY );
 
 	void TextureDelete( const TextureHandle handle );

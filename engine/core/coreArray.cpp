@@ -39,7 +39,7 @@ namespace core
         {
             case eBytePool0:
             {
-                return kNull;
+                return Null;
             }
             case eBytePool32:
             {

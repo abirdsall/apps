@@ -15,7 +15,7 @@ namespace fw
         
         _voxelCountZ = voxelCountZ;
 
-        _voxelTextureSdScratch = TextureNew( TexType3d, TexFormatRGBA8, _voxelCountX / 2, _voxelCountY / 2, _voxelCountZ, TexFlags( TexFlagClamp | TexFlagMipMap ), kNull );
+        _voxelTextureSdScratch = TextureNew( TexType3d, TexFormatRGBA8, _voxelCountX / 2, _voxelCountY / 2, _voxelCountZ, TexFlags( TexFlagClamp | TexFlagMipMap ), Null );
         
         _voxelCanvasSdScratch = CanvasNew();
         
@@ -38,7 +38,7 @@ namespace fw
             CanvasAdd( _voxelCanvasSdLod2Scratch, _voxelTextureSdScratch, i );
         }
         
-        _voxelTextureSd = TextureNew( TexType3d, TexFormatRGBA8, _voxelCountX / 2, _voxelCountY / 2, _voxelCountZ, TexFlags( TexFlagClamp | TexFlagMipMap ), kNull );
+        _voxelTextureSd = TextureNew( TexType3d, TexFormatRGBA8, _voxelCountX / 2, _voxelCountY / 2, _voxelCountZ, TexFlags( TexFlagClamp | TexFlagMipMap ), Null );
 
         _voxelCanvasSd = CanvasNew();
         _voxelCanvasSdLod1 = CanvasNew();
@@ -69,7 +69,7 @@ namespace fw
         
         CanvasAdd( _lightCanvas, _lightTextureDirection );
         
-        _voxelTextureHd = TextureNew( TexType3d, TexFormatRGBA8, _voxelCountX, _voxelCountY, _voxelCountZ, TexFlagClamp, kNull );
+        _voxelTextureHd = TextureNew( TexType3d, TexFormatRGBA8, _voxelCountX, _voxelCountY, _voxelCountZ, TexFlagClamp, Null );
         
         _voxelCanvasHd = CanvasNew();
         
@@ -78,7 +78,7 @@ namespace fw
             CanvasAdd( _voxelCanvasHd, _voxelTextureHd, i );
         }
         
-        _voxelTextureHdScratch = TextureNew( TexType3d, TexFormatRGBA8, _voxelCountX, _voxelCountY, _voxelCountZ, TexFlagClamp, kNull );
+        _voxelTextureHdScratch = TextureNew( TexType3d, TexFormatRGBA8, _voxelCountX, _voxelCountY, _voxelCountZ, TexFlagClamp, Null );
         
         _voxelCanvasHdScratch = CanvasNew();
         
@@ -103,7 +103,7 @@ namespace fw
         
         // fragment_tcoord.x = object zmiddle
         // fragment_tcoord.y = object zthickness
-#if kBuildOpenGl3
+#if GsOpenGl3
         core::String vShader = "#version 410 core\n";
 #else
         core::String vShader = "#version 300 es\n";
@@ -122,7 +122,7 @@ namespace fw
         gl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, vertex_position.z, 1.0);\n\
         }";
         
-#if kBuildOpenGl3
+#if GsOpenGl3
         core::String fShader = "#version 410 core\n";
 #else
         core::String fShader = "#version 300 es\n";
@@ -150,7 +150,7 @@ namespace fw
         
         _shaderVoxelise = ShaderNew( vShader.toStr(), fShader.toStr() );
         
-#if kBuildOpenGl3
+#if GsOpenGl3
         vShader = "#version 150\n";
 #else
         vShader = "#version 300 es\n";
@@ -166,7 +166,7 @@ namespace fw
         gl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, 0.0, 1.0);\n\
         fragment_tcoord = vertex_tcoord.xy;\n\
         }";
-#if kBuildOpenGl3
+#if GsOpenGl3
         fShader = "#version 150\n";
         fShader = fShader + "out vec4 output_colour[2];\n";
 #else
@@ -209,7 +209,7 @@ namespace fw
         //last = samp;\n\
         }\n\
         attenuate *= clamp( 1.0 - occ*0.75, 0.0, 1.0);\n";
-#if kBuildOpenGl3
+#if GsOpenGl3
         fShader = fShader + "\
         output_colour[0].rgb = lightCol * attenuate;\n\
         output_colour[1].rgb = lightDir;\n}";
@@ -222,7 +222,7 @@ namespace fw
         // need to kill light dir if lightCol zero
         _shaderLuminise = ShaderNew( vShader.toStr(), fShader.toStr() );
         
-#if kBuildOpenGl3
+#if GsOpenGl3
         vShader = "#version 150\n";
 #else
         vShader = "#version 300 es\n";
@@ -242,7 +242,7 @@ namespace fw
         fragment_normal = vec4( vertex_normal, 0.0 );\n\
         fragment_colour = vertex_colour;\n\
         }";
-#if kBuildOpenGl3
+#if GsOpenGl3
         fShader = "#version 150\n";
 #else
         fShader = "#version 300 es\n";
@@ -306,7 +306,7 @@ namespace fw
     ShaderHandle RadiosityRenderer::MakeBlurShader( s32 axis, s32 layerCount )
     {
         const c8* lookup = axis == 0 ? "offset[ j ], 0.0, 0.0": axis == 1 ? "0.0, offset[ j ], 0.0" : "0.0, 0.0, offset[ j ]";
-#if kBuildOpenGl3
+#if GsOpenGl3
         core::String vShader = "#version 410\n";
 #else
         core::String vShader = "#version 300 es\n";
@@ -322,7 +322,7 @@ namespace fw
         gl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, 0, 1);\n\
         fragment_tcoord = vertex_tcoord.xyz;\n\
         }";
-#if kBuildOpenGl3
+#if GsOpenGl3
         core::String fShader = "#version 410\n";
 #else
         core::String fShader = "#version 300 es\n";

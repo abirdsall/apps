@@ -193,7 +193,7 @@ namespace fw
 	{
 		Camera& camera = sCamera[ handle ];
 		camera.mFovX = fov;
-		camera.mMatrixProject = projection(fov, os::WindowAspect(), kZNear, kZFar);
+		camera.mMatrixProject = projection(fov, os::WindowAspect(), ZNear, ZFar);
 	}
 	
 	void CameraSetFocalLength(const CameraHandle handle, const f32 focalLength)

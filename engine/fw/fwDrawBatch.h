@@ -5,7 +5,7 @@ namespace fw
 {
     typedef ::hwInt DrawBatchHandle;
     
-    static const ::hwInt InvalidDrawBatchHandle = (DrawBatchHandle)kNull;
+    static const ::hwInt InvalidDrawBatchHandle = (DrawBatchHandle)Null;
     
     void InitDrawBatches();
     void KillDrawBatches();

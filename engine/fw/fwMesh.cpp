@@ -117,6 +117,7 @@ namespace fw
 		if( mesh.mVertexDataDirty )
 		{
 			mesh.mVertexDataDirty = false;
+            gs::FillVertexBuffer( Null, mesh.mVertexSize * mesh.mVertexLimit, false );
             gs::FillVertexBuffer( mesh.mVertexData, mesh.mVertexSize * mesh.mVertexLimit, false );
 			//gs::UpdateVertexBuffer( mesh.mVertexData, mesh.mVertexSize * mesh.mVertexLimit, 0 );
 		}
@@ -134,6 +135,7 @@ namespace fw
 		if( mesh.mElementDataDirty )
 		{
 			mesh.mElementDataDirty = false;
+            gs::FillElementBuffer( Null, mesh.mElementSize * mesh.mElementCount, false );
 			gs::FillElementBuffer( mesh.mElementData, mesh.mElementSize * mesh.mElementCount, false );
             //gs::UpdateElementBuffer( mesh.mElementData, mesh.mElementSize * mesh.mElementCount, 0 );
 		}
@@ -174,13 +176,13 @@ namespace fw
 		if( mesh.mElementData )
 		{
 			core::free( mesh.mElementData );
-			mesh.mElementData = kNull;
+			mesh.mElementData = Null;
 		}
 		
 		if( mesh.mVertexData )
 		{
 			core::free( mesh.mVertexData );
-			mesh.mVertexData = kNull;
+			mesh.mVertexData = Null;
 		}		
 	}
 }

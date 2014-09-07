@@ -51,9 +51,9 @@ namespace os
     {
         InitHw();
 		
-		core::init();
-		
-        core::TimeInit();
+		MathInit();
+        TimeInit();
+        
 		WindowInit();
 		KeyboardInit();
 		MouseInit();
@@ -134,7 +134,8 @@ namespace os
 			gs::Kill();
         }
         
-        core::kill();
+        MathKill();
+        TimeKill();
 		
 		KillHw();
     }
