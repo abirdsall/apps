@@ -1,4 +1,6 @@
 #include "core.h"
+#include "os.h"
+#include "gs.h"
 
 #if DebugOsAssert || DebugOsPanic
 
@@ -8,37 +10,14 @@ namespace core
 	{
 		if ( !success )
 		{
-            int y = 0; y++;
-#if 0
-			osString reason( "assert\nfile %s\nline %d\npress c to continue\npress q to quit", fileName, lineNumber );
+			String reason = "assert\nfile ";
+            
+            reason += fileName;
+            reason +="\nline ";
+            reason = reason + lineNumber;
+            reason += "\npress c to continue\npress q to quit";
 			
-			printf( "%s\n", reason.getString() );
-			
-			while ( true )
-			{
-				osWindow().beginFrame();
-				gs::Set2d();
-				v2 textSize = gsGetTextSize( reason.getString() );
-				gsFillRectangle( rect( 0.0f, 0.0f, osWindow().sizeX(), osWindow().sizeY() ), v4( 0.0f, 0.0f, 0.0f, 0.8f ) );
-				gsFillRectangle( rect( 0.0f, 0.0f, textSize.x, textSize.y ), v4( 1.0f, 0.25f, 0.0f, 1.0f ) );
-				gsFillText( v2( 0.0f, 0.0f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ), reason.getString() );
-				if ( osKeyboard().getKeyDown( OS_KEY_C ) )
-				{
-					break;
-				}
-				if ( osKeyboard().getKeyDown( OS_KEY_Q ) )
-				{
-					fatal = true;
-					break;
-				}
-				osWindow().endFrame();
-			}
-			
-			if ( fatal )
-			{
-				os->kill();
-			}
-#endif
+            printf( "%s", reason.toStr() );
 		}
 	}
 }

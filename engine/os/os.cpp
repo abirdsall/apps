@@ -49,8 +49,10 @@ namespace os
     
     void FlowInit()
     {
-        InitHw();
+        bool initHwSuccess = InitHw();
 		
+        PANIC( initHwSuccess );
+
 		MathInit();
         TimeInit();
         

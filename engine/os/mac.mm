@@ -88,6 +88,7 @@ namespace os
 		changeToResourcesDirectory();
 		
 		sEventSource = CGEventSourceCreate( kCGEventSourceStateHIDSystemState );
+        
 		if( !sEventSource )
 		{
 			return false;
