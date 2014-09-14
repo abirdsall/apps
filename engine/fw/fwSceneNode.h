@@ -78,7 +78,7 @@ namespace fw
         {
             for( s32 i = 0; i < _components.Count(); i++ )
             {
-                _components[ i ]->Render( renderer );
+                _components[ i ]->Render( renderer, *this );
             }
             
             for( s32 i = 0; i < _children.Count(); i++ )

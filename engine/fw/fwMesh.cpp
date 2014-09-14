@@ -117,15 +117,18 @@ namespace fw
 		if( mesh.mVertexDataDirty )
 		{
 			mesh.mVertexDataDirty = false;
-            gs::FillVertexBuffer( Null, mesh.mVertexSize * mesh.mVertexLimit, false );
-            gs::FillVertexBuffer( mesh.mVertexData, mesh.mVertexSize * mesh.mVertexLimit, false );
-			//gs::UpdateVertexBuffer( mesh.mVertexData, mesh.mVertexSize * mesh.mVertexLimit, 0 );
+            //gs::FillVertexBuffer( Null, mesh.mVertexSize * mesh.mVertexLimit, mesh.mVertexDataDynamic );
+            //gs::FillVertexBuffer( mesh.mVertexData, mesh.mVertexSize * mesh.mVertexLimit, mesh.mVertexDataDynamic );
+            printf("filling vertex data %p size %d\n", mesh.mVertexData, mesh.mVertexSize * mesh.mVertexLimit );
+
+			gs::UpdateVertexBuffer( mesh.mVertexData, mesh.mVertexSize * mesh.mVertexLimit, 0 );
 		}
 		
 		for( s32 i = 0; i < gs::eAttribCount; i++ )
-		{
+		{         
 			if( mesh.mAttribSize[ i ] > 0 )
 			{
+                printf("setting attrib %d vsize %d offset %p\n", i, mesh.mVertexSize, (mesh.mAttribOffset[ i ]) );
 				gs::SetArray( ( gs::eAttrib )i, mesh.mAttribSize[ i ], mesh.mVertexSize, mesh.mAttribOffset[ i ] );
 			}
 		}
@@ -135,9 +138,9 @@ namespace fw
 		if( mesh.mElementDataDirty )
 		{
 			mesh.mElementDataDirty = false;
-            gs::FillElementBuffer( Null, mesh.mElementSize * mesh.mElementCount, false );
-			gs::FillElementBuffer( mesh.mElementData, mesh.mElementSize * mesh.mElementCount, false );
-            //gs::UpdateElementBuffer( mesh.mElementData, mesh.mElementSize * mesh.mElementCount, 0 );
+            //gs::FillElementBuffer( Null, mesh.mElementSize * mesh.mElementCount, mesh.mElementDataDynamic );
+			//gs::FillElementBuffer( mesh.mElementData, mesh.mElementSize * mesh.mElementCount, mesh.mElementDataDynamic );
+            gs::UpdateElementBuffer( mesh.mElementData, mesh.mElementSize * mesh.mElementCount, 0 );
 		}
 		
 		gs::DrawElements( primitive, mesh.mElementCount );

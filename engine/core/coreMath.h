@@ -3,19 +3,14 @@
 
 namespace core
 {
-	void MathInit();
-	void MathKill();
-	
-	f32 sin(f32 a);
-	f32 cos(f32 a);
-	f32 SinTable(f32 a);
-	f32 costable(f32 a);
-	f32 tan(f32 a);
-	f32 acos(f32 a);
-	f32 atan(f32 a);
-	f32 sqrt(f32 a);
-	f32 pow(f32 x, f32 y);
-	f64 pow64(f64 x, f64 y);	
+	f32 sinf(f32 a);
+	f32 cosf(f32 a);
+	f32 tanf(f32 a);
+	f32 acosf(f32 a);
+	f32 atanf(f32 a);
+	f32 sqrtf(f32 a);
+	f32 powf(f32 x, f32 y);
+	f64 pow(f64 x, f64 y);
 	u32 random();
 	f32 randomfraction();
 	f32 randomrange(const f32 a, const f32 b);

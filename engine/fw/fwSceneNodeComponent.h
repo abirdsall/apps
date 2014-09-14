@@ -3,6 +3,8 @@
 
 namespace fw
 {
+    struct SceneNode;
+    
     struct SceneNodeComponent
     {
         virtual void Delete()
@@ -15,7 +17,7 @@ namespace fw
             
         }
 
-        virtual void Render( Renderer& renderer )
+        virtual void Render( Renderer& renderer, SceneNode& node )
         {
             
         }

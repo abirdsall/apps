@@ -28,8 +28,10 @@ namespace fw
 #include "fwRenderer.h"
 #include "fwCube.h"
 #include "fwCubeBatch.h"
+#include "fwSuperShape.h"
 #include "fwRadiosityRenderer.h"
 #include "fwRadiosityCube.h"
+#include "fwRadiositySuperShape.h"
 
 #include "fwDrawBatch.h"
 #include "fwQuad2d.h"

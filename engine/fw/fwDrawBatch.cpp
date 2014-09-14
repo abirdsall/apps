@@ -135,23 +135,40 @@ namespace fw
         batch->_size++;
     }
 
-    void DrawBatchFlush( DrawBatchHandle handle, gs::ePrim prim )
+    void DrawBatchFinalise( DrawBatchHandle handle )
+    {
+        DrawBatch* batch = ( DrawBatch* )handle;
+        
+        MeshSetElementCount( batch->_mesh, batch->_elementsPerPrimitive * batch->_size );
+        
+        MeshSetVertexCount( batch->_mesh, batch->_verticesPerPrimitive * batch->_size );
+    }
+    
+    void DrawBatchDraw( DrawBatchHandle handle, gs::ePrim prim )
     {
         DrawBatch* batch = ( DrawBatch* )handle;
 
         if( batch->_size > 0 )
         {
-            MeshSetElementCount( batch->_mesh, batch->_elementsPerPrimitive * batch->_size );
-
-            MeshSetVertexCount( batch->_mesh, batch->_verticesPerPrimitive * batch->_size );
-            
             MeshDraw( batch->_mesh, prim );
-            
-            batch->_size = 0;
         }
+    }
+    
+    void DrawBatchClear( DrawBatchHandle handle )
+    {
+        DrawBatch* batch = ( DrawBatch* )handle;
+        
+        batch->_size = 0;
         
         MeshSetElementCount( batch->_mesh, 0 );
         
         MeshSetVertexCount( batch->_mesh, 0 );
+    }
+    
+    void DrawBatchFlush( DrawBatchHandle handle, gs::ePrim prim )
+    {
+        DrawBatchFinalise( handle );
+        DrawBatchDraw( handle, prim );
+        DrawBatchClear( handle );
     }
 }

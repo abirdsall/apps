@@ -1,24 +1,24 @@
-#ifndef FW_RADIOSITY_CUBE
-#define FW_RADIOSITY_CUBE
+#ifndef FW_RADIOSITY_SUPERSHAPE
+#define FW_RADIOSITY_SUPERSHAPE
 
 namespace fw
 {
-    struct RadiosityCube;
+    struct RadiositySuperShape;
     
-    void InitRadiosityCubes();
-    void KillRadiosityCubes();
-    RadiosityCube* RadiosityCubeNew();
-    void RadiosityCubeDelete( RadiosityCube* cube );
-
-    struct RadiosityCube : SceneNodeComponent
+    void InitRadiositySuperShapes();
+    void KillRadiositySuperShapes();
+    RadiositySuperShape* RadiositySuperShapeNew();
+    void RadiositySuperShapeDelete( RadiositySuperShape* shape );
+    
+    struct RadiositySuperShape : SceneNodeComponent
     {
         v4 _colour;
         
         void Delete()
         {
-            RadiosityCubeDelete( this );
+            RadiositySuperShapeDelete( this );
         }
-
+        
         void Render( Renderer& renderer, SceneNode& node )
         {
             RadiosityRenderer& radiosityRenderer = (RadiosityRenderer&)renderer;

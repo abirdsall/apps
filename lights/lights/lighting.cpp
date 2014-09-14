@@ -131,20 +131,22 @@ void lightingDraw()
 
 void AddCube( const v3& position, const v3& radius, const v4& colour )
 {
-    //fw::SceneNode* node = fw::SceneNodeNew();
+    fw::SceneNode* node = fw::SceneNodeNew();
     fw::RadiosityCube* radiosityCube = fw::RadiosityCubeNew();
-    radiosityCube->_position = position;
-    radiosityCube->_radius = radius;
+    node->_localTransform = identity4();
+    node->_localTransform.setPosition( position );
+    v3 test = node->_localTransform.getPosition();
+    node->_modelScale = radius;
     radiosityCube->_colour = colour;
-    //node->AddComponent( radiosityCube );
-    _renderer._scene->AddComponent( radiosityCube );
+    node->AddComponent( radiosityCube );
+    _renderer._scene->AddChild( node );
 }
 
 void lightingInit()
 {
 	fw::Init();
     
-    _lightHandleA = fw::LightNew( v3( 5.0f, 5.0f, 5.0f ), v3( 1.0f, 1.0f, 1.0f ) * 0.0f );
+    _lightHandleA = fw::LightNew( v3( 5.0f, 5.0f, 5.0f ), v3( 1.0f, 1.0f, 1.0f ) * 0.5f );
 	_lightHandleB = fw::LightNew( v3( 5.0f, 4.5f, 5.0f ), v3( 1.0f, 0.4f, 0.0f ) );
 
     _renderer.Init( aabb( v3( 0.0f, 0.0f, 0.0f ), v3( 32.0f, 32.0f, 8.0f ) ), 256, 256, 8 );

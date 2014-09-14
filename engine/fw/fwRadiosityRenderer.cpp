@@ -156,15 +156,14 @@ namespace fw
         vShader = "#version 300 es\n";
 #endif
         vShader = vShader + "in vec2 vertex_position;\n\
-        in vec4 vertex_colour;\n\
-        in vec4 vertex_tcoord;\n\
+        in vec2 vertex_tcoord;\n\
         out vec2 fragment_tcoord;\n\
         uniform mat4 viewMatrix;\n\
         uniform mat4 projMatrix;\n\
         void main()\n\
         {\n\
         gl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, 0.0, 1.0);\n\
-        fragment_tcoord = vertex_tcoord.xy;\n\
+        fragment_tcoord = vertex_tcoord;\n\
         }";
 #if GsOpenGl3
         fShader = "#version 150\n";
@@ -312,15 +311,14 @@ namespace fw
         core::String vShader = "#version 300 es\n";
 #endif
         vShader = vShader + "in vec2 vertex_position;\n\
-        in vec4 vertex_colour;\n\
-        in vec4 vertex_tcoord;\n\
-        out vec3 fragment_tcoord;\n\
+        in vec2 vertex_tcoord;\n\
+        out vec2 fragment_tcoord;\n\
         uniform mat4 viewMatrix;\n\
         uniform mat4 projMatrix;\n\
         void main()\n\
         {\n\
         gl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, 0, 1);\n\
-        fragment_tcoord = vertex_tcoord.xyz;\n\
+        fragment_tcoord = vertex_tcoord;\n\
         }";
 #if GsOpenGl3
         core::String fShader = "#version 410\n";
@@ -338,7 +336,7 @@ namespace fw
         uniform float offset[ 5 ];\n\
         uniform float weight[ 5 ];\n\
         uniform float lod;\n\
-        in vec3 fragment_tcoord;\n\
+        in vec2 fragment_tcoord;\n\
         void main()\n\
         {\n";
         

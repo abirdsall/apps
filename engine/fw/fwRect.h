@@ -70,7 +70,7 @@ namespace fw
         {
             ASSERT( count > 0 );
             
-            u32 xCount = core::sqrt( count );
+            u32 xCount = core::sqrtf( count );
             u32 yCount = xCount;
             
             if( ( xCount * xCount ) < count )

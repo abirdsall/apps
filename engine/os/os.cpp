@@ -2,6 +2,9 @@
 #include "gs.h"
 #include "fw.h"
 
+#include <stdlib.h>
+
+
 namespace os
 {
     static void ( *sAppInit )();
@@ -53,7 +56,6 @@ namespace os
 		
         PANIC( initHwSuccess );
 
-		MathInit();
         TimeInit();
         
 		WindowInit();
@@ -136,7 +138,6 @@ namespace os
 			gs::Kill();
         }
         
-        MathKill();
         TimeKill();
 		
 		KillHw();
