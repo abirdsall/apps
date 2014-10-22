@@ -4,7 +4,7 @@ namespace fw
 {
     static f32 SuperShape(const f32 t, const f32 m, const f32 a, const f32 b, const f32 n1, const f32 n2, const f32 n3)
     {
-        return ( f32 )pow( 1e-12f + pow( abs( cosf( m * t / 4.0f ) / a ), n2 ) + pow( abs( sinf( m * t / 4.0f ) / b ), n3 ), -1.0f / n1 );
+        return ( f32 )pow( 1e-12f + pow( abs( cos( m * t / 4.0f ) / a ), n2 ) + pow( abs( sin( m * t / 4.0f ) / b ), n3 ), -1.0f / n1 );
     }
 /*
     DrawBatchHandle SuperShapeBatch()
@@ -47,9 +47,9 @@ namespace fw
             {
                 f32 t1	= ( f32 )i * detailPi - Pi;
                 f32 r1	= SuperShape( t1, ss1m, ss1a, ss1b, ss1n1, ss1n2, ss1n3 );
-                f32 x = cosf( t1 ) * r1 * cosf( t2 ) * r2;
-                f32 z = sinf( t1 ) * r1 * cosf( t2 ) * r2;
-                f32 y = sinf( t2 ) * r2;
+                f32 x = cos( t1 ) * r1 * cos( t2 ) * r2;
+                f32 z = sin( t1 ) * r1 * cos( t2 ) * r2;
+                f32 y = sin( t2 ) * r2;
                 *v ++= position.x + radius.x * x;
                 *v ++= position.y + radius.y * y;
                 *v ++= position.z + radius.z * z;
@@ -107,9 +107,9 @@ namespace fw
             {
                 f32 t1	= ( f32 )i * detailPi - Pi;
                 f32 r1	= SuperShape( t1, ss1m, ss1a, ss1b, ss1n1, ss1n2, ss1n3 );
-                f32 x = cosf( t1 ) * r1 * cosf( t2 ) * r2;
-                f32 z = sinf( t1 ) * r1 * cosf( t2 ) * r2;
-                f32 y = sinf( t2 ) * r2;
+                f32 x = cos( t1 ) * r1 * cos( t2 ) * r2;
+                f32 z = sin( t1 ) * r1 * cos( t2 ) * r2;
+                f32 y = sin( t2 ) * r2;
                 *v ++= position.x + radius.x * x;
                 *v ++= position.y + radius.y * y;
                 *v ++= position.z + radius.z * z;

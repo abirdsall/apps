@@ -39,7 +39,7 @@ namespace core
             Append( s );
         }
         
-        s32 Size()
+        s32 Size() const
         {
             return _data.Count() - 1;
         }

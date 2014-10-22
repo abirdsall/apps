@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D60D4F5119D8568900654BC0 /* openGlCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890F9198D98DD001636B5 /* openGlCanvas.cpp */; };
 		D6155FA519BD0D410039F8FA /* fwSuperShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6155FA419BD0D410039F8FA /* fwSuperShape.cpp */; };
 		D6155FA819BD12320039F8FA /* fwRadiositySuperShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6155FA719BD12320039F8FA /* fwRadiositySuperShape.cpp */; };
 		D61CBED219A2CF0E00CF7DAD /* fwDrawBatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D61CBED119A2CF0E00CF7DAD /* fwDrawBatch.cpp */; };
@@ -30,7 +31,6 @@
 		D648913A198D98DD001636B5 /* gsShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890F4198D98DD001636B5 /* gsShader.cpp */; };
 		D648913B198D98DD001636B5 /* gsTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890F6198D98DD001636B5 /* gsTexture.cpp */; };
 		D648913C198D98DD001636B5 /* openGl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890F8198D98DD001636B5 /* openGl.cpp */; };
-		D648913D198D98DD001636B5 /* openGlCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890F9198D98DD001636B5 /* openGlCanvas.cpp */; };
 		D6489142198D98DD001636B5 /* openGlShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890FF198D98DD001636B5 /* openGlShader.cpp */; };
 		D6489143198D98DD001636B5 /* openGlTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6489100198D98DD001636B5 /* openGlTexture.cpp */; };
 		D6489144198D98DD001636B5 /* ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = D6489104198D98DD001636B5 /* ios.mm */; };
@@ -81,6 +81,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D60D4F4D19D717A400654BC0 /* fwRadiosityRendererMono.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fwRadiosityRendererMono.cpp; sourceTree = "<group>"; };
+		D60D4F4E19D717A400654BC0 /* fwRadiosityRendererMono.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fwRadiosityRendererMono.h; sourceTree = "<group>"; };
 		D6155FA419BD0D410039F8FA /* fwSuperShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fwSuperShape.cpp; sourceTree = "<group>"; };
 		D6155FA619BD0D4F0039F8FA /* fwSuperShape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fwSuperShape.h; sourceTree = "<group>"; };
 		D6155FA719BD12320039F8FA /* fwRadiositySuperShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fwRadiositySuperShape.cpp; sourceTree = "<group>"; };
@@ -255,6 +257,8 @@
 				D675868819BBB3BD00E0A3F8 /* fwRadiosityCube.h */,
 				D6F564F519ABE3DC00411D9B /* fwRadiosityRenderer.cpp */,
 				D6F564F419ABE3C700411D9B /* fwRadiosityRenderer.h */,
+				D60D4F4D19D717A400654BC0 /* fwRadiosityRendererMono.cpp */,
+				D60D4F4E19D717A400654BC0 /* fwRadiosityRendererMono.h */,
 				D6155FA719BD12320039F8FA /* fwRadiositySuperShape.cpp */,
 				D6155FA919BD12490039F8FA /* fwRadiositySuperShape.h */,
 				D64890D5198D98DD001636B5 /* fwRect.h */,
@@ -477,7 +481,6 @@
 				D673D01E19A0D01A00243153 /* coreMemory.cpp in Sources */,
 				D639B0781997B6100036741C /* fwFont.cpp in Sources */,
 				D648913C198D98DD001636B5 /* openGl.cpp in Sources */,
-				D648913D198D98DD001636B5 /* openGlCanvas.cpp in Sources */,
 				D6D1E94619A80F1900FE2541 /* fwQuad2d.cpp in Sources */,
 				D6489150198D98DD001636B5 /* osWindow.cpp in Sources */,
 				D6489138198D98DD001636B5 /* gs.cpp in Sources */,
@@ -514,6 +517,7 @@
 				D675868119BB3AFD00E0A3F8 /* fwCube.cpp in Sources */,
 				D648914F198D98DD001636B5 /* osTouch.cpp in Sources */,
 				D673D02419A0D08F00243153 /* core.cpp in Sources */,
+				D60D4F5119D8568900654BC0 /* openGlCanvas.cpp in Sources */,
 				D6489149198D98DD001636B5 /* macKeyboard.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

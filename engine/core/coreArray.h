@@ -7,7 +7,8 @@ namespace core
         eBytePool128,
         eBytePool512,
         eBytePool2048,
-        eBytePool8192
+        eBytePool8192,
+        eBytePool16384
     } eBytePool;
     
     u8* bytePoolAlloc( eBytePool bytePool );
@@ -101,7 +102,7 @@ namespace core
             return _data;
         }
 
-        inline s32 Count()
+        inline s32 Count() const
         {
             return _count;
         }
@@ -111,7 +112,7 @@ namespace core
             return _capacity;
         }
 
-        inline T operator [] ( const s32 i )
+        inline T& operator [] ( const s32 i ) const
         {
             ASSERT( i < _count );
             

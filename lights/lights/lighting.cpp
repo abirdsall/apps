@@ -122,7 +122,9 @@ void lightingDraw()
     
     gs::SetBlend(gs::eBlendRgba);
     
-    fw::SystemFontDraw( core::String("0123456789abcdefghijklmnopqrstuvwxyz"), v2( 100, 100 ), v4(1.0f, 1.0f, 1.0f, 1.0f ) );
+    core::String test = core::String("0123456789abcdefghijklmnopqrstuvwxyz");
+    
+    fw::SystemFontDraw( test, v2( 100, 100 ), v4(1.0f, 1.0f, 1.0f, 1.0f ) );
     
     gs::Pop();
 
@@ -144,7 +146,13 @@ void AddCube( const v3& position, const v3& radius, const v4& colour )
 
 void lightingInit()
 {
-	fw::Init();
+    fw::InitSceneNodes();
+    fw::InitLights();
+    fw::InitDrawBatches();
+    fw::InitCubeBatches();
+    fw::InitQuad2dBatches();
+    fw::InitRadiosityCubes();
+    fw::SystemFontInit();
     
     _lightHandleA = fw::LightNew( v3( 5.0f, 5.0f, 5.0f ), v3( 1.0f, 1.0f, 1.0f ) * 0.5f );
 	_lightHandleB = fw::LightNew( v3( 5.0f, 4.5f, 5.0f ), v3( 1.0f, 0.4f, 0.0f ) );
@@ -172,4 +180,6 @@ void lightingInit()
 	fw::CameraSetFocus( mCameraHandle, v3( 16.0f, 16.0f, 4.0f ) );
 
 	mCanvasViewer.Init();
+    //mCanvasViewer.SetActive( true );
+
 }

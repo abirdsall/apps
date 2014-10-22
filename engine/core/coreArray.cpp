@@ -26,12 +26,14 @@ namespace core
     struct Bx512 { u8 _bytes[ 512 ]; };
     struct Bx2048 { u8 _bytes[ 2048 ]; };
     struct Bx8192 { u8 _bytes[ 8192 ]; };
+    struct Bx16384 { u8 _bytes[ 16384 ]; };
     
-    static Pool<Bx32> _bytePool32( 8192 );
-    static Pool<Bx128> _bytePool128( 2048 );
-    static Pool<Bx512> _bytePool512( 512 );
-    static Pool<Bx2048> _bytePool2048( 128 );
-    static Pool<Bx8192> _bytePool8192( 32 );
+    static Pool<Bx32> _bytePool32( 4096 );
+    static Pool<Bx128> _bytePool128( 1024 );
+    static Pool<Bx512> _bytePool512( 256 );
+    static Pool<Bx2048> _bytePool2048( 64 );
+    static Pool<Bx8192> _bytePool8192( 16 );
+    static Pool<Bx16384> _bytePool16384( 8 );
     
     u8* bytePoolAlloc( eBytePool bytePool )
     {
@@ -60,6 +62,10 @@ namespace core
             case eBytePool8192:
             {
                 return ( u8* )_bytePool8192.New();
+            }
+            case eBytePool16384:
+            {
+                return ( u8* )_bytePool16384.New();
             }
         }
     }
@@ -97,6 +103,11 @@ namespace core
                 _bytePool8192.Delete( ( Bx8192* )data );
                 break;
             }
+            case eBytePool16384:
+            {
+                _bytePool16384.Delete( ( Bx16384* )data );
+                break;
+            }
         }
     }
     
@@ -125,6 +136,10 @@ namespace core
         else if( capacity <= 8192 )
         {
             return eBytePool8192;
+        }
+        else if( capacity <= 16384 )
+        {
+            return eBytePool16384;
         }
         else
         {

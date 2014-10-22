@@ -154,7 +154,7 @@ namespace fw
 	f32 CameraGetFocalLength(const CameraHandle handle)
 	{
 		Camera& camera = sCamera[ handle ];
-		return 0.5f * ( 36.0f / core::tanf( 0.5f * camera.mFovX ) );
+		return 0.5f * ( 36.0f / core::tan( 0.5f * camera.mFovX ) );
 	}
 	
 	v3 CameraGetMouseDir(const CameraHandle handle)
@@ -162,7 +162,7 @@ namespace fw
 		Camera& camera = sCamera[ handle ];
 		v2 npos = ( os::MousePositionPixels() - camera.mWindow.Min() ) / camera.mWindow.Size();
 		v2 pos = npos - 0.5f;
-		f32 frustrumWidthAtZ1 = 2.0f * core::tanf(camera.mFovX * 0.5f);
+		f32 frustrumWidthAtZ1 = 2.0f * core::tan(camera.mFovX * 0.5f);
 		v3 dir = camera.mMatrixModel.rows[0].xyz() * pos.x * frustrumWidthAtZ1 -
 		camera.mMatrixModel.rows[1].xyz() * pos.y *(frustrumWidthAtZ1 * os::WindowAspect() ) +
 		camera.mMatrixModel.rows[2].xyz();
@@ -199,8 +199,8 @@ namespace fw
 	void CameraSetFocalLength(const CameraHandle handle, const f32 focalLength)
 	{
 		// 35mm format is 36mm x 24mm
-		f32 fov = 2.0f * core::atanf(36.0f / (2.0f * focalLength)); // fovX in 35mm format
-		//f32 fov = 2.0f * core::atanf(24.0f / (2.0f * focalLength)); // fovY in 35mm format
+		f32 fov = 2.0f * core::atan(36.0f / (2.0f * focalLength)); // fovX in 35mm format
+		//f32 fov = 2.0f * core::atan(24.0f / (2.0f * focalLength)); // fovY in 35mm format
 		CameraSetFov( handle, fov );
 	}
 	

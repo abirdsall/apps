@@ -6,7 +6,7 @@ namespace fw
     
     void InitRadiosityCubes()
     {
-        _radiosityCubes.Init( 256 );
+        _radiosityCubes.Init( 32 );
     }
     
     void KillRadiosityCubes()

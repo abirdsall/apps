@@ -141,9 +141,9 @@ namespace core
     inline f32	dot(const v2& a, const v2& b)					{return a.x * b.x + a.y * b.y;}
     inline f32	dot(const v3& a, const v3& b)					{return a.x * b.x + a.y * b.y + a.z * b.z;}
     inline f32	dot(const v4& a, const v4& b)					{return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;}
-    inline f32	length(const v2& a)								{return core::sqrtf(dot(a, a));}
-    inline f32	length(const v3& a)								{return core::sqrtf(dot(a, a));}
-    inline f32	length(const v4& a)								{return core::sqrtf(dot(a, a));}
+    inline f32	length(const v2& a)								{return core::sqrt(dot(a, a));}
+    inline f32	length(const v3& a)								{return core::sqrt(dot(a, a));}
+    inline f32	length(const v4& a)								{return core::sqrt(dot(a, a));}
     inline f32	distance(const v2& a, const v2& b)				{return length(b - a);}
     inline f32	distance(const v3& a, const v3& b)				{return length(b - a);}
     inline f32	distance(const v4& a, const v4& b)				{return length(b - a);}
@@ -176,8 +176,8 @@ namespace core
     
     inline v3 rotate(const v3& a, const v3& b, const f32 c)
     {
-        f32	sa = core::sinf(c * 0.5f);
-        f32	ca = core::cosf(c * 0.5f);
+        f32	sa = core::sin(c * 0.5f);
+        f32	ca = core::cos(c * 0.5f);
         v4	q = v4(b.x * sa, b.y * sa, b.z * sa, ca);
         f32 x = a.x * q.w - a.y * q.z + a.z * q.y;
         f32 y = a.y * q.w - a.z * q.x + a.x * q.z;
@@ -210,17 +210,17 @@ namespace core
     {
         f32 p = core::randomfraction() * PiMul2;
         f32 z = core::randomrange(-1.0f, 1.0f);
-        f32 r = core::sqrtf(1.0f - z * z);
-        return v3(core::sinf(p) * r, core::cosf(p) * r, z);
+        f32 r = core::sqrt(1.0f - z * z);
+        return v3(core::sin(p) * r, core::cos(p) * r, z);
     }
     
     inline v3 rndDir(const v3& vz, const f32 minRotx, const f32 maxRotx, const f32 minRotz, const f32 maxRotz)
     {
         f32 a  = core::randomrange(minRotz, maxRotz) * PiMul2;
         f32 z  = core::randomrange(minRotx, maxRotx);
-        f32 r  = core::sqrtf(1.0f - z * z);
-        f32	x  = core::sinf(a) * r;
-        f32	y  = core::cosf(a) * r;
+        f32 r  = core::sqrt(1.0f - z * z);
+        f32	x  = core::sin(a) * r;
+        f32	y  = core::cos(a) * r;
         v3	vx = normalise(perp(vz));
         v3	vy = cross(vx, vz);
         return x * vx + y * vy + z * vz;

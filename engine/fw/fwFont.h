@@ -6,7 +6,7 @@
 namespace fw
 {
     void SystemFontInit();
-    void SystemFontDraw( core::String text, v2 position, v4 colour );
+    void SystemFontDraw( core::String& text, v2 position, v4 colour );
 }
 
 #endif

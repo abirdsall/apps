@@ -441,6 +441,7 @@ namespace os
 		sWindowContext = [[NSOpenGLContext alloc] initWithFormat:sWindowPixelFormat shareContext:nil];
 		if( sWindowContext == nil )
 		{
+            int y=0;y++;
 			// critical error
 		}
 		
@@ -453,9 +454,6 @@ namespace os
 		//_glfwInput.MousePosX = point.x;
 		//_glfwInput.MousePosY = _glfwWin.height - point.y;
 		
-		// Start by clearing the front buffer to black (avoid ugly desktop remains in our OpenGL window)
-		glClear( GL_COLOR_BUFFER_BIT );
-		WindowTick();
 		
 		// set title
 		const char *title = "lights";
@@ -464,7 +462,11 @@ namespace os
 		// enable vsync
 		GLint sync = 1;
 		[sWindowContext setValues:&sync forParameter:NSOpenGLCPSwapInterval];
-		
+
+        // Start by clearing the front buffer to black (avoid ugly desktop remains in our OpenGL window)
+        glClear( GL_COLOR_BUFFER_BIT );
+        WindowTick();
+
 		return( true );
 	}
 }

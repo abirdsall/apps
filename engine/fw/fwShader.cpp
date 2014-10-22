@@ -92,9 +92,9 @@ namespace fw
 #if !GsOpenGles2
         shader += "layout(location = ";
         shader = shader + index;
-        shader += ") ";
+        shader += ") out ";
         AppendPrecision( shader, precision );
-        shader += "out vec4 output_colour";
+        shader += "vec4 output_colour";
         shader = shader + index;
         shader += ";\n";
 #endif

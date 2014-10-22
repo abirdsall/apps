@@ -61,40 +61,8 @@ namespace gs
 	{
 		glDeleteFramebuffers( 1, &sCanvasHw[ handle ].mCanvas );
 	}
-
-	void CanvasHwAdd( const CanvasHandle canvasHandle, const TextureHandle textureHandle, const u32 attachmentIndex, const u32 layer )
-	{
-        /*
-        LocateBackBuffer();
-        
-        CanvasHw canvasHw = sCanvasHw[ canvasHandle ];
-		const Texture& texture = TextureGet( textureHandle );
-		const TextureHw& textureHw = TextureHwGet( textureHandle );
-		
-		glBindFramebuffer( GL_FRAMEBUFFER, canvasHw.mCanvas );
-
-        if( texture.mType != TexTypeDepth )
-		{
-			if( texture.mSizeZ > 1 )
-			{
-#if GsOpenGles2
-                ASSERT(false);
-#else
-                glFramebufferTextureLayer( GL_FRAMEBUFFER, sColorAttachmentMap[ attachmentIndex ], textureHw.mTexture, 0, ( GLint )layer );
-#endif
-			}
-			else
-			{
-				glFramebufferTexture2D( GL_FRAMEBUFFER, sColorAttachmentMap[ attachmentIndex ], textureHw.mTarget, textureHw.mTexture, 0 );
-			}
-		}
-
-        ASSERT( glCheckFramebufferStatus( GL_FRAMEBUFFER ) == GL_FRAMEBUFFER_COMPLETE);
-        
-		glBindFramebuffer( GL_FRAMEBUFFER, sActiveBuffer );*/
-	}
 	
-	void CanvasHwSet( const CanvasHandle handle, const s32 layer, const s32 lod )
+	void CanvasHwSet( const CanvasHandle handle, const s32 lod )
 	{
         ErrorCheck();
 
@@ -129,14 +97,7 @@ namespace gs
                 
                 if( texture.mSizeZ > 1 )
                 {
-                    if( layer >= 0 )
-                    {
-                        glFramebufferTextureLayer( GL_FRAMEBUFFER, sColorAttachmentMap[ i ], textureHw.mTexture, ( GLint )lod, ( GLint )layer );
-                    }
-                    else
-                    {
-                        glFramebufferTextureLayer( GL_FRAMEBUFFER, sColorAttachmentMap[ i ], textureHw.mTexture, ( GLint )lod, ( GLint )i );
-                    }
+                    glFramebufferTextureLayer( GL_FRAMEBUFFER, sColorAttachmentMap[ i ], textureHw.mTexture, ( GLint )lod, ( GLint )canvas.mColorTextureLayer[ i ] );
                 }
                 else
                 {

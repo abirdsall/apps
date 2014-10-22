@@ -259,7 +259,7 @@ namespace fw
 				case eNavLevelTexture: // draw first lod of first layer for all textures in current canvas
 				{
 					Rect textureRects[ kColorTextureLimit ];
-					const Canvas& canvas = CanvasGet( canvases[ mNavIndex[ eNavLevelCanvas ] ] );
+					Canvas& canvas = CanvasGet( canvases[ mNavIndex[ eNavLevelCanvas ] ] );
 					Rect(0.0f, 0.0f, ( f32 )CanvasSizeX(), ( f32 )CanvasSizeY() ).Subdivide( textureRects, canvas.mColorTextureCount );
 
 					for( int i = 0; i < canvas.mColorTextureCount; i++ )
@@ -273,7 +273,7 @@ namespace fw
 				{
 					const u32 kTextureLayerLimit = 32;
 					Rect layerRects[ kTextureLayerLimit ];
-					const Canvas& canvas = CanvasGet( canvases[ mNavIndex[ eNavLevelCanvas ] ] );
+					Canvas& canvas = CanvasGet( canvases[ mNavIndex[ eNavLevelCanvas ] ] );
 					const Texture& texture = TextureGet( canvas.mColorTexture[ mNavIndex[ eNavLevelTexture ] ] );
 					Rect(0.0f, 0.0f, ( f32 )CanvasSizeX(), ( f32 )CanvasSizeY() ).Subdivide( layerRects, texture.mSizeZ );
 
@@ -304,7 +304,7 @@ namespace fw
 		Pop();
 	}
 		
-	void CanvasViewer::DrawTexture( const Rect& rect, const Canvas& canvas, const s32 textureIndex, const s32 layerIndex, const s32 lodIndex, const bool highlighted )
+	void CanvasViewer::DrawTexture( const Rect& rect, Canvas& canvas, const s32 textureIndex, const s32 layerIndex, const s32 lodIndex, const bool highlighted )
 	{
 		ASSERT( textureIndex >= 0 && textureIndex < canvas.mColorTextureCount );
 		TextureHandle textureHandle = canvas.mColorTexture[ textureIndex ];
@@ -345,7 +345,9 @@ namespace fw
         Set2d();
         SetWrite(eWriteRgb);
         SetBlend(eBlendRgba);
-        SystemFontDraw(core::String("hello HELLO"), rect.Min(), v4(1,0,0,1));
+        core::String& canvasName = canvas._name;
+        
+        SystemFontDraw(canvasName, rect.Min(), v4(1,0,0,1));
         Pop();
 	}
 

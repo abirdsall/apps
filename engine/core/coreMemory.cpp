@@ -4,10 +4,12 @@ namespace core
 {
 	void* alloc(size_t size)
 	{
-		return malloc(size);
+        void* result = malloc(size);
+        printf("abxmalloc %p %d\n", result, (s32)size);
+        return result;
 	}
 	
-	void free(void* ptr)
+	void xfree(void* ptr)
 	{
 		free(ptr);
 	}

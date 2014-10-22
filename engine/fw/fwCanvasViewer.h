@@ -45,7 +45,7 @@ namespace fw
 		u32 MakeShaderIndex( eChannel outR, eChannel outG, eChannel outB );
 		gs::ShaderHandle MakeShader( eChannel outR, eChannel outG, eChannel outB, bool is2d );
 		void DrawHighlight( const Rect& rect );
-		void DrawTexture( const Rect& rect, const gs::Canvas& canvas, const s32 textureIndex, const s32 layerIndex, const s32 lodIndex, const bool highlighted );
+		void DrawTexture( const Rect& rect, gs::Canvas& canvas, const s32 textureIndex, const s32 layerIndex, const s32 lodIndex, const bool highlighted );
 		
 	public:
 		CanvasViewer();

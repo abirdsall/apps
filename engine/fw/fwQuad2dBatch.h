@@ -15,6 +15,7 @@ namespace fw
     
     void InitQuad2dBatches();
     void KillQuad2dBatches();
+    void TickQuad2dBatches();
     
     void BatchQuad2dBegin( Quad2dShader shader, gs::TextureHandle texture );
     void BatchQuad2d( const Rect& vcoords, const v4& colour );

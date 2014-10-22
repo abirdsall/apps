@@ -104,7 +104,7 @@ namespace core
             f32 d = dot(a, b);
             if(d < 1.0f)
             {
-                roll(normalise(cross(b, a)), core::acosf(d) * c);
+                roll(normalise(cross(b, a)), core::acos(d) * c);
             }
             else
             {
@@ -118,8 +118,8 @@ namespace core
         
         inline void roll(const v3& a, f32 b)
         {
-            f32 c = core::cosf(b);
-            f32 s = core::sinf(b);
+            f32 c = core::cos(b);
+            f32 s = core::sin(b);
             f32 v = 1.0f - c;
             f32 vxx = v * a.x * a.x;
             f32 vxy = v * a.x * a.y;
@@ -167,24 +167,24 @@ namespace core
     
     inline m4 rotateX(f32 angle)
     {
-        f32 cosA = core::cosf(angle);
-        f32 sinA = core::sinf(angle);
+        f32 cosA = core::cos(angle);
+        f32 sinA = core::sin(angle);
         
         return m4(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, cosA,-sinA, 0.0f, 0.0f, sinA, cosA, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
     }
     
     inline m4 rotateY(const f32 angle)
     {
-        f32 cosA = core::cosf(angle);
-        f32 sinA = core::sinf(angle);
+        f32 cosA = core::cos(angle);
+        f32 sinA = core::sin(angle);
         
         return m4(cosA, 0.0f,-sinA, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, sinA, 0.0f, cosA, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
     }
     
     inline m4 rotateZ(const f32 angle)
     {
-        f32 cosA = core::cosf(angle);
-        f32 sinA = core::sinf(angle);
+        f32 cosA = core::cos(angle);
+        f32 sinA = core::sin(angle);
         return m4(	cosA,-sinA, 0.0f, 0.0f,
                   sinA, cosA, 0.0f, 0.0f,
                   0.0f, 0.0f, 1.0f, 0.0f,
@@ -193,8 +193,8 @@ namespace core
     
     inline m4 rotateXY(const f32 angleX, const f32 angleY)
     {
-        f32 cosX = core::cosf(angleX), sinX = core::sinf(angleX);
-        f32 cosY = core::cosf(angleY), sinY = core::sinf(angleY);
+        f32 cosX = core::cos(angleX), sinX = core::sin(angleX);
+        f32 cosY = core::cos(angleY), sinY = core::sin(angleY);
         return m4(			cosY, 0.0f,		   -sinY, 0.0f,
                   -sinX * sinY, cosX, -sinX * cosY, 0.0f,
                   cosX * sinY, sinX,  cosX * cosY, 0.0f,
@@ -203,12 +203,12 @@ namespace core
     
     inline m4 rotateZXY(const f32 angleX, const f32 angleY, const f32 angleZ)
     {
-        f32 cosX = core::cosf(angleX);
-        f32 sinX = core::sinf(angleX);
-        f32 cosY = core::cosf(angleY);
-        f32 sinY = core::sinf(angleY);
-        f32 cosZ = core::cosf(angleZ);
-        f32 sinZ = core::sinf(angleZ);
+        f32 cosX = core::cos(angleX);
+        f32 sinX = core::sin(angleX);
+        f32 cosY = core::cos(angleY);
+        f32 sinY = core::sin(angleY);
+        f32 cosZ = core::cos(angleZ);
+        f32 sinZ = core::sin(angleZ);
         return m4(
                   cosY * cosZ + sinX * sinY * sinZ,   -cosX * sinZ,    sinX * cosY * sinZ - sinY * cosZ,  0,
                   cosY * sinZ - sinX * sinY * cosZ,    cosX * cosZ,   -sinY * sinZ - sinX * cosY * cosZ,  0,
@@ -227,7 +227,7 @@ namespace core
     
     inline m4 projection(f32 fovX, f32 aspect, f32 zNear, f32 zFar)
     {
-        f32 x = core::cosf(0.5f * fovX) / core::sinf(0.5f * fovX);
+        f32 x = core::cos(0.5f * fovX) / core::sin(0.5f * fovX);
         f32 y = x / aspect;
         
         //f32 x = 1.0f / fovX;

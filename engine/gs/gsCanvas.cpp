@@ -2,13 +2,16 @@
 
 namespace gs
 {
-	static Canvas sCanvas[ kCanvasLimit ];
+    Array<Canvas> sCanvas;
+	//static Canvas sCanvas[ kCanvasLimit ];
 	static CanvasHandle sCanvasActive;
 	static s32 sCanvasActiveLod;
 	static u32 sCanvasActiveCount;
 
 	void InitCanvases()
 	{
+        sCanvas.SetCount( kCanvasLimit );
+
 		for( u32 i = 0; i < kCanvasLimit; i++ )
 		{
 			sCanvas[ i ].mActive = false;
@@ -25,8 +28,13 @@ namespace gs
 			CanvasDelete( i );
 		}
 	}
-	
-	CanvasHandle CanvasNew()
+
+    CanvasHandle CanvasNew()
+    {
+        return CanvasNew( "Unknown" );
+    }
+    
+    CanvasHandle CanvasNew( const c8* name )
 	{
 		for( u32 i = 0; i < kCanvasLimit; i++ )
 		{
@@ -34,6 +42,7 @@ namespace gs
 			{
 				CanvasHandle handle = i;
 				Canvas& canvas = sCanvas[ handle ];
+                canvas._name = name;
 				canvas.mColorTextureCount = 0;
 				canvas.mDepthTextureCount = 0;
 				canvas.mSizeX = 1;
@@ -77,22 +86,22 @@ namespace gs
 		if( texture.mType == TexTypeDepth )
 		{
 			ASSERT( canvas.mDepthTextureCount < kDepthTextureLimit );
-			CanvasHwAdd( canvasHandle, textureHandle, canvas.mDepthTextureCount, layer );
 			canvas.mDepthTexture[ canvas.mDepthTextureCount ] = textureHandle;
+            canvas.mDepthTextureLayer[ canvas.mDepthTextureCount ] = layer;
 			canvas.mDepthTextureCount++;
 		}
 		else
 		{
 			ASSERT( canvas.mColorTextureCount < kColorTextureLimit );
-			CanvasHwAdd( canvasHandle, textureHandle, canvas.mColorTextureCount, layer );
 			canvas.mColorTexture[ canvas.mColorTextureCount ] = textureHandle;
+            canvas.mColorTextureLayer[ canvas.mColorTextureCount ] = layer;
 			canvas.mColorTextureCount++;
 		}
 	}
 	
-	void CanvasSet( const CanvasHandle handle, const s32 layer, const s32 lod )
+	void CanvasSet( const CanvasHandle handle, const s32 lod )
 	{
-        CanvasHwSet( handle, layer, lod );
+        CanvasHwSet( handle, lod );
         
 		sCanvasActive = handle;
         
@@ -103,7 +112,7 @@ namespace gs
 	
 	void CanvasSet( const CanvasHandle handle )
 	{
-        CanvasSet( handle, -1, 0 );
+        CanvasSet( handle, 0 );
 	}
 	
 	u32 CanvasSizeX()
@@ -116,7 +125,7 @@ namespace gs
 		return sCanvasActive != kCanvasInvalid ? sCanvas[ sCanvasActive ].mSizeY >> sCanvasActiveLod : os::WindowSizeY();
 	}
 	
-	const Canvas& CanvasGet( const CanvasHandle handle )
+	Canvas& CanvasGet( const CanvasHandle handle )
 	{
 		return sCanvas[ handle ];
 	}

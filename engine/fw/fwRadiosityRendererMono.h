@@ -1,9 +1,9 @@
-#ifndef FW_RADIOSITY_RENDERER
-#define FW_RADIOSITY_RENDERER
+#ifndef FW_RADIOSITY_RENDERER_MONO
+#define FW_RADIOSITY_RENDERER_MONO
 
 namespace fw
 {
-    struct RadiosityRenderer : Renderer
+    struct RadiosityRendererMono : Renderer
     {
         aabb _bounds;
         
@@ -13,20 +13,20 @@ namespace fw
         s32 _voxelCountY;
         s32 _voxelCountZ;
         
-        gs::CanvasHandle _voxelCanvasHd;
-        gs::CanvasHandle _voxelCanvasHdScratch;
-        gs::CanvasHandle _voxelCanvasSd;
-        gs::CanvasHandle _voxelCanvasSdScratch;
-        gs::CanvasHandle _voxelCanvasH2;
-        gs::CanvasHandle _voxelCanvasH2Scratch;
-        gs::CanvasHandle _voxelCanvasS2;
-        gs::CanvasHandle _voxelCanvasS2Scratch;
-        gs::CanvasHandle _voxelCanvasSdLod1;
-        gs::CanvasHandle _voxelCanvasSdLod1Scratch;
-        gs::CanvasHandle _voxelCanvasSdLod2;
-        gs::CanvasHandle _voxelCanvasSdLod2Scratch;
+        s32 _passesPacked;
+        s32 _passesUnpacked;
         
-        Array<gs::CanvasHandle> _lightCanvases;
+        Array<gs::CanvasHandle> _voxelCanvasesHdPacked;
+        Array<gs::CanvasHandle> _voxelCanvasesHdPackedScratch;
+        Array<gs::CanvasHandle> _voxelCanvasesSdPacked;
+        Array<gs::CanvasHandle> _voxelCanvasesSdPackedScratch;
+        Array<gs::CanvasHandle> _voxelCanvasesSdPackedLod1;
+        Array<gs::CanvasHandle> _voxelCanvasesSdPackedLod1Scratch;
+        Array<gs::CanvasHandle> _voxelCanvasesSdPackedLod2;
+        Array<gs::CanvasHandle> _voxelCanvasesSdPackedLod2Scratch;
+        Array<gs::CanvasHandle> _voxelCanvasesHd;
+        Array<gs::CanvasHandle> _voxelCanvasesSd;
+        gs::CanvasHandle _lightCanvas;
         
         gs::TextureHandle _voxelTextureHd;
         gs::TextureHandle _voxelTextureHdScratch;
@@ -38,44 +38,36 @@ namespace fw
         gs::ShaderHandle _shaderBlurX;
         gs::ShaderHandle _shaderBlurY;
         gs::ShaderHandle _shaderBlurZ;
-        gs::ShaderHandle _shaderBlu2X;
-        gs::ShaderHandle _shaderBlu2Y;
-        gs::ShaderHandle _shaderBlu2Z;
         gs::ShaderHandle _shaderBlurXHalf;
         gs::ShaderHandle _shaderBlurYHalf;
         gs::ShaderHandle _shaderBlurZHalf;
         gs::ShaderHandle _shaderBlurXQuarter;
         gs::ShaderHandle _shaderBlurYQuarter;
         gs::ShaderHandle _shaderBlurZQuarter;
-
+        
         gs::ShaderHandle _shaderVoxelise;
+        gs::ShaderHandle _shaderUnswizzle;
         gs::ShaderHandle _shaderLuminise;
         gs::ShaderHandle _shaderForward;
         gs::ShaderHandle _shaderFillZ;
-
+        
         void Init( const aabb& bounds, s32 voxelCountX, s32 voxelCountY, s32 voxelCountZ );
         
-        gs::ShaderHandle MakeBlurShader( s32 axis, s32 targetCount, f32 zMin, f32 zStep );
+        gs::ShaderHandle MakeBlurShader( s32 axis, s32 layerCount );
         
         void Kill();
         
         void Render();
         
         void BlurLayers(gs::TextureHandle textureX,
-                        gs::TextureHandle textureY,
-                        gs::TextureHandle textureZ,
                         gs::CanvasHandle canvasX,
+                        gs::TextureHandle textureY,
                         gs::CanvasHandle canvasY,
+                        gs::TextureHandle textureZ,
                         gs::CanvasHandle canvasZ,
-                        gs::CanvasHandle canva2X,
-                        gs::CanvasHandle canva2Y,
-                        gs::CanvasHandle canva2Z,
                         gs::ShaderHandle shaderX,
                         gs::ShaderHandle shaderY,
                         gs::ShaderHandle shaderZ,
-                        gs::ShaderHandle shade2X,
-                        gs::ShaderHandle shade2Y,
-                        gs::ShaderHandle shade2Z,
                         s32 srcLod,
                         s32 dstLod,
                         u32 dstSizeX,

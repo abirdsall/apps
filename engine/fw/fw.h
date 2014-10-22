@@ -30,6 +30,7 @@ namespace fw
 #include "fwCubeBatch.h"
 #include "fwSuperShape.h"
 #include "fwRadiosityRenderer.h"
+#include "fwRadiosityRendererMono.h"
 #include "fwRadiosityCube.h"
 #include "fwRadiositySuperShape.h"
 

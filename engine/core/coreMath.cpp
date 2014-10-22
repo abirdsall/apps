@@ -6,39 +6,39 @@ namespace core
 {
 	static u64 _randomSeed = 0x0000000021454a53;
 	
-	f32 sinf(f32 a)
+	f32 sin(f32 a)
 	{
-		return ::sinf(a);
+		return ::sin(a);
 	}
 
-	f32 cosf(f32 a)
+	f32 cos(f32 a)
 	{
-		return ::cosf(a);
+		return ::cos(a);
 	}
 	
-	f32 tanf(f32 a)
+	f32 tan(f32 a)
 	{
-		return ::tanf(a);
+		return ::tan(a);
 	}
 	
-	f32 acosf(f32 a)
+	f32 acos(f32 a)
 	{
-		return ::acosf(a);
+		return ::acos(a);
 	}
 	
-	f32 atanf(f32 a)
+	f32 atan(f32 a)
 	{
-		return ::atanf(a);
+		return ::atan(a);
 	}
 	
-	f32 sqrtf(f32 a)
+	f32 sqrt(f32 a)
 	{
-		return ::sqrtf(a);
+		return ::sqrt(a);
 	}
 
-	f32 powf(f32 x, f32 y)
+	f32 pow(f32 x, f32 y)
 	{
-        return ::powf(x, y);
+        return ::pow(x, y);
 	}
 
 	f64 pow(f64 x, f64 y)

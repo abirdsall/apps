@@ -388,8 +388,14 @@ namespace gs
         
         ErrorCheck();
 
-		glDrawElements( sPrimMap[ primitive ], ( GLsizei )num, GL_UNSIGNED_SHORT, ( const GLvoid* )0 );
+        //u16* ebuf = (u16*)glMapBuffer( GL_ELEMENT_ARRAY_BUFFER, GL_READ_ONLY );
+        //f32* vbuf = (f32*)glMapBuffer( GL_ARRAY_BUFFER, GL_READ_ONLY );
+
+        glDrawElements( sPrimMap[ primitive ], ( GLsizei )num, GL_UNSIGNED_SHORT, Null);// ( const GLvoid* )0 );
         
+        //glUnmapBuffer( GL_ELEMENT_ARRAY_BUFFER );
+        //glUnmapBuffer( GL_ARRAY_BUFFER );
+
         ErrorCheck();
 	}
 
