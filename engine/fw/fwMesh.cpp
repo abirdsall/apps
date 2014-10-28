@@ -120,7 +120,7 @@ namespace fw
 		gs::SetVertexBuffer( mesh.mVertexBufferId );
         gs::SetElementBuffer( mesh.mElementBufferId );
         
-        printf("SZA %d\n", (s32)mesh.mVertexArrayId);
+        //printf("SZA %d\n", (s32)mesh.mVertexArrayId);
 		
 		if( mesh.mVertexDataDirty )
 		{
@@ -128,7 +128,7 @@ namespace fw
             //gs::FillVertexBuffer( Null, mesh.mVertexSize * mesh.mVertexLimit, mesh.mVertexDataDynamic );
             gs::FillVertexBuffer( mesh.mVertexData, mesh.mVertexSize * mesh.mVertexCount, mesh.mVertexDataDynamic );
 			//gs::UpdateVertexBuffer( mesh.mVertexData, mesh.mVertexSize * mesh.mVertexLimit, 0 );
-            printf("filling vdatabuf %d size %d\n", (s32)mesh.mVertexBufferId, mesh.mVertexSize * mesh.mVertexCount );
+            //printf("filling vdatabuf %d size %d\n", (s32)mesh.mVertexBufferId, mesh.mVertexSize * mesh.mVertexCount );
             core::set( mesh.mVertexData, mesh.mVertexSize * mesh.mVertexLimit, 0 );
 		}
         
@@ -138,7 +138,7 @@ namespace fw
             //gs::FillElementBuffer( Null, mesh.mElementSize * mesh.mElementCount, mesh.mElementDataDynamic );
 			gs::FillElementBuffer( mesh.mElementData, mesh.mElementSize * mesh.mElementCount, mesh.mElementDataDynamic );
             //gs::UpdateElementBuffer( mesh.mElementData, mesh.mElementSize * mesh.mElementCount, 0 );
-            printf("filling edatabuf %d size %d\n", (s32)mesh.mElementBufferId, mesh.mElementSize * mesh.mElementCount );
+            //printf("filling edatabuf %d size %d\n", (s32)mesh.mElementBufferId, mesh.mElementSize * mesh.mElementCount );
             core::set( mesh.mElementData, mesh.mElementSize * mesh.mElementCount, 0 );
 		}
 		
@@ -146,7 +146,7 @@ namespace fw
         {
             if( mesh.mAttribSize[ i ] > 0 )
             {
-                printf("setting attrib %d vsize %d offset %p\n", i, mesh.mVertexSize, (mesh.mAttribOffset[ i ]) );
+                //printf("setting attrib %d vsize %d offset %p\n", i, mesh.mVertexSize, (mesh.mAttribOffset[ i ]) );
                 gs::SetArray( ( gs::eAttrib )i, mesh.mAttribSize[ i ], mesh.mVertexSize, mesh.mAttribOffset[ i ] );
             }
         }
@@ -157,7 +157,7 @@ namespace fw
 		{
 			if( mesh.mAttribSize[ i ] > 0 )
 			{
-                printf("unsetting attrib %d\n", i );
+                //printf("unsetting attrib %d\n", i );
 				gs::UnsetArray( ( gs::eAttrib )i );
 			}
 		}

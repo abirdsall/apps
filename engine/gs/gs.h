@@ -143,6 +143,8 @@ namespace gs
 	void UnsetArray(const eAttrib attrib);
 	void DrawArray(const ePrim primitive, const u32 num);
 	void DrawElements(const ePrim primitive, const u32 num);
+    
+    s32 MaxDrawBuffers();
 
 	const c8* AttribName( const eAttrib attrib );
 	void Clear(const bool colour, const bool depth);

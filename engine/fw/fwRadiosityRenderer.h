@@ -13,45 +13,45 @@ namespace fw
         s32 _voxelCountY;
         s32 _voxelCountZ;
         
-        gs::CanvasHandle _voxelCanvasHd;
-        gs::CanvasHandle _voxelCanvasHdScratch;
-        gs::CanvasHandle _voxelCanvasSd;
-        gs::CanvasHandle _voxelCanvasSdScratch;
-        gs::CanvasHandle _voxelCanvasH2;
-        gs::CanvasHandle _voxelCanvasH2Scratch;
-        gs::CanvasHandle _voxelCanvasS2;
-        gs::CanvasHandle _voxelCanvasS2Scratch;
-        gs::CanvasHandle _voxelCanvasSdLod1;
-        gs::CanvasHandle _voxelCanvasSdLod1Scratch;
-        gs::CanvasHandle _voxelCanvasSdLod2;
-        gs::CanvasHandle _voxelCanvasSdLod2Scratch;
-        
-        Array<gs::CanvasHandle> _lightCanvases;
-        
-        gs::TextureHandle _voxelTextureHd;
-        gs::TextureHandle _voxelTextureHdScratch;
-        gs::TextureHandle _voxelTextureSd;
-        gs::TextureHandle _voxelTextureSdScratch;
+        s32 _voxelCountPerPassZ;
+        s32 _voxelCountPerPassHalfZ;
+        s32 _voxelCountPerPassQuarterZ;
+        s32 _passCountZ;
+        s32 _passCountHalfZ;
+        s32 _passCountQuarterZ;
+
+        gs::TextureHandle _voxelTextureA;
+        gs::TextureHandle _voxelTextureB;
+        gs::TextureHandle _voxelTextureHalfA;
+        gs::TextureHandle _voxelTextureHalfB;
         gs::TextureHandle _lightTextureColour;
         gs::TextureHandle _lightTextureDirection;
+
+        Array<gs::CanvasHandle> _voxelCanvasesA;
+        Array<gs::CanvasHandle> _voxelCanvasesB;
+        Array<gs::CanvasHandle> _voxelCanvasesHalfA;
+        Array<gs::CanvasHandle> _voxelCanvasesHalfB;
+        Array<gs::CanvasHandle> _voxelCanvasesQuarterA;
+        Array<gs::CanvasHandle> _voxelCanvasesQuarterB;
+        Array<gs::CanvasHandle> _voxelCanvasesEighthA;
+        Array<gs::CanvasHandle> _voxelCanvasesEighthB;
+        Array<gs::CanvasHandle> _lightCanvases;
         
-        gs::ShaderHandle _shaderBlurX;
-        gs::ShaderHandle _shaderBlurY;
-        gs::ShaderHandle _shaderBlurZ;
-        gs::ShaderHandle _shaderBlu2X;
-        gs::ShaderHandle _shaderBlu2Y;
-        gs::ShaderHandle _shaderBlu2Z;
-        gs::ShaderHandle _shaderBlurXHalf;
-        gs::ShaderHandle _shaderBlurYHalf;
-        gs::ShaderHandle _shaderBlurZHalf;
-        gs::ShaderHandle _shaderBlurXQuarter;
-        gs::ShaderHandle _shaderBlurYQuarter;
-        gs::ShaderHandle _shaderBlurZQuarter;
+        gs::ShaderHandle _fillShader;
+
+        Array<gs::ShaderHandle> _blurShadersX;
+        Array<gs::ShaderHandle> _blurShadersY;
+        Array<gs::ShaderHandle> _blurShadersZ;
+        Array<gs::ShaderHandle> _blurShadersHalfX;
+        Array<gs::ShaderHandle> _blurShadersHalfY;
+        Array<gs::ShaderHandle> _blurShadersHalfZ;
+        Array<gs::ShaderHandle> _blurShadersQuarterX;
+        Array<gs::ShaderHandle> _blurShadersQuarterY;
+        Array<gs::ShaderHandle> _blurShadersQuarterZ;
 
         gs::ShaderHandle _shaderVoxelise;
         gs::ShaderHandle _shaderLuminise;
         gs::ShaderHandle _shaderForward;
-        gs::ShaderHandle _shaderFillZ;
 
         void Init( const aabb& bounds, s32 voxelCountX, s32 voxelCountY, s32 voxelCountZ );
         
@@ -64,18 +64,12 @@ namespace fw
         void BlurLayers(gs::TextureHandle textureX,
                         gs::TextureHandle textureY,
                         gs::TextureHandle textureZ,
-                        gs::CanvasHandle canvasX,
-                        gs::CanvasHandle canvasY,
-                        gs::CanvasHandle canvasZ,
-                        gs::CanvasHandle canva2X,
-                        gs::CanvasHandle canva2Y,
-                        gs::CanvasHandle canva2Z,
-                        gs::ShaderHandle shaderX,
-                        gs::ShaderHandle shaderY,
-                        gs::ShaderHandle shaderZ,
-                        gs::ShaderHandle shade2X,
-                        gs::ShaderHandle shade2Y,
-                        gs::ShaderHandle shade2Z,
+                        Array<gs::CanvasHandle>& canvasesX,
+                        Array<gs::CanvasHandle>& canvasesY,
+                        Array<gs::CanvasHandle>& canvasesZ,
+                        Array<gs::ShaderHandle>& shadersX,
+                        Array<gs::ShaderHandle>& shadersY,
+                        Array<gs::ShaderHandle>& shadersZ,
                         s32 srcLod,
                         s32 dstLod,
                         u32 dstSizeX,

@@ -8,7 +8,9 @@ namespace core
         eBytePool512,
         eBytePool2048,
         eBytePool8192,
-        eBytePool16384
+        eBytePool16384,
+        eBytePool32768,
+        eBytePool65534
     } eBytePool;
     
     u8* bytePoolAlloc( eBytePool bytePool );

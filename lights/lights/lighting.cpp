@@ -85,7 +85,7 @@ void lightingTick( f32 dt )
 	}
 	if( os::KeyHeld( os::eKeyW ) )
 	{
-		lightMove.y = worldSize.y * dt;
+        lightMove.y = worldSize.y * dt;// * 0.1f;
 	}
 	if( os::KeyHeld( os::eKeyQ ) )
 	{
@@ -97,7 +97,8 @@ void lightingTick( f32 dt )
 	}
 	
     
-	fw::LightSetPosition( _lightHandleA, clamp( fw::LightPosition( _lightHandleA ) + lightMove, _renderer.Bounds().mMin, _renderer.Bounds().mMax ));
+    fw::LightSetPosition( _lightHandleA, fw::LightPosition( _lightHandleA ) + lightMove );
+	//fw::LightSetPosition( _lightHandleA, clamp( fw::LightPosition( _lightHandleA ) + lightMove, _renderer.Bounds().mMin, _renderer.Bounds().mMax ));
 	//fw::LightSetPosition( _lightHandleB, clamp( fw::LightPosition( _lightHandleB ) - lightMove, _renderer.Bounds().mMin, _renderer.Bounds().mMax ));
 	
 	if( os::KeyUp( os::eKeyZ ) )            
@@ -155,14 +156,14 @@ void lightingInit()
     fw::SystemFontInit();
     
     _lightHandleA = fw::LightNew( v3( 5.0f, 5.0f, 5.0f ), v3( 1.0f, 1.0f, 1.0f ) * 0.5f );
-	_lightHandleB = fw::LightNew( v3( 5.0f, 4.5f, 5.0f ), v3( 1.0f, 0.4f, 0.0f ) );
+	_lightHandleB = fw::LightNew( v3( 5.0f, 4.5f, 5.0f ), v3( 1.0f, 0.4f, 0.0f ) * 0.0f );
 
     _renderer.Init( aabb( v3( 0.0f, 0.0f, 0.0f ), v3( 32.0f, 32.0f, 8.0f ) ), 256, 256, 8 );
     _renderer._lights.Add( _lightHandleA );
     _renderer._lights.Add( _lightHandleB );
     _renderer._scene = fw::SceneNodeNew();
     
-    AddCube( v3( 16.0f, 16.0f, 0.0f - 0.0f ), v3( 16.0f, 16.0f, 0.05f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ) );
+    AddCube( v3( 16.0f, 16.0f, 0.0f - 0.0f ), v3( 16.0f, 16.0f, 0.5f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ) );
     AddCube( v3( 16.0f, 0.0f, 4.0f - 0.0f ), v3( 15.5f, 1.0f, 4.0f ), v4( 1.0f, 0.8f, 0.6f, 1.0f ) );
     AddCube( v3( 0.0f, 16.0f, 4.0f - 0.0f ), v3( 0.5f, 16.0f, 4.0f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ) );
     AddCube( v3( 32.0f, 16.0f, 4.0f - 0.0f ), v3( 0.5f, 16.0f, 4.0f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ) );

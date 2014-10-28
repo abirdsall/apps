@@ -120,7 +120,7 @@ namespace fw
 				camera.mOrbitDistance = 2.0f;
 				camera.mFocalDistance = 0.5f;
 				camera.mActive = true;
-				CameraSetFocalLength( handle, 35.0f);
+				CameraSetFocalLength( handle, 85.0f);
 				return handle;
 			}
 		}

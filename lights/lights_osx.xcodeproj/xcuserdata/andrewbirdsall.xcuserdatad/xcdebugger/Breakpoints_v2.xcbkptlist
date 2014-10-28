@@ -121,14 +121,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../engine/fw/fwRadiosityRenderer.cpp"
-            timestampString = "434739864.4738"
+            filePath = "../engine/core/coreAssert.cpp"
+            timestampString = "436152692.622865"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "393"
-            endingLineNumber = "393"
-            landmarkName = "RadiosityRenderer::Render()"
-            landmarkType = "5">
+            startingLineNumber = "13"
+            endingLineNumber = "13"
+            landmarkName = "Assert( const c8* fileName, s32 lineNumber, bool success, bool fatal )"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

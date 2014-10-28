@@ -399,6 +399,14 @@ namespace gs
         ErrorCheck();
 	}
 
+    s32 MaxDrawBuffers()
+    {
+        GLint maxDrawBuffers = 1;
+        
+        glGetIntegerv(GL_MAX_DRAW_BUFFERS, &maxDrawBuffers);
+        
+        return s32( maxDrawBuffers );
+    }
 }
 
 #endif

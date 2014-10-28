@@ -7,8 +7,8 @@
 
 #define OsWindows           ( 0 )
 #define OsLinux             ( 0 )
-#define OsOsx               ( 0 )
-#define OsIos               ( 1 )
+#define OsOsx               ( 1 )
+#define OsIos               ( 0 )
 #define GsOpenGles2         ( OsIos && 0 )
 #define GsOpenGles3         ( OsIos && 1 )
 #define GsOpenGl3           ( OsOsx )
