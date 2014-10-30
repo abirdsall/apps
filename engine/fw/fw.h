@@ -12,7 +12,7 @@
 #include "fwShader.h"
 
 #include "fwCamera.h"
-#include "fwCanvasViewer.h"
+#include "fwTextureViewer.h"
 #include "fwFont.h"
 #include "fwMesh.h"
 #include "fwLight.h"

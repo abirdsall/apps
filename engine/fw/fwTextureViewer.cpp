@@ -4,12 +4,12 @@ using namespace gs;
 
 namespace fw
 {
-	u32 CanvasViewer::MakeShaderIndex( eChannel outR, eChannel outG, eChannel outB )
+	u32 TextureViewer::MakeShaderIndex( eChannel outR, eChannel outG, eChannel outB )
 	{
 		return outR + ( outG * eChannelTypes ) + ( outB * eChannelTypes * eChannelTypes );
 	}
 	
-	ShaderHandle CanvasViewer::MakeShader( eChannel outR, eChannel outG, eChannel outB, bool is2d )
+	ShaderHandle TextureViewer::MakeShader( eChannel outR, eChannel outG, eChannel outB, bool is2d )
 	{
 #if GsOpenGles2
         
@@ -108,12 +108,12 @@ namespace fw
 		return ShaderNew( vShader.toStr(), fShader.toStr(), false );
 	}
 	
-	CanvasViewer::CanvasViewer() : mActive( 0 ), mNavLevel( eNavLevelCanvas )
+	TextureViewer::TextureViewer() : mActive( 0 ), mNavLevel( eNavLevelTexture )
 	{
-		mNavIndex[ eNavLevelCanvas ] = 0;
+		mNavIndex[ eNavLevelTexture ] = 0;
 	}
 	
-	void CanvasViewer::Init()
+	void TextureViewer::Init()
 	{
 		for( u32 outR = 0; outR < eChannelTypes; outR++ )
 		{
@@ -129,7 +129,7 @@ namespace fw
 		}
 	}
 	
-	void CanvasViewer::Tick()
+	void TextureViewer::Tick()
 	{
 		// switch canvas
 		// switch lod
@@ -137,15 +137,15 @@ namespace fw
         
         if( mActive )
         {
-            CanvasHandle canvases[ kCanvasLimit ];
-            u32 canvasCount = CanvasActiveGet( canvases );
+            TextureHandle textures[ kTextureLimit ];
+            s32 textureCount = TextureActiveGet( textures );
 
             // todo if leaf navlevel then left right adjust mipmap level
             
             
             if( os::KeyUp( os::eKeyUp ) )
             {
-                if( mNavLevel > eNavLevelCanvas )
+                if( mNavLevel > eNavLevelTexture )
                 {
                     mNavLevel = eNavLevel(s32(mNavLevel) - 1);
                 }
@@ -172,31 +172,24 @@ namespace fw
             {
                 switch( mNavLevel )
                 {
-                    case eNavLevelCanvas:
-                    {
-                        if( mNavIndex[ mNavLevel ] < ( canvasCount - 1 ) )
-                        {
-                            mNavIndex[ mNavLevel ]++;
-                        }
-                        break;
-                    }
                     case eNavLevelTexture:
                     {
-                        const Canvas& canvas = CanvasGet( canvases[ mNavIndex[ eNavLevelCanvas ] ] );
-                        if( mNavIndex[ mNavLevel ] < ( canvas.mColorTextureCount - 1 ) )
+                        if( mNavIndex[ mNavLevel ] < ( textureCount - 1 ) )
                         {
                             mNavIndex[ mNavLevel ]++;
                         }
+                        
                         break;
                     }
                     case eNavLevelLayer:
                     {
-                        const Canvas& canvas = CanvasGet( canvases[ mNavIndex[ eNavLevelCanvas ] ] );
-                        const Texture& texture = TextureGet( canvas.mColorTexture[ mNavIndex[ eNavLevelTexture ] ] );
+                        const Texture& texture = TextureGet( textures[ mNavIndex[ eNavLevelTexture ] ] );
+
                         if( mNavIndex[ mNavLevel ] < ( texture.mSizeZ - 1 ) )
                         {
                             mNavIndex[ mNavLevel ]++;
                         }
+                        
                         break;
                     }
                     default:
@@ -205,83 +198,52 @@ namespace fw
                     }
                 }
             }
-            
-            
-            
-            
-            
-            
-            if( os::KeyUp( os::eKeyUp ) )
-            {
-                printf("up UP\n");
-            }
-            if( os::KeyUp( os::eKeyDown ) )
-            {
-                printf("dn UP\n");
-            }
-            if( os::KeyUp( os::eKeyLeft ) )
-            {
-                printf("lf UP\n");
-            }
-            if( os::KeyUp( os::eKeyRight ) )
-            {
-                printf("rt UP\n");
-            }
-            
-            if( os::KeyUp( os::eKeyA ) )
-            {
-                printf("a UP\n");
-            }
         }
 	}
 
-	void CanvasViewer::Draw()
+	void TextureViewer::Draw()
 	{
 		if( mActive )
 		{
-			CanvasHandle canvases[ kCanvasLimit ];
-			u32 canvasCount = CanvasActiveGet( canvases );
-
+            TextureHandle textures[ kTextureLimit ];
+            s32 textureCount = TextureActiveGet( textures );
+            
 			switch( mNavLevel )
 			{
-				case eNavLevelCanvas: // draw first lod of first layer or first texture for all canvases
-				{					
-					Rect canvasRects[ kCanvasLimit ];
-					Rect(0.0f, 0.0f, ( f32 )CanvasSizeX(), ( f32 )CanvasSizeY() ).Subdivide( canvasRects, canvasCount );
-
-					for( int i = 0; i < canvasCount; i++ )
-					{
-						DrawTexture( canvasRects[ i ], CanvasGet( canvases[ i ] ), 0, 0, 0, i == mNavIndex[ eNavLevelCanvas ] );
-					}
-					DrawHighlight( canvasRects[ mNavIndex[ eNavLevelCanvas ] ] );
-					break;
-				}
 				case eNavLevelTexture: // draw first lod of first layer for all textures in current canvas
 				{
-					Rect textureRects[ kColorTextureLimit ];
-					Canvas& canvas = CanvasGet( canvases[ mNavIndex[ eNavLevelCanvas ] ] );
-					Rect(0.0f, 0.0f, ( f32 )CanvasSizeX(), ( f32 )CanvasSizeY() ).Subdivide( textureRects, canvas.mColorTextureCount );
+					Rect textureRects[ kTextureLimit ];
+                    
+					Rect(0.0f, 0.0f, ( f32 )CanvasSizeX(), ( f32 )CanvasSizeY() ).Subdivide( textureRects, textureCount );
 
-					for( int i = 0; i < canvas.mColorTextureCount; i++ )
+					for( s32 i = 0; i < textureCount; i++ )
 					{
-						DrawTexture( textureRects[ i ], canvas, i, 0, 0, i == mNavIndex[ eNavLevelTexture ] );
+						DrawTexture( textureRects[ i ], textures[ i ], 0, 0, i == mNavIndex[ eNavLevelTexture ] );
 					}
+                    
 					DrawHighlight( textureRects[ mNavIndex[ eNavLevelTexture ] ] );
+                    
 					break;
 				}
 				case eNavLevelLayer: // draw first lod for all layers in current textures in current canvas
 				{
 					const u32 kTextureLayerLimit = 32;
+                    
 					Rect layerRects[ kTextureLayerLimit ];
-					Canvas& canvas = CanvasGet( canvases[ mNavIndex[ eNavLevelCanvas ] ] );
-					const Texture& texture = TextureGet( canvas.mColorTexture[ mNavIndex[ eNavLevelTexture ] ] );
-					Rect(0.0f, 0.0f, ( f32 )CanvasSizeX(), ( f32 )CanvasSizeY() ).Subdivide( layerRects, texture.mSizeZ );
+                    
+                    TextureHandle textureHandle = textures[ mNavIndex[ eNavLevelTexture ] ];
+                    
+                    const Texture& texture = TextureGet( textureHandle );
+					
+                    Rect(0.0f, 0.0f, ( f32 )CanvasSizeX(), ( f32 )CanvasSizeY() ).Subdivide( layerRects, texture.mSizeZ );
 
-					for( int i = 0; i < texture.mSizeZ; i++ )
+					for( s32 i = 0; i < texture.mSizeZ; i++ )
 					{						
-						DrawTexture( layerRects[ i ], canvas, mNavIndex[ eNavLevelTexture ], i, mNavIndex[ eNavLevelLayer ], true );
+						DrawTexture( layerRects[ i ], textureHandle, i, mNavIndex[ eNavLevelLayer ], true );
 					}
-					DrawHighlight( layerRects[ mNavIndex[ eNavLevelLayer ] ] );
+					
+                    DrawHighlight( layerRects[ mNavIndex[ eNavLevelLayer ] ] );
+                    
 					break;
 				}
 				default:
@@ -292,7 +254,7 @@ namespace fw
 		}
 	}
 
-	void CanvasViewer::DrawHighlight( const Rect& rect )
+	void TextureViewer::DrawHighlight( const Rect& rect )
 	{
 		Put();
 		SetWrite(eWriteRgb);
@@ -304,11 +266,9 @@ namespace fw
 		Pop();
 	}
 		
-	void CanvasViewer::DrawTexture( const Rect& rect, Canvas& canvas, const s32 textureIndex, const s32 layerIndex, const s32 lodIndex, const bool highlighted )
+	void TextureViewer::DrawTexture( const Rect& rect, TextureHandle textureHandle, const s32 layerIndex, const s32 lodIndex, const bool highlighted )
 	{
-		ASSERT( textureIndex >= 0 && textureIndex < canvas.mColorTextureCount );
-		TextureHandle textureHandle = canvas.mColorTexture[ textureIndex ];
-		const Texture& texture = TextureGet( textureHandle );
+		Texture& texture = TextureGet( textureHandle );
 		u32 shaderIndex = MakeShaderIndex( eChannelR, eChannelG, eChannelB );
 		
 		Put();
@@ -345,22 +305,22 @@ namespace fw
         Set2d();
         SetWrite(eWriteRgb);
         SetBlend(eBlendRgba);
-        core::String& canvasName = canvas._name;
+        core::String& textureName = texture._name;
         
-        SystemFontDraw(canvasName, rect.Min(), v4(1,0,0,1));
+        SystemFontDraw(textureName, rect.Min(), v4(1,0,0,1));
         Pop();
 	}
 
-	void CanvasViewer::Kill()
+	void TextureViewer::Kill()
 	{
 	}
 	
-	bool CanvasViewer::Active()
+	bool TextureViewer::Active()
 	{
 		return mActive;
 	}
 	
-	void CanvasViewer::SetActive( bool active )
+	void TextureViewer::SetActive( bool active )
 	{
 		mActive = active;
 	}

@@ -1,14 +1,13 @@
-#ifndef FW_CANVAS_VIEWER
-#define FW_CANVAS_VIEWER
+#ifndef FW_TEXTURE_VIEWER
+#define FW_TEXTURE_VIEWER
 
 namespace fw
 {
-	class CanvasViewer
+	class TextureViewer
 	{
 	private:
 		enum eNavLevel
 		{
-			eNavLevelCanvas,
 			eNavLevelTexture,
 			eNavLevelLayer,
 			eNavLevelLod,
@@ -46,9 +45,10 @@ namespace fw
 		gs::ShaderHandle MakeShader( eChannel outR, eChannel outG, eChannel outB, bool is2d );
 		void DrawHighlight( const Rect& rect );
 		void DrawTexture( const Rect& rect, gs::Canvas& canvas, const s32 textureIndex, const s32 layerIndex, const s32 lodIndex, const bool highlighted );
-		
+        void DrawTexture( const Rect& rect, gs::TextureHandle textureHandle, const s32 layerIndex, const s32 lodIndex, const bool highlighted );
+
 	public:
-		CanvasViewer();
+		TextureViewer();
 		
 		void Init();
 		void Tick();

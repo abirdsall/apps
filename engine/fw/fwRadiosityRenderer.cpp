@@ -23,10 +23,10 @@ namespace fw
         
         _fillShader = fw::ShaderMake2d( true, false, 0, _voxelCountPerPassZ - 1 );
 
-        _voxelTextureA = TextureNew( TexType3d, TexFormatRGBA8, _voxelCountX, _voxelCountY, _voxelCountZ, TexFlagClamp, Null );
-        _voxelTextureB = TextureNew( TexType3d, TexFormatRGBA8, _voxelCountX, _voxelCountY, _voxelCountZ, TexFlagClamp, Null );
-        _voxelTextureHalfA = TextureNew( TexType3d, TexFormatRGBA8, _voxelCountX / 2, _voxelCountY / 2, _voxelCountZ, TexFlags( TexFlagClamp | TexFlagMipMap ), Null );
-        _voxelTextureHalfB = TextureNew( TexType3d, TexFormatRGBA8, _voxelCountX / 2, _voxelCountY / 2, _voxelCountZ, TexFlags( TexFlagClamp | TexFlagMipMap ), Null );
+        _voxelTextureA = TextureNew( "voxela", TexType3d, TexFormatRGBA8, _voxelCountX, _voxelCountY, _voxelCountZ, TexFlagClamp, Null );
+        _voxelTextureB = TextureNew( "voxelb", TexType3d, TexFormatRGBA8, _voxelCountX, _voxelCountY, _voxelCountZ, TexFlagClamp, Null );
+        _voxelTextureHalfA = TextureNew( "voxelhalfa", TexType3d, TexFormatRGBA8, _voxelCountX / 2, _voxelCountY / 2, _voxelCountZ, TexFlags( TexFlagClamp | TexFlagMipMap ), Null );
+        _voxelTextureHalfB = TextureNew( "voxelhalfb", TexType3d, TexFormatRGBA8, _voxelCountX / 2, _voxelCountY / 2, _voxelCountZ, TexFlags( TexFlagClamp | TexFlagMipMap ), Null );
         
         for( s32 i = 0; i < _passCountZ; i++)
         {
@@ -58,7 +58,7 @@ namespace fw
             _blurShadersZ.Add( MakeBlurShader( 2, _voxelCountPerPassZ, zMin, zStep ) );
         }
 
-        for( s32 i = 0; i < _passCountHalfZ; i++)
+        for( s32 i = 0; i < _passCountHalfZ; i++ )
         {
             CanvasHandle voxelCanvasQuarterA = CanvasNew( "voxelCanvasQuarterA" );
             CanvasHandle voxelCanvasQuarterB = CanvasNew( "voxelCanvasQuarterB" );
@@ -106,8 +106,8 @@ namespace fw
             _blurShadersQuarterZ.Add( MakeBlurShader( 2, _voxelCountPerPassQuarterZ, zMin, zStep ) );
         }
         
-        _lightTextureColour = TextureNew( TexType3d, TexFormatRGB16F, _voxelCountX / 2, _voxelCountY / 2, _voxelCountZ / 2, TexFlagClamp );
-        _lightTextureDirection = TextureNew( TexType3d, TexFormatRGB16F, _voxelCountX / 2, _voxelCountY / 2, _voxelCountZ / 2, TexFlagClamp );
+        _lightTextureColour = TextureNew( "lightcol", TexType3d, TexFormatRGB16F, _voxelCountX / 2, _voxelCountY / 2, _voxelCountZ / 2, TexFlagClamp );
+        _lightTextureDirection = TextureNew( "lightdir", TexType3d, TexFormatRGB16F, _voxelCountX / 2, _voxelCountY / 2, _voxelCountZ / 2, TexFlagClamp );
         for( s32 i = 0; i < _voxelCountZ / 2; i++ )
         {
             gs::CanvasHandle lightCanvas = CanvasNew();
@@ -398,10 +398,11 @@ namespace fw
             ShaderSet( _fillShader );
             DrawQuad2d( Quad2dShaderFilledCustom, fw::Rect( 0.0f, 0.0f, f32( _voxelCountX ), f32( _voxelCountY ) ), v4( 1.0f, 1.0f, 1.0f, 0.0f ) );
             Pop();
-            
+
             // Voxelise
-            f32 zStep = (( _bounds.mMax.z - _bounds.mMin.z ) / f32( _voxelCountZ )) / f32( _passCountZ );
+            f32 zStep = ( _bounds.mMax.z - _bounds.mMin.z ) / f32( _voxelCountZ );
             f32 zMin = _bounds.mMin.z + ( zStep / 2.0f ) + (( _bounds.mMax.z - _bounds.mMin.z ) / f32( _passCountZ )) * f32( i );
+
             Put();
             CanvasSet( _voxelCanvasesB[ i ] );
             SetDepth( eDepthNone );
@@ -436,7 +437,7 @@ namespace fw
                    _voxelCountZ,
                    1.0f//0.5f // is this correct?
                    );
-        // _voxelTextureA contains blurred result in Lod0
+        // _voxelTextureA contains xyz blurred result in Lod0
         BlurLayers(
                    _voxelTextureA,
                    _voxelTextureHalfA,
@@ -454,14 +455,14 @@ namespace fw
                    _voxelCountZ / 2,
                    1.0f
                    );
-        // _voxelTextureHalfA contains blurred result in Lod0
+        // _voxelTextureHalfA contains xyz blurred result in Lod0
         BlurLayers(
                    _voxelTextureHalfA,
-                   _voxelTextureHalfB,
                    _voxelTextureHalfA,
-                   _voxelCanvasesQuarterB,
+                   _voxelTextureHalfB,
                    _voxelCanvasesQuarterA,
                    _voxelCanvasesQuarterB,
+                   _voxelCanvasesQuarterA,
                    _blurShadersHalfX,
                    _blurShadersHalfY,
                    _blurShadersHalfZ,
@@ -472,9 +473,14 @@ namespace fw
                    _voxelCountZ / 2,
                    1.0f
                    );
-        // _voxelTextureHalfB contains blurred result in Lod1
+        // _voxelTextureHalfA contains xy blurred result in Lod1
+        // _voxelTextureHalfB contains xyz blurred result in Lod1
+        
+        // so copy _voxelTextureHalfB Lod1 into _voxelTextureHalfA Lod1
+        
+        
         BlurLayers(
-                   _voxelTextureHalfB,
+                   _voxelTextureHalfA,
                    _voxelTextureHalfA,
                    _voxelTextureHalfB,
                    _voxelCanvasesEighthA,
@@ -490,7 +496,7 @@ namespace fw
                    _voxelCountZ / 4,
                    1.0f
                    );
-        // _voxelTextureHalfA contains blurred result in Lod2
+        // _voxelTextureHalfA contains xyz blurred result in Lod2
         Put();
         SetWrite( eWriteRgb );
         SetBlend( eBlendNone );
@@ -600,7 +606,7 @@ namespace fw
             Set2d();
             ShaderSet( shadersY[ i ] );
             TextureSet( "texture0", textureY );
-            ShaderSetFloat( "lod", f32( srcLod ) );
+            ShaderSetFloat( "lod", f32( dstLod ) ); // Yes this sld be dstLod or results won't propogate
             ShaderSetFloatArray( "offset" , yOffsets, 5 );
             ShaderSetFloatArray( "weight" , weights, 5 );
             fw::DrawQuad2d( Quad2dShaderTexturedCustom, fw::Rect( 0, 0, f32( dstSizeX ), f32( dstSizeY ) ), fw::Rect( 0.0f, 1.0f, 1.0f, 0.0f ) );
@@ -612,7 +618,7 @@ namespace fw
             Set2d();
             ShaderSet( shadersZ[ i ] );
             TextureSet( "texture0", textureZ );
-            ShaderSetFloat( "lod", f32( srcLod ) );
+            ShaderSetFloat( "lod", f32( dstLod ) ); // Yes this sld be dstLod or results won't propogate
             ShaderSetFloatArray( "offset" , zOffsets, 5 );
             ShaderSetFloatArray( "weight" , weights, 5 );
             fw::DrawQuad2d( Quad2dShaderTexturedCustom, fw::Rect( 0, 0, f32( dstSizeX ), f32( dstSizeY ) ), fw::Rect( 0.0f, 1.0f, 1.0f, 0.0f ) );

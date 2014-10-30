@@ -2,10 +2,13 @@
 
 namespace gs
 {
-	static Texture sTexture[ kTextureLimit ];
+    Array<Texture> sTexture;
+	//static Texture sTexture[ kTextureLimit ];
 	
 	void InitTextures()
 	{
+        sTexture.SetCount( kTextureLimit );
+
 		for( u32 i = 0; i < kTextureLimit; i++ )
 		{
 			sTexture[ i ].mActive = false;
@@ -20,7 +23,7 @@ namespace gs
 		}
 	}
 
-	TextureHandle TextureNew( const TexType type, const TexFormat format, const u32 sizeX, const u32 sizeY, const u32 sizeZ, const TexFlags flags, void* data )
+	TextureHandle TextureNew( const c8* name, const TexType type, const TexFormat format, const u32 sizeX, const u32 sizeY, const u32 sizeZ, const TexFlags flags, void* data )
 	{
 		for( int i = 0; i < kTextureLimit; i++ )
 		{
@@ -28,6 +31,7 @@ namespace gs
 			{
 				TextureHandle handle = i;
 				Texture& texture = sTexture[ handle ];
+                texture._name = name;
 				texture.mFormat = format;
 				texture.mType = type;
 				texture.mSizeX = sizeX;
@@ -59,19 +63,19 @@ namespace gs
 		return kTextureInvalid;
 	}
 			
-	TextureHandle TextureNew3d( const TexFormat format, const u32 sizeX, const u32 sizeY, const u32 sizeZ, void* data )
+	TextureHandle TextureNew3d( const c8* name, const TexFormat format, const u32 sizeX, const u32 sizeY, const u32 sizeZ, void* data )
 	{
-		return TextureNew( TexType3d, format, sizeX, sizeY, sizeZ, TexFlagNone, data );
+		return TextureNew( name, TexType3d, format, sizeX, sizeY, sizeZ, TexFlagNone, data );
 	}
 
-	TextureHandle TextureNew2d( const TexFormat format, const u32 sizeX, const u32 sizeY, void* data )
+	TextureHandle TextureNew2d( const c8* name, const TexFormat format, const u32 sizeX, const u32 sizeY, void* data )
 	{
-		return TextureNew( TexType2d, format, sizeX, sizeY, 1, TexFlagNone, data );
+		return TextureNew( name, TexType2d, format, sizeX, sizeY, 1, TexFlagNone, data );
 	}
 	
-	TextureHandle TextureNewDepth( const TexFormat format, const u32 sizeX, const u32 sizeY )
+	TextureHandle TextureNewDepth( const c8* name, const TexFormat format, const u32 sizeX, const u32 sizeY )
 	{
-		return TextureNew( TexTypeDepth, format, sizeX, sizeY, 1, TexFlagNone, Null );
+		return TextureNew( name, TexTypeDepth, format, sizeX, sizeY, 1, TexFlagNone, Null );
 	}
 	
 	void TextureDelete( const TextureHandle handle )
@@ -88,8 +92,22 @@ namespace gs
 		TextureHwSet( shader, handle );
 	}
 	
-	const Texture& TextureGet( const TextureHandle handle )
+	Texture& TextureGet( const TextureHandle handle )
 	{
 		return sTexture[ handle ];
 	}
+    
+    s32 TextureActiveGet( TextureHandle array[ kTextureLimit ] )
+    {
+        s32 count = 0;
+        for( int i = 0; i < kTextureLimit; i++ )
+        {
+            if( sTexture[ i ].mActive )
+            {
+                array[ count ] = i;
+                count++;
+            }
+        }
+        return count;
+    }
 }

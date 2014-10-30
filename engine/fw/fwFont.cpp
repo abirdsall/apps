@@ -47,7 +47,7 @@ namespace fw
         
         _systemCharFractionX = f32( SystemCharSizeX ) / f32( SystemFontTextureDataSizeX );
         _systemCharFractionY = f32( SystemCharSizeY ) / f32( SystemFontTextureDataSizeY );
-        _systemFontTexture = gs::TextureNew( gs::TexType2d, gs::TexFormatRGBA8, SystemFontTextureDataSizeX, SystemFontTextureDataSizeY, 1, gs::TexFlags( gs::TexFlagClamp | gs::TexFlagNearest ), ( void* )systemFontTextureData );
+        _systemFontTexture = gs::TextureNew( "systemfont", gs::TexType2d, gs::TexFormatRGBA8, SystemFontTextureDataSizeX, SystemFontTextureDataSizeY, 1, gs::TexFlags( gs::TexFlagClamp | gs::TexFlagNearest ), ( void* )systemFontTextureData );
     }
     
     s32 SystemCharIndex( c8 c )

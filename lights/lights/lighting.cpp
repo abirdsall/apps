@@ -57,7 +57,7 @@
 #include "fw.h"
 #include "lighting.h"
 
-fw::CanvasViewer mCanvasViewer;
+fw::TextureViewer mTextureViewer;
 fw::CameraHandle mCameraHandle;
 
 fw::LightHandle _lightHandleA;
@@ -66,7 +66,7 @@ fw::RadiosityRenderer _renderer;
 
 void lightingTick( f32 dt )
 {
-    mCanvasViewer.Tick();
+    mTextureViewer.Tick();
 
     v3 worldSize = _renderer.Bounds().mMax - _renderer.Bounds().mMin;
 	v3 lightMove( 0.0f, 0.0f, 0.0f );
@@ -97,19 +97,19 @@ void lightingTick( f32 dt )
 	}
 	
     
-    fw::LightSetPosition( _lightHandleA, fw::LightPosition( _lightHandleA ) + lightMove );
-	//fw::LightSetPosition( _lightHandleA, clamp( fw::LightPosition( _lightHandleA ) + lightMove, _renderer.Bounds().mMin, _renderer.Bounds().mMax ));
+    //fw::LightSetPosition( _lightHandleA, fw::LightPosition( _lightHandleA ) + lightMove );
+	fw::LightSetPosition( _lightHandleA, clamp( fw::LightPosition( _lightHandleA ) + lightMove, _renderer.Bounds().mMin, _renderer.Bounds().mMax ));
 	//fw::LightSetPosition( _lightHandleB, clamp( fw::LightPosition( _lightHandleB ) - lightMove, _renderer.Bounds().mMin, _renderer.Bounds().mMax ));
 	
 	if( os::KeyUp( os::eKeyZ ) )            
 	{
-		if( mCanvasViewer.Active() )
+		if( mTextureViewer.Active() )
 		{
-			mCanvasViewer.SetActive( false );
+			mTextureViewer.SetActive( false );
 		}
 		else
 		{
-			mCanvasViewer.SetActive( true );
+			mTextureViewer.SetActive( true );
 		}
 	}
 }
@@ -129,7 +129,7 @@ void lightingDraw()
     
     gs::Pop();
 
-    mCanvasViewer.Draw();
+    mTextureViewer.Draw();
 }
 
 void AddCube( const v3& position, const v3& radius, const v4& colour )
@@ -158,7 +158,7 @@ void lightingInit()
     _lightHandleA = fw::LightNew( v3( 5.0f, 5.0f, 5.0f ), v3( 1.0f, 1.0f, 1.0f ) * 0.5f );
 	_lightHandleB = fw::LightNew( v3( 5.0f, 4.5f, 5.0f ), v3( 1.0f, 0.4f, 0.0f ) * 0.0f );
 
-    _renderer.Init( aabb( v3( 0.0f, 0.0f, 0.0f ), v3( 32.0f, 32.0f, 8.0f ) ), 256, 256, 8 );
+    _renderer.Init( aabb( v3( 0.0f, 0.0f, 0.0f ), v3( 32.0f, 32.0f, 8.0f ) ), 256, 256, 16 );
     _renderer._lights.Add( _lightHandleA );
     _renderer._lights.Add( _lightHandleB );
     _renderer._scene = fw::SceneNodeNew();
@@ -180,7 +180,7 @@ void lightingInit()
 
 	fw::CameraSetFocus( mCameraHandle, v3( 16.0f, 16.0f, 4.0f ) );
 
-	mCanvasViewer.Init();
-    //mCanvasViewer.SetActive( true );
+	mTextureViewer.Init();
+    //mTextureViewer.SetActive( true );
 
 }

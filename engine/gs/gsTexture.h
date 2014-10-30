@@ -46,12 +46,14 @@ namespace gs
 		TexType mType;
 		TexFormat mFormat;
 		u32 mSizeX;
+        //Why corrupts if here?core::String _name;
 		u32 mSizeY;
 		u32 mSizeZ;
 		u32 mLodMax;
 		TexFlags mFlags;
 		void* mData;
 		bool mActive;
+        core::String _name;
 	};
 
 	typedef ::u32 TextureHandle;
@@ -64,14 +66,16 @@ namespace gs
 	void InitTextures();
 	void KillTextures();
 	
-	TextureHandle TextureNew( const TexType type, const TexFormat format, const u32 sizeX, const u32 sizeY, const u32 sizeZ, const TexFlags flags, void* data = Null );
-	TextureHandle TextureNew3d( const TexFormat format, const u32 sizeX, const u32 sizeY, const u32 sizeZ, void* data = Null );
-	TextureHandle TextureNew2d( const TexFormat format, const u32 sizeX, const u32 sizeY, void* data = Null );
-	TextureHandle TextureNewDepth( const TexFormat format, const u32 sizeX, const u32 sizeY );
+	TextureHandle TextureNew( const c8* name, const TexType type, const TexFormat format, const u32 sizeX, const u32 sizeY, const u32 sizeZ, const TexFlags flags, void* data = Null );
+	TextureHandle TextureNew3d( const c8* name, const TexFormat format, const u32 sizeX, const u32 sizeY, const u32 sizeZ, void* data = Null );
+	TextureHandle TextureNew2d( const c8* name, const TexFormat format, const u32 sizeX, const u32 sizeY, void* data = Null );
+	TextureHandle TextureNewDepth( const c8* name, const TexFormat format, const u32 sizeX, const u32 sizeY );
 
 	void TextureDelete( const TextureHandle handle );
 	void TextureSet( const c8* shader, const TextureHandle handle );
-	const Texture& TextureGet( const TextureHandle handle );
+	Texture& TextureGet( const TextureHandle handle );
+    
+    s32 TextureActiveGet( TextureHandle array[ kTextureLimit ] );
 }
 
 #endif

@@ -17,7 +17,7 @@
 		D639B0781997B6100036741C /* fwFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D639B0771997B6100036741C /* fwFont.cpp */; };
 		D6489121198D98DD001636B5 /* fw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890BA198D98DD001636B5 /* fw.cpp */; };
 		D6489122198D98DD001636B5 /* fwCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890BC198D98DD001636B5 /* fwCamera.cpp */; };
-		D6489123198D98DD001636B5 /* fwCanvasViewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890BE198D98DD001636B5 /* fwCanvasViewer.cpp */; };
+		D6489123198D98DD001636B5 /* fwTextureViewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890BE198D98DD001636B5 /* fwTextureViewer.cpp */; };
 		D6489129198D98DD001636B5 /* fwLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890CB198D98DD001636B5 /* fwLight.cpp */; };
 		D648912B198D98DD001636B5 /* fwMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890CF198D98DD001636B5 /* fwMesh.cpp */; };
 		D6489130198D98DD001636B5 /* aabb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64890DB198D98DD001636B5 /* aabb.cpp */; };
@@ -100,8 +100,8 @@
 		D64890BB198D98DD001636B5 /* fw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fw.h; sourceTree = "<group>"; };
 		D64890BC198D98DD001636B5 /* fwCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fwCamera.cpp; sourceTree = "<group>"; };
 		D64890BD198D98DD001636B5 /* fwCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fwCamera.h; sourceTree = "<group>"; };
-		D64890BE198D98DD001636B5 /* fwCanvasViewer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fwCanvasViewer.cpp; sourceTree = "<group>"; };
-		D64890BF198D98DD001636B5 /* fwCanvasViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fwCanvasViewer.h; sourceTree = "<group>"; };
+		D64890BE198D98DD001636B5 /* fwTextureViewer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fwTextureViewer.cpp; sourceTree = "<group>"; };
+		D64890BF198D98DD001636B5 /* fwTextureViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fwTextureViewer.h; sourceTree = "<group>"; };
 		D64890CB198D98DD001636B5 /* fwLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fwLight.cpp; sourceTree = "<group>"; };
 		D64890CC198D98DD001636B5 /* fwLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fwLight.h; sourceTree = "<group>"; };
 		D64890CF198D98DD001636B5 /* fwMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fwMesh.cpp; sourceTree = "<group>"; };
@@ -235,8 +235,6 @@
 				D64890BB198D98DD001636B5 /* fw.h */,
 				D64890BC198D98DD001636B5 /* fwCamera.cpp */,
 				D64890BD198D98DD001636B5 /* fwCamera.h */,
-				D64890BE198D98DD001636B5 /* fwCanvasViewer.cpp */,
-				D64890BF198D98DD001636B5 /* fwCanvasViewer.h */,
 				D675868019BB3AFD00E0A3F8 /* fwCube.cpp */,
 				D675868219BB3B0D00E0A3F8 /* fwCube.h */,
 				D675868319BB5EEB00E0A3F8 /* fwCubeBatch.cpp */,
@@ -271,6 +269,8 @@
 				D6D1E94A19A8DD7600FE2541 /* fwShader.h */,
 				D6155FA419BD0D410039F8FA /* fwSuperShape.cpp */,
 				D6155FA619BD0D4F0039F8FA /* fwSuperShape.h */,
+				D64890BE198D98DD001636B5 /* fwTextureViewer.cpp */,
+				D64890BF198D98DD001636B5 /* fwTextureViewer.h */,
 			);
 			path = fw;
 			sourceTree = "<group>";
@@ -477,7 +477,7 @@
 				D6489121198D98DD001636B5 /* fw.cpp in Sources */,
 				D6489130198D98DD001636B5 /* aabb.cpp in Sources */,
 				D673D02219A0D01A00243153 /* coreTime.cpp in Sources */,
-				D6489123198D98DD001636B5 /* fwCanvasViewer.cpp in Sources */,
+				D6489123198D98DD001636B5 /* fwTextureViewer.cpp in Sources */,
 				D673D01E19A0D01A00243153 /* coreMemory.cpp in Sources */,
 				D639B0781997B6100036741C /* fwFont.cpp in Sources */,
 				D648913C198D98DD001636B5 /* openGl.cpp in Sources */,
