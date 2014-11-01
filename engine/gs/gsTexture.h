@@ -43,16 +43,16 @@ namespace gs
 
 	struct Texture
 	{
-		TexType mType;
-		TexFormat mFormat;
-		u32 mSizeX;
-        //Why corrupts if here?core::String _name;
-		u32 mSizeY;
-		u32 mSizeZ;
-		u32 mLodMax;
-		TexFlags mFlags;
-		void* mData;
-		bool mActive;
+		TexType _type;
+		TexFormat _format;
+		u32 _sizeX;
+        //Why corrupts add member here?
+		u32 _sizeY;
+		u32 _sizeZ;
+		u32 _lodMax;
+		TexFlags _flags;
+		void* _data;
+		bool _active;
         core::String _name;
 	};
 

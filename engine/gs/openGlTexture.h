@@ -8,8 +8,8 @@ namespace gs
 		GLuint mTexture;
 		GLenum mTarget;
 		GLint mInternalFormat;
-		GLenum mFormat;
-		GLenum mType;
+		GLenum _format;
+		GLenum _type;
 	};
 }
 

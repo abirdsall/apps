@@ -110,44 +110,44 @@ namespace gs
 	{
 		const Texture& texture = TextureGet( handle );
 		TextureHw& textureHw = sTextureHw[ handle ];
-		textureHw.mTarget = sHwTextureTarget[ texture.mType ];
-		textureHw.mInternalFormat = sHwTextureInternalFormat[ texture.mFormat ];
-		textureHw.mFormat = sHwTextureFormat[ texture.mFormat ];
-		textureHw.mType = sHwTextureType[ texture.mFormat ];
+		textureHw.mTarget = sHwTextureTarget[ texture._type ];
+		textureHw.mInternalFormat = sHwTextureInternalFormat[ texture._format ];
+		textureHw._format = sHwTextureFormat[ texture._format ];
+		textureHw._type = sHwTextureType[ texture._format ];
 		glGenTextures( 1, &textureHw.mTexture );
 		glBindTexture( textureHw.mTarget,textureHw.mTexture );
-		if( texture.mSizeZ > 1 )
+		if( texture._sizeZ > 1 )
 		{
 #if GsOpenGles2
             ASSERT(false);
 #else
-            glTexImage3D( textureHw.mTarget, 0, textureHw.mInternalFormat, texture.mSizeX, texture.mSizeY, texture.mSizeZ, 0, textureHw.mFormat, textureHw.mType, texture.mData );
+            glTexImage3D( textureHw.mTarget, 0, textureHw.mInternalFormat, texture._sizeX, texture._sizeY, texture._sizeZ, 0, textureHw._format, textureHw._type, texture._data );
 #endif
 		}
 		else
 		{
-            glTexImage2D( textureHw.mTarget, 0, textureHw.mInternalFormat, texture.mSizeX, texture.mSizeY, 0, textureHw.mFormat, textureHw.mType, texture.mData );
+            glTexImage2D( textureHw.mTarget, 0, textureHw.mInternalFormat, texture._sizeX, texture._sizeY, 0, textureHw._format, textureHw._type, texture._data );
 		}
 
-		glTexParameteri( textureHw.mTarget, GL_TEXTURE_WRAP_S, texture.mFlags & TexFlagClampS ? GL_CLAMP_TO_EDGE : GL_REPEAT );
-		glTexParameteri( textureHw.mTarget, GL_TEXTURE_WRAP_T, texture.mFlags & TexFlagClampT ? GL_CLAMP_TO_EDGE : GL_REPEAT );
-		if( texture.mSizeZ > 1 )
+		glTexParameteri( textureHw.mTarget, GL_TEXTURE_WRAP_S, texture._flags & TexFlagClampS ? GL_CLAMP_TO_EDGE : GL_REPEAT );
+		glTexParameteri( textureHw.mTarget, GL_TEXTURE_WRAP_T, texture._flags & TexFlagClampT ? GL_CLAMP_TO_EDGE : GL_REPEAT );
+		if( texture._sizeZ > 1 )
 		{
 #if GsOpenGles2
             ASSERT(false);
 #else
-            glTexParameteri( textureHw.mTarget, GL_TEXTURE_WRAP_R, texture.mFlags & TexFlagClampR ? GL_CLAMP_TO_EDGE : GL_REPEAT );
+            glTexParameteri( textureHw.mTarget, GL_TEXTURE_WRAP_R, texture._flags & TexFlagClampR ? GL_CLAMP_TO_EDGE : GL_REPEAT );
 #endif
 		}
-		glTexParameteri( textureHw.mTarget, GL_TEXTURE_MAG_FILTER, texture.mFlags & TexFlagNearest ? GL_NEAREST : GL_LINEAR);
-		if( texture.mFlags & TexFlagMipMap )
+		glTexParameteri( textureHw.mTarget, GL_TEXTURE_MAG_FILTER, texture._flags & TexFlagNearest ? GL_NEAREST : GL_LINEAR);
+		if( texture._flags & TexFlagMipMap )
 		{
-			glTexParameteri( textureHw.mTarget, GL_TEXTURE_MIN_FILTER, texture.mFlags & TexFlagNearest ? GL_NEAREST : GL_LINEAR_MIPMAP_LINEAR );
+			glTexParameteri( textureHw.mTarget, GL_TEXTURE_MIN_FILTER, texture._flags & TexFlagNearest ? GL_NEAREST : GL_LINEAR_MIPMAP_LINEAR );
 			glGenerateMipmap( textureHw.mTarget );
 		}
 		else
 		{
-			glTexParameteri( textureHw.mTarget, GL_TEXTURE_MIN_FILTER, texture.mFlags & TexFlagNearest ? GL_NEAREST : GL_LINEAR );
+			glTexParameteri( textureHw.mTarget, GL_TEXTURE_MIN_FILTER, texture._flags & TexFlagNearest ? GL_NEAREST : GL_LINEAR );
 		}
 
         glBindTexture(GL_TEXTURE_2D, 0);

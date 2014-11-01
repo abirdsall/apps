@@ -11,7 +11,7 @@ namespace gs
 
 		for( u32 i = 0; i < kTextureLimit; i++ )
 		{
-			sTexture[ i ].mActive = false;
+			sTexture[ i ]._active = false;
 		}
 	}
 	
@@ -27,21 +27,21 @@ namespace gs
 	{
 		for( int i = 0; i < kTextureLimit; i++ )
 		{
-			if( !sTexture[ i ].mActive )
+			if( !sTexture[ i ]._active )
 			{
 				TextureHandle handle = i;
 				Texture& texture = sTexture[ handle ];
                 texture._name = name;
-				texture.mFormat = format;
-				texture.mType = type;
-				texture.mSizeX = sizeX;
-				texture.mSizeY = sizeY;
-				texture.mSizeZ = sizeZ;
-				texture.mFlags = flags;
-				texture.mData = data;
-				texture.mActive = true;
+				texture._format = format;
+				texture._type = type;
+				texture._sizeX = sizeX;
+				texture._sizeY = sizeY;
+				texture._sizeZ = sizeZ;
+				texture._flags = flags;
+				texture._data = data;
+				texture._active = true;
 				
-				if( texture.mFlags & TexFlagMipMap )
+				if( texture._flags & TexFlagMipMap )
 				{
 					u32 x = sizeX;
 					u32 y = sizeY;
@@ -51,7 +51,7 @@ namespace gs
 						if( x > 1 ) x >>= 1;
 						if( y > 1 ) y >>= 1;
 						if( z > 1 ) z >>= 1;
-						texture.mLodMax++;
+						texture._lodMax++;
 					}
 				}
 
@@ -80,10 +80,10 @@ namespace gs
 	
 	void TextureDelete( const TextureHandle handle )
 	{
-		if( sTexture[ handle ].mActive )
+		if( sTexture[ handle ]._active )
 		{
 			TextureHwDelete( handle );
-			sTexture[ handle ].mActive = false;
+			sTexture[ handle ]._active = false;
 		}
 	}
 	
@@ -102,7 +102,7 @@ namespace gs
         s32 count = 0;
         for( int i = 0; i < kTextureLimit; i++ )
         {
-            if( sTexture[ i ].mActive )
+            if( sTexture[ i ]._active )
             {
                 array[ count ] = i;
                 count++;

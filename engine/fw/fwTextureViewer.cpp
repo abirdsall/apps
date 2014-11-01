@@ -185,7 +185,7 @@ namespace fw
                     {
                         const Texture& texture = TextureGet( textures[ mNavIndex[ eNavLevelTexture ] ] );
 
-                        if( mNavIndex[ mNavLevel ] < ( texture.mSizeZ - 1 ) )
+                        if( mNavIndex[ mNavLevel ] < ( texture._sizeZ - 1 ) )
                         {
                             mNavIndex[ mNavLevel ]++;
                         }
@@ -235,9 +235,9 @@ namespace fw
                     
                     const Texture& texture = TextureGet( textureHandle );
 					
-                    Rect(0.0f, 0.0f, ( f32 )CanvasSizeX(), ( f32 )CanvasSizeY() ).Subdivide( layerRects, texture.mSizeZ );
+                    Rect(0.0f, 0.0f, ( f32 )CanvasSizeX(), ( f32 )CanvasSizeY() ).Subdivide( layerRects, texture._sizeZ );
 
-					for( s32 i = 0; i < texture.mSizeZ; i++ )
+					for( s32 i = 0; i < texture._sizeZ; i++ )
 					{						
 						DrawTexture( layerRects[ i ], textureHandle, i, mNavIndex[ eNavLevelLayer ], true );
 					}
@@ -278,7 +278,7 @@ namespace fw
 		SetDepth(eDepthNone);
 		SetCull(eCullNone);
 		Set2d();
-		if( texture.mSizeZ == 1 )
+		if( texture._sizeZ == 1 )
 		{
 			ShaderHandle shaderHandle = mTexture2dShaders[ shaderIndex ];
 			ShaderSet( shaderHandle );
@@ -293,7 +293,7 @@ namespace fw
 			ShaderHandle shaderHandle = mTexture3dShaders[ shaderIndex ];
 			ShaderSet( shaderHandle );
 			TextureSet( "texture0", textureHandle );
-            f32 zStep = 1.0f / f32( texture.mSizeZ );
+            f32 zStep = 1.0f / f32( texture._sizeZ );
             f32 zMin = zStep / 2.0f;
 			ShaderSetFloat( "lod", f32( lodIndex ) );
             ShaderSetFloat( "layer", zMin + zStep * f32( layerIndex ) );

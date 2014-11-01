@@ -392,7 +392,7 @@ namespace os
 				styleMask |= NSResizableWindowMask;
 			}
 		
-		sWindowRef = [[NSWindow alloc] initWithContentRect:NSMakeRect( 0, 0, windowFormat.mSizeX, windowFormat.mSizeY ) styleMask:styleMask backing:NSBackingStoreBuffered defer:NO];
+		sWindowRef = [[NSWindow alloc] initWithContentRect:NSMakeRect( 0, 0, windowFormat._sizeX, windowFormat._sizeY ) styleMask:styleMask backing:NSBackingStoreBuffered defer:NO];
 		[sWindowRef setContentView:[[CocoaContentView alloc] init]];
 		[sWindowRef setDelegate:sWindowDelegate];
 		[sWindowRef setAcceptsMouseMovedEvents:YES];

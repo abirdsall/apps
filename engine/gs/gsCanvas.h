@@ -19,8 +19,8 @@ namespace gs
 		u32 mDepthTexture[ kDepthTextureLimit ];
         u32 mColorTextureLayer[ kColorTextureLimit ];
         u32 mDepthTextureLayer[ kDepthTextureLimit ];
-		u32 mSizeX;
-		u32 mSizeY;
+		u32 _sizeX;
+		u32 _sizeY;
 		bool mActive;
 	};
 	

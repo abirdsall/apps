@@ -5,8 +5,8 @@ namespace os
 {
     struct WindowFormat
 	{
-        s32 mSizeX;
-        s32 mSizeY;
+        s32 _sizeX;
+        s32 _sizeY;
         
         s32 mBitsR;
         s32 mBitsG;
@@ -29,8 +29,8 @@ namespace os
         
         void Init( s32 sizeX, s32 sizeY, s32 rBits, s32 gBits, s32 bBits, s32 aBits, s32 zBits, bool fullscreen, bool native )
         {
-            mSizeX = sizeX;
-            mSizeY = sizeY;
+            _sizeX = sizeX;
+            _sizeY = sizeY;
             mBitsR = rBits;
             mBitsG = gBits;
             mBitsB = bBits;

@@ -95,7 +95,7 @@ namespace gs
                 
                 ErrorCheck();
                 
-                if( texture.mSizeZ > 1 )
+                if( texture._sizeZ > 1 )
                 {
                     glFramebufferTextureLayer( GL_FRAMEBUFFER, sColorAttachmentMap[ i ], textureHw.mTexture, ( GLint )lod, ( GLint )canvas.mColorTextureLayer[ i ] );
                 }

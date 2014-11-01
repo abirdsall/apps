@@ -39,16 +39,16 @@ namespace os
 	
 	void OnWindowResize( s32 sizeX, s32 sizeY )
 	{
-        sWindowFormat->mSizeX = sizeX;
-        sWindowFormat->mSizeY = sizeY;
+        sWindowFormat->_sizeX = sizeX;
+        sWindowFormat->_sizeY = sizeY;
         
-        ASSERT( sWindowFormat->mSizeX > 0 );
-        ASSERT( sWindowFormat->mSizeY > 0 );
+        ASSERT( sWindowFormat->_sizeX > 0 );
+        ASSERT( sWindowFormat->_sizeY > 0 );
         
-        sPixelSizeX = 1.0f / f32( sWindowFormat->mSizeX );
-        sPixelSizeY = 1.0f / f32( sWindowFormat->mSizeY );
+        sPixelSizeX = 1.0f / f32( sWindowFormat->_sizeX );
+        sPixelSizeY = 1.0f / f32( sWindowFormat->_sizeY );
         
-        sAspect = f32( sWindowFormat->mSizeY ) / f32( sWindowFormat->mSizeX );
+        sAspect = f32( sWindowFormat->_sizeY ) / f32( sWindowFormat->_sizeX );
 	}
 	    
 	bool WindowOpen( WindowFormat& windowFormat )
@@ -63,7 +63,7 @@ namespace os
         
         if( !windowFormat.mNative )
         {
-            OnWindowResize( windowFormat.mSizeX, windowFormat.mSizeY );
+            OnWindowResize( windowFormat._sizeX, windowFormat._sizeY );
         }
         
 		sActive = true;
@@ -83,13 +83,13 @@ namespace os
 	s32 WindowSizeX( void )
 	{
 		ASSERT( sOpened );
-		return( sWindowFormat->mSizeX );
+		return( sWindowFormat->_sizeX );
 	}
 	
 	s32 WindowSizeY( void )
 	{
 		ASSERT( sOpened );
-		return( sWindowFormat->mSizeY );
+		return( sWindowFormat->_sizeY );
 	}
 	
 	f32 WindowPixelSizeX( void )

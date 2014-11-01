@@ -45,8 +45,8 @@ namespace gs
                 canvas._name = name;
 				canvas.mColorTextureCount = 0;
 				canvas.mDepthTextureCount = 0;
-				canvas.mSizeX = 1;
-				canvas.mSizeY = 1;
+				canvas._sizeX = 1;
+				canvas._sizeY = 1;
 				canvas.mActive = true;
 				sCanvasActiveCount++;
 				CanvasHwNew( handle );
@@ -80,10 +80,10 @@ namespace gs
 		Canvas& canvas = sCanvas[ canvasHandle ];
 		const Texture& texture = TextureGet( textureHandle );
 		
-		canvas.mSizeX = texture.mSizeX;
-		canvas.mSizeY = texture.mSizeY;
+		canvas._sizeX = texture._sizeX;
+		canvas._sizeY = texture._sizeY;
 			
-		if( texture.mType == TexTypeDepth )
+		if( texture._type == TexTypeDepth )
 		{
 			ASSERT( canvas.mDepthTextureCount < kDepthTextureLimit );
 			canvas.mDepthTexture[ canvas.mDepthTextureCount ] = textureHandle;
@@ -117,12 +117,12 @@ namespace gs
 	
 	u32 CanvasSizeX()
 	{
-		return sCanvasActive != kCanvasInvalid ? sCanvas[ sCanvasActive ].mSizeX >> sCanvasActiveLod : os::WindowSizeX();
+		return sCanvasActive != kCanvasInvalid ? sCanvas[ sCanvasActive ]._sizeX >> sCanvasActiveLod : os::WindowSizeX();
 	}
 	
 	u32 CanvasSizeY()
 	{
-		return sCanvasActive != kCanvasInvalid ? sCanvas[ sCanvasActive ].mSizeY >> sCanvasActiveLod : os::WindowSizeY();
+		return sCanvasActive != kCanvasInvalid ? sCanvas[ sCanvasActive ]._sizeY >> sCanvasActiveLod : os::WindowSizeY();
 	}
 	
 	Canvas& CanvasGet( const CanvasHandle handle )
