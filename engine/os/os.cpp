@@ -1,6 +1,5 @@
 #include "os.h"
 #include "gs.h"
-#include "fw.h"
 
 #include <stdlib.h>
 
@@ -68,7 +67,6 @@ namespace os
 		if( WindowOpen( sWindowFormat ) )
 		{
 			gs::Init();
-			fw::InitCameras();
 			
 			if( sAppInit )
 			{
@@ -84,8 +82,6 @@ namespace os
         f32 dt = core::TimeTick();
         
         WindowTick();
-        
-        fw::TickCameras( dt );
         
         if( sAppTick )
         {
@@ -117,7 +113,10 @@ namespace os
         gs::Clear( true, true );
         gs::SetWrite( gs::eWriteRgbz );
         
-        fw::DrawCameras();
+        if( sAppDraw )
+        {
+            sAppDraw();
+        }
         
         MouseDraw();
         TouchDraw();
@@ -134,7 +133,6 @@ namespace os
 				sAppKill();
 			}
 			
-			fw::KillCameras();
 			gs::Kill();
         }
         

@@ -5,8 +5,9 @@ namespace fw
 {
     struct SceneNode;
     
-    struct SceneNodeComponent
+    class SceneNodeComponent
     {
+    public:
         virtual void Delete()
         {
             

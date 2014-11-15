@@ -3,15 +3,16 @@
 
 namespace fw
 {
-    struct RadiosityCube;
+    class RadiosityCube;
     
     void InitRadiosityCubes();
     void KillRadiosityCubes();
     RadiosityCube* RadiosityCubeNew();
     void RadiosityCubeDelete( RadiosityCube* cube );
 
-    struct RadiosityCube : SceneNodeComponent
+    class RadiosityCube : public SceneNodeComponent
     {
+    public:
         v4 _colour;
         
         void Delete()

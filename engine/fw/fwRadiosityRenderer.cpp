@@ -458,7 +458,7 @@ namespace fw
         ShaderSetVec3( "worldMin", _bounds.mMin );
         ShaderSetVec3( "worldSize", _bounds.mMax - _bounds.mMin );
         
-        //SetStageMatrices( true );
+        SetStageMatrices( true );
 
         _voxelising = false;
         _scene->Render( *this );

@@ -11,18 +11,19 @@
 #include "fwRect.h"
 #include "fwShader.h"
 
-#include "fwCamera.h"
-#include "fwTextureViewer.h"
-#include "fwFont.h"
-#include "fwMesh.h"
-#include "fwLight.h"
-
 namespace fw
 {
     struct Renderer;
 }
 
 #include "fwSceneNodeComponent.h"
+#include "fwCamera.h"
+#include "fwTextureViewer.h"
+#include "fwFont.h"
+#include "fwMesh.h"
+#include "fwLight.h"
+
+
 #include "fwSceneNode.h"
 
 #include "fwRenderer.h"

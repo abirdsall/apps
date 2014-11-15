@@ -58,7 +58,6 @@
 #include "lighting.h"
 
 fw::TextureViewer mTextureViewer;
-fw::CameraHandle mCameraHandle;
 
 fw::LightHandle _lightHandleA;
 fw::LightHandle _lightHandleB;
@@ -177,10 +176,6 @@ void lightingInit()
     AddCube( v3( 28.0f, 4.0f, 1.0f ), v3( 1.0f, 1.0f, 1.0f ), v4( 0.0f, 0.0f, 1.0f, 1.0f ) );
 
     AddCube( v3( 16.0f, 14.0f, 2.0f ), v3( 5.0f, 1.0f, 1.0f ), v4( 0.5f, 0.8f, 1.0f, 1.0f ) );
-
-	mCameraHandle = fw::CameraNew( fw::Rect(0.0f, 0.0f, ( f32 )os::WindowSizeX(), ( f32 )os::WindowSizeY()), &lightingDraw );
-
-	fw::CameraSetFocus( mCameraHandle, v3( 16.0f, 16.0f, 4.0f ) );
 
 	mTextureViewer.Init();
     //mTextureViewer.SetActive( true );
