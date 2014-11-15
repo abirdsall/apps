@@ -65,7 +65,7 @@ namespace fw
             
             for( s32 i = 0; i < _components.Count(); i++ )
             {
-                _components[ i ]->Tick( dt );
+                _components[ i ]->Tick( dt, *this );
             }
             
             for( s32 i = 0; i < _children.Count(); i++ )

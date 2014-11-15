@@ -12,7 +12,7 @@ namespace fw
             
         }
         
-        virtual void Tick( float dt )
+        virtual void Tick( float dt, SceneNode& node )
         {
             
         }

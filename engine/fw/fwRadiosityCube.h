@@ -32,6 +32,11 @@ namespace fw
                 DrawCube( node._localTransform.getPosition(), node._modelScale, _colour );
             }
         }
+        
+        void Tick( float dt, SceneNode& node )
+        {
+            node._localTransform = node._localTransform * r4( v3( 1.0f, 1.0f, 0.0f ), 33.3f );
+        }
     };
 }
 

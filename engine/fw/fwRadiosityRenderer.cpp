@@ -291,7 +291,7 @@ namespace fw
         ao += clamp( aocol3.a * 1.0, 0.0, 1.0 );\n\
         ao = 1.0 - clamp( 0.25 * ao, 0.0, 1.0 );\n\
         vec3 amb = aocol0.rgb * aocol1.rgb * aocol2.rgb * aocol3.rgb;\n\
-        output_colour = fragment_colour * ( vec4( amb.xyz * 0.5 * ao + 1.0 * ( col * attenuation ), 1.0 ) + vec4(0.1,0.0,0.0,1.0));\n\
+        output_colour = fragment_colour * ( vec4( amb.xyz * 0.5 * ao + 1.0 * ( col * attenuation ), 1.0 ) + vec4(0.0,0.0,0.0,1.0));\n\
         }";
         _shaderForward = ShaderNew( vShader.toStr(), fShader.toStr() );
     }
