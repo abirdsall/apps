@@ -8,12 +8,16 @@ namespace fw
     class SceneNodeComponent
     {
     public:
-        virtual void Delete()
-        {
-            
-        }
+
+        f32 testa;
         
-        virtual void Tick( float dt, SceneNode& node )
+        SceneNodeComponent()
+        {
+            testa = 7.0f;
+            testb = 8.0f;
+        }
+
+        virtual void Delete()
         {
             
         }
@@ -22,6 +26,13 @@ namespace fw
         {
             
         }
+
+        virtual void Tick( f32 dt, SceneNode& node )
+        {
+            
+        }
+        
+        f32 testb;
     };
 }
 

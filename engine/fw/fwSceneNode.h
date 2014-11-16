@@ -12,6 +12,7 @@ namespace fw
 
     struct SceneNode
     {
+        f32 testa;
         SceneNode* _parent;
 
         Array<SceneNodeComponent*> _components;
@@ -25,7 +26,9 @@ namespace fw
         
         SceneNode()
         {
+            testa = 3.0f;
             _parent = Null;
+            testb = 4.0f;
         }
         
         ~SceneNode()
@@ -51,7 +54,7 @@ namespace fw
             _children.Add( child );
         }
         
-        void Tick( float dt )
+        void Tick( f32 dt )
         {
             if( _parent != Null )
             {
@@ -65,7 +68,8 @@ namespace fw
             
             for( s32 i = 0; i < _components.Count(); i++ )
             {
-                _components[ i ]->Tick( dt, *this );
+                SceneNodeComponent* component = _components[ i ];
+                component->Tick( dt, *this );
             }
             
             for( s32 i = 0; i < _children.Count(); i++ )
@@ -78,14 +82,19 @@ namespace fw
         {
             for( s32 i = 0; i < _components.Count(); i++ )
             {
-                _components[ i ]->Render( renderer, *this );
+                SceneNodeComponent* component = _components[ i ];
+//                printf("compr %f %f\n", component->testa, component->testb);
+                component->Render( renderer, *this );
             }
             
             for( s32 i = 0; i < _children.Count(); i++ )
             {
-                _children[ i ]->Render( renderer );
+                SceneNode* child = _children[ i ];
+//                printf("child\n");
+                child->Render( renderer );
             }
         }
+        f32 testb;
     };
 }
 

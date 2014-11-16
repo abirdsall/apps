@@ -57,17 +57,17 @@
 #include "fw.h"
 #include "lighting.h"
 
-fw::TextureViewer mTextureViewer;
-
 fw::LightHandle _lightHandleA;
 fw::LightHandle _lightHandleB;
-fw::RadiosityRenderer _renderer;
+fw::Camera* _camera;
+fw::RadiosityRenderer* _renderer;
+fw::TextureViewer _textureViewer;
 
 void lightingTick( f32 dt )
 {
-    mTextureViewer.Tick();
+    _textureViewer.Tick();
 
-    v3 worldSize = _renderer.Bounds().mMax - _renderer.Bounds().mMin;
+    v3 worldSize = _renderer->Bounds().mMax - _renderer->Bounds().mMin;
 	v3 lightMove( 0.0f, 0.0f, 0.0f );
     
 	if( os::KeyHeld( os::eKeyA ) )
@@ -94,28 +94,29 @@ void lightingTick( f32 dt )
 	{
 		lightMove.z = worldSize.z * dt;
 	}
-	
-    
+
     //fw::LightSetPosition( _lightHandleA, fw::LightPosition( _lightHandleA ) + lightMove );
-	fw::LightSetPosition( _lightHandleA, clamp( fw::LightPosition( _lightHandleA ) + lightMove, _renderer.Bounds().mMin, _renderer.Bounds().mMax ));
-	//fw::LightSetPosition( _lightHandleB, clamp( fw::LightPosition( _lightHandleB ) - lightMove, _renderer.Bounds().mMin, _renderer.Bounds().mMax ));
+	fw::LightSetPosition( _lightHandleA, clamp( fw::LightPosition( _lightHandleA ) + lightMove, _renderer->Bounds().mMin, _renderer->Bounds().mMax ));
+	//fw::LightSetPosition( _lightHandleB, clamp( fw::LightPosition( _lightHandleB ) - lightMove, _renderer->Bounds().mMin, _renderer->Bounds().mMax ));
 	
 	if( os::KeyUp( os::eKeyZ ) )            
 	{
-		if( mTextureViewer.Active() )
+		if( _textureViewer.Active() )
 		{
-			mTextureViewer.SetActive( false );
+			_textureViewer.SetActive( false );
 		}
 		else
 		{
-			mTextureViewer.SetActive( true );
+			_textureViewer.SetActive( true );
 		}
 	}
+    
+    _renderer->_scene->Tick( dt );
 }
 
 void lightingDraw()
 {
-    _renderer.Render();
+    _renderer->Render();
 
     gs::Put();
     gs::Set2d();
@@ -128,7 +129,7 @@ void lightingDraw()
     
     gs::Pop();
 
-    mTextureViewer.Draw();
+    _textureViewer.Draw();
 }
 
 void AddCube( const v3& position, const v3& radius, const v4& colour )
@@ -137,15 +138,18 @@ void AddCube( const v3& position, const v3& radius, const v4& colour )
     fw::RadiosityCube* radiosityCube = fw::RadiosityCubeNew();
     node->_localTransform = identity4();
     node->_localTransform.setPosition( position );
-    v3 test = node->_localTransform.getPosition();
+    //v3 test = node->_localTransform.getPosition();
     node->_modelScale = radius;
     radiosityCube->_colour = colour;
     node->AddComponent( radiosityCube );
-    _renderer._scene->AddChild( node );
+    _renderer->_scene->AddChild( node );
 }
 
 void lightingInit()
 {
+    _renderer = new fw::RadiosityRenderer();
+    
+    fw::InitCameras();
     fw::InitSceneNodes();
     fw::InitLights();
     fw::InitDrawBatches();
@@ -157,10 +161,15 @@ void lightingInit()
     _lightHandleA = fw::LightNew( v3( 5.0f, 5.0f, 5.0f ), v3( 1.0f, 1.0f, 1.0f ) * 0.5f );
 	_lightHandleB = fw::LightNew( v3( 5.0f, 4.5f, 5.0f ), v3( 1.0f, 0.5f, 0.0f ) * 0.0f );
 
-    _renderer.Init( aabb( v3( 0.0f, 0.0f, 0.0f ), v3( 32.0f, 32.0f, 8.0f ) ), 256, 256, 16 );
-    _renderer._lights.Add( _lightHandleA );
-    _renderer._lights.Add( _lightHandleB );
-    _renderer._scene = fw::SceneNodeNew();
+    _renderer->Init( aabb( v3( 0.0f, 0.0f, 0.0f ), v3( 32.0f, 32.0f, 8.0f ) ), 256, 256, 16 );
+    _renderer->_lights.Add( _lightHandleA );
+    _renderer->_lights.Add( _lightHandleB );
+    _renderer->_scene = fw::SceneNodeNew();
+    
+    fw::SceneNode* cameraNode = fw::SceneNodeNew();
+    _camera = fw::CameraNew();
+    cameraNode->AddComponent( _camera );
+    _renderer->_scene->AddChild( cameraNode );
     
     AddCube( v3( 16.0f, 16.0f, 0.0f - 0.0f ), v3( 16.0f, 16.0f, 0.5f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ) );
     AddCube( v3( 16.0f, 0.0f, 4.0f - 0.0f ), v3( 15.5f, 1.0f, 4.0f ), v4( 1.0f, 0.8f, 0.6f, 1.0f ) );
@@ -177,7 +186,5 @@ void lightingInit()
 
     AddCube( v3( 16.0f, 14.0f, 2.0f ), v3( 5.0f, 1.0f, 1.0f ), v4( 0.5f, 0.8f, 1.0f, 1.0f ) );
 
-	mTextureViewer.Init();
-    //mTextureViewer.SetActive( true );
-
+	_textureViewer.Init();
 }

@@ -2,15 +2,14 @@
 
 namespace gs
 {
-    Array<Canvas> sCanvas;
-	//static Canvas sCanvas[ kCanvasLimit ];
+	static Canvas* sCanvas;
 	static CanvasHandle sCanvasActive;
 	static s32 sCanvasActiveLod;
 	static u32 sCanvasActiveCount;
 
 	void InitCanvases()
 	{
-        sCanvas.SetCount( kCanvasLimit );
+        sCanvas = new Canvas[ kCanvasLimit ];
 
 		for( u32 i = 0; i < kCanvasLimit; i++ )
 		{

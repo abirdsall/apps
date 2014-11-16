@@ -8,7 +8,7 @@ namespace core
     template <class T> class Pool
     {
     private:
-        T* _data;
+        T** _data;
         T** _free;
         s32 _dataSize;
         s32 _freeSize;
@@ -31,13 +31,18 @@ namespace core
             
             _dataSize = size;
             _freeSize = size;
-            
-            _data = (T*)core::alloc(sizeof(T) * _dataSize);
-            _free = (T**)core::alloc(sizeof(void*) * _dataSize);
+
+            _data = static_cast<T**> ( ::operator new( sizeof( hwInt[ size ] ) ) );
+            _free = static_cast<T**> ( ::operator new( sizeof( hwInt[ size ] ) ) );
+
+            for( s32 i = 0; i < size; i++ )
+            {
+                _data[ i ] = static_cast<T*> ( ::operator new( sizeof( T ) ) );
+                _free[ i ] = _data[ i ];
+            }
             
             for( s32 i = 0; i < _dataSize; i++ )
             {
-                _free[ i ] = &(_data[ i ]);
             }
         }
         
@@ -50,7 +55,7 @@ namespace core
         void Delete( T* object )
         {
             ASSERT( _freeSize < _dataSize );
-            ASSERT( hwInt( object ) >= hwInt( _data ) && hwInt( object ) <= hwInt( &_data[_dataSize - 1] ));
+            //ASSERT( hwInt( object ) >= hwInt( _data ) && hwInt( object ) <= hwInt( &_data[_dataSize - 1] ));
             object->~T();
             _free[ _freeSize++ ] = object;
         }

@@ -2,12 +2,11 @@
 
 namespace gs
 {
-    Array<Texture> sTexture;
-	//static Texture sTexture[ kTextureLimit ];
+	static Texture* sTexture;
 	
 	void InitTextures()
 	{
-        sTexture.SetCount( kTextureLimit );
+        sTexture = new Texture[ kTextureLimit ];
 
 		for( u32 i = 0; i < kTextureLimit; i++ )
 		{
