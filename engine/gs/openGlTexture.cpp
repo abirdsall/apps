@@ -116,19 +116,42 @@ namespace gs
 		textureHw._type = sHwTextureType[ texture._format ];
 		glGenTextures( 1, &textureHw.mTexture );
 		glBindTexture( textureHw.mTarget,textureHw.mTexture );
+        glTexParameteri( textureHw.mTarget, GL_TEXTURE_BASE_LEVEL, 0 );
+        glTexParameteri( textureHw.mTarget, GL_TEXTURE_MAX_LEVEL, texture._lodMax );
+
 		if( texture._sizeZ > 1 )
 		{
 #if GsOpenGles2
             ASSERT(false);
 #else
-            glTexImage3D( textureHw.mTarget, 0, textureHw.mInternalFormat, texture._sizeX, texture._sizeY, texture._sizeZ, 0, textureHw._format, textureHw._type, texture._data );
+            s32 sizeX = texture._sizeX;
+            s32 sizeY = texture._sizeY;
+            s32 sizeZ = texture._sizeZ;
+            
+            for( s32 i = 0; i <= texture._lodMax; i++ )
+            {
+                glTexImage3D( textureHw.mTarget, i, textureHw.mInternalFormat, sizeX, sizeY, sizeZ, 0, textureHw._format, textureHw._type, texture._data );
+                
+                if( sizeX > 1 ) sizeX >>= 1;
+                if( sizeY > 1 ) sizeY >>= 1;
+                if( sizeZ > 1 ) sizeZ >>= 1;
+            }
 #endif
 		}
 		else
 		{
-            glTexImage2D( textureHw.mTarget, 0, textureHw.mInternalFormat, texture._sizeX, texture._sizeY, 0, textureHw._format, textureHw._type, texture._data );
-		}
+            s32 sizeX = texture._sizeX;
+            s32 sizeY = texture._sizeY;
 
+            for( s32 i = 0; i <= texture._lodMax; i++ )
+            {
+                glTexImage2D( textureHw.mTarget, i, textureHw.mInternalFormat, sizeX, sizeY, 0, textureHw._format, textureHw._type, texture._data );
+                
+                if( sizeX > 1 ) sizeX >>= 1;
+                if( sizeY > 1 ) sizeY >>= 1;
+            }
+		}
+        
 		glTexParameteri( textureHw.mTarget, GL_TEXTURE_WRAP_S, texture._flags & TexFlagClampS ? GL_CLAMP_TO_EDGE : GL_REPEAT );
 		glTexParameteri( textureHw.mTarget, GL_TEXTURE_WRAP_T, texture._flags & TexFlagClampT ? GL_CLAMP_TO_EDGE : GL_REPEAT );
 		if( texture._sizeZ > 1 )
@@ -143,7 +166,6 @@ namespace gs
 		if( texture._flags & TexFlagMipMap )
 		{
 			glTexParameteri( textureHw.mTarget, GL_TEXTURE_MIN_FILTER, texture._flags & TexFlagNearest ? GL_NEAREST : GL_LINEAR_MIPMAP_LINEAR );
-			glGenerateMipmap( textureHw.mTarget );
 		}
 		else
 		{

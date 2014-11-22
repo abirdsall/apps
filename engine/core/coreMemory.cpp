@@ -2,16 +2,14 @@
 
 namespace core
 {
-	void* alloc(size_t size)
+	void* alloc( size_t size )
 	{
-        void* result = malloc(size);
-        printf("abxmalloc %p %d\n", result, (s32)size);
-        return result;
+        return malloc( size );
 	}
 	
-	void xfree(void* ptr)
+	void xfree( void* ptr )
 	{
-		free(ptr);
+		free( ptr );
 	}
 
 	void set( void* dataDst, const s32 dataValue, s32 size )

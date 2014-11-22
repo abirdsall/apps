@@ -36,6 +36,7 @@ namespace gs
 				texture._sizeX = sizeX;
 				texture._sizeY = sizeY;
 				texture._sizeZ = sizeZ;
+                texture._lodMax = 0;
 				texture._flags = flags;
 				texture._data = data;
 				texture._active = true;

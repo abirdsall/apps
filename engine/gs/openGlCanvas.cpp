@@ -47,8 +47,6 @@ namespace gs
             glGetIntegerv(GL_FRAMEBUFFER_BINDING, &backBuffer);
             sActiveBuffer = backBuffer;
             sBackBuffer = backBuffer;
-            
-            printf("AXXA %d\n", backBuffer);
         }
     }
     
@@ -110,6 +108,8 @@ namespace gs
             ErrorCheck();
 
             glDrawBuffers( canvas.mColorTextureCount, sColorAttachmentMap );
+            
+            ASSERT( glCheckFramebufferStatus( GL_FRAMEBUFFER ) == GL_FRAMEBUFFER_COMPLETE );
             
             ErrorCheck();
 #endif
