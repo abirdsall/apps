@@ -37,7 +37,7 @@ namespace fw
         void Tick( f32 dt, SceneNode& node )
         {
             //printf("ffffff\n");
-            //node._localTransform = node._localTransform * r4( v3( 1.0f, 1.0f, 0.0f ), 33.3f );
+            //node._localTransform = node._localTransform * r4( v3( 0.0f, 0.0f, 1.0f ), 0.001f );
         }
     };
 }

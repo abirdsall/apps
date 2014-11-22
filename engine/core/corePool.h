@@ -25,6 +25,11 @@ namespace core
             }
         }
         
+        ~Pool()
+        {
+            // todo
+        }
+        
         void Init( s32 size )
         {
             ASSERT( _data == Null );
