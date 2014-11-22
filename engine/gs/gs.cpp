@@ -2,7 +2,7 @@
 
 namespace gs
 {
-	static const c8* kAttribNames[ eAttribCount ] =
+	static const c8* AttributeNames[ AttributeCount ] =
 	{
 		"vertex_position",
 		"vertex_normal",
@@ -10,161 +10,161 @@ namespace gs
 		"vertex_tcoord"
 	};
 
-	static const u32 kStateLimit = 8;
-	static state sState[ kStateLimit ];
-	static state sStateApplied;
-	static u32 sStateActive = 0;
+	static const u32 StateLimit = 8;
+	static state _state[ StateLimit ];
+	static state _stateApplied;
+	static u32 _stateActive = 0;
 
 	static void InitStates()
 	{
-		SetBlend( eBlendRgba );
-		SetDepth( eDepthLequal );
-		SetWrite( eWriteRgbz );
-		SetCull( eCullBack );
+		SetBlend( BlendModeRgba );
+		SetDepth( DepthTestLequal );
+		SetWrite( WriteMaskRgbz );
+		SetCull( CullFaceBack );
 		SetScissor( 0, 0, CanvasSizeX(), CanvasSizeY() );
 		SetViewport( 0, 0, CanvasSizeX(), CanvasSizeY() );
 		SetMatrixP( identity4() );
 		SetMatrixM( identity4() );
 		
-		state& stateActive = sState[ sStateActive ];
+		state& stateActive = _state[ _stateActive ];
 		
-		SetBlendHw( stateActive.mBlend );
-		SetDepthHw( stateActive.mDepth );
-		SetWriteHw( stateActive.mWrite );
-		SetCullHw( stateActive.mCull );
-		SetScissorHw( stateActive.mScissor );
-		SetViewportHw( stateActive.mViewport );
+		SetBlendHw( stateActive._blend );
+		SetDepthHw( stateActive._depth );
+		SetWriteHw( stateActive._write );
+		SetCullHw( stateActive._cull );
+		SetScissorHw( stateActive._scissor );
+		SetViewportHw( stateActive._viewport );
 		
-		core::copy( &sStateApplied, &sState[ sStateActive ], sizeof( state ) );
+		core::copy( &_stateApplied, &_state[ _stateActive ], sizeof( state ) );
 	}
 	
 	void ApplyState()
 	{
-		state& stateActive = sState[ sStateActive ];
+		state& stateActive = _state[ _stateActive ];
 		
-		if( stateActive.mBlend != sStateApplied.mBlend )
+		if( stateActive._blend != _stateApplied._blend )
 		{
-			SetBlendHw( stateActive.mBlend );
+			SetBlendHw( stateActive._blend );
 		}
 		
-		if( stateActive.mDepth != sStateApplied.mDepth )
+		if( stateActive._depth != _stateApplied._depth )
 		{
-			SetDepthHw( stateActive.mDepth );
+			SetDepthHw( stateActive._depth );
 		}
 		
-		if( stateActive.mWrite != sStateApplied.mWrite )
+		if( stateActive._write != _stateApplied._write )
 		{
-			SetWriteHw( stateActive.mWrite );
+			SetWriteHw( stateActive._write );
 		}
 		
-		if( stateActive.mCull != sStateApplied.mCull )
+		if( stateActive._cull != _stateApplied._cull )
 		{
-			SetCullHw( stateActive.mCull );
+			SetCullHw( stateActive._cull );
 		}
 		
-		if( stateActive.mScissor != sStateApplied.mScissor )
+		if( stateActive._scissor != _stateApplied._scissor )
 		{
-			SetScissorHw( stateActive.mScissor );
+			SetScissorHw( stateActive._scissor );
 		}
 		
-		if( stateActive.mViewport != sStateApplied.mViewport )
+		if( stateActive._viewport != _stateApplied._viewport )
 		{
-			SetViewportHw( stateActive.mViewport );
+			SetViewportHw( stateActive._viewport );
 		}
 		
-		if( ShaderActive() != kShaderInvalid )
+		if( ShaderActive() != ShaderInvalid )
 		{
-			ShaderSetMat4( "viewMatrix", stateActive.mMatrixM );
-			ShaderSetMat4( "projMatrix", stateActive.mMatrixP );
+			ShaderSetMat4( "viewMatrix", stateActive._matrixM );
+			ShaderSetMat4( "projMatrix", stateActive._matrixP );
 		}
 
-		core::copy( &sStateApplied, &sState[ sStateActive ], sizeof( state ) );
+		core::copy( &_stateApplied, &_state[ _stateActive ], sizeof( state ) );
 	}
 	
 	void Put()
 	{
-		sStateActive++;
-		ASSERT( sStateActive < kStateLimit );
-		core::copy( &sState[ sStateActive ], &sState[ sStateActive - 1 ], sizeof( state ) );
+		_stateActive++;
+		ASSERT( _stateActive < StateLimit );
+		core::copy( &_state[ _stateActive ], &_state[ _stateActive - 1 ], sizeof( state ) );
 	}
 	
 	void Pop()
 	{
-		ASSERT( sStateActive > 0 );
-		sStateActive--;
+		ASSERT( _stateActive > 0 );
+		_stateActive--;
 	}
 		
-	void SetBlend(const eBlend blend)
+	void SetBlend( BlendMode blend )
 	{
-		sState[ sStateActive ].mBlend = blend;
+		_state[ _stateActive ]._blend = blend;
 	}
 	
-	void SetDepth(const eDepth depth)
+	void SetDepth( DepthTest depth )
 	{
-		sState[ sStateActive ].mDepth = depth;
+		_state[ _stateActive ]._depth = depth;
 	}
 	
-	void SetWrite(const eWrite write)
+	void SetWrite( WriteMask write )
 	{
-		sState[ sStateActive ].mWrite = write;
+		_state[ _stateActive ]._write = write;
 	}
 	
-	void SetCull(const eCull cull)
+	void SetCull(CullFace cull)
 	{
-		sState[ sStateActive ].mCull = cull;
+		_state[ _stateActive ]._cull = cull;
 	}
 	
-	void SetScissor(const s32 x1, const s32 y1, const s32 x2, const s32 y2)
+	void SetScissor( s32 x1, s32 y1, s32 x2, s32 y2 )
 	{
-		state& activeState = sState[ sStateActive ];
+		state& activeState = _state[ _stateActive ];
 		
-		activeState.mScissor[ 0 ] = x1;
-		activeState.mScissor[ 1 ] = y1;
-		activeState.mScissor[ 2 ] = x2;
-		activeState.mScissor[ 3 ] = y2;
+		activeState._scissor[ 0 ] = x1;
+		activeState._scissor[ 1 ] = y1;
+		activeState._scissor[ 2 ] = x2;
+		activeState._scissor[ 3 ] = y2;
 		
-		SetScissorHw( activeState.mScissor );
+		SetScissorHw( activeState._scissor );
 		
-		sStateApplied.mScissor[ 0 ] = x1;
-		sStateApplied.mScissor[ 1 ] = y1;
-		sStateApplied.mScissor[ 2 ] = x2;
-		sStateApplied.mScissor[ 3 ] = y2;
+		_stateApplied._scissor[ 0 ] = x1;
+		_stateApplied._scissor[ 1 ] = y1;
+		_stateApplied._scissor[ 2 ] = x2;
+		_stateApplied._scissor[ 3 ] = y2;
 	}
 	
-	void SetViewport(const s32 x1, const s32 y1, const s32 x2, const s32 y2)
+	void SetViewport( s32 x1, s32 y1, s32 x2, s32 y2 )
 	{
-		state& activeState = sState[ sStateActive ];
+		state& activeState = _state[ _stateActive ];
 		
-		activeState.mViewport[ 0 ] = x1;
-		activeState.mViewport[ 1 ] = y1;
-		activeState.mViewport[ 2 ] = x2;
-		activeState.mViewport[ 3 ] = y2;
+		activeState._viewport[ 0 ] = x1;
+		activeState._viewport[ 1 ] = y1;
+		activeState._viewport[ 2 ] = x2;
+		activeState._viewport[ 3 ] = y2;
 		
-		SetViewportHw( activeState.mViewport );
+		SetViewportHw( activeState._viewport );
 		
-		sStateApplied.mViewport[ 0 ] = x1;
-		sStateApplied.mViewport[ 1 ] = y1;
-		sStateApplied.mViewport[ 2 ] = x2;
-		sStateApplied.mViewport[ 3 ] = y2;
+		_stateApplied._viewport[ 0 ] = x1;
+		_stateApplied._viewport[ 1 ] = y1;
+		_stateApplied._viewport[ 2 ] = x2;
+		_stateApplied._viewport[ 3 ] = y2;
 	}
 	
-	void SetMatrixP(const m4& matrix)
+	void SetMatrixP( const m4& matrix )
 	{
-		sState[ sStateActive ].mMatrixP = matrix;
+		_state[ _stateActive ]._matrixP = matrix;
 	}
 	
-	void SetMatrixM(const m4& matrix)
+	void SetMatrixM( const m4& matrix )
 	{
-		sState[ sStateActive ].mMatrixM = matrix;
+		_state[ _stateActive ]._matrixM = matrix;
 	}
 	
-	void Set2d(void)
+	void Set2d()
 	{
-		s32* v = sStateApplied.mViewport;
+		s32* v = _stateApplied._viewport;
 		SetOrtho( v[ 0 ], v[ 1 ], v[ 2 ], v[ 3 ] );
 	}
 	
-	void SetOrtho( const f32 x1, const f32 y1, const f32 x2, const f32 y2 )
+	void SetOrtho( f32 x1, f32 y1, f32 x2, f32 y2 )
 	{
 		SetMatrixP( orthogonal( x1, x2, y1, y2, -1.0f, 1.0f ) );
 		SetMatrixM( identity4() );
@@ -220,62 +220,61 @@ namespace gs
 		UpdateElementBufferHw( data, dataSize, dataOffset );
 	}
 	
-	void DeleteVertexArray(u32 va)
+	void DeleteVertexArray( u32 va )
 	{
 		DeleteVertexArray( va );
 	}
 	
-	void DeleteVertexBuffer(u32 vb)
+	void DeleteVertexBuffer( u32 vb )
 	{
 		DeleteVertexBufferHw( vb );
 	}
 	
-	void DeleteElementBuffer(u32 eb)
+	void DeleteElementBuffer( u32 eb )
 	{
 		DeleteElementBufferHw( eb );
 	}
 
-	void SetArray(const eAttrib attrib, const u32 size, const u32 stride, const void* pointer)
+	void SetArray( Attribute attrib, u32 size, u32 stride, const void* pointer)
 	{
 		SetArrayHw( attrib, size, stride, pointer );
 	}
 	
-	void UnsetArray(const eAttrib attrib)
+	void UnsetArray( Attribute attrib)
 	{
 		UnsetArrayHw( attrib );
 	}
 	
-	void DrawArray(const ePrim primitive, const u32 num)
+	void DrawArray( Primitive primitive, u32 num)
 	{
 		DrawArrayHw( primitive, num );
 	}
 	
-	void DrawElements( const ePrim primitive, const u32 num )
+	void DrawElements( Primitive primitive, u32 num )
 	{
 		DrawElementsHw( primitive, num );
 	}
 
-	const c8* AttribName( const eAttrib attrib )
+	const c8* AttributeName( Attribute attrib )
 	{
-		return kAttribNames[ attrib ];
+		return AttributeNames[ attrib ];
 	}
 	
-	void Clear( const bool colour, const bool depth )
+	void Clear( bool colour, bool depth )
 	{
 		ClearHw( colour, depth );
 	}
 	
-	void Init(void)
+	void Init()
 	{
 		InitHw();
 		InitCanvases();
 		InitShaders();
 		InitTextures();
-		
 		InitStates();
 	}
 	
-	void Kill(void)
+	void Kill()
 	{
 		KillCanvases();
 		KillShaders();

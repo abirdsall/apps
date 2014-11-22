@@ -5,9 +5,9 @@ namespace gs
 {
 	struct TextureHw
 	{
-		GLuint mTexture;
-		GLenum mTarget;
-		GLint mInternalFormat;
+		GLuint _id;
+		GLenum _target;
+		GLint _internalFormat;
 		GLenum _format;
 		GLenum _type;
 	};

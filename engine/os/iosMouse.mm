@@ -4,15 +4,15 @@
 
 #include "ios.h"
 
-extern id sWindowRef;
+extern id _windowRef;
 
 namespace os
 {	
-	void MouseSetVisibileHw( const bool visible )
+	void MouseSetVisibileHw( bool visible )
 	{
 	}
 	
-	void MouseSetPositionHw( const s16 x, const s16 y )
+	void MouseSetPositionHw( s16 x, s16 y )
 	{
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace core
 {
-	static u64 sMilliseconds;
+	static u64 _milliseconds;
 	
 	static u64 TimeMilliseconds()
 	{
@@ -15,7 +15,7 @@ namespace core
 	
 	void TimeInit()
 	{
-		sMilliseconds = TimeMilliseconds();
+		_milliseconds = TimeMilliseconds();
 	}
 	
     void TimeKill()
@@ -25,8 +25,8 @@ namespace core
     
 	f32 TimeTick()
 	{
-		u64 oldMilliseconds = sMilliseconds;
-		sMilliseconds = TimeMilliseconds();
-		return 0.001f * ( f32 )( sMilliseconds - oldMilliseconds );
+		u64 oldMilliseconds = _milliseconds;
+		_milliseconds = TimeMilliseconds();
+		return 0.001f * ( f32 )( _milliseconds - oldMilliseconds );
 	}
 }

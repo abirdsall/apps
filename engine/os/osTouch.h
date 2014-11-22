@@ -3,21 +3,21 @@
 
 namespace os
 {
-    const s32 kTouchLimit = 32;
+    static const s32 TouchLimit = 32;
 
-    enum eTouchPhase
+    enum TouchPhase
 	{
-        eTouchPhaseBegan,
-        eTouchPhaseMoved,
-        eTouchPhaseStationary,
-        eTouchPhaseEnded,
-        eTouchPhaseCancelled,
-		eTouchPhaseCount
+        TouchPhaseBegan,
+        TouchPhaseMoved,
+        TouchPhaseStationary,
+        TouchPhaseEnded,
+        TouchPhaseCancelled,
+		TouchPhaseCount
 	};
     
     struct Touch
     {
-        eTouchPhase _phase;
+        TouchPhase _phase;
         f32 _x;
         f32 _y;
         f32 _xPrevious;
@@ -26,7 +26,7 @@ namespace os
         s32 _timeStamp;
         hwInt _nativeTouch;
         
-        void Init( eTouchPhase phase, f32 x, f32 y, f32 xPrevious, f32 yPrevious, s32 tapCount, s32 timeStamp, hwInt nativeTouch )
+        void Init( TouchPhase phase, f32 x, f32 y, f32 xPrevious, f32 yPrevious, s32 tapCount, s32 timeStamp, hwInt nativeTouch )
         {
             _phase = phase;
             _x = x;
@@ -40,10 +40,10 @@ namespace os
         
         Touch()
         {
-            Init( eTouchPhaseCount, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0, 0 );
+            Init( TouchPhaseCount, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0, 0 );
         }
         
-        Touch( eTouchPhase phase, f32 x, f32 y, f32 xPrevious, f32 yPrevious, s32 tapCount, s32 timeStamp, hwInt nativeTouch )
+        Touch( TouchPhase phase, f32 x, f32 y, f32 xPrevious, f32 yPrevious, s32 tapCount, s32 timeStamp, hwInt nativeTouch )
         {
             Init( phase, x, y, xPrevious, yPrevious, tapCount, timeStamp, nativeTouch );
         }

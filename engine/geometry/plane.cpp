@@ -1,13 +1,13 @@
 #include "plane.h"
 
-plane :: plane(void) {}
+plane :: plane() {}
 plane :: plane(const v3& normal, const v3& point)
 {
-	mNormal = normal;
-	mOffset = dot(mNormal, point);
+	_normal = normal;
+	_offset = dot(_normal, point);
 }
 
 f32 plane :: distanceToPoint(const v3& point) const
 {
-	return dot(mNormal, point) - mOffset;
+	return dot(_normal, point) - _offset;
 }

@@ -6,18 +6,18 @@
 
 namespace os
 {
-    static void ( *sAppInit )();
-    static void ( *sAppTick )( f32 dt );
-    static void ( *sAppTouch )( const Touch* touches, s32 touchCount );
-    static void ( *sAppDraw )();
-    static void ( *sAppKill )();
-    static WindowFormat sWindowFormat;
-    static eState sState = eStateUninitialised;
-	static bool sKilled = false;
+    static void ( *_appInit )();
+    static void ( *_appTick )( f32 dt );
+    static void ( *_appTouch )( const Touch* touches, s32 touchCount );
+    static void ( *_appDraw )();
+    static void ( *_appKill )();
+    static WindowFormat _windowFormat;
+    static State _state = StateUninitialised;
+	static bool _killed = false;
 	
 	void Kill( void )
 	{
-        sKilled = true;
+        _killed = true;
 	}
 	
     bool Main( int argc, char *argv[],
@@ -27,12 +27,12 @@ namespace os
               void ( *appDraw )(),
               void ( *appKill )(), WindowFormat windowFormat )
     {
-        sAppInit = appInit;
-        sAppTick = appTick;
-        sAppTouch = appTouch;
-        sAppDraw = appDraw;
-        sAppKill = appKill;
-        sWindowFormat = windowFormat;
+        _appInit = appInit;
+        _appTick = appTick;
+        _appTouch = appTouch;
+        _appDraw = appDraw;
+        _appKill = appKill;
+        _windowFormat = windowFormat;
         
         PANIC( 2 == sizeof( s16 ) );
 		PANIC( 2 == sizeof( u16 ) );
@@ -46,7 +46,7 @@ namespace os
     
     bool FlowActive()
     {
-        return sState == eStateInitialised && !sKilled;
+        return _state == StateInitialised && !_killed;
     }
     
     void FlowInit()
@@ -64,16 +64,16 @@ namespace os
 
     void FlowInitWindow()
     {
-		if( WindowOpen( sWindowFormat ) )
+		if( WindowOpen( _windowFormat ) )
 		{
 			gs::Init();
 			
-			if( sAppInit )
+			if( _appInit )
 			{
-				sAppInit();
+				_appInit();
 			}
             
-            sState = eStateInitialised;
+            _state = StateInitialised;
         }
     }
     
@@ -83,15 +83,15 @@ namespace os
         
         WindowTick();
         
-        if( sAppTick )
+        if( _appTick )
         {
-            sAppTick( dt );
+            _appTick( dt );
         }
         
         KeyboardTick( dt );
         MouseTick( dt );
         
-        if( KeyDown( eKeyEscape ) )
+        if( KeyboardDown( KeyEscape ) )
         {
             Kill();
         }
@@ -99,9 +99,9 @@ namespace os
 
     void FlowTouch( const Touch* touches, s32 touchCount )
     {
-        if( sAppTouch )
+        if( _appTouch )
         {
-            sAppTouch( touches, touchCount );
+            _appTouch( touches, touchCount );
         }
     }
     
@@ -109,13 +109,13 @@ namespace os
     {
         gs::Put();
         gs::SetViewport( 0, 0, WindowSizeX(), WindowSizeY() );
-        gs::SetWrite( gs::eWriteRgbaz );
+        gs::SetWrite( gs::WriteMaskRgbaz );
         gs::Clear( true, true );
-        gs::SetWrite( gs::eWriteRgbz );
+        gs::SetWrite( gs::WriteMaskRgbz );
         
-        if( sAppDraw )
+        if( _appDraw )
         {
-            sAppDraw();
+            _appDraw();
         }
         
         MouseDraw();
@@ -126,11 +126,11 @@ namespace os
     
     void FlowKill()
     {
-        if( sState == eStateInitialised )
+        if( _state == StateInitialised )
         {
-            if( sAppKill )
+            if( _appKill )
 			{
-				sAppKill();
+				_appKill();
 			}
 			
 			gs::Kill();

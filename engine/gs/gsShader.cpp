@@ -2,21 +2,21 @@
 
 namespace gs
 {
-	static Shader sShader[ kShaderLimit ];
-	static ShaderHandle sShaderActive = kShaderInvalid;
+	static Shader _shaders[ ShaderLimit ];
+	static ShaderHandle _shaderActive = ShaderInvalid;
 	
 	void InitShaders()
 	{
-		for( u32 i = 0; i < kShaderLimit; i++ )
+		for( u32 i = 0; i < ShaderLimit; i++ )
 		{
-			sShader[ i ].mActive = false;
+			_shaders[ i ]._active = false;
 		}
-		sShaderActive = kShaderInvalid;
+		_shaderActive = ShaderInvalid;
 	}
 	
 	void KillShaders()
 	{
-		for( u32 i = 0; i < kShaderLimit;  i++ )
+		for( u32 i = 0; i < ShaderLimit;  i++ )
 		{
 			ShaderDelete( i );
 		}
@@ -24,16 +24,16 @@ namespace gs
 	
 	ShaderHandle ShaderNew()
 	{
-		for( u32 i = 0; i < kShaderLimit; i++ )
+		for( u32 i = 0; i < ShaderLimit; i++ )
 		{
-			if( !sShader[ i ].mActive )
+			if( !_shaders[ i ]._active )
 			{
-				sShader[ i ].mActive = true;
+				_shaders[ i ]._active = true;
 				return i;
 			}
 		}
 		ASSERT(0);
-		return kShaderInvalid;
+		return ShaderInvalid;
 	}
 	
 	ShaderHandle ShaderNew( const c8* vShader, const c8* fShader, bool debug )
@@ -45,75 +45,75 @@ namespace gs
 			printf( "//\n//////////////////////////////////////////////////\n\n" );
 		}
 		ShaderHandle handle = ShaderNew();
-		if( handle != kShaderInvalid )
+		if( handle != ShaderInvalid )
 		{
-			Shader& shader = sShader[ handle ];
+			Shader& shader = _shaders[ handle ];
 			if( ShaderHwNew( handle, vShader, fShader ) )
 			{
 				return handle;
 			}
 			else
 			{
-				shader.mActive = false;
+				shader._active = false;
 			}
 		}
 		ASSERT(0);
-		return kShaderInvalid;
+		return ShaderInvalid;
 	}
 		
-	void ShaderDelete( const ShaderHandle handle )
+	void ShaderDelete( ShaderHandle handle )
 	{
-		Shader& shader = sShader[ handle ];
-		if( shader.mActive )
+		Shader& shader = _shaders[ handle ];
+		if( shader._active )
 		{
 			ShaderHwDelete( handle );
-			shader.mActive = false;
+			shader._active = false;
 		}
 	}
 	
-	void ShaderSet( const ShaderHandle handle )
+	void ShaderSet( ShaderHandle handle )
 	{
 		ShaderHwSet( handle );
-		sShaderActive = handle;
+		_shaderActive = handle;
 	}
 	
-	void ShaderSetInt( const c8* name, const s32 value )
+	void ShaderSetInt( const c8* name, s32 value )
 	{
-		ShaderHwSetInt( sShaderActive, name, value );
+		ShaderHwSetInt( _shaderActive, name, value );
 	}
 	
-	void ShaderSetFloat( const c8* name, const f32 value )
+	void ShaderSetFloat( const c8* name, f32 value )
 	{
-		ShaderHwSetFloat( sShaderActive, name, value );
+		ShaderHwSetFloat( _shaderActive, name, value );
 	}
 	
 	void ShaderSetFloatArray( const c8* name, f32* array, u32 arraySize )
 	{
-		ShaderHwSetFloatArray( sShaderActive, name, array, arraySize );
+		ShaderHwSetFloatArray( _shaderActive, name, array, arraySize );
 	}
 	
 	void ShaderSetVec2( const c8* name, const v2& v )
 	{
-		ShaderHwSetVec2( sShaderActive, name, v );
+		ShaderHwSetVec2( _shaderActive, name, v );
 	}
 
 	void ShaderSetVec3( const c8* name, const v3& v )
 	{
-		ShaderHwSetVec3( sShaderActive, name, v );
+		ShaderHwSetVec3( _shaderActive, name, v );
 	}
 	
 	void ShaderSetVec4( const c8* name, const v4& v )
 	{
-		ShaderHwSetVec4( sShaderActive, name, v );
+		ShaderHwSetVec4( _shaderActive, name, v );
 	}
 	
 	void ShaderSetMat4( const c8* name, const m4& m )
 	{
-		ShaderHwSetMat4( sShaderActive, name, m );
+		ShaderHwSetMat4( _shaderActive, name, m );
 	}
 	
 	ShaderHandle ShaderActive()
 	{
-		return sShaderActive;
+		return _shaderActive;
 	}
 }

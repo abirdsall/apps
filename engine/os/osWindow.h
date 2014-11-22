@@ -8,14 +8,14 @@ namespace os
         s32 _sizeX;
         s32 _sizeY;
         
-        s32 mBitsR;
-        s32 mBitsG;
-        s32 mBitsB;
-        s32 mBitsA;
-        s32 mBitsZ;
+        s32 _bitsR;
+        s32 _bitsG;
+        s32 _bitsB;
+        s32 _bitsA;
+        s32 _bitsZ;
         
-        bool mFullscreen;
-        bool mNative;
+        bool _fullscreen;
+        bool _native;
         
         WindowFormat()
         {
@@ -31,13 +31,13 @@ namespace os
         {
             _sizeX = sizeX;
             _sizeY = sizeY;
-            mBitsR = rBits;
-            mBitsG = gBits;
-            mBitsB = bBits;
-            mBitsA = aBits;
-            mBitsZ = zBits;
-            mFullscreen = fullscreen;
-            mNative = native;
+            _bitsR = rBits;
+            _bitsG = gBits;
+            _bitsB = bBits;
+            _bitsA = aBits;
+            _bitsZ = zBits;
+            _fullscreen = fullscreen;
+            _native = native;
         }
 	};
     

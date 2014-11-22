@@ -4,90 +4,90 @@
 
 namespace os
 {
-	extern void OnKey( const eKey key, const bool pressed );
+	extern void OnKey( const Key key, bool pressed );
 
-	void OnModifierChange( const u32 modifiers )
+	void OnModifierChange( u32 modifiers )
 	{
 #if 0
 		static u32 sPreviousModifiers = 0;
 		
-		const u32 changed = modifiers ^ sPreviousModifiers;
+		u32 changed = modifiers ^ sPreviousModifiers;
 		
 		sPreviousModifiers = modifiers;
 		
 		if( changed & shiftKey )
 		{
-			OnKey( eKeyShift, modifiers & shiftKey );
+			OnKey( KeyShift, modifiers & shiftKey );
 		}
 		
 		if( changed & rightShiftKey )
 		{
-			OnKey( eKeyShift, modifiers & rightShiftKey );
+			OnKey( KeyShift, modifiers & rightShiftKey );
 		}
 		
 		if( changed & controlKey )
 		{
-			OnKey( eKeyCtrl, modifiers & controlKey );
+			OnKey( KeyCtrl, modifiers & controlKey );
 		}
 		
 		if( changed & rightControlKey )
 		{
-			OnKey( eKeyCtrl, modifiers & rightControlKey );
+			OnKey( KeyCtrl, modifiers & rightControlKey );
 		}
 #endif
 	}
 
-	void OnKeyChange( const u32 keyCode, const bool pressed )
+	void OnKeyChange( u32 keyCode, bool pressed )
 	{
 		switch( keyCode )
 		{  
-			case 0x00 : OnKey( eKeyA, pressed ); break;
-			case 0x0B : OnKey( eKeyB, pressed ); break;
-			case 0x08 : OnKey( eKeyC, pressed ); break;
-			case 0x02 : OnKey( eKeyD, pressed ); break;
-			case 0x0E : OnKey( eKeyE, pressed ); break;
-			case 0x03 : OnKey( eKeyF, pressed ); break;
-			case 0x05 : OnKey( eKeyG, pressed ); break;
-			case 0x04 : OnKey( eKeyH, pressed ); break;
-			case 0x22 : OnKey( eKeyI, pressed ); break;
-			case 0x26 : OnKey( eKeyJ, pressed ); break;
-			case 0x28 : OnKey( eKeyK, pressed ); break;
-			case 0x25 : OnKey( eKeyL, pressed ); break;
-			case 0x2E : OnKey( eKeyM, pressed ); break;
-			case 0x2D : OnKey( eKeyN, pressed ); break;
-			case 0x1F : OnKey( eKeyO, pressed ); break;
-			case 0x23 : OnKey( eKeyP, pressed ); break;
-			case 0x0C : OnKey( eKeyQ, pressed ); break;
-			case 0x0F : OnKey( eKeyR, pressed ); break;
-			case 0x01 : OnKey( eKeyS, pressed ); break;
-			case 0x11 : OnKey( eKeyT, pressed ); break;
-			case 0x20 : OnKey( eKeyU, pressed ); break;
-			case 0x09 : OnKey( eKeyV, pressed ); break;
-			case 0x0D : OnKey( eKeyW, pressed ); break;
-			case 0x07 : OnKey( eKeyX, pressed ); break;
-			case 0x10 : OnKey( eKeyY, pressed ); break;
-			case 0x06 : OnKey( eKeyZ, pressed ); break;
-			case 0x1D : OnKey( eKey0, pressed ); break;
-			case 0x12 : OnKey( eKey1, pressed ); break;
-			case 0x13 : OnKey( eKey2, pressed ); break;
-			case 0x14 : OnKey( eKey3, pressed ); break;
-			case 0x15 : OnKey( eKey4, pressed ); break;
-			case 0x17 : OnKey( eKey5, pressed ); break;
-			case 0x16 : OnKey( eKey6, pressed ); break;
-			case 0x1A : OnKey( eKey7, pressed ); break;
-			case 0x1C : OnKey( eKey8, pressed ); break;
-			case 0x19 : OnKey( eKey9, pressed ); break;
-			case 0x7E : OnKey( eKeyUp, pressed ); break;
-			case 0x7D : OnKey( eKeyDown, pressed ); break;
-			case 0x7B : OnKey( eKeyLeft, pressed ); break;
-			case 0x7C : OnKey( eKeyRight, pressed ); break;
-			case 0x3B : OnKey( eKeyCtrl, pressed ); break;
-			case 0x38 : OnKey( eKeyShift, pressed ); break;
-			case 0x24 : OnKey( eKeyEnter, pressed ); break;
-			case 0x31 : OnKey( eKeySpace, pressed ); break;
-			case 0x30 : OnKey( eKeyTab, pressed ); break;
-			case 0x35 : OnKey( eKeyEscape, pressed ); break;
-			case 0x33 : OnKey( eKeyDelete, pressed ); break;
+			case 0x00 : OnKey( KeyA, pressed ); break;
+			case 0x0B : OnKey( KeyB, pressed ); break;
+			case 0x08 : OnKey( KeyC, pressed ); break;
+			case 0x02 : OnKey( KeyD, pressed ); break;
+			case 0x0E : OnKey( KeyE, pressed ); break;
+			case 0x03 : OnKey( KeyF, pressed ); break;
+			case 0x05 : OnKey( KeyG, pressed ); break;
+			case 0x04 : OnKey( KeyH, pressed ); break;
+			case 0x22 : OnKey( KeyI, pressed ); break;
+			case 0x26 : OnKey( KeyJ, pressed ); break;
+			case 0x28 : OnKey( KeyK, pressed ); break;
+			case 0x25 : OnKey( KeyL, pressed ); break;
+			case 0x2E : OnKey( KeyM, pressed ); break;
+			case 0x2D : OnKey( KeyN, pressed ); break;
+			case 0x1F : OnKey( KeyO, pressed ); break;
+			case 0x23 : OnKey( KeyP, pressed ); break;
+			case 0x0C : OnKey( KeyQ, pressed ); break;
+			case 0x0F : OnKey( KeyR, pressed ); break;
+			case 0x01 : OnKey( KeyS, pressed ); break;
+			case 0x11 : OnKey( KeyT, pressed ); break;
+			case 0x20 : OnKey( KeyU, pressed ); break;
+			case 0x09 : OnKey( KeyV, pressed ); break;
+			case 0x0D : OnKey( KeyW, pressed ); break;
+			case 0x07 : OnKey( KeyX, pressed ); break;
+			case 0x10 : OnKey( KeyY, pressed ); break;
+			case 0x06 : OnKey( KeyZ, pressed ); break;
+			case 0x1D : OnKey( Key0, pressed ); break;
+			case 0x12 : OnKey( Key1, pressed ); break;
+			case 0x13 : OnKey( Key2, pressed ); break;
+			case 0x14 : OnKey( Key3, pressed ); break;
+			case 0x15 : OnKey( Key4, pressed ); break;
+			case 0x17 : OnKey( Key5, pressed ); break;
+			case 0x16 : OnKey( Key6, pressed ); break;
+			case 0x1A : OnKey( Key7, pressed ); break;
+			case 0x1C : OnKey( Key8, pressed ); break;
+			case 0x19 : OnKey( Key9, pressed ); break;
+			case 0x7E : OnKey( KeyUp, pressed ); break;
+			case 0x7D : OnKey( KeyDown, pressed ); break;
+			case 0x7B : OnKey( KeyLeft, pressed ); break;
+			case 0x7C : OnKey( KeyRight, pressed ); break;
+			case 0x3B : OnKey( KeyCtrl, pressed ); break;
+			case 0x38 : OnKey( KeyShift, pressed ); break;
+			case 0x24 : OnKey( KeyEnter, pressed ); break;
+			case 0x31 : OnKey( KeySpace, pressed ); break;
+			case 0x30 : OnKey( KeyTab, pressed ); break;
+			case 0x35 : OnKey( KeyEscape, pressed ); break;
+			case 0x33 : OnKey( KeyDelete, pressed ); break;
 		}
 	}
 }

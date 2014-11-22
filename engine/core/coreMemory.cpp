@@ -12,7 +12,7 @@ namespace core
 		free( ptr );
 	}
 
-	void set( void* dataDst, const s32 dataValue, s32 size )
+	void set( void* dataDst, s32 dataValue, s32 size )
 	{
 		u8* dst = ( u8* )dataDst;
 		

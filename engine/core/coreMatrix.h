@@ -11,7 +11,7 @@ namespace core
     {
         v4 rows[4];
         
-        m4(void) {}
+        m4() {}
         m4(const v4 &r0, const v4 &r1, const v4 &r2, const v4 &r3)
         {
             rows[0] = r0;
@@ -20,10 +20,10 @@ namespace core
             rows[3] = r3;
         }
         
-        m4(	const f32 m00, const f32 m01, const f32 m02, const f32 m03,
-           const f32 m10, const f32 m11, const f32 m12, const f32 m13,
-           const f32 m20, const f32 m21, const f32 m22, const f32 m23,
-           const f32 m30, const f32 m31, const f32 m32, const f32 m33 )
+        m4(	f32 m00, f32 m01, f32 m02, f32 m03,
+           f32 m10, f32 m11, f32 m12, f32 m13,
+           f32 m20, f32 m21, f32 m22, f32 m23,
+           f32 m30, f32 m31, f32 m32, f32 m33 )
         {
             rows[0] = v4(m00, m01, m02, m03);
             rows[1] = v4(m10, m11, m12, m13);
@@ -31,7 +31,7 @@ namespace core
             rows[3] = v4(m30, m31, m32, m33);
         }
         
-        m4(const f32 *a)
+        m4(const f32* a)
         {
             rows[0] = v4(a[ 0], a[ 1], a[ 2], a[ 3]);
             rows[1] = v4(a[ 4], a[ 5], a[ 6], a[ 7]);
@@ -47,14 +47,14 @@ namespace core
             rows[3].w += dot(rows[3].xyz(), v);
         }
         
-        inline void stabilise(void) // stabilise
+        inline void stabilise() // stabilise
         {
             (v3&)rows[0] = normalise((v3&)rows[0]);
             (v3&)rows[2] = normalise(cross((v3&)rows[0], (v3&)rows[1]));
             (v3&)rows[1] = cross((v3&)rows[2], (v3&)rows[0]);
         }
         
-        v4 getColumn(const u8 column) const
+        v4 getColumn(u8 column) const
         {
             switch(column)
             {
@@ -65,7 +65,7 @@ namespace core
             }
         }
         
-        void setColumn(const u8 column, const v4& v)
+        void setColumn(u8 column, const v4& v)
         {
             switch(column)
             {
@@ -76,7 +76,7 @@ namespace core
             }
         }
         
-        v3 getPosition(void)
+        v3 getPosition()
         {
             return - rows[0].w * rows[0].xyz() - rows[1].w * rows[1].xyz() - rows[2].w * rows[2].xyz();
         }
@@ -173,7 +173,7 @@ namespace core
         return m4(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, cosA,-sinA, 0.0f, 0.0f, sinA, cosA, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
     }
     
-    inline m4 rotateY(const f32 angle)
+    inline m4 rotateY(f32 angle)
     {
         f32 cosA = core::cos(angle);
         f32 sinA = core::sin(angle);
@@ -181,7 +181,7 @@ namespace core
         return m4(cosA, 0.0f,-sinA, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, sinA, 0.0f, cosA, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
     }
     
-    inline m4 rotateZ(const f32 angle)
+    inline m4 rotateZ(f32 angle)
     {
         f32 cosA = core::cos(angle);
         f32 sinA = core::sin(angle);
@@ -191,7 +191,7 @@ namespace core
                   0.0f, 0.0f, 0.0f, 1.0f);
     }
     
-    inline m4 rotateXY(const f32 angleX, const f32 angleY)
+    inline m4 rotateXY(f32 angleX, f32 angleY)
     {
         f32 cosX = core::cos(angleX), sinX = core::sin(angleX);
         f32 cosY = core::cos(angleY), sinY = core::sin(angleY);
@@ -201,7 +201,7 @@ namespace core
                   0.0f, 0.0f,			0.0f, 1.0f);
     }
     
-    inline m4 rotateZXY(const f32 angleX, const f32 angleY, const f32 angleZ)
+    inline m4 rotateZXY(f32 angleX, f32 angleY, f32 angleZ)
     {
         f32 cosX = core::cos(angleX);
         f32 sinX = core::sin(angleX);
@@ -216,7 +216,7 @@ namespace core
                   0,                                   0,              0,                                 1);
     }
     
-    inline m4 identity4(void)
+    inline m4 identity4()
     {
         return m4(	1.0f, 0.0f, 0.0f, 0.0f,
                   0.0f, 1.0f, 0.0f, 0.0f,
@@ -238,7 +238,7 @@ namespace core
                   0.0f, 0.0f, 1.0f, 0.0f);
     }
     
-    inline m4 orthogonal(const f32 left, const f32 right, const f32 top, const f32 bottom, const f32 zNear, const f32 zFar)
+    inline m4 orthogonal(f32 left, f32 right, f32 top, f32 bottom, f32 zNear, f32 zFar)
     {
         f32 rl = right - left;
         f32 tb = top - bottom;
@@ -264,7 +264,7 @@ namespace core
         return v4(dot(m.rows[0], v), dot(m.rows[1], v), dot(m.rows[2], v), dot(m.rows[3], v));
     }
     
-    inline m4 operator * (const m4& m, const f32 x)
+    inline m4 operator * (const m4& m, f32 x)
     {
         return m4(m.rows[0] * x, m.rows[1] * x, m.rows[2] * x, m.rows[3] * x);
     }

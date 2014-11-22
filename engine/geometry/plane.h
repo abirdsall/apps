@@ -7,7 +7,7 @@
 class line;
 struct plane
 {
-	enum eSide
+	enum Side
 	{
 		eFront		= 0,
 		eBack		= 1,
@@ -15,11 +15,11 @@ struct plane
 		eOn		= 3 
 	};
 
-			plane(void);
+			plane();
 			plane(const v3& normal, const v3& point);
 	f32		distanceToPoint(const v3& point) const;
-	v3		mNormal;
-	f32		mOffset;
+	v3		_normal;
+	f32		_offset;
 };
 
 #endif

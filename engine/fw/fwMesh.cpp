@@ -4,161 +4,161 @@ namespace fw
 {
 	void MeshInit( Mesh& mesh )
 	{
-		mesh.mVertexArrayId = gs::NewVertexArray();
-		mesh.mFinalised = false;
-		mesh.mElementDataSet = false;
-		mesh.mVertexDataSet = false;
+		mesh._vertexArrayId = gs::NewVertexArray();
+		mesh._finalised = false;
+		mesh._elementDataSet = false;
+		mesh._vertexDataSet = false;
 		
-		for( s32 i = 0; i < gs::eAttribCount; i++ )
+		for( s32 i = 0; i < gs::AttributeCount; i++ )
 		{
-			mesh.mAttribSize[ i ] = 0;
+			mesh._attributeSize[ i ] = 0;
 		}
 	}
 
 	void MeshSetElementData( Mesh& mesh, void* elementData, s32 elementSize, s32 elementCount, s32 elementLimit, bool dynamic )
 	{
-		ASSERT( !mesh.mFinalised );
-		mesh.mElementDataDirty = false;
-		mesh.mElementDataDynamic = dynamic;
-		mesh.mElementDataSet = true;
-		mesh.mElementData = elementData;
-		mesh.mElementSize = elementSize;
-		mesh.mElementCount = elementCount;
-		mesh.mElementLimit = elementLimit;
+		ASSERT( !mesh._finalised );
+		mesh._elementDataDirty = false;
+		mesh._elementDataDynamic = dynamic;
+		mesh._elementDataSet = true;
+		mesh._elementData = elementData;
+		mesh._elementSize = elementSize;
+		mesh._elementCount = elementCount;
+		mesh._elementLimit = elementLimit;
 	}
 	
 	void MeshSetVertexData( Mesh& mesh, void* vertexData, s32 vertexSize, s32 vertexCount, s32 vertexLimit, bool dynamic )
 	{
-		ASSERT( !mesh.mFinalised );
-		mesh.mVertexDataDirty = false;
-		mesh.mVertexDataDynamic = dynamic;
-		mesh.mVertexDataSet = true;
-		mesh.mVertexData = vertexData;
-		mesh.mVertexSize = vertexSize;
-		mesh.mVertexCount = vertexCount;
-		mesh.mVertexLimit = vertexLimit;
+		ASSERT( !mesh._finalised );
+		mesh._vertexDataDirty = false;
+		mesh._vertexDataDynamic = dynamic;
+		mesh._vertexDataSet = true;
+		mesh._vertexData = vertexData;
+		mesh._vertexSize = vertexSize;
+		mesh._vertexCount = vertexCount;
+		mesh._vertexLimit = vertexLimit;
 	}
 	
-	void MeshSetAttrib( Mesh& mesh, gs::eAttrib attrib, void* offset, s32 size )
+	void MeshSetAttrib( Mesh& mesh, gs::Attribute attrib, void* offset, s32 size )
 	{
-		mesh.mAttribOffset[ attrib ] = offset;
-		mesh.mAttribSize[ attrib ] = size;
+		mesh._attributeOffset[ attrib ] = offset;
+		mesh._attributeSize[ attrib ] = size;
 	}
 	
 	s32 MeshGetElementCount( Mesh& mesh )
 	{
-		return mesh.mElementCount;
+		return mesh._elementCount;
 	}
 	
 	s32 MeshGetVertexCount( Mesh& mesh )
 	{
-		return mesh.mVertexCount;
+		return mesh._vertexCount;
 	}
 	
 	void MeshSetElementCount( Mesh& mesh, s32 count )
 	{
-		mesh.mElementCount = count;
-        mesh.mElementDataDirty = true;
-		ASSERT( mesh.mElementCount <= mesh.mElementLimit );
+		mesh._elementCount = count;
+        mesh._elementDataDirty = true;
+		ASSERT( mesh._elementCount <= mesh._elementLimit );
 	}
 	
 	void MeshSetVertexCount( Mesh& mesh, s32 count )
 	{
-		mesh.mVertexCount = count;
-        mesh.mVertexDataDirty = true;
-		ASSERT( mesh.mVertexCount <= mesh.mVertexLimit );
+		mesh._vertexCount = count;
+        mesh._vertexDataDirty = true;
+		ASSERT( mesh._vertexCount <= mesh._vertexLimit );
 	}
 
 	void* MeshGetElementData( Mesh& mesh, s32 elementIndex )
 	{
-		ASSERT( mesh.mElementDataSet );
-		return ( void* )( ( ( u8* )mesh.mElementData ) + mesh.mElementSize * elementIndex );
+		ASSERT( mesh._elementDataSet );
+		return ( void* )( ( ( u8* )mesh._elementData ) + mesh._elementSize * elementIndex );
 	}
 	
 	void* MeshGetVertexData( Mesh& mesh, s32 vertexIndex )
 	{
-		ASSERT( mesh.mVertexDataSet );
-		return ( void* )( ( ( u8* )mesh.mVertexData ) + mesh.mVertexSize * vertexIndex );
+		ASSERT( mesh._vertexDataSet );
+		return ( void* )( ( ( u8* )mesh._vertexData ) + mesh._vertexSize * vertexIndex );
 	}
 
 	void MeshFinalise( Mesh& mesh )
 	{
-		ASSERT( !mesh.mFinalised );
-		ASSERT( mesh.mElementDataSet );
-		ASSERT( mesh.mVertexDataSet );
+		ASSERT( !mesh._finalised );
+		ASSERT( mesh._elementDataSet );
+		ASSERT( mesh._vertexDataSet );
 		
-		mesh.mElementBufferId = gs::NewElementBuffer();
-		gs::SetVertexArray( mesh.mVertexArrayId );
-		gs::SetElementBuffer( mesh.mElementBufferId );
-		gs::FillElementBuffer( mesh.mElementData, mesh.mElementSize * mesh.mElementLimit, mesh.mElementDataDynamic );
-        core::set( mesh.mElementData, mesh.mElementSize * mesh.mElementCount, 0 );
-        printf("video mem element buffer %d size %d\n", mesh.mElementBufferId, mesh.mElementSize * mesh.mElementLimit / 1024);
+		mesh._elementBufferId = gs::NewElementBuffer();
+		gs::SetVertexArray( mesh._vertexArrayId );
+		gs::SetElementBuffer( mesh._elementBufferId );
+		gs::FillElementBuffer( mesh._elementData, mesh._elementSize * mesh._elementLimit, mesh._elementDataDynamic );
+        core::set( mesh._elementData, mesh._elementSize * mesh._elementCount, 0 );
+        printf("video mem element buffer %d size %d\n", mesh._elementBufferId, mesh._elementSize * mesh._elementLimit / 1024);
 
         gs::SetElementBuffer( 0 );
         gs::SetVertexArray( 0 );
         
-		mesh.mVertexBufferId = gs::NewVertexBuffer();
-		gs::SetVertexArray( mesh.mVertexArrayId );
-		gs::SetVertexBuffer( mesh.mVertexBufferId );
-		gs::FillVertexBuffer( mesh.mVertexData, mesh.mVertexSize * mesh.mVertexLimit, mesh.mVertexDataDynamic );
-        core::set( mesh.mVertexData, mesh.mVertexSize * mesh.mVertexLimit, 0 );
-        printf("video mem vertex buffer %d size %d\n", mesh.mVertexBufferId, mesh.mVertexSize * mesh.mVertexLimit / 1024);
+		mesh._vertexBufferId = gs::NewVertexBuffer();
+		gs::SetVertexArray( mesh._vertexArrayId );
+		gs::SetVertexBuffer( mesh._vertexBufferId );
+		gs::FillVertexBuffer( mesh._vertexData, mesh._vertexSize * mesh._vertexLimit, mesh._vertexDataDynamic );
+        core::set( mesh._vertexData, mesh._vertexSize * mesh._vertexLimit, 0 );
+        printf("video mem vertex buffer %d size %d\n", mesh._vertexBufferId, mesh._vertexSize * mesh._vertexLimit / 1024);
         gs::SetVertexBuffer( 0 );
         gs::SetVertexArray( 0 );
 		
-		mesh.mFinalised = true;
+		mesh._finalised = true;
 	}
 	
-	void MeshDraw( Mesh& mesh, gs::ePrim primitive )
+	void MeshDraw( Mesh& mesh, gs::Primitive primitive )
 	{
-		ASSERT( mesh.mFinalised );
-		ASSERT( mesh.mElementDataSet );
-		ASSERT( mesh.mVertexDataSet );
-		ASSERT( mesh.mAttribSize[ gs::eAttribVertex ] > 0 );
+		ASSERT( mesh._finalised );
+		ASSERT( mesh._elementDataSet );
+		ASSERT( mesh._vertexDataSet );
+		ASSERT( mesh._attributeSize[ gs::AttributeVertex ] > 0 );
 		
-		gs::SetVertexArray( mesh.mVertexArrayId );
-		gs::SetVertexBuffer( mesh.mVertexBufferId );
-        gs::SetElementBuffer( mesh.mElementBufferId );
+		gs::SetVertexArray( mesh._vertexArrayId );
+		gs::SetVertexBuffer( mesh._vertexBufferId );
+        gs::SetElementBuffer( mesh._elementBufferId );
         
-        //printf("SZA %d\n", (s32)mesh.mVertexArrayId);
+        //printf("SZA %d\n", (s32)mesh._vertexArrayId);
 		
-		if( mesh.mVertexDataDirty )
+		if( mesh._vertexDataDirty )
 		{
-			mesh.mVertexDataDirty = false;
-            //gs::FillVertexBuffer( Null, mesh.mVertexSize * mesh.mVertexLimit, mesh.mVertexDataDynamic );
-            gs::FillVertexBuffer( mesh.mVertexData, mesh.mVertexSize * mesh.mVertexCount, mesh.mVertexDataDynamic );
-			//gs::UpdateVertexBuffer( mesh.mVertexData, mesh.mVertexSize * mesh.mVertexLimit, 0 );
-            //printf("filling vdatabuf %d size %d\n", (s32)mesh.mVertexBufferId, mesh.mVertexSize * mesh.mVertexCount );
-            core::set( mesh.mVertexData, mesh.mVertexSize * mesh.mVertexLimit, 0 );
+			mesh._vertexDataDirty = false;
+            //gs::FillVertexBuffer( Null, mesh._vertexSize * mesh._vertexLimit, mesh._vertexDataDynamic );
+            gs::FillVertexBuffer( mesh._vertexData, mesh._vertexSize * mesh._vertexCount, mesh._vertexDataDynamic );
+			//gs::UpdateVertexBuffer( mesh._vertexData, mesh._vertexSize * mesh._vertexLimit, 0 );
+            //printf("filling vdatabuf %d size %d\n", (s32)mesh._vertexBufferId, mesh._vertexSize * mesh._vertexCount );
+            core::set( mesh._vertexData, mesh._vertexSize * mesh._vertexLimit, 0 );
 		}
         
-		if( mesh.mElementDataDirty )
+		if( mesh._elementDataDirty )
 		{
-			mesh.mElementDataDirty = false;
-            //gs::FillElementBuffer( Null, mesh.mElementSize * mesh.mElementCount, mesh.mElementDataDynamic );
-			gs::FillElementBuffer( mesh.mElementData, mesh.mElementSize * mesh.mElementCount, mesh.mElementDataDynamic );
-            //gs::UpdateElementBuffer( mesh.mElementData, mesh.mElementSize * mesh.mElementCount, 0 );
-            //printf("filling edatabuf %d size %d\n", (s32)mesh.mElementBufferId, mesh.mElementSize * mesh.mElementCount );
-            core::set( mesh.mElementData, mesh.mElementSize * mesh.mElementCount, 0 );
+			mesh._elementDataDirty = false;
+            //gs::FillElementBuffer( Null, mesh._elementSize * mesh._elementCount, mesh._elementDataDynamic );
+			gs::FillElementBuffer( mesh._elementData, mesh._elementSize * mesh._elementCount, mesh._elementDataDynamic );
+            //gs::UpdateElementBuffer( mesh._elementData, mesh._elementSize * mesh._elementCount, 0 );
+            //printf("filling edatabuf %d size %d\n", (s32)mesh._elementBufferId, mesh._elementSize * mesh._elementCount );
+            core::set( mesh._elementData, mesh._elementSize * mesh._elementCount, 0 );
 		}
 		
-        for( s32 i = 0; i < gs::eAttribCount; i++ )
+        for( s32 i = 0; i < gs::AttributeCount; i++ )
         {
-            if( mesh.mAttribSize[ i ] > 0 )
+            if( mesh._attributeSize[ i ] > 0 )
             {
-                //printf("setting attrib %d vsize %d offset %p\n", i, mesh.mVertexSize, (mesh.mAttribOffset[ i ]) );
-                gs::SetArray( ( gs::eAttrib )i, mesh.mAttribSize[ i ], mesh.mVertexSize, mesh.mAttribOffset[ i ] );
+                //printf("setting attrib %d vsize %d offset %p\n", i, mesh._vertexSize, (mesh._attributeOffset[ i ]) );
+                gs::SetArray( ( gs::Attribute )i, mesh._attributeSize[ i ], mesh._vertexSize, mesh._attributeOffset[ i ] );
             }
         }
 
-		gs::DrawElements( primitive, mesh.mElementCount );
+		gs::DrawElements( primitive, mesh._elementCount );
 				
-		for( s32 i = 0; i < gs::eAttribCount; i++ )
+		for( s32 i = 0; i < gs::AttributeCount; i++ )
 		{
-			if( mesh.mAttribSize[ i ] > 0 )
+			if( mesh._attributeSize[ i ] > 0 )
 			{
                 //printf("unsetting attrib %d\n", i );
-				gs::UnsetArray( ( gs::eAttrib )i );
+				gs::UnsetArray( ( gs::Attribute )i );
 			}
 		}
 		
@@ -171,30 +171,30 @@ namespace fw
 	
 	void MeshKill( Mesh& mesh )
 	{
-		gs::DeleteVertexArray( mesh.mVertexArrayId );
+		gs::DeleteVertexArray( mesh._vertexArrayId );
 		
-		if( mesh.mElementDataSet )
+		if( mesh._elementDataSet )
 		{
-			gs::DeleteElementBuffer( mesh.mElementBufferId );
-			mesh.mElementDataSet = false;
+			gs::DeleteElementBuffer( mesh._elementBufferId );
+			mesh._elementDataSet = false;
 		}
 		
-		if( mesh.mVertexDataSet )
+		if( mesh._vertexDataSet )
 		{
-			gs::DeleteVertexBuffer( mesh.mVertexBufferId );
-			mesh.mVertexDataSet = false;
+			gs::DeleteVertexBuffer( mesh._vertexBufferId );
+			mesh._vertexDataSet = false;
 		}
 		
-		if( mesh.mElementData )
+		if( mesh._elementData )
 		{
-			core::xfree( mesh.mElementData );
-			mesh.mElementData = Null;
+			core::xfree( mesh._elementData );
+			mesh._elementData = Null;
 		}
 		
-		if( mesh.mVertexData )
+		if( mesh._vertexData )
 		{
-			core::xfree( mesh.mVertexData );
-			mesh.mVertexData = Null;
+			core::xfree( mesh._vertexData );
+			mesh._vertexData = Null;
 		}		
 	}
 }

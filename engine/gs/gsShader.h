@@ -5,14 +5,12 @@ namespace gs
 {
 	typedef ::u32 ShaderHandle;
 
-    const ShaderHandle InvalidShaderHandle = MaxU32;
-
-	const u32 kShaderInvalid = MaxU32;
-	const u32 kShaderLimit = 256 + 64;
+	const u32 ShaderInvalid = MaxU32;
+	const u32 ShaderLimit = 256 + 256;
 	
 	struct Shader
 	{
-		bool mActive;
+		bool _active;
 	};
 	
 	void InitShaders();
@@ -20,11 +18,11 @@ namespace gs
 	
 	ShaderHandle ShaderNew();
 	ShaderHandle ShaderNew( const c8* vShader, const c8* fShader, bool debug = true );
-	void ShaderDelete( const ShaderHandle handle );
+	void ShaderDelete( ShaderHandle handle );
 	
-	void ShaderSet( const ShaderHandle handle );
-	void ShaderSetInt( const c8* name, const s32 value );
-	void ShaderSetFloat( const c8* name, const f32 value );
+	void ShaderSet( ShaderHandle handle );
+	void ShaderSetInt( const c8* name, s32 value );
+	void ShaderSetFloat( const c8* name, f32 value );
 	void ShaderSetFloatArray( const c8* name, f32* array, u32 arraySize );
 	void ShaderSetVec2( const c8* name, const v2& v );
 	void ShaderSetVec3( const c8* name, const v3& v );

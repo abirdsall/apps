@@ -102,6 +102,6 @@ namespace fw
             x2 += f32( SystemCharSizeX * 1 ) + 1;
         }
         
-        BatchQuad2dEnd( gs::ePrimTriangles );
+        BatchQuad2dEnd( gs::PrimitiveTriangles );
     }
 }

@@ -17,7 +17,7 @@ struct frustum
 		kAll		= kNear | kFar | kLeft | kRight | kTop | kBottom
 	};
 
-	frustum(void);
+	frustum();
 	frustum(
 		const plane& planeNear, // stupid 'plane_' prefix required due to obsolete keyword 'near'
 		const plane& planeFar,
@@ -26,8 +26,8 @@ struct frustum
 		const plane& planeTop,
 		const plane& planeBottom);
 
-	plane	mPlanes[6];
-	line	mLines[4];
+	plane	_planes[6];
+	line	_lines[4];
 };
 
 #endif

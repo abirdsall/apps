@@ -2,35 +2,35 @@
 
 namespace os
 {
-    WindowFormat* sWindowFormat;
+    WindowFormat* _windowFormat;
 
-	f32 sPixelSizeX;
-	f32 sPixelSizeY;
-	f32 sAspect;
+	f32 _pixelSizeX;
+	f32 _pixelSizeY;
+	f32 _aspect;
 	
-	bool sActive;
-	bool sOpened;
-	bool sIconified;
+	bool _active;
+	bool _opened;
+	bool _iconified;
     
     void OnWindowClose()
 	{
 		os::Kill();
 	}
 	
-	void OnWindowIconified( const bool iconified )
+	void OnWindowIconified( bool iconified )
 	{
-		sIconified = iconified;
+		_iconified = iconified;
 	}
 	
-	bool OnWindowActivated( const bool activated )
+	bool OnWindowActivated( bool activated )
 	{
 		if ( activated )
 		{
-			sActive = true;
+			_active = true;
 		}
 		else
 		{
-			sActive = false;
+			_active = false;
 			MouseReleaseAll();
 			KeyboardReleaseAll();
 		}
@@ -39,40 +39,40 @@ namespace os
 	
 	void OnWindowResize( s32 sizeX, s32 sizeY )
 	{
-        sWindowFormat->_sizeX = sizeX;
-        sWindowFormat->_sizeY = sizeY;
+        _windowFormat->_sizeX = sizeX;
+        _windowFormat->_sizeY = sizeY;
         
-        ASSERT( sWindowFormat->_sizeX > 0 );
-        ASSERT( sWindowFormat->_sizeY > 0 );
+        ASSERT( _windowFormat->_sizeX > 0 );
+        ASSERT( _windowFormat->_sizeY > 0 );
         
-        sPixelSizeX = 1.0f / f32( sWindowFormat->_sizeX );
-        sPixelSizeY = 1.0f / f32( sWindowFormat->_sizeY );
+        _pixelSizeX = 1.0f / f32( _windowFormat->_sizeX );
+        _pixelSizeY = 1.0f / f32( _windowFormat->_sizeY );
         
-        sAspect = f32( sWindowFormat->_sizeY ) / f32( sWindowFormat->_sizeX );
+        _aspect = f32( _windowFormat->_sizeY ) / f32( _windowFormat->_sizeX );
 	}
 	    
 	bool WindowOpen( WindowFormat& windowFormat )
 	{
-		if( sOpened )
+		if( _opened )
 		{
 			ASSERT( 0 ); // Error - Multiple windows are not supported
 			return false;
 		}
 
-		sWindowFormat = &windowFormat;
+		_windowFormat = &windowFormat;
         
-        if( !windowFormat.mNative )
+        if( !windowFormat._native )
         {
             OnWindowResize( windowFormat._sizeX, windowFormat._sizeY );
         }
         
-		sActive = true;
-        sOpened = false;
-        sIconified = false;
+		_active = true;
+        _opened = false;
+        _iconified = false;
 		
 		if( WindowOpenHw( windowFormat ) )
 		{
-			sOpened = true;
+			_opened = true;
 			
 			return true;
 		}
@@ -82,48 +82,48 @@ namespace os
 	
 	s32 WindowSizeX( void )
 	{
-		ASSERT( sOpened );
-		return( sWindowFormat->_sizeX );
+		ASSERT( _opened );
+		return( _windowFormat->_sizeX );
 	}
 	
 	s32 WindowSizeY( void )
 	{
-		ASSERT( sOpened );
-		return( sWindowFormat->_sizeY );
+		ASSERT( _opened );
+		return( _windowFormat->_sizeY );
 	}
 	
 	f32 WindowPixelSizeX( void )
 	{
-		ASSERT( sOpened );
-		return( sPixelSizeX );
+		ASSERT( _opened );
+		return( _pixelSizeX );
 	}
 	
 	f32 WindowPixelSizeY( void )
 	{
-		ASSERT( sOpened );
-		return( sPixelSizeY );
+		ASSERT( _opened );
+		return( _pixelSizeY );
 	}
 	
 	f32 WindowAspect( void )
 	{
-		ASSERT( sOpened );
-		return( sAspect );
+		ASSERT( _opened );
+		return( _aspect );
 	}
 	
 	bool WindowOpened( void )
 	{
-		return( sOpened );
+		return( _opened );
 	}
 	
 	void WindowInit()
 	{
-        sPixelSizeX = 0.0f;
-        sPixelSizeY = 0.0f;
-        sAspect = 0.0f;
+        _pixelSizeX = 0.0f;
+        _pixelSizeY = 0.0f;
+        _aspect = 0.0f;
         
-        sActive = false;
-        sOpened = false;
-        sIconified = false;
+        _active = false;
+        _opened = false;
+        _iconified = false;
 
 		WindowInitHw();
 	}

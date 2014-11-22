@@ -56,12 +56,12 @@ namespace core
 		return (f32)random() / (f32)MaxU32;
 	}
 	
-	f32 randomrange(const f32 a, const f32 b)
+	f32 randomrange(f32 a, f32 b)
 	{
 		return a + randomfraction() * (b - a);
 	}
 	
-	void randomseed(const u32 a)
+	void randomseed(u32 a)
 	{
 		_randomSeed = a;
 	}

@@ -5,7 +5,7 @@ namespace gs
 {
 	void CanvasHwNew( CanvasHandle handle );
 	void CanvasHwDelete( CanvasHandle handle );
-	void CanvasHwSet( const CanvasHandle handle, const s32 lod );
+	void CanvasHwSet( CanvasHandle handle, s32 lod );
 }
 
 #endif

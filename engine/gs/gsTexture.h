@@ -58,24 +58,22 @@ namespace gs
 
 	typedef ::u32 TextureHandle;
     
-    const TextureHandle InvalidTextureHandle = MaxU32;
-	
-	const u32 kTextureInvalid = MaxU32;
-	const int kTextureLimit = 256;
+	const u32 TextureInvalid = MaxU32;
+	const int TextureLimit = 256;
 	
 	void InitTextures();
 	void KillTextures();
 	
-	TextureHandle TextureNew( const c8* name, const TexType type, const TexFormat format, const u32 sizeX, const u32 sizeY, const u32 sizeZ, const TexFlags flags, void* data = Null );
-	TextureHandle TextureNew3d( const c8* name, const TexFormat format, const u32 sizeX, const u32 sizeY, const u32 sizeZ, void* data = Null );
-	TextureHandle TextureNew2d( const c8* name, const TexFormat format, const u32 sizeX, const u32 sizeY, void* data = Null );
-	TextureHandle TextureNewDepth( const c8* name, const TexFormat format, const u32 sizeX, const u32 sizeY );
+	TextureHandle TextureNew( const c8* name, TexType type, TexFormat format, u32 sizeX, u32 sizeY, u32 sizeZ, const TexFlags flags, void* data = Null );
+	TextureHandle TextureNew3d( const c8* name, TexFormat format, u32 sizeX, u32 sizeY, u32 sizeZ, void* data = Null );
+	TextureHandle TextureNew2d( const c8* name, TexFormat format, u32 sizeX, u32 sizeY, void* data = Null );
+	TextureHandle TextureNewDepth( const c8* name, TexFormat format, u32 sizeX, u32 sizeY );
 
-	void TextureDelete( const TextureHandle handle );
-	void TextureSet( const c8* shader, const TextureHandle handle );
-	Texture& TextureGet( const TextureHandle handle );
+	void TextureDelete( TextureHandle handle );
+	void TextureSet( const c8* shader, TextureHandle handle );
+	Texture& TextureGet( TextureHandle handle );
     
-    s32 TextureActiveGet( TextureHandle array[ kTextureLimit ] );
+    s32 TextureActiveGet( TextureHandle array[ TextureLimit ] );
 }
 
 #endif

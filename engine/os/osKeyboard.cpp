@@ -2,74 +2,74 @@
 
 namespace os
 {
-	static f32 sKeyTime[ eKeyCount ];
-	static u8 sKey[ eKeyCount ];
+	static f32 _keyTime[ KeyCount ];
+	static u8 _key[ KeyCount ];
 	
 	void KeyboardInit()
 	{
-		for( s32 i = 0; i < eKeyCount; i++ )
+		for( s32 i = 0; i < KeyCount; i++ )
 		{
-			sKeyTime[ i ] = 0.0f;
-			sKey[ i ] = 0;
+			_keyTime[ i ] = 0.0f;
+			_key[ i ] = 0;
 		}
 	}
 	
 	void KeyboardTick( f32 dt )
 	{
-		for( s32 i = 0; i < eKeyCount; i++ )
+		for( s32 i = 0; i < KeyCount; i++ )
 		{
-			sKey[ i ] &= ~0x5;
+			_key[ i ] &= ~0x5;
 			
-			if( KeyHeld( ( eKey )i ) )
+			if( KeyboardHeld( ( Key )i ) )
 			{
-				sKeyTime[ i ] += dt;
+				_keyTime[ i ] += dt;
 			}
 		}
 	}
 	
 	void KeyboardReleaseAll( void )
 	{
-		for( s32 i = 0; i < eKeyCount; i++ )
+		for( s32 i = 0; i < KeyCount; i++ )
 		{
-			if( sKey[ i ] & 0x2 )
+			if( _key[ i ] & 0x2 )
 			{
-				OnKeyChange( ( eKey )i, false );
+				OnKeyChange( ( Key )i, false );
 			}
 		}
 	}
 	
-	bool KeyDown( const eKey key )
+	bool KeyboardDown( const Key key )
 	{
-		return sKey[ key ] & 0x1;
+		return _key[ key ] & 0x1;
 	}
 	
-	bool KeyHeld( const eKey key )
+	bool KeyboardHeld( const Key key )
 	{
-		return sKey[ key ] & 0x2;
+		return _key[ key ] & 0x2;
 	}
 	
-	bool KeyUp( const eKey key )
+	bool KeyboardUp( const Key key )
 	{
-		return sKey[ key ] & 0x4;
+		return _key[ key ] & 0x4;
 	}
 	
-	f32 KeyTime( const eKey key )
+	f32 KeyboardTime( const Key key )
 	{
-		return sKeyTime[ key ];
+		return _keyTime[ key ];
 	}
 	
-	void OnKey( const eKey key, const bool pressed )
+	void OnKey( const Key key, bool pressed )
 	{
-		if( key < eKeyCount )
+		if( key < KeyCount )
 		{
 			if( pressed )
 			{
-				sKeyTime[ key ] = 0.0f;
-				sKey[ key ] |= sKey[ key ] & 0x2 ? 0x2 : 0x3;
+				_keyTime[ key ] = 0.0f;
+				_key[ key ] |= _key[ key ] & 0x2 ? 0x2 : 0x3;
 			}
 			else
 			{
-				sKey[ key ] = 0x4;
+				_key[ key ] = 0x4;
 			}
 		}
 	}

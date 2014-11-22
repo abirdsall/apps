@@ -375,22 +375,22 @@ namespace fw
 
             Put();
             Set2d();
-            SetWrite( eWriteRgba );
-            SetBlend( eBlendNone );
+            SetWrite( WriteMaskRgba );
+            SetBlend( BlendModeNone );
             ShaderSet( _fillShader );
             DrawQuad2d( Quad2dShaderFilledCustom, fw::Rect( 0.0f, 0.0f, f32( _voxelCountX ), f32( _voxelCountY ) ), v4( 1.0f, 1.0f, 1.0f, 0.0f ) );
             Pop();
 
-            f32 zStep = ( _bounds.mMax.z - _bounds.mMin.z ) / f32( _voxelCountZ );
-            f32 zMin = _bounds.mMin.z + ( zStep / 2.0f ) + (( _bounds.mMax.z - _bounds.mMin.z ) / f32( _passCountZ )) * f32( i );
+            f32 zStep = ( _bounds._max.z - _bounds._min.z ) / f32( _voxelCountZ );
+            f32 zMin = _bounds._min.z + ( zStep / 2.0f ) + (( _bounds._max.z - _bounds._min.z ) / f32( _passCountZ )) * f32( i );
             Put();
-            SetDepth( eDepthNone );
+            SetDepth( DepthTestNone );
             ShaderSet( _shaderVoxelise );
             ShaderSetFloat( "zMin", zMin );
             ShaderSetFloat( "zStep", zStep );
-            SetWrite( eWriteRgba );
-            SetBlend( eBlendMixRgbAddA );
-            SetCull( eCullBack );
+            SetWrite( WriteMaskRgba );
+            SetBlend( BlendModeMixRgbAddA );
+            SetCull( CullFaceBack );
             SetStageMatrices( true );
             _voxelising = true;
             _scene->Render( *this );
@@ -409,13 +409,13 @@ namespace fw
         // Create light field
 
         Put();
-        SetWrite( eWriteRgb );
-        SetBlend( eBlendNone );
-        SetDepth( eDepthNone );
-        SetCull( eCullNone );
+        SetWrite( WriteMaskRgb );
+        SetBlend( BlendModeNone );
+        SetDepth( DepthTestNone );
+        SetCull( CullFaceNone );
         
-        f32 zStep = ( _bounds.mMax.z - _bounds.mMin.z ) / f32( _voxelCountZ / 2 );
-        f32 zMin = _bounds.mMin.z + ( zStep / 2.0f );
+        f32 zStep = ( _bounds._max.z - _bounds._min.z ) / f32( _voxelCountZ / 2 );
+        f32 zMin = _bounds._min.z + ( zStep / 2.0f );
         
         for( s32 l = 0; l < _lights.Count(); l++ )
         {
@@ -430,12 +430,12 @@ namespace fw
                     TextureSet("texture0", _voxelTextureA );
                     ShaderSetVec3( "lightPos", light->_position );
                     ShaderSetVec3( "lightCol", light->_colour );
-                    ShaderSetVec3( "worldMin", _bounds.mMin );
-                    ShaderSetVec3( "worldSize", _bounds.mMax - _bounds.mMin );
+                    ShaderSetVec3( "worldMin", _bounds._min );
+                    ShaderSetVec3( "worldSize", _bounds._max - _bounds._min );
                     ShaderSetFloat( "zWorld", zMin + zStep * f32( i ) );
                     DrawQuad2d( Quad2dShaderTexturedCustom, fw::Rect( 0, 0, f32( _voxelCountX / 2 ), f32( _voxelCountY / 2 ) ), fw::Rect(0.0f, 1.0f, 1.0f, 0.0f) );
                 }
-                SetBlend( eBlendAddRgb ); // set to add rgb for subsequent lights
+                SetBlend( BlendModeAddRgb ); // set to add rgb for subsequent lights
                 //break;
             }
         }
@@ -443,20 +443,20 @@ namespace fw
         
         // Render scene
 
-        CanvasSet( kCanvasInvalid );
+        CanvasSet( CanvasInvalid );
         
         Put();
-        SetCull(eCullBack);
-        SetBlend(eBlendNone);
-        SetWrite(eWriteRgbz);
-        SetDepth(eDepthLequal);
+        SetCull(CullFaceBack);
+        SetBlend(BlendModeNone);
+        SetWrite(WriteMaskRgbz);
+        SetDepth(DepthTestLequal);
         ShaderSet( _shaderForward );
         TextureSet("texture0", _lightTextureColour );
         TextureSet("texture1", _lightTextureDirection );
         TextureSet("texture2", _voxelTextureA );
         TextureSet("texture3", _voxelTextureHalfA );
-        ShaderSetVec3( "worldMin", _bounds.mMin );
-        ShaderSetVec3( "worldSize", _bounds.mMax - _bounds.mMin );
+        ShaderSetVec3( "worldMin", _bounds._min );
+        ShaderSetVec3( "worldSize", _bounds._max - _bounds._min );
         
         SetStageMatrices( true );
 
@@ -496,10 +496,10 @@ namespace fw
         }
         
         Put();
-        SetWrite( eWriteRgba );
-        SetBlend( eBlendNone );
-        SetDepth( eDepthNone );
-        SetCull( eCullNone );
+        SetWrite( WriteMaskRgba );
+        SetBlend( BlendModeNone );
+        SetDepth( DepthTestNone );
+        SetCull( CullFaceNone );
         
         for( s32 i = 0; i < shadersX.Count(); i++ )
         {
@@ -543,9 +543,9 @@ namespace fw
     void RadiosityRenderer::SetStageMatrices( bool tracing )
     {
         m4 mp = orthogonal(
-                           _bounds.mMin.x, _bounds.mMax.x,
-                           _bounds.mMax.y, _bounds.mMin.y,
-                           _bounds.mMax.z + 20.0f, _bounds.mMin.z - 20.0f );
+                           _bounds._min.x, _bounds._max.x,
+                           _bounds._max.y, _bounds._min.y,
+                           _bounds._max.z + 20.0f, _bounds._min.z - 20.0f );
         
         gs::SetMatrixP( mp );
         

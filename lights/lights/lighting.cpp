@@ -67,39 +67,39 @@ void lightingTick( f32 dt )
 {
     _textureViewer.Tick();
 
-    v3 worldSize = _renderer->Bounds().mMax - _renderer->Bounds().mMin;
+    v3 worldSize = _renderer->Bounds()._max - _renderer->Bounds()._min;
 	v3 lightMove( 0.0f, 0.0f, 0.0f );
     
-	if( os::KeyHeld( os::eKeyA ) )
+	if( os::KeyboardHeld( os::KeyA ) )
 	{
 		lightMove.x = -worldSize.x * dt;
 	}
-	if( os::KeyHeld( os::eKeyD ) )
+	if( os::KeyboardHeld( os::KeyD ) )
 	{
 		lightMove.x = worldSize.x * dt;
 	}
-	if( os::KeyHeld( os::eKeyS ) )
+	if( os::KeyboardHeld( os::KeyS ) )
 	{
 		lightMove.y = -worldSize.y * dt;
 	}
-	if( os::KeyHeld( os::eKeyW ) )
+	if( os::KeyboardHeld( os::KeyW ) )
 	{
         lightMove.y = worldSize.y * dt;// * 0.1f;
 	}
-	if( os::KeyHeld( os::eKeyQ ) )
+	if( os::KeyboardHeld( os::KeyQ ) )
 	{
 		lightMove.z = -worldSize.z * dt;
 	}
-	if( os::KeyHeld( os::eKeyE ) )
+	if( os::KeyboardHeld( os::KeyE ) )
 	{
 		lightMove.z = worldSize.z * dt;
 	}
 
     //fw::LightSetPosition( _lightHandleA, fw::LightPosition( _lightHandleA ) + lightMove );
-	fw::LightSetPosition( _lightHandleA, clamp( fw::LightPosition( _lightHandleA ) + lightMove, _renderer->Bounds().mMin, _renderer->Bounds().mMax ));
-	//fw::LightSetPosition( _lightHandleB, clamp( fw::LightPosition( _lightHandleB ) - lightMove, _renderer->Bounds().mMin, _renderer->Bounds().mMax ));
+	fw::LightSetPosition( _lightHandleA, clamp( fw::LightPosition( _lightHandleA ) + lightMove, _renderer->Bounds()._min, _renderer->Bounds()._max ));
+	//fw::LightSetPosition( _lightHandleB, clamp( fw::LightPosition( _lightHandleB ) - lightMove, _renderer->Bounds()._min, _renderer->Bounds()._max ));
 	
-	if( os::KeyUp( os::eKeyZ ) )            
+	if( os::KeyboardUp( os::KeyZ ) )            
 	{
 		if( _textureViewer.Active() )
 		{
@@ -121,7 +121,7 @@ void lightingDraw()
     gs::Put();
     gs::Set2d();
     
-    gs::SetBlend(gs::eBlendRgba);
+    gs::SetBlend(gs::BlendModeRgba);
     
     core::String test = core::String("0123456789abcdefghijklmnopqrstuvwxyz");
     
@@ -161,7 +161,7 @@ void lightingInit()
     _lightHandleA = fw::LightNew( v3( 5.0f, 5.0f, 5.0f ), v3( 1.0f, 1.0f, 1.0f ) * 0.5f );
 	_lightHandleB = fw::LightNew( v3( 5.0f, 4.5f, 5.0f ), v3( 1.0f, 0.5f, 0.0f ) * 0.0f );
 
-    _renderer->Init( aabb( v3( 0.0f, 0.0f, 0.0f ), v3( 32.0f, 32.0f, 8.0f ) ), 256, 256, 16 );
+    _renderer->Init( aabb( v3( 0.0f, 0.0f, 0.0f ), v3( 32.0f, 32.0f, 8.0f ) ), 256, 256, 32 );
     _renderer->_lights.Add( _lightHandleA );
     _renderer->_lights.Add( _lightHandleB );
     _renderer->_scene = fw::SceneNodeNew();

@@ -6,16 +6,16 @@ namespace gs
 {
 	struct CanvasHw
 	{
-		GLuint mCanvas;
+		GLuint _id;
 	};
 
-    static GLuint sActiveBuffer = 0;
+    static GLuint _activeBuffer = 0;
     
-    static GLuint sBackBuffer = 0;
+    static GLuint _backBuffer = 0;
     
-	static CanvasHw sCanvasHw[ kCanvasLimit ];
+	static CanvasHw _canvasesHw[ CanvasLimit ];
 	
-	static u32 sColorAttachmentMap[ kColorTextureLimit ] =
+	static u32 _colorAttachmentMap[ ColorTextureLimit ] =
 	{
 #if GsOpenGles2
         GL_COLOR_ATTACHMENT0
@@ -41,26 +41,26 @@ namespace gs
 	
     void LocateBackBuffer()
     {
-        if(sActiveBuffer == sBackBuffer)
+        if(_activeBuffer == _backBuffer)
         {
             GLint backBuffer;
             glGetIntegerv(GL_FRAMEBUFFER_BINDING, &backBuffer);
-            sActiveBuffer = backBuffer;
-            sBackBuffer = backBuffer;
+            _activeBuffer = backBuffer;
+            _backBuffer = backBuffer;
         }
     }
     
 	void CanvasHwNew( CanvasHandle handle )
 	{
-		glGenFramebuffers( 1, &sCanvasHw[ handle ].mCanvas );
+		glGenFramebuffers( 1, &_canvasesHw[ handle ]._id );
 	}
 	
 	void CanvasHwDelete( CanvasHandle handle )
 	{
-		glDeleteFramebuffers( 1, &sCanvasHw[ handle ].mCanvas );
+		glDeleteFramebuffers( 1, &_canvasesHw[ handle ]._id );
 	}
 	
-	void CanvasHwSet( const CanvasHandle handle, const s32 lod )
+	void CanvasHwSet( CanvasHandle handle, s32 lod )
 	{
         ErrorCheck();
 
@@ -68,38 +68,38 @@ namespace gs
 
         ErrorCheck();
 
-        if( handle != kCanvasInvalid )
+        if( handle != CanvasInvalid )
         {
-            CanvasHw canvasHw = sCanvasHw[ handle ];
+            CanvasHw canvasHw = _canvasesHw[ handle ];
             
             ErrorCheck();
 
-            glBindFramebuffer( GL_FRAMEBUFFER, canvasHw.mCanvas );
+            glBindFramebuffer( GL_FRAMEBUFFER, canvasHw._id );
 
             ErrorCheck();
 
-            sActiveBuffer = canvasHw.mCanvas;
+            _activeBuffer = canvasHw._id;
             
 #if !GsOpenGles2
             const Canvas& canvas = CanvasGet( handle );
             
             // todo only reattach textures when changing lod?
             
-            for( int i = 0; i < canvas.mColorTextureCount; i++ )
+            for( int i = 0; i < canvas._colorTextureCount; i++ )
             {
-                const Texture& texture = TextureGet( canvas.mColorTexture[ i ] );
+                const Texture& texture = TextureGet( canvas._colorTexture[ i ] );
                 
-                const TextureHw& textureHw = TextureHwGet( canvas.mColorTexture[ i ] );
+                const TextureHw& textureHw = TextureHwGet( canvas._colorTexture[ i ] );
                 
                 ErrorCheck();
                 
                 if( texture._sizeZ > 1 )
                 {
-                    glFramebufferTextureLayer( GL_FRAMEBUFFER, sColorAttachmentMap[ i ], textureHw.mTexture, ( GLint )lod, ( GLint )canvas.mColorTextureLayer[ i ] );
+                    glFramebufferTextureLayer( GL_FRAMEBUFFER, _colorAttachmentMap[ i ], textureHw._id, ( GLint )lod, ( GLint )canvas._colorTextureLayer[ i ] );
                 }
                 else
                 {
-                    glFramebufferTexture2D( GL_FRAMEBUFFER, sColorAttachmentMap[ i ], textureHw.mTarget, textureHw.mTexture, ( GLint )lod );
+                    glFramebufferTexture2D( GL_FRAMEBUFFER, _colorAttachmentMap[ i ], textureHw._target, textureHw._id, ( GLint )lod );
                 }
                 
                 ErrorCheck();
@@ -107,7 +107,7 @@ namespace gs
 
             ErrorCheck();
 
-            glDrawBuffers( canvas.mColorTextureCount, sColorAttachmentMap );
+            glDrawBuffers( canvas._colorTextureCount, _colorAttachmentMap );
             
             ASSERT( glCheckFramebufferStatus( GL_FRAMEBUFFER ) == GL_FRAMEBUFFER_COMPLETE );
             
@@ -118,11 +118,11 @@ namespace gs
         {
             ErrorCheck();
 
-            glBindFramebuffer( GL_FRAMEBUFFER, sBackBuffer );
+            glBindFramebuffer( GL_FRAMEBUFFER, _backBuffer );
 
             ErrorCheck();
 
-            sActiveBuffer = sBackBuffer;
+            _activeBuffer = _backBuffer;
         }
         
         ErrorCheck();

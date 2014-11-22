@@ -4,11 +4,11 @@
 
 #include "mac.h"
 
-extern id sWindowRef;
+extern id _windowRef;
 
 namespace os
 {	
-	void MouseSetVisibileHw( const bool visible )
+	void MouseSetVisibileHw( bool visible )
 	{
 		if( visible )
 		{
@@ -22,7 +22,7 @@ namespace os
 		}
 	}
 	
-	void MouseSetPositionHw( const s16 x, const s16 y )
+	void MouseSetPositionHw( s16 x, s16 y )
 	{
 		bool fullscreen = false;
 		if( fullscreen )
@@ -34,7 +34,7 @@ namespace os
 		else
 		{
 			NSPoint localPoint = NSMakePoint( x, os::WindowSizeY() - y - 1 );
-			NSPoint globalPoint = [sWindowRef convertBaseToScreen:localPoint];
+			NSPoint globalPoint = [_windowRef convertBaseToScreen:localPoint];
 			CGPoint mainScreenOrigin = CGDisplayBounds( CGMainDisplayID() ).origin;
 			double mainScreenHeight = CGDisplayBounds( CGMainDisplayID() ).size.height;
 			CGPoint targetPoint = CGPointMake( globalPoint.x - mainScreenOrigin.x, mainScreenHeight - globalPoint.y - mainScreenOrigin.y );

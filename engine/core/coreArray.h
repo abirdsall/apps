@@ -114,7 +114,7 @@ namespace core
             return _capacity;
         }
 
-        inline T& operator [] ( const s32 i ) const
+        inline T& operator [] ( s32 i ) const
         {
             ASSERT( i < _count );
             

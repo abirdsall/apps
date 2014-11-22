@@ -6,13 +6,13 @@
 
 namespace os
 {
-	//extern void OnKey( const eKey key, const bool pressed );
+	//extern void OnKey( const Key key, bool pressed );
 
-	void OnModifierChange( const u32 modifiers )
+	void OnModifierChange( u32 modifiers )
 	{
 	}
 
-	void OnKeyChange( const u32 keyCode, const bool pressed )
+	void OnKeyChange( u32 keyCode, bool pressed )
 	{
 	}
 }

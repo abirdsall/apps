@@ -3,8 +3,8 @@
 
 namespace os
 {
-	void MouseSetVisibileHw( const bool visible );
-	void MouseSetPositionHw( const s16 x, const s16 y );
+	void MouseSetVisibileHw( bool visible );
+	void MouseSetPositionHw( s16 x, s16 y );
 }
 
 #endif

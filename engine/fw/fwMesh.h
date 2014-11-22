@@ -5,39 +5,39 @@ namespace fw
 {
 	struct Mesh
 	{
-		u32 mVertexArrayId;
+		u32 _vertexArrayId;
 		
-		bool mFinalised;
+		bool _finalised;
 		
-		bool mElementDataDirty;
-		bool mElementDataDynamic;
-		bool mElementDataSet;
+		bool _elementDataDirty;
+		bool _elementDataDynamic;
+		bool _elementDataSet;
 		
-		bool mVertexDataDirty;
-		bool mVertexDataDynamic;
-		bool mVertexDataSet;
+		bool _vertexDataDirty;
+		bool _vertexDataDynamic;
+		bool _vertexDataSet;
 		
-		void* mElementData;
-		s32 mElementSize;
-		s32 mElementCount;
-		s32 mElementLimit;
-		u32 mElementBufferId;
+		void* _elementData;
+		s32 _elementSize;
+		s32 _elementCount;
+		s32 _elementLimit;
+		u32 _elementBufferId;
 		
-		void* mVertexData;
-		s32 mVertexSize;
-		s32 mVertexCount;
-		s32 mVertexLimit;
-		u32 mVertexBufferId;
+		void* _vertexData;
+		s32 _vertexSize;
+		s32 _vertexCount;
+		s32 _vertexLimit;
+		u32 _vertexBufferId;
 		
-		void* mAttribOffset[ gs::eAttribCount ];
-		s32 mAttribSize[ gs::eAttribCount ];
+		void* _attributeOffset[ gs::AttributeCount ];
+		s32 _attributeSize[ gs::AttributeCount ];
 	};
 	
 	void MeshInit( Mesh& mesh );
 	
 	void MeshSetElementData( Mesh& mesh, void* elementData, s32 elementSize, s32 elementCount, s32 elementLimit, bool dynamic );
 	void MeshSetVertexData( Mesh& mesh, void* vertexData, s32 vertexSize, s32 vertexCount, s32 vertexLimit, bool dynamic );
-	void MeshSetAttrib( Mesh& mesh, gs::eAttrib attrib, void* offset, s32 size );
+	void MeshSetAttrib( Mesh& mesh, gs::Attribute attrib, void* offset, s32 size );
 	
 	s32 MeshGetElementCount( Mesh& mesh );
 	s32 MeshGetVertexCount( Mesh& mesh );
@@ -50,7 +50,7 @@ namespace fw
 	
 	void MeshFinalise( Mesh& mesh );
 	
-	void MeshDraw( Mesh& mesh, gs::ePrim primitive );
+	void MeshDraw( Mesh& mesh, gs::Primitive primitive );
 	
 	void MeshKill( Mesh& mesh );
 	

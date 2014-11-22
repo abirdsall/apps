@@ -5,9 +5,9 @@
 
 namespace geometry
 {
-	struct triangle
+	struct Triangle
 	{
-		v3 mVertices[3];
+		v3 _vertices[3];
 	};
 }
 

@@ -12,11 +12,11 @@
 
 namespace os
 {
-    enum eState
+    enum State
 	{
-		eStateUninitialised,
-        eStateInitialising,
-		eStateInitialised,
+		StateUninitialised,
+        StateInitialising,
+		StateInitialised,
 	};
 
     bool Main( int argc, char *argv[],

@@ -7,7 +7,7 @@
 #import <Cocoa/Cocoa.h>
 #else
 #include <ApplicationServices/ApplicationServices.h>
-typedef void *id;
+typedef void* id;
 #endif
 
 #endif

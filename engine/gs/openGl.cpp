@@ -4,15 +4,15 @@
 
 namespace gs
 {
-	static GLenum sPrimMap[ ePrimCount ] =
+	static GLenum _primitiveMap[ PrimitiveCount ] =
 	{
-		GL_POINTS,			// ePrimPoints
-		GL_LINES,			// ePrimLines
-		GL_LINE_LOOP,		// ePrimLineLoop
-		GL_LINE_STRIP,		// ePrimLineStrip
-		GL_TRIANGLES,		// ePrimTriangles
-		GL_TRIANGLE_FAN,	// ePrimTriangleFan
-		GL_TRIANGLE_STRIP,	// ePrimTriangleStrip
+		GL_POINTS,			// PrimitivePoints
+		GL_LINES,			// PrimitiveLines
+		GL_LINE_LOOP,		// PrimitiveLineLoop
+		GL_LINE_STRIP,		// PrimitiveLineStrip
+		GL_TRIANGLES,		// PrimitiveTriangles
+		GL_TRIANGLE_FAN,	// PrimitiveTriangleFan
+		GL_TRIANGLE_STRIP,	// PrimitiveTriangleStrip
 	};
 
 #ifdef DebugGs
@@ -31,7 +31,7 @@ namespace gs
 	}
 #endif
     
-	void InitHw(void)
+	void InitHw()
 	{
 		glFrontFace(GL_CCW);
 		glPixelStorei(GL_PACK_ALIGNMENT, 1);
@@ -48,15 +48,15 @@ namespace gs
         ErrorCheck();
 	}
 	
-	void KillHw(void)
+	void KillHw()
 	{
 	}
 	
-	void SetBlendHw( const eBlend blend )
+	void SetBlendHw( BlendMode blend )
 	{
 		ErrorCheck();
         
-		if ( blend == eBlendMin )
+		if ( blend == BlendModeMin )
 		{
 #if GsOpenGles2
             ASSERT(false);
@@ -65,7 +65,7 @@ namespace gs
             glBlendEquation( GL_MIN );
 #endif
 		}
-		else if ( blend == eBlendMax )
+		else if ( blend == BlendModeMax )
 		{
 #if GsOpenGles2
             ASSERT(false);
@@ -85,13 +85,13 @@ namespace gs
 		//void glBlendFuncSeparatei(GLuint  buf,  GLenum  srcRGB,  GLenum  dstRGB,  GLenum  srcAlpha,  GLenum  dstAlpha); //buf is drawbuffer
 		switch( blend )
 		{
-			case eBlendNone : glDisable( GL_BLEND ); return;
-			case eBlendRgb : glBlendFunc( GL_ONE, GL_ZERO ); break;
-			case eBlendRgba : glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); break;
-			case eBlendAddRgb : glBlendFunc( GL_ONE, GL_ONE ); break;
-			case eBlendAddRgba : glBlendFunc( GL_SRC_ALPHA, GL_ONE ); break;
-			case eBlendRgbDstAlpha : glBlendFunc( GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA ); break;
-			case eBlendMixRgbAddA : glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE); break;
+			case BlendModeNone : glDisable( GL_BLEND ); return;
+			case BlendModeRgb : glBlendFunc( GL_ONE, GL_ZERO ); break;
+			case BlendModeRgba : glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); break;
+			case BlendModeAddRgb : glBlendFunc( GL_ONE, GL_ONE ); break;
+			case BlendModeAddRgba : glBlendFunc( GL_SRC_ALPHA, GL_ONE ); break;
+			case BlendModeRgbDstAlpha : glBlendFunc( GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA ); break;
+			case BlendModeMixRgbAddA : glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE); break;
 			default: break;
 		}
 		
@@ -102,19 +102,19 @@ namespace gs
         ErrorCheck();
 	}
 	
-	void SetDepthHw( const eDepth depth )
+	void SetDepthHw( DepthTest depth )
 	{
         ErrorCheck();
 
 		switch( depth )
 		{
-			case eDepthNone : glDisable( GL_DEPTH_TEST ); return;
-			case eDepthLess : glDepthFunc( GL_LESS ); break;
-			case eDepthLequal : glDepthFunc( GL_LEQUAL ); break;
-			case eDepthGequal : glDepthFunc( GL_GEQUAL ); break;
-			case eDepthGreater : glDepthFunc( GL_GREATER ); break;
-			case eDepthNotEqual : glDepthFunc( GL_NOTEQUAL );	break;
-			case eDepthEqual : glDepthFunc( GL_EQUAL ); break;
+			case DepthTestNone : glDisable( GL_DEPTH_TEST ); return;
+			case DepthTestLess : glDepthFunc( GL_LESS ); break;
+			case DepthTestLequal : glDepthFunc( GL_LEQUAL ); break;
+			case DepthTestGequal : glDepthFunc( GL_GEQUAL ); break;
+			case DepthTestGreater : glDepthFunc( GL_GREATER ); break;
+			case DepthTestNotEqual : glDepthFunc( GL_NOTEQUAL );	break;
+			case DepthTestEqual : glDepthFunc( GL_EQUAL ); break;
 		}
 		
         ErrorCheck();
@@ -124,31 +124,31 @@ namespace gs
         ErrorCheck();
 	}
 	
-	void SetWriteHw( const eWrite write )
+	void SetWriteHw( WriteMask write )
 	{
         ErrorCheck();
 
-		glDepthMask( ( write & eWriteZ ) ? GL_TRUE : GL_FALSE );
+		glDepthMask( ( write & WriteMaskZ ) ? GL_TRUE : GL_FALSE );
         
         ErrorCheck();
 
-		glColorMask( ( ( write & eWriteR ) >> 1 ) ? GL_TRUE : GL_FALSE,
-					( ( write & eWriteG ) >> 2 ) ? GL_TRUE : GL_FALSE,
-					( ( write & eWriteB ) >> 3 ) ? GL_TRUE : GL_FALSE,
-					( ( write & eWriteA ) >> 4 ) ? GL_TRUE : GL_FALSE );
+		glColorMask( ( ( write & WriteMaskR ) >> 1 ) ? GL_TRUE : GL_FALSE,
+					( ( write & WriteMaskG ) >> 2 ) ? GL_TRUE : GL_FALSE,
+					( ( write & WriteMaskB ) >> 3 ) ? GL_TRUE : GL_FALSE,
+					( ( write & WriteMaskA ) >> 4 ) ? GL_TRUE : GL_FALSE );
         
         ErrorCheck();
 	}
 	
-	void SetCullHw( const eCull cull )
+	void SetCullHw( CullFace cull )
 	{
         ErrorCheck();
 
 		switch( cull )
 		{
-			case eCullNone : glDisable( GL_CULL_FACE ); return;
-			case eCullBack : glCullFace( GL_BACK ); break;
-			case eCullFront : glCullFace( GL_FRONT ); break;
+			case CullFaceNone : glDisable( GL_CULL_FACE ); return;
+			case CullFaceBack : glCullFace( GL_BACK ); break;
+			case CullFaceFront : glCullFace( GL_FRONT ); break;
 		}
 
         ErrorCheck();
@@ -192,7 +192,7 @@ namespace gs
         ErrorCheck();
 	}
 	
-	void ClearHw( const bool colour, const bool depth )
+	void ClearHw( bool colour, bool depth )
 	{
         ErrorCheck();
 
@@ -345,7 +345,7 @@ namespace gs
         ErrorCheck();
 	}
 	
-	void SetArrayHw( const eAttrib attrib, const u32 size, const u32 stride, const void* pointer )
+	void SetArrayHw( Attribute attrib, u32 size, u32 stride, const void* pointer )
 	{
         ErrorCheck();
 
@@ -358,7 +358,7 @@ namespace gs
         ErrorCheck();
 	}
 	
-	void UnsetArrayHw( const eAttrib attrib)
+	void UnsetArrayHw( Attribute attrib)
 	{
         ErrorCheck();
 
@@ -367,7 +367,7 @@ namespace gs
         ErrorCheck();
 	}
 	
-	void DrawArrayHw( const ePrim primitive, const u32 num )
+	void DrawArrayHw( Primitive primitive, u32 num )
 	{
         ErrorCheck();
 
@@ -375,12 +375,12 @@ namespace gs
         
         ErrorCheck();
 
-		glDrawArrays( sPrimMap[ primitive ], 0, ( GLsizei )num );
+		glDrawArrays( _primitiveMap[ primitive ], 0, ( GLsizei )num );
         
         ErrorCheck();
 	}
 	
-	void DrawElementsHw( const ePrim primitive, const u32 num )
+	void DrawElementsHw( Primitive primitive, u32 num )
 	{
         ErrorCheck();
 
@@ -391,7 +391,7 @@ namespace gs
         //u16* ebuf = (u16*)glMapBuffer( GL_ELEMENT_ARRAY_BUFFER, GL_READ_ONLY );
         //f32* vbuf = (f32*)glMapBuffer( GL_ARRAY_BUFFER, GL_READ_ONLY );
 
-        glDrawElements( sPrimMap[ primitive ], ( GLsizei )num, GL_UNSIGNED_SHORT, Null);// ( const GLvoid* )0 );
+        glDrawElements( _primitiveMap[ primitive ], ( GLsizei )num, GL_UNSIGNED_SHORT, Null);// ( const GLvoid* )0 );
         
         //glUnmapBuffer( GL_ELEMENT_ARRAY_BUFFER );
         //glUnmapBuffer( GL_ARRAY_BUFFER );

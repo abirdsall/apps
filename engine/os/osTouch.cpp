@@ -4,13 +4,13 @@
 
 namespace os
 {
-    static Touch sExistingTouches[ kTouchLimit ];
+    static Touch _existingTouches[ TouchLimit ];
     
-    static s32 sExistingTouchCount;
+    static s32 _existingTouchCount;
     
 	void TouchInit()
 	{
-        sExistingTouchCount = 0;
+        _existingTouchCount = 0;
 	}
     
     void TouchTick( f32 dt )
@@ -27,7 +27,7 @@ namespace os
     
 	void TouchProcess( Touch touches[], s32 touchCount )
 	{
-        Touch processedTouches[ kTouchLimit ];
+        Touch processedTouches[ TouchLimit ];
         s32 processedTouchCount = 0;
         
         for( s32 i = 0; i < touchCount; i++ )
@@ -35,11 +35,11 @@ namespace os
             Touch& touch = touches[ i ];
             s32 existingTouchIndex = 0;
             
-            for( ; existingTouchIndex < sExistingTouchCount; existingTouchIndex++ )
+            for( ; existingTouchIndex < _existingTouchCount; existingTouchIndex++ )
             {
-                Touch& existingTouch = sExistingTouches[ existingTouchIndex ];
+                Touch& existingTouch = _existingTouches[ existingTouchIndex ];
 
-                if( existingTouch._phase == eTouchPhaseEnded || existingTouch._phase == eTouchPhaseCancelled )
+                if( existingTouch._phase == TouchPhaseEnded || existingTouch._phase == TouchPhaseCancelled )
                 {
                     continue;
                 }
@@ -57,11 +57,11 @@ namespace os
                 }
             }
             
-            if( processedTouchCount < kTouchLimit )
+            if( processedTouchCount < TouchLimit )
             {
-                if( existingTouchIndex < sExistingTouchCount ) // existing touch
+                if( existingTouchIndex < _existingTouchCount ) // existing touch
                 {
-                    processedTouches[ processedTouchCount++ ] = sExistingTouches[ existingTouchIndex ];
+                    processedTouches[ processedTouchCount++ ] = _existingTouches[ existingTouchIndex ];
                 }
                 else // new touch
                 {
@@ -76,11 +76,11 @@ namespace os
         
         for( s32 processedTouchIndex = 0; processedTouchIndex < processedTouchCount; processedTouchIndex++ )
         {
-            sExistingTouches[ processedTouchIndex ] = processedTouches[ processedTouchIndex ];
+            _existingTouches[ processedTouchIndex ] = processedTouches[ processedTouchIndex ];
         }
         
-        sExistingTouchCount = processedTouchCount;
+        _existingTouchCount = processedTouchCount;
         
-        os::FlowTouch( sExistingTouches, sExistingTouchCount );
+        os::FlowTouch( _existingTouches, _existingTouchCount );
     }    
 }

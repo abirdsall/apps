@@ -44,7 +44,7 @@ namespace core
             return _data.Count() - 1;
         }
         
-        c8 operator [] ( const s32 i )
+        c8 operator [] ( s32 i )
         {
             return _data[ i ];
         }

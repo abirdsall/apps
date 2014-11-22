@@ -2,96 +2,96 @@
 
 namespace os
 {
-	s16 sPositionPixelsX;
-	s16 sPositionPixelsY;
-	v2 sPosition;
-	v2 sVelocity;
-	bool sLocked;
+	s16 _positionPixelsX;
+	s16 _positionPixelsY;
+	v2 _position;
+	v2 _velocity;
+	bool _locked;
 	
-	f32 sButtonTime[ eMouseButtonCount ];
-	u8 sButton[ eMouseButtonCount ];
+	f32 _buttonTime[ MouseButtonCount ];
+	u8 _button[ MouseButtonCount ];
 	
-	void OnMouseButton( const eMouseButton button, const bool pressed )
+	void OnMouseButton( MouseButton button, bool pressed )
 	{
-		if( button < eMouseButtonCount )
+		if( button < MouseButtonCount )
 		{
 			if( pressed )
 			{
-				sButtonTime[ button ] = 0.0f;
-				sButton[ button ] |= sButton[ button ] & 0x2 ? 0x2 : 0x3;
+				_buttonTime[ button ] = 0.0f;
+				_button[ button ] |= _button[ button ] & 0x2 ? 0x2 : 0x3;
 			}
 			else
 			{
-				sButton[ button ] = 0x4;
+				_button[ button ] = 0x4;
 			}
 		}
 	}
 	
 	void OnMouseMove( s32 x, s32 y, s32 dx, s32 dy )
 	{
-		if( sLocked )
+		if( _locked )
 		{
-			sPositionPixelsX += dx;
-			sPositionPixelsY += dy;
+			_positionPixelsX += dx;
+			_positionPixelsY += dy;
 		}
 		else
 		{
-			sPositionPixelsX = x;
-			sPositionPixelsY = y;
+			_positionPixelsX = x;
+			_positionPixelsY = y;
 		}
 	}
 	
-	bool MouseButtonDown( const eMouseButton button )
+	bool MouseButtonDown( MouseButton button )
 	{
-		return sButton[ button ] & 0x1 ? true : false;
+		return _button[ button ] & 0x1 ? true : false;
 	}
 	
-	bool MouseButtonHeld( const eMouseButton button )
+	bool MouseButtonHeld( MouseButton button )
 	{
-		return sButton[ button ] & 0x2 ? true : false;
+		return _button[ button ] & 0x2 ? true : false;
 	}
 	
-	bool MouseButtonUp( const eMouseButton button )
+	bool MouseButtonUp( MouseButton button )
 	{
-		return sButton[ button ] & 0x4 ? true : false;
+		return _button[ button ] & 0x4 ? true : false;
 	}
 	
-	f32 MouseButtonTime( const eMouseButton button )
+	f32 MouseButtonTime( MouseButton button )
 	{
-		return sButtonTime[ button ];
+		return _buttonTime[ button ];
 	}
 	
 	void MouseInit()
 	{
-		sPositionPixelsX = 0;
-		sPositionPixelsY = 0;
-		sPosition.x = 0.0f;
-		sPosition.y = 0.0f;
-		sVelocity.x = 0.0f;
-		sVelocity.y = 0.0f;
-		sLocked = false;
+		_positionPixelsX = 0;
+		_positionPixelsY = 0;
+		_position.x = 0.0f;
+		_position.y = 0.0f;
+		_velocity.x = 0.0f;
+		_velocity.y = 0.0f;
+		_locked = false;
 		
-		for( s32 i = 0; i < eMouseButtonCount; i++ )
+		for( s32 i = 0; i < MouseButtonCount; i++ )
 		{
-			sButtonTime[ i ] = 0.0f;
-			sButton[ i ] = 0;
+			_buttonTime[ i ] = 0.0f;
+			_button[ i ] = 0;
 		}
 	}
 	
 	void MouseTick( f32 dt )
 	{
-		v2 position = sPosition;
+		v2 position = _position;
 		
-		sPosition = v2( f32( sPositionPixelsX ) / f32( WindowSizeX() ), f32( sPositionPixelsY ) / f32( WindowSizeY() ) );
-		sVelocity = lerp( sVelocity, sPosition - position, 0.25f );
+		_position = v2( f32( _positionPixelsX ) / f32( WindowSizeX() ), f32( _positionPixelsY ) / f32( WindowSizeY() ) );
+		_velocity = lerp( _velocity, _position - position, 0.25f );
 		
-		for( s32 i = 0; i < eMouseButtonCount; i++ )
+		for( s32 i = 0; i < MouseButtonCount; i++ )
 		{
-			sButton[ i ] &= ~0x5;
+			_button[ i ] &= ~0x5;
 			
-			if( MouseButtonHeld( ( eMouseButton )i ) )
+			if( MouseButtonHeld( ( MouseButton )i ) )
 			{
-				sButtonTime[ i ] += dt;
+				_buttonTime[ i ] += dt;
 			}
 		}
 	}
@@ -106,23 +106,23 @@ namespace os
 	
 	void MouseReleaseAll()
 	{
-		for( s32 i = 0; i < eMouseButtonCount; i++ )
+		for( s32 i = 0; i < MouseButtonCount; i++ )
 		{
-			if( sButton[ i ] & 0x2 )
+			if( _button[ i ] & 0x2 )
 			{
-				OnMouseButton( ( eMouseButton )i, false );
+				OnMouseButton( ( MouseButton )i, false );
 			}
 		}
 	}
 	
 	v2 MousePositionPixels()
 	{
-		return v2( sPositionPixelsX, sPositionPixelsY );
+		return v2( _positionPixelsX, _positionPixelsY );
 	}
 	
 	v2 MousePosition()
 	{
-		return sPosition;
+		return _position;
 	}
 	
 	void MouseSetPosition( s16 x, s16 y )
@@ -132,12 +132,12 @@ namespace os
 	
 	v2 MouseVelocity()
 	{
-		return sVelocity;
+		return _velocity;
 	}
 	
 	bool MouseVisibile()
 	{
-		return !sLocked;
+		return !_locked;
 	}
 	
 	void MouseSetVisibile( bool visible )
@@ -148,35 +148,35 @@ namespace os
 			return;
 		}
 		
-		sPosition.x = 0.5f;
-		sPosition.y = 0.5f;
+		_position.x = 0.5f;
+		_position.y = 0.5f;
 		
 		s32 centerPosX = WindowSizeX() / 2;
 		s32 centerPosY = WindowSizeY() / 2;
 		
 		if( visible )
 		{
-			if( !sLocked )
+			if( !_locked )
 			{
 				ASSERT( 0 );
 				return;
 			}
-			sLocked = false;
+			_locked = false;
 		}
 		else
 		{
-			if( sLocked )
+			if( _locked )
 			{
 				ASSERT( 0 );
 				return;
 			}
 		}
 		
-		if ( centerPosX != sPositionPixelsX || centerPosY != sPositionPixelsY )
+		if ( centerPosX != _positionPixelsX || centerPosY != _positionPixelsY )
 		{
 			MouseSetPosition( centerPosX, centerPosY );
-			sPositionPixelsX = centerPosX;
-			sPositionPixelsY = centerPosY;
+			_positionPixelsX = centerPosX;
+			_positionPixelsY = centerPosY;
 		}
 		
 		return MouseSetVisibileHw( visible );

@@ -11,10 +11,10 @@
 
 namespace gs
 {
-	void TextureHwNew( const TextureHandle handle );
-	void TextureHwDelete( const TextureHandle handle );
-	void TextureHwSet( const c8* shader, const TextureHandle handle );
-	const TextureHw& TextureHwGet( const TextureHandle handle );
+	void TextureHwNew( TextureHandle handle );
+	void TextureHwDelete( TextureHandle handle );
+	void TextureHwSet( const c8* shader, TextureHandle handle );
+	const TextureHw& TextureHwGet( TextureHandle handle );
 	void TextureHwActiveCountReset();
 }
 

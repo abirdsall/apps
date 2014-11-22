@@ -28,9 +28,9 @@ namespace fw
     
     void DrawBatchIncrement( DrawBatchHandle handle );
     void DrawBatchFinalise( DrawBatchHandle handle );
-    void DrawBatchDraw( DrawBatchHandle handle, gs::ePrim prim );
+    void DrawBatchDraw( DrawBatchHandle handle, gs::Primitive prim );
     void DrawBatchClear( DrawBatchHandle handle );
-    void DrawBatchFlush( DrawBatchHandle handle, gs::ePrim prim );
+    void DrawBatchFlush( DrawBatchHandle handle, gs::Primitive prim );
 }
 
 #endif

@@ -6,10 +6,10 @@
 
 #include <pthread.h>
 
-void* sNsglFramework;
-pthread_key_t sNsglThread;
-CGEventSourceRef sEventSource;
-id sAutoreleasePool;
+void* _nsglFramework;
+pthread_key_t _nsglThread;
+CGEventSourceRef _eventSource;
+id _autoreleasePool;
 
 static void changeToResourcesDirectory( void )
 {
@@ -41,13 +41,13 @@ namespace os
 {
 	bool InitContext()
 	{
-		if( pthread_key_create( &sNsglThread, nil ) != 0)
+		if( pthread_key_create( &_nsglThread, nil ) != 0)
 		{
 			return false;
 		}
 		
-		sNsglFramework = CFBundleGetBundleWithIdentifier( CFSTR( "com.apple.opengl" ) );
-		if( !sNsglFramework )
+		_nsglFramework = CFBundleGetBundleWithIdentifier( CFSTR( "com.apple.opengl" ) );
+		if( !_nsglFramework )
 		{
 			return false;
 		}
@@ -57,10 +57,10 @@ namespace os
 	
 	void KillContext()
 	{
-		pthread_key_delete( sNsglThread );
+		pthread_key_delete( _nsglThread );
 		
-        sNsglThread = 0;//nil;
-		sNsglFramework = nil;
+        _nsglThread = 0;//nil;
+		_nsglFramework = nil;
 	}
     
     bool MainHw( int argc, char *argv[] )
@@ -81,34 +81,34 @@ namespace os
 	
 	bool InitHw()
 	{
-		sAutoreleasePool = [[NSAutoreleasePool alloc] init];
+		_autoreleasePool = [[NSAutoreleasePool alloc] init];
 
 		InitContext();
 		
 		changeToResourcesDirectory();
 		
-		sEventSource = CGEventSourceCreate( kCGEventSourceStateHIDSystemState );
+		_eventSource = CGEventSourceCreate( kCGEventSourceStateHIDSystemState );
         
-		if( !sEventSource )
+		if( !_eventSource )
 		{
 			return false;
 		}
 		
-		CGEventSourceSetLocalEventsSuppressionInterval( sEventSource, 0.0 );
+		CGEventSourceSetLocalEventsSuppressionInterval( _eventSource, 0.0 );
 		
 		return true;
 	}
     
 	void KillHw()
 	{
-		if( sEventSource )
+		if( _eventSource )
 		{
-			CFRelease( sEventSource );
-			sEventSource = nil;
+			CFRelease( _eventSource );
+			_eventSource = nil;
 		}
 
-		[sAutoreleasePool release];
-		sAutoreleasePool = nil;
+		[_autoreleasePool release];
+		_autoreleasePool = nil;
 		
 		KillContext();
 	}

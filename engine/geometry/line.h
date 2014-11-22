@@ -6,44 +6,44 @@
 class line
 {
 public:
-				line(void) :
-					mPos(V3Zero),
-					mDir(V3Zero),
-					mEnd(V3Zero)
+				line() :
+					_pos(V3Zero),
+					_dir(V3Zero),
+					_end(V3Zero)
 				{
 				}
 
 				line(const v3& pos, const v3& dir)
 				{
-					mPos = pos;
-					mDir = dir;
+					_pos = pos;
+					_dir = dir;
 					fixEnd();
-					normalise(mDir);
+					normalise(_dir);
 				}
 	
 	void		setPath(const v3& pos, const v3& end)
 				{
-					mPos = pos;
-					mEnd = end;
+					_pos = pos;
+					_end = end;
 					fixDir();
 				}
 
-	v3			getPos(void) const		{return mPos;}
-	v3			getEnd(void) const		{return mEnd;}
-	v3			getDir(void) const		{return mDir;}
+	v3			getPos() const		{return _pos;}
+	v3			getEnd() const		{return _end;}
+	v3			getDir() const		{return _dir;}
 
-	void		setPos(const v3& pos)	{mPos = pos; fixDir();}
-	void		setEnd(const v3& end)	{mEnd = end; fixDir();}
-	void		setDir(const v3& dir)	{mDir = dir; fixEnd();}
+	void		setPos(const v3& pos)	{_pos = pos; fixDir();}
+	void		setEnd(const v3& end)	{_end = end; fixDir();}
+	void		setDir(const v3& dir)	{_dir = dir; fixEnd();}
 
 private:
-	void		fixPos(void)			{mPos = mEnd - mDir;}
-	void		fixEnd(void)			{mEnd = mPos + mDir;}
-	void		fixDir(void)			{mDir = normalise(mEnd - mPos);}
+	void		fixPos()			{_pos = _end - _dir;}
+	void		fixEnd()			{_end = _pos + _dir;}
+	void		fixDir()			{_dir = normalise(_end - _pos);}
 
-	v3			mPos;
-	v3			mDir;
-	v3			mEnd;
+	v3			_pos;
+	v3			_dir;
+	v3			_end;
 };
 
 #endif

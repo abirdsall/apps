@@ -7,12 +7,12 @@
 
 namespace os
 {
-	extern void OnMouseButton( const eMouseButton button, const bool pressed );
+	extern void OnMouseButton( MouseButton button, bool pressed );
 	extern void OnMouseMove( s32 x, s32 y, s32 dx, s32 dy );
 	
 	extern void OnWindowResize( s32 sizeX, s32 sizeY );
-	extern bool OnWindowActivated( const bool activated );
-	extern void OnWindowIconified( const bool iconified );
+	extern bool OnWindowActivated( bool activated );
+	extern void OnWindowIconified( bool iconified );
 	extern void OnWindowClose();
 }
 
@@ -168,7 +168,7 @@ using namespace gs;
     {
         @autoreleasepool
         {
-            os::Touch touches[ os::kTouchLimit ];
+            os::Touch touches[ os::TouchLimit ];
             
             s32 touchCount = 0;
             
@@ -181,7 +181,7 @@ using namespace gs;
                 CGPoint location = [uiTouch locationInView:self.view];
                 CGPoint previousLocation = [uiTouch previousLocationInView:self.view];
                 
-                os::Touch touch = os::Touch( ( os::eTouchPhase )uiTouch.phase,
+                os::Touch touch = os::Touch( ( os::TouchPhase )uiTouch.phase,
                                             location.x * pointScale,
                                             location.y * pointScale,
                                             previousLocation.x * pointScale,
@@ -190,7 +190,7 @@ using namespace gs;
                                             now, // timestamp of uiTouch not compatible to Sparrow timestamp
                                             (hwInt)uiTouch );
                 
-                if( touchCount < os::kTouchLimit )
+                if( touchCount < os::TouchLimit )
                 {
                     touches[ touchCount++ ] = touch;
                 }

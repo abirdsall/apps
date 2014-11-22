@@ -7,16 +7,16 @@
 struct plane;
 struct aabb
 {
-					aabb(void);
+					aabb();
 					aabb(const v3& min, const v3& max);
-	v3				getVertex(const u8 i) const;
-	void			getFace(const u8 face, v3* v) const;
+	v3				getVertex(u8 i) const;
+	void			getFace(u8 face, v3* v) const;
 	f32				getRadiusInDirection(const v3& dir) const;
 	f32				distanceToPlane(const plane& plane) const;
-	plane::eSide	planeSide(const plane& plane) const;
+	plane::Side	planeSide(const plane& plane) const;
 
-	v3				mMin;
-	v3				mMax;
+	v3				_min;
+	v3				_max;
 };
 
 #endif

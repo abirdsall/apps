@@ -61,12 +61,12 @@ namespace fw
         
         MeshSetVertexData( batch->_mesh, core::alloc( vertexSize * vertexLimit ), vertexSize, 0, vertexLimit, true );
         
-        MeshSetAttrib( batch->_mesh, gs::eAttribVertex, ( void* )( sizeof( f32 ) * 0 ), batch->_vertexAttribSize );
+        MeshSetAttrib( batch->_mesh, gs::AttributeVertex, ( void* )( sizeof( f32 ) * 0 ), batch->_vertexAttribSize );
 
         if(normalAttribSize > 0)
         {
             MeshSetAttrib( batch->_mesh,
-                          gs::eAttribNormal,
+                          gs::AttributeNormal,
                           ( void* )( sizeof( f32 ) * ( batch->_vertexAttribSize ) ),
                           batch->_normalAttribSize );
         }
@@ -74,14 +74,14 @@ namespace fw
         if(colourAttribSize > 0)
         {
             MeshSetAttrib( batch->_mesh,
-                          gs::eAttribColour,
+                          gs::AttributeColour,
                           ( void* )( sizeof( f32 ) * ( batch->_vertexAttribSize + batch->_normalAttribSize ) ),
                           batch->_colourAttribSize );
         }
         
         if(tcoordAttribSize > 0)
         {
-            MeshSetAttrib( batch->_mesh, gs::eAttribTcoord,
+            MeshSetAttrib( batch->_mesh, gs::AttributeTcoord,
                           ( void* )( sizeof( f32 ) * ( batch->_vertexAttribSize + batch->_normalAttribSize + batch->_colourAttribSize ) ),
                           batch->_tcoordAttribSize );
         }
@@ -144,7 +144,7 @@ namespace fw
         MeshSetVertexCount( batch->_mesh, batch->_verticesPerPrimitive * batch->_size );
     }
     
-    void DrawBatchDraw( DrawBatchHandle handle, gs::ePrim prim )
+    void DrawBatchDraw( DrawBatchHandle handle, gs::Primitive prim )
     {
         DrawBatch* batch = ( DrawBatch* )handle;
 
@@ -165,7 +165,7 @@ namespace fw
         MeshSetVertexCount( batch->_mesh, 0 );
     }
     
-    void DrawBatchFlush( DrawBatchHandle handle, gs::ePrim prim )
+    void DrawBatchFlush( DrawBatchHandle handle, gs::Primitive prim )
     {
         DrawBatchFinalise( handle );
         DrawBatchDraw( handle, prim );

@@ -13,8 +13,8 @@ namespace core
 	f64 pow(f64 x, f64 y);
 	u32 random();
 	f32 randomfraction();
-	f32 randomrange(const f32 a, const f32 b);
-	void randomseed(const u32 a);
+	f32 randomrange(f32 a, f32 b);
+	void randomseed(u32 a);
 	
 	inline s32 abs(s32 a)
 	{

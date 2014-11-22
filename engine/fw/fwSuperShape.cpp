@@ -2,7 +2,7 @@
 
 namespace fw
 {
-    static f32 SuperShape(const f32 t, const f32 m, const f32 a, const f32 b, const f32 n1, const f32 n2, const f32 n3)
+    static f32 SuperShape(f32 t, f32 m, f32 a, f32 b, f32 n1, f32 n2, f32 n3)
     {
         return ( f32 )pow( 1e-12f + pow( abs( cos( m * t / 4.0f ) / a ), n2 ) + pow( abs( sin( m * t / 4.0f ) / b ), n3 ), -1.0f / n1 );
     }

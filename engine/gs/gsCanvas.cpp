@@ -2,27 +2,27 @@
 
 namespace gs
 {
-	static Canvas* sCanvas;
-	static CanvasHandle sCanvasActive;
-	static s32 sCanvasActiveLod;
-	static u32 sCanvasActiveCount;
+	static Canvas* _canvases;
+	static CanvasHandle _canvasActive;
+	static s32 _canvasActiveLod;
+	static u32 _canvasActiveCount;
 
 	void InitCanvases()
 	{
-        sCanvas = new Canvas[ kCanvasLimit ];
+        _canvases = new Canvas[ CanvasLimit ];
 
-		for( u32 i = 0; i < kCanvasLimit; i++ )
+		for( u32 i = 0; i < CanvasLimit; i++ )
 		{
-			sCanvas[ i ].mActive = false;
+			_canvases[ i ]._active = false;
 		}
-		sCanvasActive = kCanvasInvalid;
-		sCanvasActiveLod = -1;
-		sCanvasActiveCount = 0;
+		_canvasActive = CanvasInvalid;
+		_canvasActiveLod = -1;
+		_canvasActiveCount = 0;
 	}
 	
 	void KillCanvases()
 	{
-		for( u32 i = 0; i < kCanvasLimit;  i++ )
+		for( u32 i = 0; i < CanvasLimit;  i++ )
 		{
 			CanvasDelete( i );
 		}
@@ -35,48 +35,48 @@ namespace gs
     
     CanvasHandle CanvasNew( const c8* name )
 	{
-		for( u32 i = 0; i < kCanvasLimit; i++ )
+		for( u32 i = 0; i < CanvasLimit; i++ )
 		{
-			if( !sCanvas[ i ].mActive )
+			if( !_canvases[ i ]._active )
 			{
 				CanvasHandle handle = i;
-				Canvas& canvas = sCanvas[ handle ];
+				Canvas& canvas = _canvases[ handle ];
                 canvas._name = name;
-				canvas.mColorTextureCount = 0;
-				canvas.mDepthTextureCount = 0;
+				canvas._colorTextureCount = 0;
+				canvas._depthTextureCount = 0;
 				canvas._sizeX = 1;
 				canvas._sizeY = 1;
-				canvas.mActive = true;
-				sCanvasActiveCount++;
+				canvas._active = true;
+				_canvasActiveCount++;
 				CanvasHwNew( handle );
 				return handle;
 			}
 		}
 		ASSERT(0);
-		return kCanvasInvalid;
+		return CanvasInvalid;
 	}
 	
-	CanvasHandle CanvasNew( const TextureHandle textureHandle )
+	CanvasHandle CanvasNew( TextureHandle textureHandle )
 	{
 		CanvasHandle handle = CanvasNew();
 		CanvasAdd( handle, textureHandle );
 		return handle;
 	}
 	
-	void CanvasDelete( const CanvasHandle handle )
+	void CanvasDelete( CanvasHandle handle )
 	{
-		if( sCanvas[ handle ].mActive )
+		if( _canvases[ handle ]._active )
 		{
 			CanvasHwDelete( handle );
-			sCanvas[ handle ].mActive = false;
-			sCanvasActiveCount--;
+			_canvases[ handle ]._active = false;
+			_canvasActiveCount--;
 
 		}
 	}
 	
-	void CanvasAdd( const CanvasHandle canvasHandle, const TextureHandle textureHandle, const u32 layer )
+	void CanvasAdd( CanvasHandle canvasHandle, TextureHandle textureHandle, u32 layer )
 	{
-		Canvas& canvas = sCanvas[ canvasHandle ];
+		Canvas& canvas = _canvases[ canvasHandle ];
 		const Texture& texture = TextureGet( textureHandle );
 		
 		canvas._sizeX = texture._sizeX;
@@ -84,72 +84,72 @@ namespace gs
 			
 		if( texture._type == TexTypeDepth )
 		{
-			ASSERT( canvas.mDepthTextureCount < kDepthTextureLimit );
-			canvas.mDepthTexture[ canvas.mDepthTextureCount ] = textureHandle;
-            canvas.mDepthTextureLayer[ canvas.mDepthTextureCount ] = layer;
-			canvas.mDepthTextureCount++;
+			ASSERT( canvas._depthTextureCount < DepthTextureLimit );
+			canvas._depthTexture[ canvas._depthTextureCount ] = textureHandle;
+            canvas._depthTextureLayer[ canvas._depthTextureCount ] = layer;
+			canvas._depthTextureCount++;
 		}
 		else
 		{
-			ASSERT( canvas.mColorTextureCount < kColorTextureLimit );
-			canvas.mColorTexture[ canvas.mColorTextureCount ] = textureHandle;
-            canvas.mColorTextureLayer[ canvas.mColorTextureCount ] = layer;
-			canvas.mColorTextureCount++;
+			ASSERT( canvas._colorTextureCount < ColorTextureLimit );
+			canvas._colorTexture[ canvas._colorTextureCount ] = textureHandle;
+            canvas._colorTextureLayer[ canvas._colorTextureCount ] = layer;
+			canvas._colorTextureCount++;
 		}
 	}
 	
-	void CanvasSet( const CanvasHandle handle, const s32 lod )
+	void CanvasSet( CanvasHandle handle, s32 lod )
 	{
         CanvasHwSet( handle, lod );
         
-		sCanvasActive = handle;
+		_canvasActive = handle;
         
-        sCanvasActiveLod = lod;
+        _canvasActiveLod = lod;
 		
         gs::SetViewport( 0, 0, CanvasSizeX(), CanvasSizeY() );
 	}
 	
-	void CanvasSet( const CanvasHandle handle )
+	void CanvasSet( CanvasHandle handle )
 	{
         CanvasSet( handle, 0 );
 	}
 	
 	u32 CanvasSizeX()
 	{
-		return sCanvasActive != kCanvasInvalid ? sCanvas[ sCanvasActive ]._sizeX >> sCanvasActiveLod : os::WindowSizeX();
+		return _canvasActive != CanvasInvalid ? _canvases[ _canvasActive ]._sizeX >> _canvasActiveLod : os::WindowSizeX();
 	}
 	
 	u32 CanvasSizeY()
 	{
-		return sCanvasActive != kCanvasInvalid ? sCanvas[ sCanvasActive ]._sizeY >> sCanvasActiveLod : os::WindowSizeY();
+		return _canvasActive != CanvasInvalid ? _canvases[ _canvasActive ]._sizeY >> _canvasActiveLod : os::WindowSizeY();
 	}
 	
-	Canvas& CanvasGet( const CanvasHandle handle )
+	Canvas& CanvasGet( CanvasHandle handle )
 	{
-		return sCanvas[ handle ];
+		return _canvases[ handle ];
 	}
 	
 	u32 CanvasActive() // todo rename to applied?
 	{
-		return sCanvasActive;
+		return _canvasActive;
 	}
 	
 	s32 CanvasActiveLod() // todo rename to applied?
 	{
-		return sCanvasActiveLod;
+		return _canvasActiveLod;
 	}
 	
 	s32 CanvasActiveCount()
 	{
-		return sCanvasActiveCount;
+		return _canvasActiveCount;
 	}
 	
-	s32 CanvasActiveGet( CanvasHandle array[ kCanvasLimit ] )
+	s32 CanvasActiveGet( CanvasHandle array[ CanvasLimit ] )
 	{
 		s32 count = 0;
-		for( int i = 0; i < kCanvasLimit; i++ )
+		for( int i = 0; i < CanvasLimit; i++ )
 		{
-			if( sCanvas[ i ].mActive )
+			if( _canvases[ i ]._active )
 			{
 				array[ count ] = i;
 				count++;

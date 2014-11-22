@@ -1,6 +1,6 @@
 #include "frustum.h"
 
-frustum :: frustum(void) {}
+frustum :: frustum() {}
 
 frustum :: frustum(
 	const plane& planeNear,
@@ -10,10 +10,10 @@ frustum :: frustum(
 	const plane& planeTop,
 	const plane& planeBottom)
 {
-	mPlanes[0] = planeNear;
-	mPlanes[1] = planeFar;
-	mPlanes[2] = planeLeft;
-	mPlanes[3] = planeRight;
-	mPlanes[4] = planeTop;
-	mPlanes[5] = planeBottom;
+	_planes[0] = planeNear;
+	_planes[1] = planeFar;
+	_planes[2] = planeLeft;
+	_planes[3] = planeRight;
+	_planes[4] = planeTop;
+	_planes[5] = planeBottom;
 }

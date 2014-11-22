@@ -32,17 +32,17 @@ namespace fw
     {
         v3 position = _view.getPosition();
         
-        if( os::MouseButtonDown( os::eMouseButtonRight ) )
+        if( os::MouseButtonDown( os::MouseButtonRight ) )
         {
             os::MouseSetVisibile( false );
         }
         
-        if( os::MouseButtonUp( os::eMouseButtonRight ) )
+        if( os::MouseButtonUp( os::MouseButtonRight ) )
         {
             os::MouseSetVisibile( true );
         }
         
-        if( os::MouseButtonHeld( os::eMouseButtonRight ) )
+        if( os::MouseButtonHeld( os::MouseButtonRight ) )
         {
             v2 delta = os::MouseVelocity() * dt * FlyRotationalSpeed;
             
@@ -64,22 +64,22 @@ namespace fw
             }
         }
         
-        if( os::KeyHeld( os::eKeyA ) )
+        if( os::KeyboardHeld( os::KeyA ) )
         {
             position -= _view.rows[ 0 ].xyz() * dt * FlyMovementSpeed;
         }
         
-        if( os::KeyHeld( os::eKeyD ) )
+        if( os::KeyboardHeld( os::KeyD ) )
         {
             position += _view.rows[ 0 ].xyz() * dt * FlyMovementSpeed;
         }
         
-        if( os::KeyHeld( os::eKeyS ) )
+        if( os::KeyboardHeld( os::KeyS ) )
         {
             position -= _view.rows[ 2 ].xyz() * dt * FlyMovementSpeed;
         }
         
-        if( os::KeyHeld( os::eKeyW ) )
+        if( os::KeyboardHeld( os::KeyW ) )
         {
             position += _view.rows[ 2 ].xyz() * dt * FlyMovementSpeed;
         }
@@ -89,9 +89,9 @@ namespace fw
     
     void Camera::TickOrbit( f32 dt )
     {
-        if( os::KeyHeld( os::eKeySpace ) )
+        if( os::KeyboardHeld( os::KeySpace ) )
         {
-            if( os::MouseButtonHeld( os::eMouseButtonLeft ) )
+            if( os::MouseButtonHeld( os::MouseButtonLeft ) )
             {
                 v2 delta = -os::MouseVelocity() * OrbitRotationalSpeed * dt;
                 
@@ -108,7 +108,7 @@ namespace fw
             
             f32 distance = core::distance( _view.getPosition(), _target );
             
-            if( os::MouseButtonHeld( os::eMouseButtonRight ) )
+            if( os::MouseButtonHeld( os::MouseButtonRight ) )
             {
                 distance += os::MouseVelocity().y * OrbitMovementSpeed * dt;
                 

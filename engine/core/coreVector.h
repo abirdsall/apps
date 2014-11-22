@@ -16,13 +16,13 @@ namespace core
             f32 v[2];
             struct{ f32 x, y; };
         };
-        v2(void)												{}
-        v2(const f32 a, const f32 b)							{x  = a;   y  = b;}
-        void operator =  (const f32 a)							{x  = a;   y  = a;}
-        void operator -= (const f32 a)							{x -= a;   y -= a;}
-        void operator += (const f32 a)							{x += a;   y += a;}
-        void operator *= (const f32 a)							{x *= a;   y *= a;}
-        void operator /= (const f32 a)							{x /= a;   y /= a;}
+        v2()												{}
+        v2(f32 a, f32 b)							{x  = a;   y  = b;}
+        void operator =  (f32 a)							{x  = a;   y  = a;}
+        void operator -= (f32 a)							{x -= a;   y -= a;}
+        void operator += (f32 a)							{x += a;   y += a;}
+        void operator *= (f32 a)							{x *= a;   y *= a;}
+        void operator /= (f32 a)							{x /= a;   y /= a;}
         void operator =  (const v2& a)							{x  = a.x; y  = a.y;}
         void operator -= (const v2& a)							{x -= a.x; y -= a.y;}
         void operator += (const v2& a)							{x += a.x; y += a.y;}
@@ -38,14 +38,14 @@ namespace core
             f32 v[3];
             struct{ f32 x, y, z; };
         };
-        v3(void)												{}
-        v3(const f32 a)											{x  = a;   y  = a;   z  = a;}
-        v3(const f32 a, const f32 b, const f32 c)				{x  = a;   y  = b;   z  = c;}
-        void operator =  (const f32 a)							{x  = a;   y  = a;   z  = a;}
-        void operator -= (const f32 a)							{x -= a;   y -= a;   z -= a;}
-        void operator += (const f32 a)							{x += a;   y += a;   z += a;}
-        void operator *= (const f32 a)							{x *= a;   y *= a;   z *= a;}
-        void operator /= (const f32 a)							{x /= a;   y /= a;   z /= a;}
+        v3()												{}
+        v3(f32 a)											{x  = a;   y  = a;   z  = a;}
+        v3(f32 a, f32 b, f32 c)				{x  = a;   y  = b;   z  = c;}
+        void operator =  (f32 a)							{x  = a;   y  = a;   z  = a;}
+        void operator -= (f32 a)							{x -= a;   y -= a;   z -= a;}
+        void operator += (f32 a)							{x += a;   y += a;   z += a;}
+        void operator *= (f32 a)							{x *= a;   y *= a;   z *= a;}
+        void operator /= (f32 a)							{x /= a;   y /= a;   z /= a;}
         void operator =  (const v3& a)							{x  = a.x; y  = a.y; z  = a.z;}
         void operator -= (const v3& a)							{x -= a.x; y -= a.y; z -= a.z;}
         void operator += (const v3& a)							{x += a.x; y += a.y; z += a.z;}
@@ -61,17 +61,17 @@ namespace core
             f32 v[4];
             struct{ f32 x, y, z, w; };
         };
-        v4(void) {}
+        v4() {}
         v4(const v3& a)											{x = a.x;  y  = a.y; z  = a.z; w  = 1.0f;}
-        v4(const v3& a, const f32 b)							{x = a.x;  y  = a.y; z  = a.z; w  = b;}
-        v4(const f32 a, const f32 b, const f32 c, const f32 d)	{x = a;    y  = b;   z  = c;   w  = d;}
+        v4(const v3& a, f32 b)							{x = a.x;  y  = a.y; z  = a.z; w  = b;}
+        v4(f32 a, f32 b, f32 c, f32 d)	{x = a;    y  = b;   z  = c;   w  = d;}
         v2 xy() const											{return v2(x, y);}
         v3 xyz() const											{return v3(x, y, z);}
-        void operator =  (const f32 a)							{x  = a;   y  = a;   z  = a;   w  = a;}
-        void operator -= (const f32 a)							{x -= a;   y -= a;   z -= a;   w -= a;}
-        void operator += (const f32 a)							{x += a;   y += a;   z += a;   w += a;}
-        void operator *= (const f32 a)							{x *= a;   y *= a;   z *= a;   w *= a;}
-        void operator /= (const f32 a)							{x /= a;   y /= a;   z /= a;   w /= a;}
+        void operator =  (f32 a)							{x  = a;   y  = a;   z  = a;   w  = a;}
+        void operator -= (f32 a)							{x -= a;   y -= a;   z -= a;   w -= a;}
+        void operator += (f32 a)							{x += a;   y += a;   z += a;   w += a;}
+        void operator *= (f32 a)							{x *= a;   y *= a;   z *= a;   w *= a;}
+        void operator /= (f32 a)							{x /= a;   y /= a;   z /= a;   w /= a;}
         void operator =  (const v4& a)							{x  = a.x; y  = a.y; z  = a.z; w  = a.w;}
         void operator -= (const v4& a)							{x -= a.x; y -= a.y; z -= a.z; w -= a.w;}
         void operator += (const v4& a)							{x += a.x; y += a.y; z += a.z; w += a.w;}
@@ -80,63 +80,63 @@ namespace core
         operator float *() const { return (float *) &x; }
     };
         
-    inline bool operator == (const f32 a, const v2& b)			{return (a   == b.x  &&  a   == b.y									);}
-    inline bool operator == (const f32 a, const v3& b)			{return (a   == b.x  &&  a   == b.y  &&	a   == b.z					);}
-    inline bool operator == (const f32 a, const v4& b)			{return (a   == b.x  &&  a   == b.y  &&	a   == b.w  &&  a   == b.w	);}
+    inline bool operator == (f32 a, const v2& b)			{return (a   == b.x  &&  a   == b.y									);}
+    inline bool operator == (f32 a, const v3& b)			{return (a   == b.x  &&  a   == b.y  &&	a   == b.z					);}
+    inline bool operator == (f32 a, const v4& b)			{return (a   == b.x  &&  a   == b.y  &&	a   == b.w  &&  a   == b.w	);}
     inline bool operator == (const v2& a, const v2& b)			{return (a.x == b.x	 &&  a.y == b.y									);}
     inline bool operator == (const v3& a, const v3& b)			{return (a.x == b.x	 &&  a.y == b.y  &&	a.z == b.z					);}
     inline bool operator == (const v4& a, const v4& b)			{return (a.x == b.x  &&  a.y == b.y  &&	a.z == b.w  &&  a.w == b.w	);}
-    inline bool operator == (const v2& a, const f32 b)			{return (a.x == b    &&  a.y == b									);}
-    inline bool operator == (const v3& a, const f32 b)			{return (a.x == b    &&  a.y == b    &&	a.z == b					);}
-    inline bool operator == (const v4& a, const f32 b)			{return (a.x == b    &&  a.y == b    &&	a.z == b    &&  a.w == b	);}
-    inline bool operator != (const f32 a, const v2& b)			{return (a   != b.x  ||  a   != b.y									);}
-    inline bool operator != (const f32 a, const v3& b)			{return (a   != b.x  ||  a   != b.y  ||	a   != b.z					);}
-    inline bool operator != (const f32 a, const v4& b)			{return (a   != b.x  ||  a   != b.y  ||	a   != b.w  ||  a   != b.w	);}
+    inline bool operator == (const v2& a, f32 b)			{return (a.x == b    &&  a.y == b									);}
+    inline bool operator == (const v3& a, f32 b)			{return (a.x == b    &&  a.y == b    &&	a.z == b					);}
+    inline bool operator == (const v4& a, f32 b)			{return (a.x == b    &&  a.y == b    &&	a.z == b    &&  a.w == b	);}
+    inline bool operator != (f32 a, const v2& b)			{return (a   != b.x  ||  a   != b.y									);}
+    inline bool operator != (f32 a, const v3& b)			{return (a   != b.x  ||  a   != b.y  ||	a   != b.z					);}
+    inline bool operator != (f32 a, const v4& b)			{return (a   != b.x  ||  a   != b.y  ||	a   != b.w  ||  a   != b.w	);}
     inline bool operator != (const v2& a, const v2& b)			{return (a.x != b.x  ||  a.y != b.y									);}
     inline bool operator != (const v3& a, const v3& b)			{return (a.x != b.x  ||  a.y != b.y  ||	a.z != b.z					);}
     inline bool operator != (const v4& a, const v4& b)			{return (a.x != b.x  ||  a.y != b.y  ||	a.z != b.w  ||  a.w != b.w	);}
-    inline bool operator != (const v2& a, const f32 b)			{return (a.x != b    ||  a.y != b									);}
-    inline bool operator != (const v3& a, const f32 b)			{return (a.x != b    ||  a.y != b    ||	a.z != b					);}
-    inline bool operator != (const v4& a, const f32 b)			{return (a.x != b    ||  a.y != b    ||	a.z != b    ||  a.w != b	);}
+    inline bool operator != (const v2& a, f32 b)			{return (a.x != b    ||  a.y != b									);}
+    inline bool operator != (const v3& a, f32 b)			{return (a.x != b    ||  a.y != b    ||	a.z != b					);}
+    inline bool operator != (const v4& a, f32 b)			{return (a.x != b    ||  a.y != b    ||	a.z != b    ||  a.w != b	);}
     inline v2	operator  - (const v2& a)						{return v2(-a.x,		-a.y								);}
     inline v3	operator  - (const v3& a)						{return v3(-a.x,		-a.y,		-a.z					);}
     inline v4	operator  - (const v4& a)						{return v4(-a.x,		-a.y,		-a.z,      -a.w			);}
-    inline v2	operator  - (const f32 a, const v2& b)			{return v2(a - b.x,		a - b.y								);}
-    inline v3	operator  - (const f32 a, const v3& b)			{return v3(a - b.x,		a - b.y,	a - b.z					);}
-    inline v4	operator  - (const f32 a, const v4& b)			{return v4(a - b.x,		a - b.y,	a - b.z,	a - b.w		);}
+    inline v2	operator  - (f32 a, const v2& b)			{return v2(a - b.x,		a - b.y								);}
+    inline v3	operator  - (f32 a, const v3& b)			{return v3(a - b.x,		a - b.y,	a - b.z					);}
+    inline v4	operator  - (f32 a, const v4& b)			{return v4(a - b.x,		a - b.y,	a - b.z,	a - b.w		);}
     inline v2	operator  - (const v2& a, const v2& b)			{return v2(a.x - b.x,	a.y - b.y							);}
     inline v3	operator  - (const v3& a, const v3& b)			{return v3(a.x - b.x,	a.y - b.y,	a.z - b.z				);}
     inline v4	operator  - (const v4& a, const v4& b)			{return v4(a.x - b.x,	a.y - b.y,	a.z - b.z,	a.w - b.w	);}
-    inline v2	operator  - (const v2& a, const f32 b)			{return v2(a.x - b,		a.y - b								);}
-    inline v3	operator  - (const v3& a, const f32 b)			{return v3(a.x - b,		a.y - b,	a.z - b					);}
-    inline v4	operator  - (const v4& a, const f32 b)			{return v4(a.x - b,		a.y - b,	a.z - b,	a.w - b		);}
-    inline v2	operator  + (const f32 a, const v2& b)			{return v2(a + b.x,		a + b.y								);}
-    inline v3	operator  + (const f32 a, const v3& b)			{return v3(a + b.x,		a + b.y,	a + b.z					);}
-    inline v4	operator  + (const f32 a, const v4& b)			{return v4(a + b.x,		a + b.y,	a + b.z,	a + b.w		);}
+    inline v2	operator  - (const v2& a, f32 b)			{return v2(a.x - b,		a.y - b								);}
+    inline v3	operator  - (const v3& a, f32 b)			{return v3(a.x - b,		a.y - b,	a.z - b					);}
+    inline v4	operator  - (const v4& a, f32 b)			{return v4(a.x - b,		a.y - b,	a.z - b,	a.w - b		);}
+    inline v2	operator  + (f32 a, const v2& b)			{return v2(a + b.x,		a + b.y								);}
+    inline v3	operator  + (f32 a, const v3& b)			{return v3(a + b.x,		a + b.y,	a + b.z					);}
+    inline v4	operator  + (f32 a, const v4& b)			{return v4(a + b.x,		a + b.y,	a + b.z,	a + b.w		);}
     inline v2	operator  + (const v2& a, const v2& b)			{return v2(a.x + b.x,	a.y + b.y							);}
     inline v3	operator  + (const v3& a, const v3& b)			{return v3(a.x + b.x,	a.y + b.y,	a.z + b.z				);}
     inline v4	operator  + (const v4& a, const v4& b)			{return v4(a.x + b.x,	a.y + b.y,	a.z + b.z,	a.w + b.w	);}
-    inline v2	operator  + (const v2& a, const f32 b)			{return v2(a.x + b,		a.y + b								);}
-    inline v3	operator  + (const v3& a, const f32 b)			{return v3(a.x + b,		a.y + b,	a.z + b					);}
-    inline v4	operator  + (const v4& a, const f32 b)			{return v4(a.x + b,		a.y + b,	a.z + b,	a.w + b		);}
-    inline v2	operator  * (const f32 a, const v2& b)			{return v2(a * b.x,		a * b.y								);}
-    inline v3	operator  * (const f32 a, const v3& b)			{return v3(a * b.x,		a * b.y,	a * b.z					);}
-    inline v4	operator  * (const f32 a, const v4& b)			{return v4(a * b.x,		a * b.y,	a * b.z,	a * b.w		);}
+    inline v2	operator  + (const v2& a, f32 b)			{return v2(a.x + b,		a.y + b								);}
+    inline v3	operator  + (const v3& a, f32 b)			{return v3(a.x + b,		a.y + b,	a.z + b					);}
+    inline v4	operator  + (const v4& a, f32 b)			{return v4(a.x + b,		a.y + b,	a.z + b,	a.w + b		);}
+    inline v2	operator  * (f32 a, const v2& b)			{return v2(a * b.x,		a * b.y								);}
+    inline v3	operator  * (f32 a, const v3& b)			{return v3(a * b.x,		a * b.y,	a * b.z					);}
+    inline v4	operator  * (f32 a, const v4& b)			{return v4(a * b.x,		a * b.y,	a * b.z,	a * b.w		);}
     inline v2	operator  * (const v2& a, const v2& b)			{return v2(a.x * b.x,	a.y * b.y							);}
     inline v3	operator  * (const v3& a, const v3& b)			{return v3(a.x * b.x,	a.y * b.y,	a.z * b.z				);}
     inline v4	operator  * (const v4& a, const v4& b)			{return v4(a.x * b.x,	a.y * b.y,	a.z * b.z,	a.w * b.w	);}
-    inline v2	operator  * (const v2& a, const f32 b)			{return v2(a.x * b,		a.y * b								);}
-    inline v3	operator  * (const v3& a, const f32 b)			{return v3(a.x * b,		a.y * b,	a.z * b					);}
-    inline v4	operator  * (const v4& a, const f32 b)			{return v4(a.x * b,		a.y * b,	a.z * b,	a.w * b		);}
-    inline v2	operator  / (const f32 a, const v2& b)			{return v2(a / b.x,		a / b.y								);}
-    inline v3	operator  / (const f32 a, const v3& b)			{return v3(a / b.x,		a / b.y,	a / b.z					);}
-    inline v4	operator  / (const f32 a, const v4& b)			{return v4(a / b.x,		a / b.y,	a / b.z,	a / b.w		);}
+    inline v2	operator  * (const v2& a, f32 b)			{return v2(a.x * b,		a.y * b								);}
+    inline v3	operator  * (const v3& a, f32 b)			{return v3(a.x * b,		a.y * b,	a.z * b					);}
+    inline v4	operator  * (const v4& a, f32 b)			{return v4(a.x * b,		a.y * b,	a.z * b,	a.w * b		);}
+    inline v2	operator  / (f32 a, const v2& b)			{return v2(a / b.x,		a / b.y								);}
+    inline v3	operator  / (f32 a, const v3& b)			{return v3(a / b.x,		a / b.y,	a / b.z					);}
+    inline v4	operator  / (f32 a, const v4& b)			{return v4(a / b.x,		a / b.y,	a / b.z,	a / b.w		);}
     inline v2	operator  / (const v2& a, const v2& b)			{return v2(a.x / b.x,	a.y / b.y							);}
     inline v3	operator  / (const v3& a, const v3& b)			{return v3(a.x / b.x,	a.y / b.y,	a.z / b.z				);}
     inline v4	operator  / (const v4& a, const v4& b)			{return v4(a.x / b.x,	a.y / b.y,	a.z / b.z,	a.w / b.w	);}
-    inline v2	operator  / (const v2& a, const f32 b)			{f32 c = 1.0f / b; return v2(a.x * c, a.y * c);}
-    inline v3	operator  / (const v3& a, const f32 b)			{f32 c = 1.0f / b; return v3(a.x * c, a.y * c, a.z * c);}
-    inline v4	operator  / (const v4& a, const f32 b)			{f32 c = 1.0f / b; return v4(a.x * c, a.y * c, a.z * c, a.w * c);}
+    inline v2	operator  / (const v2& a, f32 b)			{f32 c = 1.0f / b; return v2(a.x * c, a.y * c);}
+    inline v3	operator  / (const v3& a, f32 b)			{f32 c = 1.0f / b; return v3(a.x * c, a.y * c, a.z * c);}
+    inline v4	operator  / (const v4& a, f32 b)			{f32 c = 1.0f / b; return v4(a.x * c, a.y * c, a.z * c, a.w * c);}
     
     inline f32	dot(const v2& a, const v2& b)					{return a.x * b.x + a.y * b.y;}
     inline f32	dot(const v3& a, const v3& b)					{return a.x * b.x + a.y * b.y + a.z * b.z;}
@@ -162,9 +162,9 @@ namespace core
     inline v4	max(const v4& a, const v4& b)					{return v4(core::max(a.x, b.x), core::max(a.y, b.y), core::max(a.z, b.z), core::max(a.w, b.w));}
     inline v2	clamp(const v2& a, const v2& b, const v2& c)	{return v2(core::clamp(a.x, b.x, c.x), core::clamp(a.y, b.y, c.y));}
     inline v3	clamp(const v3& a, const v3& b, const v3& c)	{return v3(core::clamp(a.x, b.x, c.x), core::clamp(a.y, b.y, c.y), core::clamp(a.z, b.z, c.z));}
-    inline v2	lerp(const v2& a, const v2& b, const f32 c)		{return a + (b - a) * c;}
-    inline v3	lerp(const v3& a, const v3& b, const f32 c)		{return a + (b - a) * c;}
-    inline v4	lerp(const v4& a, const v4& b, const f32 c)		{return a + (b - a) * c;}
+    inline v2	lerp(const v2& a, const v2& b, f32 c)		{return a + (b - a) * c;}
+    inline v3	lerp(const v3& a, const v3& b, f32 c)		{return a + (b - a) * c;}
+    inline v4	lerp(const v4& a, const v4& b, f32 c)		{return a + (b - a) * c;}
     inline v2	normaliseFast(const v2& a)						{return a * core::rsqrt(dot(a, a));}
     inline v3	normaliseFast(const v3& a)						{return a * core::rsqrt(dot(a, a));}
     inline v4	normaliseFast(const v4& a)						{return a * core::rsqrt(dot(a, a));}
@@ -174,7 +174,7 @@ namespace core
     inline v3	normalise(const v3& a, f32& b)					{b = length(a); return b > 0.0f ? a / b : v3(0.0f, 0.0f, 0.0f);}
     inline v3	genNormal(const v3& a, const v3& b, const v3& c){return normalise(cross(normalise(b - a), normalise(c - a)));}
     
-    inline v3 rotate(const v3& a, const v3& b, const f32 c)
+    inline v3 rotate(const v3& a, const v3& b, f32 c)
     {
         f32	sa = core::sin(c * 0.5f);
         f32	ca = core::cos(c * 0.5f);
@@ -206,7 +206,7 @@ namespace core
         }
     }
     
-    inline v3 rndDir(void)
+    inline v3 rndDir()
     {
         f32 p = core::randomfraction() * PiMul2;
         f32 z = core::randomrange(-1.0f, 1.0f);
@@ -214,7 +214,7 @@ namespace core
         return v3(core::sin(p) * r, core::cos(p) * r, z);
     }
     
-    inline v3 rndDir(const v3& vz, const f32 minRotx, const f32 maxRotx, const f32 minRotz, const f32 maxRotz)
+    inline v3 rndDir(const v3& vz, f32 minRotx, f32 maxRotx, f32 minRotz, f32 maxRotz)
     {
         f32 a  = core::randomrange(minRotz, maxRotz) * PiMul2;
         f32 z  = core::randomrange(minRotx, maxRotx);
@@ -231,7 +231,7 @@ namespace core
         return u8(255.0f * a.x) | u8(255.0f * a.y) << 8 | u8(255.0f * a.z) << 16 | u8(255.0f * a.w) << 24;
     }
     
-    inline v4 decompress(const u32 a)
+    inline v4 decompress(u32 a)
     {
         f32 r = 1.0f / 255.0f;
         return v4(f32(a & 0xff) * r, f32((a & 0xff00) >> 8) * r, f32((a & 0xff0000) >> 16) * r, f32((a & 0xff000000) >> 24) * r);

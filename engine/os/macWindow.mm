@@ -10,20 +10,20 @@
 
 namespace os
 {
-	extern void OnMouseButton( const eMouseButton button, const bool pressed );
+	extern void OnMouseButton( MouseButton button, bool pressed );
 	extern void OnMouseMove( s32 x, s32 y, s32 dx, s32 dy );
 	
 	extern void OnWindowResize( s32 sizeX, s32 sizeY );
-	extern bool OnWindowActivated( const bool activated );
-	extern void OnWindowIconified( const bool iconified );
+	extern bool OnWindowActivated( bool activated );
+	extern void OnWindowIconified( bool iconified );
 	extern void OnWindowClose();
 }
 
-id sWindowContext;
-id sWindowRef;
-id sWindowDelegate;
-id sWindowPixelFormat;
-NSDictionary* sOriginalMode;
+id _windowContext;
+id _windowRef;
+id _windowDelegate;
+id _windowPixelFormat;
+NSDictionary* _originalMode;
 
 //////////////////////////////////////////////////
 //
@@ -184,15 +184,15 @@ static GLboolean initializeAppKit( void )
 
 - (void)windowDidResize:(NSNotification *)notification
 {
-    [sWindowContext update];
-    NSRect contentRect = [sWindowRef contentRectForFrameRect:[sWindowRef frame]];
+    [_windowContext update];
+    NSRect contentRect = [_windowRef contentRectForFrameRect:[_windowRef frame]];
 	os::OnWindowResize(contentRect.size.width,contentRect.size.height);
 }
 
 - (void)windowDidMove:(NSNotification *)notification
 {
 #if 0
-    NSPoint point = [sWindowRef mouseLocationOutsideOfEventStream];
+    NSPoint point = [_windowRef mouseLocationOutsideOfEventStream];
     //_glfwInput.MousePosX = lround(floor(point.x));
     //_glfwInput.MousePosY = _glfwWin.height - lround(ceil(point.y));
 	// OnMouseMove(^^^);
@@ -254,22 +254,22 @@ static GLboolean initializeAppKit( void )
 
 - (void)mouseDown:(NSEvent *)event
 {
-	os::OnMouseButton( os::eMouseButtonLeft, true );
+	os::OnMouseButton( os::MouseButtonLeft, true );
 }
 
 - (void)mouseUp:(NSEvent *)event
 {
-	os::OnMouseButton( os::eMouseButtonLeft, false );
+	os::OnMouseButton( os::MouseButtonLeft, false );
 }
 
 - (void)rightMouseDown:(NSEvent *)event
 {
-	os::OnMouseButton( os::eMouseButtonRight, true );
+	os::OnMouseButton( os::MouseButtonRight, true );
 }
 
 - (void)rightMouseUp:(NSEvent *)event
 {
-	os::OnMouseButton( os::eMouseButtonRight, false );
+	os::OnMouseButton( os::MouseButtonRight, false );
 }
 
 - (void)mouseDragged:(NSEvent *)event
@@ -310,7 +310,7 @@ static GLboolean initializeAppKit( void )
 //
 //////////////////////////////////////////////////
 
-extern id sAutoreleasePool;
+extern id _autoreleasePool;
 
 namespace os
 {
@@ -321,30 +321,30 @@ namespace os
 	void WindowKillHw()
 	{
 		bool fullscreen = false;
-		[sWindowRef orderOut:nil];
+		[_windowRef orderOut:nil];
 		if( fullscreen )
 		{
-//			[[sWindowRef contentView] exitFullScreenModeWithOptions:nil];
-//			CGDisplaySwitchToMode( CGMainDisplayID(), (CFDictionaryRef)sOriginalMode );
+//			[[_windowRef contentView] exitFullScreenModeWithOptions:nil];
+//			CGDisplaySwitchToMode( CGMainDisplayID(), (CFDictionaryRef)_originalMode );
 //			CGReleaseAllDisplays();
 		}
-		[sWindowPixelFormat release];
-		sWindowPixelFormat = nil;
+		[_windowPixelFormat release];
+		_windowPixelFormat = nil;
 		[NSOpenGLContext clearCurrentContext];
-		[sWindowContext release];
-		sWindowContext = nil;
-		[sWindowRef setDelegate:nil];
+		[_windowContext release];
+		_windowContext = nil;
+		[_windowRef setDelegate:nil];
 		[NSApp setDelegate:nil];
-		[sWindowDelegate release];
-		sWindowDelegate = nil;
-		[sWindowRef close];
-		sWindowRef = nil;
+		[_windowDelegate release];
+		_windowDelegate = nil;
+		[_windowRef close];
+		_windowRef = nil;
 	}
 	
 	void WindowTickHw()
 	{
 		// swap buffer
-		[sWindowContext flushBuffer];
+		[_windowContext flushBuffer];
 		
 		// poll events
 		NSEvent *event;
@@ -357,14 +357,14 @@ namespace os
 			}
 		}
 		while( event );
-		[sAutoreleasePool drain];
-		sAutoreleasePool = [[NSAutoreleasePool alloc] init];
+		[_autoreleasePool drain];
+		_autoreleasePool = [[NSAutoreleasePool alloc] init];
 	}
 	
 	
 	void* WindowRefHw()
 	{
-		return ( void* )sWindowRef;
+		return ( void* )_windowRef;
 	}
 	
 	bool WindowOpenHw( WindowFormat& windowFormat )
@@ -377,13 +377,13 @@ namespace os
 			// critical error
 		}
 
-		sWindowDelegate = [[CocoaWindowDelegate alloc] init];
-		if( sWindowDelegate == nil )
+		_windowDelegate = [[CocoaWindowDelegate alloc] init];
+		if( _windowDelegate == nil )
 		{
 			// critical error
 		}
 		
-		[NSApp setDelegate:sWindowDelegate];
+		[NSApp setDelegate:_windowDelegate];
 		
 		unsigned int styleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask;
 			
@@ -392,15 +392,15 @@ namespace os
 				styleMask |= NSResizableWindowMask;
 			}
 		
-		sWindowRef = [[NSWindow alloc] initWithContentRect:NSMakeRect( 0, 0, windowFormat._sizeX, windowFormat._sizeY ) styleMask:styleMask backing:NSBackingStoreBuffered defer:NO];
-		[sWindowRef setContentView:[[CocoaContentView alloc] init]];
-		[sWindowRef setDelegate:sWindowDelegate];
-		[sWindowRef setAcceptsMouseMovedEvents:YES];
-		[sWindowRef center];
+		_windowRef = [[NSWindow alloc] initWithContentRect:NSMakeRect( 0, 0, windowFormat._sizeX, windowFormat._sizeY ) styleMask:styleMask backing:NSBackingStoreBuffered defer:NO];
+		[_windowRef setContentView:[[CocoaContentView alloc] init]];
+		[_windowRef setDelegate:_windowDelegate];
+		[_windowRef setAcceptsMouseMovedEvents:YES];
+		[_windowRef center];
 
-		if( [sWindowRef respondsToSelector:@selector(setRestorable)] )
+		if( [_windowRef respondsToSelector:@selector(setRestorable)] )
 		{
-			[sWindowRef setRestorable:NO];
+			[_windowRef setRestorable:NO];
 		}
 		
 		unsigned int attribute_count = 0;
@@ -418,50 +418,50 @@ namespace os
 		}
 #endif /*MAC_OS_X_VERSION_MAX_ALLOWED*/
 		
-		ADD_ATTR2( NSOpenGLPFAColorSize, (windowFormat.mBitsR+windowFormat.mBitsG+windowFormat.mBitsB) );
+		ADD_ATTR2( NSOpenGLPFAColorSize, (windowFormat._bitsR+windowFormat._bitsG+windowFormat._bitsB) );
 		
-		if( windowFormat.mBitsA > 0)
+		if( windowFormat._bitsA > 0)
 		{
-			ADD_ATTR2( NSOpenGLPFAAlphaSize, windowFormat.mBitsA );
+			ADD_ATTR2( NSOpenGLPFAAlphaSize, windowFormat._bitsA );
 		}
 		
-		if( windowFormat.mBitsZ > 0)
+		if( windowFormat._bitsZ > 0)
 		{
-			ADD_ATTR2( NSOpenGLPFADepthSize, windowFormat.mBitsZ );
+			ADD_ATTR2( NSOpenGLPFADepthSize, windowFormat._bitsZ );
 		}
 		
 		ADD_ATTR( 0 );
 		
-		sWindowPixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attributes];
-		if( sWindowPixelFormat == nil )
+		_windowPixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attributes];
+		if( _windowPixelFormat == nil )
 		{
 			// critical error
 		}
 		
-		sWindowContext = [[NSOpenGLContext alloc] initWithFormat:sWindowPixelFormat shareContext:nil];
-		if( sWindowContext == nil )
+		_windowContext = [[NSOpenGLContext alloc] initWithFormat:_windowPixelFormat shareContext:nil];
+		if( _windowContext == nil )
 		{
             int y=0;y++;
 			// critical error
 		}
 		
-		[sWindowRef makeKeyAndOrderFront:nil];
-		[sWindowContext setView:[sWindowRef contentView]];
-		[sWindowContext makeCurrentContext];
+		[_windowRef makeKeyAndOrderFront:nil];
+		[_windowContext setView:[_windowRef contentView]];
+		[_windowContext makeCurrentContext];
 		
 		//ABX FIX THIS MOUSE STUFF
-		//NSPoint point = [sWindowRef mouseLocationOutsideOfEventStream];
+		//NSPoint point = [_windowRef mouseLocationOutsideOfEventStream];
 		//_glfwInput.MousePosX = point.x;
 		//_glfwInput.MousePosY = _glfwWin.height - point.y;
 		
 		
 		// set title
 		const char *title = "lights";
-		[sWindowRef setTitle:[NSString stringWithCString:title encoding:NSISOLatin1StringEncoding]];
+		[_windowRef setTitle:[NSString stringWithCString:title encoding:NSISOLatin1StringEncoding]];
 		
 		// enable vsync
 		GLint sync = 1;
-		[sWindowContext setValues:&sync forParameter:NSOpenGLCPSwapInterval];
+		[_windowContext setValues:&sync forParameter:NSOpenGLCPSwapInterval];
 
         // Start by clearing the front buffer to black (avoid ugly desktop remains in our OpenGL window)
         glClear( GL_COLOR_BUFFER_BIT );

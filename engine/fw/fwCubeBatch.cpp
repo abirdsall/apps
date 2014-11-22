@@ -6,53 +6,53 @@ namespace fw
     static const s32 BatchCapacityRadiosity = 64;
     static const s32 BatchCapacityRadiosityMono = 64;
     
-    static DrawBatchHandle sBatchFilled = InvalidDrawBatchHandle;
-    static DrawBatchHandle sBatchRadiosity = InvalidDrawBatchHandle;
-    static DrawBatchHandle sBatchRadiosityMono = InvalidDrawBatchHandle;
+    static DrawBatchHandle _batchFilled = InvalidDrawBatchHandle;
+    static DrawBatchHandle _batchRadiosity = InvalidDrawBatchHandle;
+    static DrawBatchHandle _batchRadiosityMono = InvalidDrawBatchHandle;
     
-    static DrawBatchHandle sBatchActive = InvalidDrawBatchHandle;
+    static DrawBatchHandle _batchActive = InvalidDrawBatchHandle;
     
    void InitCubeBatches()
     {
-        if(sBatchFilled == InvalidDrawBatchHandle)
+        if(_batchFilled == InvalidDrawBatchHandle)
         {
-            sBatchFilled = DrawBatchNew(BatchCapacityFilled, 36, 24, 3, 3, 4, 0);
+            _batchFilled = DrawBatchNew(BatchCapacityFilled, 36, 24, 3, 3, 4, 0);
         }
         
-        if(sBatchRadiosity == InvalidDrawBatchHandle)
+        if(_batchRadiosity == InvalidDrawBatchHandle)
         {
-            sBatchRadiosity = DrawBatchNew(BatchCapacityRadiosity, 36, 24, 3, 0, 4, 2);
+            _batchRadiosity = DrawBatchNew(BatchCapacityRadiosity, 36, 24, 3, 0, 4, 2);
         }
         
-        if(sBatchRadiosityMono == InvalidDrawBatchHandle)
+        if(_batchRadiosityMono == InvalidDrawBatchHandle)
         {
-            sBatchRadiosityMono = DrawBatchNew(BatchCapacityRadiosityMono, 36, 24, 3, 0, 0, 2);
+            _batchRadiosityMono = DrawBatchNew(BatchCapacityRadiosityMono, 36, 24, 3, 0, 0, 2);
         }
 
-        sBatchActive = InvalidDrawBatchHandle;
+        _batchActive = InvalidDrawBatchHandle;
     }
     
     void KillCubeBatches()
     {
-        if(sBatchFilled != InvalidDrawBatchHandle)
+        if(_batchFilled != InvalidDrawBatchHandle)
         {
-            DrawBatchDelete( sBatchFilled );
-            sBatchFilled = InvalidDrawBatchHandle;
+            DrawBatchDelete( _batchFilled );
+            _batchFilled = InvalidDrawBatchHandle;
         }
         
-        if(sBatchRadiosity != InvalidDrawBatchHandle)
+        if(_batchRadiosity != InvalidDrawBatchHandle)
         {
-            DrawBatchDelete( sBatchRadiosity );
-            sBatchRadiosity = InvalidDrawBatchHandle;
+            DrawBatchDelete( _batchRadiosity );
+            _batchRadiosity = InvalidDrawBatchHandle;
         }
         
-        if(sBatchRadiosityMono != InvalidDrawBatchHandle)
+        if(_batchRadiosityMono != InvalidDrawBatchHandle)
         {
-            DrawBatchDelete( sBatchRadiosityMono );
-            sBatchRadiosityMono = InvalidDrawBatchHandle;
+            DrawBatchDelete( _batchRadiosityMono );
+            _batchRadiosityMono = InvalidDrawBatchHandle;
         }
         
-        sBatchActive = InvalidDrawBatchHandle;
+        _batchActive = InvalidDrawBatchHandle;
     }
 
     DrawBatchHandle BatchFromCubeBatch( CubeBatch batch )
@@ -61,74 +61,74 @@ namespace fw
         {
             case CubeBatchFilled:
             {
-                return sBatchFilled;
+                return _batchFilled;
             }
                 
             case CubeBatchRadiosity:
             {
-                return sBatchRadiosity;
+                return _batchRadiosity;
             }
                 
             case CubeBatchRadiosityMono:
             {
-                return sBatchRadiosityMono;
+                return _batchRadiosityMono;
             }
         }
     }
     
     void BatchCubeBegin( CubeBatch batch )
     {
-        sBatchActive = BatchFromCubeBatch( batch );
+        _batchActive = BatchFromCubeBatch( batch );
     }
     
     void BatchCube( const v3& position, const v3& radius, const v4& colour )
     {
-        ASSERT( sBatchActive == sBatchFilled );
-        CubeGenElements( DrawBatchElementPtr( sBatchActive ), DrawBatchVertexCount( sBatchActive ) );
-        CubeGenVertices( DrawBatchVertexPtr( sBatchActive ), position, radius, colour );
-        DrawBatchIncrement( sBatchActive );
+        ASSERT( _batchActive == _batchFilled );
+        CubeGenElements( DrawBatchElementPtr( _batchActive ), DrawBatchVertexCount( _batchActive ) );
+        CubeGenVertices( DrawBatchVertexPtr( _batchActive ), position, radius, colour );
+        DrawBatchIncrement( _batchActive );
     }
 
     void BatchCubeRadiosity( const v3& position, const v3& radius, const v4& colour )
     {
-        ASSERT( sBatchActive == sBatchRadiosity );
-        CubeGenElements( DrawBatchElementPtr( sBatchActive ), DrawBatchVertexCount( sBatchActive ) );
-        CubeGenVerticesRadiosity( DrawBatchVertexPtr( sBatchActive ), position, radius, colour );
-        DrawBatchIncrement( sBatchActive );
+        ASSERT( _batchActive == _batchRadiosity );
+        CubeGenElements( DrawBatchElementPtr( _batchActive ), DrawBatchVertexCount( _batchActive ) );
+        CubeGenVerticesRadiosity( DrawBatchVertexPtr( _batchActive ), position, radius, colour );
+        DrawBatchIncrement( _batchActive );
     }
     
     void BatchCubeRadiosity( const v3& position, const v3& radius )
     {
-        ASSERT( sBatchActive == sBatchRadiosityMono );
-        CubeGenElements( DrawBatchElementPtr( sBatchActive ), DrawBatchVertexCount( sBatchActive ) );
-        CubeGenVerticesRadiosityMono( DrawBatchVertexPtr( sBatchActive ), position, radius );
-        DrawBatchIncrement( sBatchActive );
+        ASSERT( _batchActive == _batchRadiosityMono );
+        CubeGenElements( DrawBatchElementPtr( _batchActive ), DrawBatchVertexCount( _batchActive ) );
+        CubeGenVerticesRadiosityMono( DrawBatchVertexPtr( _batchActive ), position, radius );
+        DrawBatchIncrement( _batchActive );
     }
     
-    void BatchCubeEnd( gs::ePrim primitive )
+    void BatchCubeEnd( gs::Primitive primitive )
     {
-        DrawBatchFlush( sBatchActive, primitive );
+        DrawBatchFlush( _batchActive, primitive );
     }
     
     void DrawCube( const v3& position, const v3& radius, const v4& colour )
     {
         BatchCubeBegin( CubeBatchFilled );
         BatchCube( position, radius, colour );
-        BatchCubeEnd( gs::ePrimTriangles);
+        BatchCubeEnd( gs::PrimitiveTriangles);
     }
     
     void DrawCubeRadiosity( const v3& position, const v3& radius, const v4& colour )
     {
         BatchCubeBegin( CubeBatchRadiosity );
         BatchCubeRadiosity( position, radius, colour );
-        BatchCubeEnd( gs::ePrimTriangles);
+        BatchCubeEnd( gs::PrimitiveTriangles);
     }
 
     void DrawCubeRadiosity( const v3& position, const v3& radius )
     {
         BatchCubeBegin( CubeBatchRadiosityMono );
         BatchCubeRadiosity( position, radius );
-        BatchCubeEnd( gs::ePrimTriangles);
+        BatchCubeEnd( gs::PrimitiveTriangles);
     }
 }
 

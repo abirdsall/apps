@@ -21,7 +21,7 @@ namespace fw
     void BatchQuad2d( const Rect& vcoords, const v4& colour );
     void BatchQuad2d( const Rect& vcoords, const Rect& tcoords );
     void BatchQuad2d( const Rect& vcoords, const Rect& tcoords, const v4& colour );
-    void BatchQuad2dEnd( gs::ePrim primitive );
+    void BatchQuad2dEnd( gs::Primitive primitive );
     
     void DrawQuad2d( Quad2dShader shader, const Rect& vcoords, const v4& colour, bool wireframe = false );
     void DrawQuad2d( Quad2dShader shader, const Rect& vcoords, const Rect& tcoords );

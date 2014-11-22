@@ -17,7 +17,7 @@ namespace fw
     void BatchCube( const v3& position, const v3& radius, const v4& colour );
     void BatchCubeRadiosity( const v3& position, const v3& radius, const v4& colour );
     void BatchCubeRadiosity( const v3& position, const v3& radius );
-    void BatchCubeEnd( gs::ePrim primitive );
+    void BatchCubeEnd( gs::Primitive primitive );
     
     void DrawCube( const v3& position, const v3& radius, const v4& colour );
     void DrawCubeRadiosity( const v3& position, const v3& radius, const v4& colour );

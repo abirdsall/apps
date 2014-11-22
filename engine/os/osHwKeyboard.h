@@ -3,8 +3,8 @@
 
 namespace os
 {
-	void OnModifierChange( const u32 modifiers );
-	void OnKeyChange( const u32 keyCode, const bool pressed );
+	void OnModifierChange( u32 modifiers );
+	void OnKeyChange( u32 keyCode, bool pressed );
 }
 
 #endif

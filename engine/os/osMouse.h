@@ -3,12 +3,12 @@
 
 namespace os
 {
-	enum eMouseButton
+	enum MouseButton
 	{
-		eMouseButtonLeft,
-		eMouseButtonRight,
-		eMouseButtonMiddle,
-		eMouseButtonCount
+		MouseButtonLeft,
+		MouseButtonRight,
+		MouseButtonMiddle,
+		MouseButtonCount
 	};
 	
 	void MouseInit();
@@ -16,10 +16,10 @@ namespace os
 	void MouseDraw();
 	void MouseReleaseAll();
 	
-	bool MouseButtonDown( const eMouseButton button );
-	bool MouseButtonHeld( const eMouseButton button );
-	bool MouseButtonUp( const eMouseButton button );
-	f32 MouseButtonTime( const eMouseButton button );
+	bool MouseButtonDown( MouseButton button );
+	bool MouseButtonHeld( MouseButton button );
+	bool MouseButtonUp( MouseButton button );
+	f32 MouseButtonTime( MouseButton button );
 	
 	v2 MousePositionPixels();
 	v2 MousePosition();

@@ -27,130 +27,130 @@
 
 #endif
 
-#include "gshwTexture.h"
-#include "gshwCanvas.h"
-#include "gshwShader.h"
+#include "gsHwTexture.h"
+#include "gsHwCanvas.h"
+#include "gsHwShader.h"
 
 namespace gs
 {	
-	enum eAttrib
+	enum Attribute
 	{
-		eAttribVertex,
-		eAttribNormal,
-		eAttribColour,
-		eAttribTcoord,
-		eAttribCount
+		AttributeVertex,
+		AttributeNormal,
+		AttributeColour,
+		AttributeTcoord,
+		AttributeCount
 	};
 
-	enum ePrim
+	enum Primitive
 	{
-		ePrimPoints,
-		ePrimLines,
-		ePrimLineLoop,
-		ePrimLineStrip,
-		ePrimTriangles,
-		ePrimTriangleFan,
-		ePrimTriangleStrip,
-		ePrimCount
+		PrimitivePoints,
+		PrimitiveLines,
+		PrimitiveLineLoop,
+		PrimitiveLineStrip,
+		PrimitiveTriangles,
+		PrimitiveTriangleFan,
+		PrimitiveTriangleStrip,
+		PrimitiveCount
 	};
 	
-	enum eBlend
+	enum BlendMode
 	{
-		eBlendNone, // deprecated?
-		eBlendRgb,
-		eBlendRgba,
-		eBlendAddRgb,
-		eBlendAddRgba,
-		eBlendRgbDstAlpha,
-		eBlendMixRgbAddA,
-		eBlendMin,
-		eBlendMax
+		BlendModeNone, // deprecated?
+		BlendModeRgb,
+		BlendModeRgba,
+		BlendModeAddRgb,
+		BlendModeAddRgba,
+		BlendModeRgbDstAlpha,
+		BlendModeMixRgbAddA,
+		BlendModeMin,
+		BlendModeMax
 	};
 	
-	enum eDepth
+	enum DepthTest
 	{
-		eDepthNone,
-		eDepthLess,
-		eDepthEqual,
-		eDepthLequal,
-		eDepthGreater,
-		eDepthGequal,
-		eDepthNotEqual
+		DepthTestNone,
+		DepthTestLess,
+		DepthTestEqual,
+		DepthTestLequal,
+		DepthTestGreater,
+		DepthTestGequal,
+		DepthTestNotEqual
 	};
 	
-	enum eWrite
+	enum WriteMask
 	{
-		eWriteNone = 0,
-		eWriteZ = 0x01,
-		eWriteR = 0x02,
-		eWriteG = 0x04,
-		eWriteB = 0x08,
-		eWriteA = 0x10,
-		eWriteRg = eWriteR | eWriteG,
-		eWriteRgb = eWriteRg | eWriteB,
-		eWriteRgba = eWriteRgb | eWriteA,
-		eWriteRgbz = eWriteRgb | eWriteZ,
-		eWriteRgbaz = eWriteRgba | eWriteZ
+		WriteMaskNone = 0,
+		WriteMaskZ = 0x01,
+		WriteMaskR = 0x02,
+		WriteMaskG = 0x04,
+		WriteMaskB = 0x08,
+		WriteMaskA = 0x10,
+		WriteMaskRg = WriteMaskR | WriteMaskG,
+		WriteMaskRgb = WriteMaskRg | WriteMaskB,
+		WriteMaskRgba = WriteMaskRgb | WriteMaskA,
+		WriteMaskRgbz = WriteMaskRgb | WriteMaskZ,
+		WriteMaskRgbaz = WriteMaskRgba | WriteMaskZ
 	};
 	
-	enum eCull
+	enum CullFace
 	{
-		eCullNone,
-		eCullBack,
-		eCullFront
+		CullFaceNone,
+		CullFaceBack,
+		CullFaceFront
 	};
 	
 	struct state
 	{
-		eBlend mBlend;
-		eDepth mDepth;
-		eWrite mWrite;
-		eCull mCull;
-		s32 mScissor[4];
-		s32 mViewport[4];
-		m4 mMatrixM;
-		m4 mMatrixP;
+		BlendMode _blend;
+		DepthTest _depth;
+		WriteMask _write;
+		CullFace _cull;
+		s32 _scissor[4];
+		s32 _viewport[4];
+		m4 _matrixM;
+		m4 _matrixP;
 	};
 	
 	void ApplyState();
-	void Put(void);
-	void Pop(void);
-	void Set2d(void);
-	void SetOrtho(const f32 x1 = 0.0f, const f32 y1 = 0.0f, const f32 x2 = 1.0f, const f32 y2 = 1.0f);	
-	void SetBlend(const eBlend blend);
-	void SetDepth(const eDepth depth);
-	void SetWrite(const eWrite write);
-	void SetCull(const eCull cull);
-	void SetScissor(const s32 x1, const s32 y1, const s32 x2, const s32 y2);
-	void SetViewport(const s32 x1, const s32 y1, const s32 x2, const s32 y2);
-	void SetMatrixP(const m4& matrix);
-	void SetMatrixM(const m4& matrix);
+	void Put();
+	void Pop();
+	void Set2d();
+	void SetOrtho( f32 x1 = 0.0f, f32 y1 = 0.0f, f32 x2 = 1.0f, f32 y2 = 1.0f );
+	void SetBlend( BlendMode blend );
+	void SetDepth( DepthTest depth );
+	void SetWrite( WriteMask write );
+	void SetCull( CullFace cull );
+	void SetScissor( s32 x1, s32 y1, s32 x2, s32 y2 );
+	void SetViewport( s32 x1, s32 y1, s32 x2, s32 y2 );
+	void SetMatrixP( const m4& matrix );
+	void SetMatrixM( const m4& matrix );
 	
 	u32 NewVertexArray();
 	u32 NewVertexBuffer();
 	u32 NewElementBuffer();
-	void SetVertexArray(u32 va);
-	void SetVertexBuffer(u32 vb);
-	void SetElementBuffer(u32 eb);
+	void SetVertexArray( u32 va );
+	void SetVertexBuffer( u32 vb );
+	void SetElementBuffer( u32 eb );
 	void FillVertexBuffer( const void* data, s32 dataSize, bool dynamic );
 	void FillElementBuffer( const void* data, s32 dataSize, bool dynamic );
 	void UpdateVertexBuffer( const void* data, s32 dataSize, s32 dataOffset );
 	void UpdateElementBuffer( const void* data, s32 dataSize, s32 dataOffset );
-	void DeleteVertexArray(u32 va);
-	void DeleteVertexBuffer(u32 vb);
-	void DeleteElementBuffer(u32 eb);
-	void SetArray(const eAttrib attrib, const u32 size, const u32 stride, const void* pointer);
-	void UnsetArray(const eAttrib attrib);
-	void DrawArray(const ePrim primitive, const u32 num);
-	void DrawElements(const ePrim primitive, const u32 num);
+	void DeleteVertexArray( u32 va );
+	void DeleteVertexBuffer( u32 vb );
+	void DeleteElementBuffer( u32 eb );
+	void SetArray( Attribute attrib, u32 size, u32 stride, const void* pointer );
+	void UnsetArray( Attribute attrib );
+	void DrawArray( Primitive primitive, u32 num );
+	void DrawElements( Primitive primitive, u32 num );
     
     s32 MaxDrawBuffers();
 
-	const c8* AttribName( const eAttrib attrib );
-	void Clear(const bool colour, const bool depth);
+	const c8* AttributeName( Attribute attrib );
+	void Clear( bool colour, bool depth );
 	
-	void Init(void);
-	void Kill(void);
+	void Init();
+	void Kill();
 }
 
 #endif
