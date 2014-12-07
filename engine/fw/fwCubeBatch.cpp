@@ -114,21 +114,21 @@ namespace fw
     {
         BatchCubeBegin( CubeBatchFilled );
         BatchCube( position, radius, colour );
-        BatchCubeEnd( gs::PrimitiveTriangles);
+        BatchCubeEnd( gs::PrimitiveTriangles );
     }
     
     void DrawCubeRadiosity( const v3& position, const v3& radius, const v4& colour )
     {
         BatchCubeBegin( CubeBatchRadiosity );
         BatchCubeRadiosity( position, radius, colour );
-        BatchCubeEnd( gs::PrimitiveTriangles);
+        BatchCubeEnd( gs::PrimitiveTriangles );
     }
 
     void DrawCubeRadiosity( const v3& position, const v3& radius )
     {
         BatchCubeBegin( CubeBatchRadiosityMono );
         BatchCubeRadiosity( position, radius );
-        BatchCubeEnd( gs::PrimitiveTriangles);
+        BatchCubeEnd( gs::PrimitiveTriangles );
     }
 }
 

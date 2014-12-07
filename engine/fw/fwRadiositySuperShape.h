@@ -25,11 +25,11 @@ namespace fw
             
             if(radiosityRenderer.Voxelising())
             {
-                DrawCubeRadiosity( node._localTransform.getPosition(), node._modelScale, _colour );
+                //DrawCubeRadiosity( node._localTransform.getPosition(), node._modelScale, _colour );
             }
             else
             {
-                DrawCube( node._localTransform.getPosition(), node._modelScale, _colour );
+                //DrawCube( node._localTransform.getPosition(), node._modelScale, _colour );
             }
         }
     };

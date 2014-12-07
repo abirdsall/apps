@@ -22,4 +22,21 @@ namespace fw
     {
         _radiosityCubes.Delete( cube );
     }
+    
+    void RadiosityCube::Delete()
+    {
+        if(_batchFilled != InvalidDrawBatchHandle)
+        {
+            DrawBatchDelete( _batchFilled );
+            _batchFilled = InvalidDrawBatchHandle;
+        }
+        
+        if(_batchRadiosity != InvalidDrawBatchHandle)
+        {
+            DrawBatchDelete( _batchRadiosity );
+            _batchRadiosity = InvalidDrawBatchHandle;
+        }
+        
+        RadiosityCubeDelete( this );
+    }
 }

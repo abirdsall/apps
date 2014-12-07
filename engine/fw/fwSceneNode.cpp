@@ -23,4 +23,17 @@ namespace fw
     {
         _sceneNodes.Delete( node );
     }
+    
+    SceneNode::~SceneNode()
+    {
+        for( s32 i = 0; i < _components.Count(); i++ )
+        {
+            _components[ i ]->Delete();
+        }
+        
+        for( s32 i = 0; i < _children.Count(); i++ )
+        {
+            SceneNodeDelete( _children[ i ] );
+        }
+    }
 }

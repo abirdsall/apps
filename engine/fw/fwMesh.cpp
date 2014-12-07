@@ -92,7 +92,6 @@ namespace fw
 		gs::SetElementBuffer( mesh._elementBufferId );
 		gs::FillElementBuffer( mesh._elementData, mesh._elementSize * mesh._elementLimit, mesh._elementDataDynamic );
         core::set( mesh._elementData, mesh._elementSize * mesh._elementCount, 0 );
-        printf("video mem element buffer %d size %d\n", mesh._elementBufferId, mesh._elementSize * mesh._elementLimit / 1024);
 
         gs::SetElementBuffer( 0 );
         gs::SetVertexArray( 0 );
@@ -102,7 +101,7 @@ namespace fw
 		gs::SetVertexBuffer( mesh._vertexBufferId );
 		gs::FillVertexBuffer( mesh._vertexData, mesh._vertexSize * mesh._vertexLimit, mesh._vertexDataDynamic );
         core::set( mesh._vertexData, mesh._vertexSize * mesh._vertexLimit, 0 );
-        printf("video mem vertex buffer %d size %d\n", mesh._vertexBufferId, mesh._vertexSize * mesh._vertexLimit / 1024);
+
         gs::SetVertexBuffer( 0 );
         gs::SetVertexArray( 0 );
 		

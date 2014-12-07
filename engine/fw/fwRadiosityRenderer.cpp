@@ -366,6 +366,18 @@ namespace fw
 
     void RadiosityRenderer::Render()
     {
+        m4 mp = orthogonal(
+                           _bounds._min.x, _bounds._max.x,
+                           _bounds._max.y, _bounds._min.y,
+                           _bounds._max.z + 20.0f, _bounds._min.z - 20.0f );
+        gs::Put();
+        gs::SetMatrixP( mp );
+        
+        m4 vm = look( v3( 0.0f, 0.0f, 10.0f ), V3Zero, V3UnitY );
+        m4 mm = identity4();
+        
+        gs::SetMatrixM( vm * mm );
+        
         // Clear buffers and voxelise scene
         
         for( s32 i = 0; i < _passCountZ; i++ )
@@ -391,9 +403,9 @@ namespace fw
             SetWrite( WriteMaskRgba );
             SetBlend( BlendModeMixRgbAddA );
             SetCull( CullFaceBack );
-            SetStageMatrices( true );
+            // todo set ortho and fixed z aligned camera
             _voxelising = true;
-            _scene->Render( *this );
+            _scene->Render( *this, vm );
             Pop();
             
             Pop();
@@ -458,11 +470,12 @@ namespace fw
         ShaderSetVec3( "worldMin", _bounds._min );
         ShaderSetVec3( "worldSize", _bounds._max - _bounds._min );
         
-        SetStageMatrices( true );
-
-        _voxelising = false;
-        _scene->Render( *this );
+        // todo set perspective matrix and actual camera view
         
+        _voxelising = false;
+        _scene->Render( *this, vm );
+        
+        Pop();
         Pop();
     }
     
@@ -539,22 +552,61 @@ namespace fw
         
         Pop();
     }
-    
-    void RadiosityRenderer::SetStageMatrices( bool tracing )
-    {
-        m4 mp = orthogonal(
-                           _bounds._min.x, _bounds._max.x,
-                           _bounds._max.y, _bounds._min.y,
-                           _bounds._max.z + 20.0f, _bounds._min.z - 20.0f );
-        
-        gs::SetMatrixP( mp );
-        
-        if( tracing )
-        {
-            m4 mm = identity4();
-            mm.rows[ 2 ].z = -1.0f;
-            mm.setPosition( v3( 0.0f, 0.0f, 20.0f ) );
-            gs::SetMatrixM( mm );
-        }
-    }
 }
+
+/*
+ 
+ current renderer:
+ 
+ clear buffers
+ 
+ set matrices to look down z axis
+ 
+ voxelise half scene
+ 
+ set matrices to look down z axis
+ 
+ voxelise half scene
+ 
+ blur voxelised scene
+ 
+ calculate light volume
+ 
+ render final scene with lighting look up
+ 
+ 
+ generalised:
+ 
+ voxel rep prepare
+ 
+ render voxel contribs
+ 
+ lighting rep generate
+ 
+ render final scene with lighting model
+ 
+ 
+ 
+ thoughts:
+ 
+ model
+ 
+ renderer object per material - voxelise pass is a material
+ 
+ models are added to renderers...
+ 
+ 
+ have a stat
+ 
+ vertex data? draw call per model? or store vertex data in renderer and switch mvm
+ 
+ 
+ 
+ desired renderer:
+ 
+ fast low draw call ios renderer
+ 
+ full fat renderer
+ 
+ 
+ */

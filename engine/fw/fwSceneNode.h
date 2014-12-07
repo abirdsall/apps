@@ -3,46 +3,23 @@
 
 namespace fw
 {
-    struct SceneNode;
-
-    void InitSceneNodes();
-    void KillSceneNodes();
-    SceneNode* SceneNodeNew();
-    void SceneNodeDelete( SceneNode* node );
-
     struct SceneNode
     {
-        f32 testa;
         SceneNode* _parent;
 
         Array<SceneNodeComponent*> _components;
         Array<SceneNode*> _children;
 
         m4 _worldTransform;
-        
         m4 _localTransform;
-        
-        v3 _modelScale;//?
         
         SceneNode()
         {
-            testa = 3.0f;
             _parent = Null;
-            testb = 4.0f;
+            _localTransform = identity4();
         }
         
-        ~SceneNode()
-        {
-            for( s32 i = 0; i < _components.Count(); i++ )
-            {
-                _components[ i ]->Delete();
-            }
-
-            for( s32 i = 0; i < _children.Count(); i++ )
-            {
-                SceneNodeDelete( _children[ i ] );
-            }
-        }
+        ~SceneNode();
 
         void AddComponent( SceneNodeComponent* component )
         {
@@ -51,9 +28,23 @@ namespace fw
 
         void AddChild( SceneNode* child )
         {
+            child->_parent = this;
+            
             _children.Add( child );
         }
         
+        void SetLocalPosition( const v3& position )
+        {
+            _localTransform.setPosition( position );
+        }
+
+        void SetLocalScale( const v3& scale )
+        {
+            _localTransform.setScale( scale );
+            
+            // if z has changed then update thickness values for self and all children
+        }
+
         void Tick( f32 dt )
         {
             if( _parent != Null )
@@ -78,24 +69,26 @@ namespace fw
             }
         }
         
-        void Render( Renderer& renderer )
+        void Render( Renderer& renderer, const m4& viewMatrix )
         {
             for( s32 i = 0; i < _components.Count(); i++ )
             {
                 SceneNodeComponent* component = _components[ i ];
-//                printf("compr %f %f\n", component->testa, component->testb);
-                component->Render( renderer, *this );
+                component->Render( renderer, *this, viewMatrix );
             }
             
             for( s32 i = 0; i < _children.Count(); i++ )
             {
                 SceneNode* child = _children[ i ];
-//                printf("child\n");
-                child->Render( renderer );
+                child->Render( renderer, viewMatrix );
             }
         }
-        f32 testb;
     };
+    
+    void InitSceneNodes();
+    void KillSceneNodes();
+    SceneNode* SceneNodeNew();
+    void SceneNodeDelete( SceneNode* node );
 }
 
 #endif

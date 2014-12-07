@@ -20,7 +20,7 @@ namespace fw
 
     void InitDrawBatches()
     {
-        _batches.Init( 32 );
+        _batches.Init( 1024 );
     }
     
     void KillDrawBatches()

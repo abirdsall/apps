@@ -1,59 +1,3 @@
-/*
- 
- current renderer:
- 
- clear buffers
- 
- set matrices to look down z axis
- 
- voxelise half scene
-
- set matrices to look down z axis
-
- voxelise half scene
- 
- blur voxelised scene
- 
- calculate light volume
- 
- render final scene with lighting look up
- 
- 
- generalised:
- 
- voxel rep prepare
- 
- render voxel contribs
- 
- lighting rep generate
- 
- render final scene with lighting model
- 
- 
- 
- thoughts:
- 
- model
- 
- renderer object per material - voxelise pass is a material
- 
- models are added to renderers...
- 
-
- have a stat
- 
- vertex data? draw call per model? or store vertex data in renderer and switch mvm
- 
- 
- 
- desired renderer:
- 
- fast low draw call ios renderer
- 
- full fat renderer
- 
- 
-*/
 #include "fw.h"
 #include "lighting.h"
 
@@ -136,11 +80,9 @@ void AddCube( const v3& position, const v3& radius, const v4& colour )
 {
     fw::SceneNode* node = fw::SceneNodeNew();
     fw::RadiosityCube* radiosityCube = fw::RadiosityCubeNew();
-    node->_localTransform = identity4();
-    node->_localTransform.setPosition( position );
-    //v3 test = node->_localTransform.getPosition();
-    node->_modelScale = radius;
-    radiosityCube->_colour = colour;
+    node->SetLocalPosition( position );
+    node->SetLocalScale( radius );
+    radiosityCube->Init( colour );
     node->AddComponent( radiosityCube );
     _renderer->_scene->AddChild( node );
 }
@@ -171,7 +113,7 @@ void lightingInit()
     cameraNode->AddComponent( _camera );
     _renderer->_scene->AddChild( cameraNode );
     
-    AddCube( v3( 16.0f, 16.0f, 0.0f - 0.0f ), v3( 16.0f, 16.0f, 0.5f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ) );
+    AddCube( v3( 16.0f, 16.0f, 0.0f - 0.0f ), v3( 10.0f, 10.0f, 0.5f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ) );
     AddCube( v3( 16.0f, 0.0f, 4.0f - 0.0f ), v3( 15.5f, 1.0f, 4.0f ), v4( 1.0f, 0.8f, 0.6f, 1.0f ) );
     AddCube( v3( 0.0f, 16.0f, 4.0f - 0.0f ), v3( 0.5f, 16.0f, 4.0f ), v4( 0.0f, 1.0f, 0.0f, 1.0f ) );
     AddCube( v3( 32.0f, 16.0f, 4.0f - 0.0f ), v3( 0.5f, 16.0f, 4.0f ), v4( 1.0f, 1.0f, 0.0f, 1.0f ) );
