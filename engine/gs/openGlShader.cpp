@@ -96,7 +96,6 @@ namespace gs
 	{
 		ShaderHw& shaderHw = _shadersHw[ handle ];
 		GLint location = ::glGetUniformLocation( shaderHw._program, name );
-		ASSERT( location >= 0 );
 		return location;
 	}
 	
@@ -132,12 +131,17 @@ namespace gs
 			
 	void ShaderHwSetMat4( ShaderHandle handle, const c8* name, const m4& m )
 	{
+        s32 uniform = FindUniform( handle, ( GLchar* )name );
+        
+        if( uniform >= 0 ) // Assert? 
+        {
 #if GsOpenGles2
-        m4 tm = transpose( m );
-        glUniformMatrix4fv( FindUniform( handle, ( GLchar* )name ), 1, false, ( GLfloat* )tm );
+            m4 tm = transpose( m );
+            glUniformMatrix4fv( uniform, 1, false, ( GLfloat* )tm );
 #else
-        glUniformMatrix4fv( FindUniform( handle, ( GLchar* )name ), 1, true, ( GLfloat* )m );
+            glUniformMatrix4fv( uniform, 1, true, ( GLfloat* )m );
 #endif
+        }
 	}
 }
 

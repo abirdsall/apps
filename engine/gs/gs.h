@@ -108,8 +108,9 @@ namespace gs
 		CullFace _cull;
 		s32 _scissor[4];
 		s32 _viewport[4];
-		m4 _matrixM;
 		m4 _matrixP;
+        m4 _matrixV;
+        m4 _matrixM;
 	};
 	
 	void ApplyState();
@@ -124,6 +125,7 @@ namespace gs
 	void SetScissor( s32 x1, s32 y1, s32 x2, s32 y2 );
 	void SetViewport( s32 x1, s32 y1, s32 x2, s32 y2 );
 	void SetMatrixP( const m4& matrix );
+    void SetMatrixV( const m4& matrix );
 	void SetMatrixM( const m4& matrix );
 	
 	u32 NewVertexArray();

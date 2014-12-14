@@ -22,12 +22,11 @@ namespace fw
         
         vShader += "varying lowp vec4 fragment_colour;\n";
 
-        vShader += "uniform mat4 viewMatrix;\n";
-        vShader += "uniform mat4 projMatrix;\n";
+        vShader += "uniform mat4 modelViewProjectionMatrix;\n";
         
         vShader += "void main()\n";
         vShader += "{\n";
-        vShader += "\tgl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, 0, 1);\n";
+        vShader += "\tgl_Position = modelViewProjectionMatrix * vec4(vertex_position.x, vertex_position.y, 0, 1);\n";
         vShader += "\tfragment_colour = vertex_colour;\n";
         vShader += "\tfragment_tcoord = vertex_tcoord.xy;\n";
         vShader += "}\n";
@@ -57,11 +56,10 @@ namespace fw
         vShader += "in vec4 vertex_colour;\n";
         vShader += "in vec4 vertex_tcoord;\n";
         vShader += "out vec2 fragment_tcoord;\n";
-		vShader += "uniform mat4 viewMatrix;\n";
-		vShader += "uniform mat4 projMatrix;\n";
+		vShader += "uniform mat4 modelViewProjectionMatrix;\n";
 		vShader += "void main()\n";
 		vShader += "{\n";
-		vShader += "\tgl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, 0, 1);\n";
+		vShader += "\tgl_Position = modelViewProjectionMatrix * vec4(vertex_position.x, vertex_position.y, 0, 1);\n";
         vShader += "\tfragment_tcoord = vertex_tcoord.xy;\n";
 		vShader += "}\n";
 		

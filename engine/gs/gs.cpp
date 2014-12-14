@@ -24,6 +24,7 @@ namespace gs
 		SetScissor( 0, 0, CanvasSizeX(), CanvasSizeY() );
 		SetViewport( 0, 0, CanvasSizeX(), CanvasSizeY() );
 		SetMatrixP( identity4() );
+        SetMatrixV( identity4() );
 		SetMatrixM( identity4() );
 		
 		state& stateActive = _state[ _stateActive ];
@@ -74,8 +75,12 @@ namespace gs
 		
 		if( ShaderActive() != ShaderInvalid )
 		{
-			ShaderSetMat4( "viewMatrix", stateActive._matrixM );
-			ShaderSetMat4( "projMatrix", stateActive._matrixP );
+            m4 modelViewProjectionMatrix = stateActive._matrixP * stateActive._matrixV * stateActive._matrixM;
+            m4 modelViewMatrix = stateActive._matrixV * stateActive._matrixM;
+            ShaderSetMat4( "projectionMatrix", stateActive._matrixP );
+			ShaderSetMat4( "viewMatrix", stateActive._matrixV );
+            ShaderSetMat4( "modelMatrix", stateActive._matrixM );
+            ShaderSetMat4( "modelViewProjectionMatrix", modelViewProjectionMatrix );
 		}
 
 		core::copy( &_stateApplied, &_state[ _stateActive ], sizeof( state ) );
@@ -152,7 +157,12 @@ namespace gs
 	{
 		_state[ _stateActive ]._matrixP = matrix;
 	}
-	
+
+    void SetMatrixV( const m4& matrix )
+    {
+        _state[ _stateActive ]._matrixV = matrix;
+    }
+
 	void SetMatrixM( const m4& matrix )
 	{
 		_state[ _stateActive ]._matrixM = matrix;
@@ -167,7 +177,8 @@ namespace gs
 	void SetOrtho( f32 x1, f32 y1, f32 x2, f32 y2 )
 	{
 		SetMatrixP( orthogonal( x1, x2, y1, y2, -1.0f, 1.0f ) );
-		SetMatrixM( identity4() );
+		SetMatrixV( identity4() );
+        SetMatrixM( identity4() );
 	}
 	
 	u32 NewVertexArray()

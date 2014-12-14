@@ -106,8 +106,6 @@ namespace fw
         
         _fillShader = fw::ShaderMake2d( true, false, 0, _voxelCountPerPassZ - 1 );
 
-        // fragment_tcoord.x = object zmiddle
-        // fragment_tcoord.y = object zthickness
 #if GsOpenGl3
         core::String vShader = "#version 410 core\n";
 #else
@@ -115,18 +113,16 @@ namespace fw
 #endif
         vShader = vShader + "in vec3 vertex_position;\n\
         in vec4 vertex_colour;\n\
-        in vec2 vertex_tcoord;\n\
         out vec4 fragment_colour;\n\
-        out vec2 fragment_tcoord;\n\
-        uniform mat4 viewMatrix;\n\
-        uniform mat4 projMatrix;\n\
+        uniform mat4 modelViewProjectionMatrix;\n\
         void main()\n\
         {\n\
         fragment_colour = vertex_colour; \n\
-        fragment_tcoord = vertex_tcoord; \n\
-        gl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, vertex_position.z, 1.0);\n\
+        gl_Position = modelViewProjectionMatrix * vec4(vertex_position.x, vertex_position.y, vertex_position.z, 1.0);\n\
         }";
         
+        // fragment_tcoord = object zmiddle
+        // modelMatrix[2][2] = object thickness
 #if GsOpenGl3
         core::String fShader = "#version 410 core\n";
 #else
@@ -135,8 +131,8 @@ namespace fw
 #endif
         fShader = fShader + "uniform float zMin;\n\
         uniform float zStep;\n\
-        in vec4 fragment_colour;\n\
-        in vec2 fragment_tcoord;\n";
+        uniform mat4 modelMatrix;\n\
+        in vec4 fragment_colour;\n";
         
         for(s32 i = 0; i < _voxelCountPerPassZ; i++)
         {
@@ -145,10 +141,11 @@ namespace fw
         
         fShader = fShader + "void main()\n\
         {\n\
+        float modelZ = -modelMatrix[3][2];\n\
         float zBase = zMin;\n";
         for(s32 i = 0; i < _voxelCountPerPassZ; i++)
         {
-            fShader = fShader + "fs_" + i + "= vec4( fragment_colour.x, fragment_colour.y, fragment_colour.z, clamp( ( fragment_tcoord.y - abs( zBase - fragment_tcoord.x ) ) / zStep, 0.0, 1.0 ) );\n\
+            fShader = fShader + "fs_" + i + "= vec4( fragment_colour.x, fragment_colour.y, fragment_colour.z, clamp( ( modelMatrix[2][2] - abs( zBase - modelZ ) ) / zStep, 0.0, 1.0 ) );\n\
             zBase += zStep;\n";
         }
         fShader = fShader + "}";
@@ -163,11 +160,10 @@ namespace fw
         vShader = vShader + "in vec2 vertex_position;\n\
         in vec2 vertex_tcoord;\n\
         out vec2 fragment_tcoord;\n\
-        uniform mat4 viewMatrix;\n\
-        uniform mat4 projMatrix;\n\
+        uniform mat4 modelViewProjectionMatrix;\n\
         void main()\n\
         {\n\
-        gl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, 0.0, 1.0);\n\
+        gl_Position = modelViewProjectionMatrix * vec4(vertex_position.x, vertex_position.y, 0.0, 1.0);\n\
         fragment_tcoord = vertex_tcoord;\n\
         }";
 #if GsOpenGl3
@@ -237,13 +233,16 @@ namespace fw
         out vec4 fragment_normal;\n\
         out vec4 fragment_colour;\n\
         out vec4 fragment_worldPos;\n\
-        uniform mat4 viewMatrix;\n\
-        uniform mat4 projMatrix;\n\
+        uniform mat4 modelViewProjectionMatrix;\n\
+        uniform mat4 modelMatrix;\n\
         void main()\n\
         {\n\
-        gl_Position = projMatrix * viewMatrix * vec4( vertex_position, 1.0 );\n\
-        fragment_worldPos = vec4( vertex_position, 1.0 );\n\
-        fragment_normal = vec4( vertex_normal, 0.0 );\n\
+        gl_Position = modelViewProjectionMatrix * vec4( vertex_position, 1.0 );\n\
+        fragment_worldPos = modelMatrix * vec4( vertex_position.x, vertex_position.y, vertex_position.z, 1.0 );\n\
+        fragment_worldPos.x = -fragment_worldPos.x;\n\
+        fragment_worldPos.y = -fragment_worldPos.y;\n\
+        fragment_worldPos.z = -fragment_worldPos.z;\n\
+        fragment_normal = modelMatrix * vec4( vertex_normal.x, vertex_normal.y, vertex_normal.z, 0.0 );\n\
         fragment_colour = vertex_colour;\n\
         }";
 #if GsOpenGl3
@@ -295,6 +294,10 @@ namespace fw
         }";
         _shaderForward = ShaderNew( vShader.toStr(), fShader.toStr() );
     }
+//    float tx = (fragment_worldPos.x > 0.25 && fragment_worldPos.x < 4.0) ? 1.0 : 0.0;\n\
+//    float ty = (fragment_worldPos.y > 0.25 && fragment_worldPos.y < 4.0) ? 1.0 : 0.0;\n\
+//    float tz = (fragment_worldPos.z > 0.25 && fragment_worldPos.z < 4.0) ? 1.0 : 0.0;\n\
+//    output_colour = vec4( tx, ty, tz, 1.0 );\n\
     
     ShaderHandle RadiosityRenderer::MakeBlurShader( s32 axis, s32 targetCount, f32 zMin, f32 zStep )
     {
@@ -307,11 +310,10 @@ namespace fw
         vShader = vShader + "in vec2 vertex_position;\n\
         in vec2 vertex_tcoord;\n\
         out vec2 fragment_tcoord;\n\
-        uniform mat4 viewMatrix;\n\
-        uniform mat4 projMatrix;\n\
+        uniform mat4 modelViewProjectionMatrix;\n\
         void main()\n\
         {\n\
-        gl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, 0, 1);\n\
+        gl_Position = modelViewProjectionMatrix * vec4(vertex_position.x, vertex_position.y, 0, 1);\n\
         fragment_tcoord = vertex_tcoord;\n\
         }";
 #if GsOpenGl3
@@ -366,17 +368,18 @@ namespace fw
 
     void RadiosityRenderer::Render()
     {
-        m4 mp = orthogonal(
+        m4 projectionMatrix = orthogonal(
                            _bounds._min.x, _bounds._max.x,
                            _bounds._max.y, _bounds._min.y,
                            _bounds._max.z + 20.0f, _bounds._min.z - 20.0f );
+        
+        m4 viewMatrix = look( v3( 0.0f, 0.0f, 20.0f ), V3Zero, V3UnitY );
+
         gs::Put();
-        gs::SetMatrixP( mp );
         
-        m4 vm = look( v3( 0.0f, 0.0f, 10.0f ), V3Zero, V3UnitY );
-        m4 mm = identity4();
+        gs::SetMatrixP( projectionMatrix );
         
-        gs::SetMatrixM( vm * mm );
+        gs::SetMatrixV( viewMatrix );
         
         // Clear buffers and voxelise scene
         
@@ -405,7 +408,7 @@ namespace fw
             SetCull( CullFaceBack );
             // todo set ortho and fixed z aligned camera
             _voxelising = true;
-            _scene->Render( *this, vm );
+            _scene->Render( *this );
             Pop();
             
             Pop();
@@ -473,7 +476,7 @@ namespace fw
         // todo set perspective matrix and actual camera view
         
         _voxelising = false;
-        _scene->Render( *this, vm );
+        _scene->Render( *this );
         
         Pop();
         Pop();

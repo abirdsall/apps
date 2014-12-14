@@ -21,12 +21,12 @@ namespace fw
         
         if(_batchRadiosity == InvalidDrawBatchHandle)
         {
-            _batchRadiosity = DrawBatchNew(BatchCapacityRadiosity, 36, 24, 3, 0, 4, 2);
+            _batchRadiosity = DrawBatchNew(BatchCapacityRadiosity, 36, 24, 3, 0, 4, 1);
         }
         
         if(_batchRadiosityMono == InvalidDrawBatchHandle)
         {
-            _batchRadiosityMono = DrawBatchNew(BatchCapacityRadiosityMono, 36, 24, 3, 0, 0, 2);
+            _batchRadiosityMono = DrawBatchNew(BatchCapacityRadiosityMono, 36, 24, 3, 0, 0, 1);
         }
 
         _batchActive = InvalidDrawBatchHandle;
@@ -85,7 +85,7 @@ namespace fw
     {
         ASSERT( _batchActive == _batchFilled );
         CubeGenElements( DrawBatchElementPtr( _batchActive ), DrawBatchVertexCount( _batchActive ) );
-        CubeGenVertices( DrawBatchVertexPtr( _batchActive ), position, radius, colour );
+        CubeGenPositionsNormalsColours( DrawBatchVertexPtr( _batchActive ), position, radius, colour );
         DrawBatchIncrement( _batchActive );
     }
 
@@ -93,7 +93,7 @@ namespace fw
     {
         ASSERT( _batchActive == _batchRadiosity );
         CubeGenElements( DrawBatchElementPtr( _batchActive ), DrawBatchVertexCount( _batchActive ) );
-        CubeGenVerticesRadiosity( DrawBatchVertexPtr( _batchActive ), position, radius, colour );
+        CubeGenPositionsColours( DrawBatchVertexPtr( _batchActive ), position, radius, colour );
         DrawBatchIncrement( _batchActive );
     }
     
@@ -101,7 +101,7 @@ namespace fw
     {
         ASSERT( _batchActive == _batchRadiosityMono );
         CubeGenElements( DrawBatchElementPtr( _batchActive ), DrawBatchVertexCount( _batchActive ) );
-        CubeGenVerticesRadiosityMono( DrawBatchVertexPtr( _batchActive ), position, radius );
+        CubeGenPositions( DrawBatchVertexPtr( _batchActive ), position, radius );
         DrawBatchIncrement( _batchActive );
     }
     

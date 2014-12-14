@@ -85,7 +85,12 @@ namespace core
         {
             setColumn(3, v4(-multiply33(*this, position), 1.0f));
         }
-        
+
+        void setPositi0n(const v3& position)
+        {
+            setColumn(3, v4(multiply33(*this, position), 1.0f));
+        }
+
         void setScale(const v3& scale)
         {
             rows[0].x = scale.x;

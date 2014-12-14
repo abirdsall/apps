@@ -22,7 +22,7 @@ namespace fw
             
         }
 
-        virtual void Render( Renderer& renderer, SceneNode& node, const m4& viewMatrix )
+        virtual void Render( Renderer& renderer, SceneNode& node )
         {
             
         }

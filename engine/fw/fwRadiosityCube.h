@@ -29,31 +29,31 @@ namespace fw
             }
             DrawBatchClear( _batchFilled );
             CubeGenElements( DrawBatchElementPtr( _batchFilled ), DrawBatchVertexCount( _batchFilled ) );
-            CubeGenVertices( DrawBatchVertexPtr( _batchFilled ), V3UnitZ, V3One, _colour );
+            CubeGenPositionsNormalsColours( DrawBatchVertexPtr( _batchFilled ), V3UnitZ, V3One, _colour );
             DrawBatchIncrement( _batchFilled );
             DrawBatchFinalise( _batchFilled );
             
             if(_batchRadiosity == InvalidDrawBatchHandle)
             {
-                _batchRadiosity = DrawBatchNew( 1, 36, 24, 3, 0, 4, 2 );
+                _batchRadiosity = DrawBatchNew( 1, 36, 24, 3, 0, 4, 0 );
                 DrawBatchIncrement( _batchRadiosity );
             }
             DrawBatchClear( _batchRadiosity );
             CubeGenElements( DrawBatchElementPtr( _batchRadiosity ), DrawBatchVertexCount( _batchRadiosity ) );
-            CubeGenVerticesRadiosity( DrawBatchVertexPtr( _batchRadiosity ), V3UnitZ, V3One, _colour );
+            CubeGenPositionsColours( DrawBatchVertexPtr( _batchRadiosity ), V3UnitZ, V3One, _colour );
             DrawBatchIncrement( _batchRadiosity );
             DrawBatchFinalise( _batchRadiosity );
         }
         
         void Delete();
 
-        void Render( Renderer& renderer, SceneNode& node, const m4& viewMatrix )
+        void Render( Renderer& renderer, SceneNode& node )
         {
             RadiosityRenderer& radiosityRenderer = (RadiosityRenderer&)renderer;
             
             gs::Put();
             
-            gs::SetMatrixM( viewMatrix * node._worldTransform );
+            gs::SetMatrixM( node._worldTransform );
             
             if(radiosityRenderer.Voxelising())
             {

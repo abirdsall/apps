@@ -169,12 +169,11 @@ namespace fw
             AppendVertexOutput( vShader, "vec2", "fragment_tcoord", eShaderPrecisionLow );
         }
         
-        AppendVertexUniform( vShader, "mat4", "viewMatrix" );
-        AppendVertexUniform( vShader, "mat4", "projMatrix" );
+        AppendVertexUniform( vShader, "mat4", "modelViewProjectionMatrix" );
         
         AppendFunctionBegin( vShader, "void", "main", "" );
         
-        vShader += "gl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, 0, 1);\n";
+        vShader += "gl_Position = modelViewProjectionMatrix * vec4(vertex_position.x, vertex_position.y, 0, 1);\n";
         
         if( colour )
         {

@@ -50,7 +50,7 @@ namespace fw
         return p;
     }
 
-    f32* CubeGenVertices( f32* p, const v3& position, const v3& radius, const v4& colour )
+    f32* CubeGenPositionsNormalsColours( f32* p, const v3& position, const v3& radius, const v4& colour )
     {
         *p ++= position.x - radius.x;
         *p ++= position.y - radius.y;
@@ -62,6 +62,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
+        
         *p ++= position.x - radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z - radius.z;
@@ -72,6 +73,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
+        
         *p ++= position.x - radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z - radius.z;
@@ -82,6 +84,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z - radius.z;
@@ -92,6 +95,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z - radius.z;
@@ -102,6 +106,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z - radius.z;
@@ -112,6 +117,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
+        
         *p ++= position.x - radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z + radius.z;
@@ -122,6 +128,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
+        
         *p ++= position.x - radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z + radius.z;
@@ -132,6 +139,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
+        
         *p ++= position.x - radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z + radius.z;
@@ -142,6 +150,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z + radius.z;
@@ -152,6 +161,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z + radius.z;
@@ -162,6 +172,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z + radius.z;
@@ -172,6 +183,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
+        
         *p ++= position.x - radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z - radius.z;
@@ -182,6 +194,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
+        
         *p ++= position.x - radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z - radius.z;
@@ -192,6 +205,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
+        
         *p ++= position.x - radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z - radius.z;
@@ -202,6 +216,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z - radius.z;
@@ -212,6 +227,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z - radius.z;
@@ -222,6 +238,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z - radius.z;
@@ -232,6 +249,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
+        
         *p ++= position.x - radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z + radius.z;
@@ -242,6 +260,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
+        
         *p ++= position.x - radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z + radius.z;
@@ -252,6 +271,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
+        
         *p ++= position.x - radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z + radius.z;
@@ -262,6 +282,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z + radius.z;
@@ -272,6 +293,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z + radius.z;
@@ -282,6 +304,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z + radius.z;
@@ -296,7 +319,7 @@ namespace fw
         return p;
     }
     
-    f32* CubeGenVerticesRadiosity( f32* p, const v3& position, const v3& radius, const v4& colour )
+    f32* CubeGenPositionsColours( f32* p, const v3& position, const v3& radius, const v4& colour )
     {
         *p ++= position.x - radius.x;
         *p ++= position.y - radius.y;
@@ -305,8 +328,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         *p ++= position.x - radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z - radius.z;
@@ -314,8 +336,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         *p ++= position.x - radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z - radius.z;
@@ -323,8 +344,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z - radius.z;
@@ -332,8 +352,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z - radius.z;
@@ -341,8 +360,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z - radius.z;
@@ -350,8 +368,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         *p ++= position.x - radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z + radius.z;
@@ -359,8 +376,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         *p ++= position.x - radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z + radius.z;
@@ -368,8 +384,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         *p ++= position.x - radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z + radius.z;
@@ -377,8 +392,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z + radius.z;
@@ -386,8 +400,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z + radius.z;
@@ -395,8 +408,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z + radius.z;
@@ -404,8 +416,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         *p ++= position.x - radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z - radius.z;
@@ -413,8 +424,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         *p ++= position.x - radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z - radius.z;
@@ -422,8 +432,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         *p ++= position.x - radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z - radius.z;
@@ -431,8 +440,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z - radius.z;
@@ -440,8 +448,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z - radius.z;
@@ -449,8 +456,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z - radius.z;
@@ -458,8 +464,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         *p ++= position.x - radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z + radius.z;
@@ -467,8 +472,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         *p ++= position.x - radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z + radius.z;
@@ -476,8 +480,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         *p ++= position.x - radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z + radius.z;
@@ -485,8 +488,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z + radius.z;
@@ -494,8 +496,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z + radius.z;
@@ -503,8 +504,7 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         *p ++= position.x + radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z + radius.z;
@@ -512,133 +512,84 @@ namespace fw
         *p ++= colour.y;
         *p ++= colour.z;
         *p ++= colour.w;
-        *p ++= position.z;
-        *p ++= radius.z;
+        
         return p;
     }
     
-    f32* CubeGenVerticesRadiosityMono( f32* p, const v3& position, const v3& radius )
+    f32* CubeGenPositions( f32* p, const v3& position, const v3& radius )
     {
         *p ++= position.x - radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z - radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         *p ++= position.x - radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z - radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         *p ++= position.x - radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z - radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         *p ++= position.x + radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z - radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         *p ++= position.x + radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z - radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         *p ++= position.x + radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z - radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         *p ++= position.x - radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z + radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         *p ++= position.x - radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z + radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         *p ++= position.x - radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z + radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         *p ++= position.x + radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z + radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         *p ++= position.x + radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z + radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         *p ++= position.x + radius.x;
         *p ++= position.y - radius.y;
         *p ++= position.z + radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         *p ++= position.x - radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z - radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         *p ++= position.x - radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z - radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         *p ++= position.x - radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z - radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         *p ++= position.x + radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z - radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         *p ++= position.x + radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z - radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         *p ++= position.x + radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z - radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         *p ++= position.x - radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z + radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         *p ++= position.x - radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z + radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         *p ++= position.x - radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z + radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         *p ++= position.x + radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z + radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         *p ++= position.x + radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z + radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         *p ++= position.x + radius.x;
         *p ++= position.y + radius.y;
         *p ++= position.z + radius.z;
-        *p ++= position.z;
-        *p ++= radius.z;
         
         return p;
     }

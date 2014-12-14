@@ -186,12 +186,11 @@ namespace fw
         vShader = vShader + "in vec3 vertex_position;\n\
         in vec2 vertex_tcoord;\n\
         out vec2 fragment_tcoord;\n\
-        uniform mat4 viewMatrix;\n\
-        uniform mat4 projMatrix;\n\
+        uniform mat4 modelViewProjectionMatrix;\n\
         void main()\n\
         {\n\
         fragment_tcoord = vertex_tcoord; \n\
-        gl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, vertex_position.z, 1.0);\n\
+        gl_Position = modelViewProjectionMatrix * vec4(vertex_position.x, vertex_position.y, vertex_position.z, 1.0);\n\
         }";
         
 #if GsOpenGl3
@@ -234,12 +233,11 @@ namespace fw
         vShader = vShader + "in vec2 vertex_position;\n\
         in vec2 vertex_tcoord;\n\
         out vec2 fragment_tcoord;\n\
-        uniform mat4 viewMatrix;\n\
-        uniform mat4 projMatrix;\n\
+        uniform mat4 modelViewProjectionMatrix;\n\
         void main()\n\
         {\n\
         fragment_tcoord = vertex_tcoord; \n\
-        gl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, 0.0, 1.0);\n\
+        gl_Position = modelViewProjectionMatrix * vec4(vertex_position.x, vertex_position.y, 0.0, 1.0);\n\
         }";
         
 #if GsOpenGl3
@@ -281,11 +279,10 @@ namespace fw
         vShader = vShader + "in vec2 vertex_position;\n\
         in vec2 vertex_tcoord;\n\
         out vec2 fragment_tcoord;\n\
-        uniform mat4 viewMatrix;\n\
-        uniform mat4 projMatrix;\n\
+        uniform mat4 modelViewProjectionMatrix;\n\
         void main()\n\
         {\n\
-        gl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, 0.0, 1.0);\n\
+        gl_Position = modelViewProjectionMatrix * vec4(vertex_position.x, vertex_position.y, 0.0, 1.0);\n\
         fragment_tcoord = vertex_tcoord;\n\
         }";
 #if GsOpenGl3
@@ -361,11 +358,10 @@ namespace fw
         out vec4 fragment_normal;\n\
         out vec4 fragment_colour;\n\
         out vec4 fragment_worldPos;\n\
-        uniform mat4 viewMatrix;\n\
-        uniform mat4 projMatrix;\n\
+        uniform mat4 modelViewProjectionMatrix;\n\
         void main()\n\
         {\n\
-        gl_Position = projMatrix * viewMatrix * vec4( vertex_position, 1.0 );\n\
+        gl_Position = modelViewProjectionMatrix * vec4( vertex_position, 1.0 );\n\
         fragment_worldPos = vec4( vertex_position, 1.0 );\n\
         fragment_normal = vec4( vertex_normal, 0.0 );\n\
         fragment_colour = vertex_colour;\n\
@@ -448,11 +444,10 @@ namespace fw
         vShader = vShader + "in vec2 vertex_position;\n\
         in vec2 vertex_tcoord;\n\
         out vec2 fragment_tcoord;\n\
-        uniform mat4 viewMatrix;\n\
-        uniform mat4 projMatrix;\n\
+        uniform mat4 modelViewProjectionMatrix;\n\
         void main()\n\
         {\n\
-        gl_Position = projMatrix * viewMatrix * vec4(vertex_position.x, vertex_position.y, 0, 1);\n\
+        gl_Position = modelViewProjectionMatrix * vec4(vertex_position.x, vertex_position.y, 0, 1);\n\
         fragment_tcoord = vertex_tcoord;\n\
         }";
 #if GsOpenGl3

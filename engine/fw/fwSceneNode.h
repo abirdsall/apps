@@ -69,18 +69,18 @@ namespace fw
             }
         }
         
-        void Render( Renderer& renderer, const m4& viewMatrix )
+        void Render( Renderer& renderer )
         {
             for( s32 i = 0; i < _components.Count(); i++ )
             {
                 SceneNodeComponent* component = _components[ i ];
-                component->Render( renderer, *this, viewMatrix );
+                component->Render( renderer, *this );
             }
             
             for( s32 i = 0; i < _children.Count(); i++ )
             {
                 SceneNode* child = _children[ i ];
-                child->Render( renderer, viewMatrix );
+                child->Render( renderer );
             }
         }
     };

@@ -81,6 +81,7 @@ void AddCube( const v3& position, const v3& radius, const v4& colour )
     fw::SceneNode* node = fw::SceneNodeNew();
     fw::RadiosityCube* radiosityCube = fw::RadiosityCubeNew();
     node->SetLocalPosition( position );
+    //node->SetLocalPosition( v3( position.x, position.y, -position.z) );
     node->SetLocalScale( radius );
     radiosityCube->Init( colour );
     node->AddComponent( radiosityCube );
@@ -113,7 +114,7 @@ void lightingInit()
     cameraNode->AddComponent( _camera );
     _renderer->_scene->AddChild( cameraNode );
     
-    AddCube( v3( 16.0f, 16.0f, 0.0f - 0.0f ), v3( 10.0f, 10.0f, 0.5f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ) );
+    AddCube( v3( 16.0f, 16.0f, 0.0f + 0.0f ), v3( 10.0f, 10.0f, 0.5f ), v4( 1.0f, 0.0f, 1.0f, 1.0f ) );
     AddCube( v3( 16.0f, 0.0f, 4.0f - 0.0f ), v3( 15.5f, 1.0f, 4.0f ), v4( 1.0f, 0.8f, 0.6f, 1.0f ) );
     AddCube( v3( 0.0f, 16.0f, 4.0f - 0.0f ), v3( 0.5f, 16.0f, 4.0f ), v4( 0.0f, 1.0f, 0.0f, 1.0f ) );
     AddCube( v3( 32.0f, 16.0f, 4.0f - 0.0f ), v3( 0.5f, 16.0f, 4.0f ), v4( 1.0f, 1.0f, 0.0f, 1.0f ) );
