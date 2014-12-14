@@ -121,8 +121,6 @@ namespace fw
         gl_Position = modelViewProjectionMatrix * vec4(vertex_position.x, vertex_position.y, vertex_position.z, 1.0);\n\
         }";
         
-        // fragment_tcoord = object zmiddle
-        // modelMatrix[2][2] = object thickness
 #if GsOpenGl3
         core::String fShader = "#version 410 core\n";
 #else
@@ -139,13 +137,15 @@ namespace fw
             fShader = fShader + "layout(location = " + i + ") out vec4 fs_" + i + ";\n";
         }
         
+        // modelMatrix[2][2] = object z thickness
+        // modelMatrix[3][2] = object z middle
+
         fShader = fShader + "void main()\n\
         {\n\
-        float modelZ = -modelMatrix[3][2];\n\
         float zBase = zMin;\n";
         for(s32 i = 0; i < _voxelCountPerPassZ; i++)
         {
-            fShader = fShader + "fs_" + i + "= vec4( fragment_colour.x, fragment_colour.y, fragment_colour.z, clamp( ( modelMatrix[2][2] - abs( zBase - modelZ ) ) / zStep, 0.0, 1.0 ) );\n\
+            fShader = fShader + "fs_" + i + "= vec4( fragment_colour.x, fragment_colour.y, fragment_colour.z, clamp( ( modelMatrix[2][2] - abs( zBase - modelMatrix[3][2] ) ) / zStep, 0.0, 1.0 ) );\n\
             zBase += zStep;\n";
         }
         fShader = fShader + "}";
@@ -238,11 +238,8 @@ namespace fw
         void main()\n\
         {\n\
         gl_Position = modelViewProjectionMatrix * vec4( vertex_position, 1.0 );\n\
-        fragment_worldPos = modelMatrix * vec4( vertex_position.x, vertex_position.y, vertex_position.z, 1.0 );\n\
-        fragment_worldPos.x = -fragment_worldPos.x;\n\
-        fragment_worldPos.y = -fragment_worldPos.y;\n\
-        fragment_worldPos.z = -fragment_worldPos.z;\n\
-        fragment_normal = modelMatrix * vec4( vertex_normal.x, vertex_normal.y, vertex_normal.z, 0.0 );\n\
+        fragment_worldPos = modelMatrix * vec4( vertex_position, 1.0 );\n\
+        fragment_normal = modelMatrix * vec4( vertex_normal, 0.0 );\n\
         fragment_colour = vertex_colour;\n\
         }";
 #if GsOpenGl3
@@ -294,10 +291,6 @@ namespace fw
         }";
         _shaderForward = ShaderNew( vShader.toStr(), fShader.toStr() );
     }
-//    float tx = (fragment_worldPos.x > 0.25 && fragment_worldPos.x < 4.0) ? 1.0 : 0.0;\n\
-//    float ty = (fragment_worldPos.y > 0.25 && fragment_worldPos.y < 4.0) ? 1.0 : 0.0;\n\
-//    float tz = (fragment_worldPos.z > 0.25 && fragment_worldPos.z < 4.0) ? 1.0 : 0.0;\n\
-//    output_colour = vec4( tx, ty, tz, 1.0 );\n\
     
     ShaderHandle RadiosityRenderer::MakeBlurShader( s32 axis, s32 targetCount, f32 zMin, f32 zStep )
     {
@@ -373,7 +366,7 @@ namespace fw
                            _bounds._max.y, _bounds._min.y,
                            _bounds._max.z + 20.0f, _bounds._min.z - 20.0f );
         
-        m4 viewMatrix = look( v3( 0.0f, 0.0f, 20.0f ), V3Zero, V3UnitY );
+        m4 viewMatrix = look( v3( 0.0f, 0.0f, 10.0f ), V3Zero, V3UnitY );
 
         gs::Put();
         

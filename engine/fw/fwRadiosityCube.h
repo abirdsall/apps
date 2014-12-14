@@ -61,7 +61,6 @@ namespace fw
                 {
                     DrawBatchDraw( _batchRadiosity, gs::PrimitiveTriangles );
                 }
-                //DrawCubeRadiosity( node._localTransform.getPosition(), node._modelScale, _colour );
             }
             else
             {
@@ -69,7 +68,6 @@ namespace fw
                 {
                     DrawBatchDraw( _batchFilled, gs::PrimitiveTriangles );
                 }
-                //DrawCube( node._localTransform.getPosition(), node._modelScale, _colour );
             }
             
             gs::Pop();
@@ -77,8 +75,7 @@ namespace fw
         
         void Tick( f32 dt, SceneNode& node )
         {
-            //printf("ffffff\n");
-            //node._localTransform = node._localTransform * r4( v3( 0.0f, 0.0f, 1.0f ), 0.001f );
+            //node._localTransform = r4( v3( 0.0f, 0.0f, 1.0f ), 0.01f ) * node._localTransform;
         }
     };
     

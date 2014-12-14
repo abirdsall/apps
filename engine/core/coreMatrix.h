@@ -83,11 +83,6 @@ namespace core
         
         void setPosition(const v3& position)
         {
-            setColumn(3, v4(-multiply33(*this, position), 1.0f));
-        }
-
-        void setPositi0n(const v3& position)
-        {
             setColumn(3, v4(multiply33(*this, position), 1.0f));
         }
 
@@ -257,7 +252,7 @@ namespace core
         f32 fn = zFar - zNear;
         return m4(	2.0f / rl,      0.0f,       0.0f, -(right + left) / rl,
                   0.0f, 2.0f / tb,       0.0f, -(top + bottom) / tb,
-                  0.0f,      0.0f, -2.0f / fn,  (zFar + zNear) / fn,
+                  0.0f,      0.0f, -2.0f / fn, -(zFar + zNear) / fn,
                   0.0f,      0.0f,       0.0f,                 1.0f);
     }
     
@@ -376,7 +371,7 @@ namespace core
     inline m4 look(const v3& a, const v3& b, const v3& c)
     {
         v3 z = normalise(b - a);
-        v3 x = normalise(-cross(z, c));
+        v3 x = normalise(cross(z, c));
         v3 y = cross(x, z);
         m4 m(x, y, z, v3(V3Zero));
         m.setPosition(a);

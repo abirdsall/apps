@@ -9,12 +9,8 @@ namespace fw
     {
     public:
 
-        f32 testa;
-        
         SceneNodeComponent()
         {
-            testa = 7.0f;
-            testb = 8.0f;
         }
 
         virtual void Delete()
@@ -31,8 +27,6 @@ namespace fw
         {
             
         }
-        
-        f32 testb;
     };
 }
 

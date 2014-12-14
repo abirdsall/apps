@@ -101,7 +101,7 @@ void lightingInit()
     fw::InitRadiosityCubes();
     fw::SystemFontInit();
     
-    _lightHandleA = fw::LightNew( v3( 5.0f, 5.0f, 5.0f ), v3( 1.0f, 1.0f, 1.0f ) * 0.5f );
+    _lightHandleA = fw::LightNew( v3( 5.0f, 5.0f, 5.0f ), v3( 1.0f, 1.0f, 1.0f ) * 0.85f );
 	_lightHandleB = fw::LightNew( v3( 5.0f, 4.5f, 5.0f ), v3( 1.0f, 0.5f, 0.0f ) * 0.0f );
 
     _renderer->Init( aabb( v3( 0.0f, 0.0f, 0.0f ), v3( 32.0f, 32.0f, 8.0f ) ), 256, 256, 32 );
@@ -114,7 +114,7 @@ void lightingInit()
     cameraNode->AddComponent( _camera );
     _renderer->_scene->AddChild( cameraNode );
     
-    AddCube( v3( 16.0f, 16.0f, 0.0f + 0.0f ), v3( 10.0f, 10.0f, 0.5f ), v4( 1.0f, 0.0f, 1.0f, 1.0f ) );
+    AddCube( v3( 16.0f, 16.0f, 0.0f + 0.0f ), v3( 16.0f, 16.0f, 0.5f ), v4( 1.0f, 1.0f, 1.0f, 1.0f ) );
     AddCube( v3( 16.0f, 0.0f, 4.0f - 0.0f ), v3( 15.5f, 1.0f, 4.0f ), v4( 1.0f, 0.8f, 0.6f, 1.0f ) );
     AddCube( v3( 0.0f, 16.0f, 4.0f - 0.0f ), v3( 0.5f, 16.0f, 4.0f ), v4( 0.0f, 1.0f, 0.0f, 1.0f ) );
     AddCube( v3( 32.0f, 16.0f, 4.0f - 0.0f ), v3( 0.5f, 16.0f, 4.0f ), v4( 1.0f, 1.0f, 0.0f, 1.0f ) );
