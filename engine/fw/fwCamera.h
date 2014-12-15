@@ -57,7 +57,7 @@ namespace fw
         
         void SetPerspective( f32 fov, f32 aspect, f32 zNear, f32 zFar )
         {
-            _projection = projection(fov, aspect, zNear, zFar);
+            _projection = perspective(fov, aspect, zNear, zFar);
         }
         
         void SetPosition( const v3& position )
