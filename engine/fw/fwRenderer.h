@@ -5,7 +5,7 @@ namespace fw
 {
     struct Renderer
     {
-        virtual void Render() = 0;
+        virtual void Render( Camera* camera ) = 0;
         
         Array<LightHandle> _lights;
         

@@ -30,7 +30,7 @@ namespace fw
     
     void Camera::TickFly( f32 dt )
     {
-        v3 position = _view.getPosition();
+        v3 position = _position;
         
         if( os::MouseButtonDown( os::MouseButtonRight ) )
         {
@@ -84,7 +84,7 @@ namespace fw
             position += _view.rows[ 2 ].xyz() * dt * FlyMovementSpeed;
         }
         
-        _view.setPosition( position );
+        SetPosition( position );
     }
     
     void Camera::TickOrbit( f32 dt )
@@ -106,7 +106,7 @@ namespace fw
                 }
             }
             
-            f32 distance = core::distance( _view.getPosition(), _target );
+            f32 distance = core::distance( _position, _target );
             
             if( os::MouseButtonHeld( os::MouseButtonRight ) )
             {
@@ -118,7 +118,7 @@ namespace fw
                 }
             }
             
-            _view.setPosition( _target - _view.rows[ 2 ].xyz() * distance);
+            SetPosition( _target - _view.rows[ 2 ].xyz() * distance );
         }
     }
 }

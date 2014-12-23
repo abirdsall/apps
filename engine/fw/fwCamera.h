@@ -13,8 +13,7 @@ namespace fw
     class Camera : public SceneNodeComponent
     {
     private:
-        m4 _projection;
-        m4 _view;
+        v3 _position;
         v3 _target;
         CameraControl _control;
         
@@ -22,6 +21,8 @@ namespace fw
         void TickOrbit( f32 dt );
         
     public:
+        m4 _projection;
+        m4 _view;
         
         Camera()
         {
@@ -29,7 +30,7 @@ namespace fw
             _view = identity4();
             _control = CameraControl_Orbit;
             
-            SetPerspective( 85.0f, os::WindowAspect(), 0.01f, 1000.0f );
+            SetPerspective( core::d2r( 45.0f ), os::WindowAspect(), 0.1f, 1000.0f );
             SetPosition( V3UnitZ );
             SetTarget( V3Zero );
         }
@@ -62,13 +63,14 @@ namespace fw
         
         void SetPosition( const v3& position )
         {
-            _view.setPosition( position );
+            _position = position;
+            _view = look( _position, _target, V3UnitY );
         }
         
         void SetTarget( const v3& target )
         {
             _target = target;
-            _view = look( _view.getPosition(), target, V3UnitY );
+            _view = look( _position, _target, V3UnitY );
         }
     };
     

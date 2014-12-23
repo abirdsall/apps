@@ -48,6 +48,7 @@ namespace core
         
         v3 getPosition()
         {
+            //return rows[ 0 ].w * rows[ 0 ].xyz() + rows[ 1 ].w * rows[ 1 ].xyz() + rows[ 2 ].w * rows[ 2 ].xyz();
             return - rows[ 0 ].w * rows[ 0 ].xyz() - rows[ 1 ].w * rows[ 1 ].xyz() - rows[ 2 ].w * rows[ 2 ].xyz();
         }
         
@@ -167,15 +168,15 @@ namespace core
         return m4( 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
     }
     
-//    inline m4 translate( const v3 &v )
-//    {
-//        return m4( 1.0f, 0.0f, 0.0f, v.x, 0.0f, 1.0f, 0.0f, v.y, 0.0f, 0.0f, 1.0f, v.z, 0.0f, 0.0f, 0.0f, 1.0f );
-//    }
-//    
-//    inline m4 scale( const v3 &v )
-//    {
-//        return m4( v.x, 0.0f, 0.0f, 0.0f, 0.0f, v.y, 0.0f, 0.0f, 0.0f, 0.0f, v.z, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f );
-//    }
+    inline m4 translate( const v3 &v )
+    {
+        return m4( 1.0f, 0.0f, 0.0f, v.x, 0.0f, 1.0f, 0.0f, v.y, 0.0f, 0.0f, 1.0f, v.z, 0.0f, 0.0f, 0.0f, 1.0f );
+    }
+    
+    inline m4 scale( const v3 &v )
+    {
+        return m4( v.x, 0.0f, 0.0f, 0.0f, 0.0f, v.y, 0.0f, 0.0f, 0.0f, 0.0f, v.z, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f );
+    }
     
     inline m4 rotateX( const f32 angle )
     {
@@ -238,13 +239,26 @@ namespace core
                   1.0f );
     }
     
-    inline m4 perspective( const f32 fovX, const f32 aspect, const f32 n, const f32 f )
+    inline m4 perspective2( const f32 fovX, const f32 aspect, const f32 n, const f32 f )
     {
         f32 x = core::cos( 0.5f * fovX ) / core::sin( 0.5f * fovX );
         f32 y = x / aspect;
         f32 fn = 1.0f / ( f - n );
         
         return m4( x, 0.0f, 0.0f, 0.0f, 0.0f, y, 0.0f, 0.0f, 0.0f, 0.0f, ( f + n ) * fn, -2.0f * f * n * fn, 0.0f, 0.0f, 1.0f, 0.0f );
+    }
+    
+    inline m4 perspective(f32 fovX, f32 aspect, f32 zNear, f32 zFar)
+    {
+        f32 x = core::cos(0.5f * fovX) / core::sin(0.5f * fovX);
+        f32 y = x / aspect;
+        
+        //f32 x = 1.0f / fovX;
+        //f32 y = 1.0f / (fovX * osWindow().aspect());
+        return m4(	   x, 0.0f, 0.0f, 0.0f,
+                  0.0f,    y, 0.0f, 0.0f,
+                  0.0f, 0.0f, (zFar + zNear) / (zFar - zNear), -(2.0f * zFar * zNear) / (zFar - zNear),
+                  0.0f, 0.0f, 1.0f, 0.0f);
     }
     
     inline m4 orthogonal( const f32 l, const f32 r, const f32 t, const f32 b, const f32 n, const f32 f )
@@ -259,11 +273,11 @@ namespace core
     inline m4 look( const v3& from, const v3& to, const v3& up )
     {
         v3 z = normalise( to - from );
-        v3 x = normalise( cross( z, up ) );
-        v3 y = cross( x, z );
+        v3 x = -normalise( cross( up, z ) );
+        v3 y = -cross( z, x );
         m4 m( x, y, z, v4( V3Zero ) );
         
-        m.setPosition( from );
+        m.setPosition( -from );
         
         return m;
     }

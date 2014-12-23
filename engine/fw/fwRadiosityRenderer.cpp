@@ -145,7 +145,7 @@ namespace fw
         float zBase = zMin;\n";
         for(s32 i = 0; i < _voxelCountPerPassZ; i++)
         {
-            fShader = fShader + "fs_" + i + "= vec4( fragment_colour.x, fragment_colour.y, fragment_colour.z, clamp( ( modelMatrix[2][2] - abs( zBase - modelMatrix[3][2] ) ) / zStep, 0.0, 1.0 ) );\n\
+            fShader = fShader + "fs_" + i + "= vec4( fragment_colour.x, fragment_colour.y, fragment_colour.z, clamp( ( length( modelMatrix[2] ) - abs( zBase - modelMatrix[3][2] ) ) / zStep, 0.0, 1.0 ) );\n\
             zBase += zStep;\n";
         }
         fShader = fShader + "}";
@@ -359,7 +359,7 @@ namespace fw
         return ShaderNew( vShader.toStr(), fShader.toStr() );
     }
 
-    void RadiosityRenderer::Render()
+    void RadiosityRenderer::Render( Camera* camera )
     {
         m4 projectionMatrix = orthogonal(
                            _bounds._min.x, _bounds._max.x,
@@ -468,10 +468,17 @@ namespace fw
         
         // todo set perspective matrix and actual camera view
         
+        gs::SetMatrixP( camera->_projection );
+        gs::SetMatrixV( camera->_view );
+
+//        m4 pm = perspective( core::d2r( 85.0f ), 1.0f, 0.1f, 100.0f );
+//        gs::SetMatrixP( pm );
+//        gs::SetMatrixV( look( v3( 16.0f, 16.0f, 32.0f ), v3( 16.0f, 16.0f, 0.0f ), V3UnitY ) );
         _voxelising = false;
         _scene->Render( *this );
         
         Pop();
+        
         Pop();
     }
     

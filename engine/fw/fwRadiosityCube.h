@@ -12,6 +12,7 @@ namespace fw
         v4 _colour;
         
     public:
+        bool _spin;
         
         RadiosityCube()
         {
@@ -29,7 +30,7 @@ namespace fw
             }
             DrawBatchClear( _batchFilled );
             CubeGenElements( DrawBatchElementPtr( _batchFilled ), DrawBatchVertexCount( _batchFilled ) );
-            CubeGenPositionsNormalsColours( DrawBatchVertexPtr( _batchFilled ), V3UnitZ, V3One, _colour );
+            CubeGenPositionsNormalsColours( DrawBatchVertexPtr( _batchFilled ), V3Zero, V3One, _colour );
             DrawBatchIncrement( _batchFilled );
             DrawBatchFinalise( _batchFilled );
             
@@ -40,7 +41,7 @@ namespace fw
             }
             DrawBatchClear( _batchRadiosity );
             CubeGenElements( DrawBatchElementPtr( _batchRadiosity ), DrawBatchVertexCount( _batchRadiosity ) );
-            CubeGenPositionsColours( DrawBatchVertexPtr( _batchRadiosity ), V3UnitZ, V3One, _colour );
+            CubeGenPositionsColours( DrawBatchVertexPtr( _batchRadiosity ), V3Zero, V3One, _colour );
             DrawBatchIncrement( _batchRadiosity );
             DrawBatchFinalise( _batchRadiosity );
         }
@@ -75,7 +76,10 @@ namespace fw
         
         void Tick( f32 dt, SceneNode& node )
         {
-            //node._localTransform = r4( v3( 0.0f, 0.0f, 1.0f ), 0.01f ) * node._localTransform;
+            if( _spin )
+            {
+                node._localTransform = node._localTransform * r4( v3( 1.0f, 1.0f, 1.0f ), 0.01f );
+            }
         }
     };
     

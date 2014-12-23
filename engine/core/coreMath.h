@@ -15,7 +15,17 @@ namespace core
 	f32 randomfraction();
 	f32 randomrange(f32 a, f32 b);
 	void randomseed(u32 a);
-	
+
+    inline f32 r2d(f32 r)
+    {
+        return r / Pi * 180.0f;
+    }
+    
+    inline f32 d2r(f32 d)
+    {
+        return d / 180.0f * Pi;
+    }
+    
 	inline s32 abs(s32 a)
 	{
 		return a < 0.0f ? -a : a;

@@ -75,12 +75,10 @@ namespace gs
 		
 		if( ShaderActive() != ShaderInvalid )
 		{
-            m4 modelViewProjectionMatrix = stateActive._matrixP * stateActive._matrixV * stateActive._matrixM;
-            m4 modelViewMatrix = stateActive._matrixV * stateActive._matrixM;
+            ShaderSetMat4( "modelViewProjectionMatrix", stateActive._matrixP * stateActive._matrixV * stateActive._matrixM );
             ShaderSetMat4( "projectionMatrix", stateActive._matrixP );
 			ShaderSetMat4( "viewMatrix", stateActive._matrixV );
             ShaderSetMat4( "modelMatrix", stateActive._matrixM );
-            ShaderSetMat4( "modelViewProjectionMatrix", modelViewProjectionMatrix );
 		}
 
 		core::copy( &_stateApplied, &_state[ _stateActive ], sizeof( state ) );

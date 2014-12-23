@@ -59,7 +59,7 @@ namespace fw
         
         void Kill();
         
-        void Render();
+        void Render( Camera* camera );
         
         void BlurLayers(gs::TextureHandle textureX,
                         gs::TextureHandle textureY,

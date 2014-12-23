@@ -13,6 +13,9 @@ namespace fw
         m4 _worldTransform;
         m4 _localTransform;
         
+        v3 _localPosition;
+        v3 _localScale;
+        
         SceneNode()
         {
             _parent = Null;
@@ -35,12 +38,16 @@ namespace fw
         
         void SetLocalPosition( const v3& position )
         {
-            _localTransform.setPosition( position );
+            _localPosition = position;
+//            _localTransform = core::scale( _localScale ) * core::translate( _localPosition );
+            _localTransform = core::translate( _localPosition ) * core::scale( _localScale );
         }
 
         void SetLocalScale( const v3& scale )
         {
-            _localTransform.setScale( scale );
+            _localScale = scale;
+//            _localTransform = core::scale( _localScale ) * core::translate( _localPosition );
+            _localTransform = core::translate( _localPosition ) * core::scale( _localScale );
             
             // if z has changed then update thickness values for self and all children
         }

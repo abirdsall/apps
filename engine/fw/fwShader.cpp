@@ -143,7 +143,7 @@ namespace fw
         shader += name;
         shader += ";\n";
     }
-
+    
     gs::ShaderHandle ShaderMake2d( bool colour, bool tcoords )
     {
         return ShaderMake2d( colour, tcoords, 0, 0 );
@@ -202,6 +202,130 @@ namespace fw
             AppendFragmentUniform( fShader, "sampler2D", "texture0", eShaderPrecisionLow );
         }
 
+        if( locationEnd > 0 )
+        {
+            for( s32 i = locationBegin; i <= locationEnd; i++ )
+            {
+                AppendFragmentOutput( fShader, i, eShaderPrecisionLow );
+            }
+        }
+        else
+        {
+            AppendFragmentOutput( fShader, eShaderPrecisionLow );
+        }
+        
+        AppendFunctionBegin( fShader, "void", "main", "" );
+        
+        const c8* tmp;
+        
+        if( locationEnd > 0 )
+        {
+            tmp = "tmp";
+            AppendVariable( fShader, "vec4", "tmp", eShaderPrecisionLow );
+        }
+        else
+        {
+#if GsOpenGles2
+            tmp = "gl_FragColor";
+#else
+            tmp = "output_colour";
+#endif
+        }
+        
+        if( colour && !tcoords )
+        {
+            fShader = fShader + tmp + " = fragment_colour;\n";
+        }
+        else if( !colour && tcoords )
+        {
+#if GsOpenGles2
+            fShader = fShader + tmp + " = texture2D(texture0, fragment_tcoord);\n";
+#else
+            fShader = fShader + tmp + " = texture(texture0, fragment_tcoord);\n";
+#endif
+        }
+        else if( colour && tcoords )
+        {
+#if GsOpenGles2
+            fShader = fShader + tmp + " = texture2D(texture0, fragment_tcoord) * fragment_colour;\n";
+#else
+            fShader = fShader + tmp + " = texture(texture0, fragment_tcoord) * fragment_colour;\n";
+#endif
+        }
+        
+        if( locationEnd > 0 )
+        {
+            for( s32 i = locationBegin; i <= locationEnd; i++ )
+            {
+                fShader += "output_colour";
+                fShader = fShader + i;
+                fShader = fShader + " = " + tmp + ";\n";
+            }
+        }
+        
+        AppendFunctionEnd( fShader );
+        
+        return gs::ShaderNew( vShader.toStr(), fShader.toStr() );
+    }
+    
+    gs::ShaderHandle ShaderMake3d( bool colour, bool tcoords )
+    {
+        return ShaderMake3d( colour, tcoords, 0, 0 );
+    }
+    
+    gs::ShaderHandle ShaderMake3d( bool colour, bool tcoords, s32 locationBegin, s32 locationEnd )
+    {
+        core::String vShader = "";
+        
+        AppendHeader( vShader );
+        
+        AppendVertexInput( vShader, "vec3", "vertex_position" );
+        
+        if( colour )
+        {
+            AppendVertexInput( vShader, "vec4", "vertex_colour" );
+            AppendVertexOutput( vShader, "vec4", "fragment_colour", eShaderPrecisionLow );
+        }
+        
+        if( tcoords )
+        {
+            AppendVertexInput( vShader, "vec2", "vertex_tcoord" );
+            AppendVertexOutput( vShader, "vec2", "fragment_tcoord", eShaderPrecisionLow );
+        }
+        
+        AppendVertexUniform( vShader, "mat4", "modelViewProjectionMatrix" );
+        
+        AppendFunctionBegin( vShader, "void", "main", "" );
+        
+        vShader += "gl_Position = modelViewProjectionMatrix * vec4(vertex_position.x, vertex_position.y, vertex_position.z, 1);\n";
+        
+        if( colour )
+        {
+            vShader += "fragment_colour = vertex_colour;\n";
+        }
+        
+        if( tcoords )
+        {
+            vShader += "fragment_tcoord = vertex_tcoord;\n";
+        }
+        
+        AppendFunctionEnd( vShader );
+        
+        core::String fShader = "";
+        
+        AppendHeader( fShader );
+        
+        if( colour )
+        {
+            AppendFragmentInput( fShader, "vec4", "fragment_colour", eShaderPrecisionLow );
+        }
+        
+        if( tcoords )
+        {
+            AppendFragmentInput( fShader, "vec2", "fragment_tcoord", eShaderPrecisionLow );
+            AppendFragmentUniform( fShader, "sampler2D", "texture0", eShaderPrecisionLow );
+        }
+        
         if( locationEnd > 0 )
         {
             for( s32 i = locationBegin; i <= locationEnd; i++ )
