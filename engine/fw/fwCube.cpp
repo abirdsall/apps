@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "fw.h"
 
 namespace fw

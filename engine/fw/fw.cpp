@@ -10,12 +10,14 @@ namespace fw
         InitCubeBatches();
         InitQuad2dBatches();
         InitRadiosityCubes();
+        InitRadiositySpheres();
         
         SystemFontInit();
     }
     
     void Kill()
     {
+        InitRadiositySpheres();
         KillRadiosityCubes();
         KillQuad2dBatches();
         KillCubeBatches();

@@ -114,10 +114,14 @@ namespace fw
         vShader = vShader + "in vec3 vertex_position;\n\
         in vec4 vertex_colour;\n\
         out vec4 fragment_colour;\n\
+        out float fragment_thickness;\n\
         uniform mat4 modelViewProjectionMatrix;\n\
+        uniform mat4 modelMatrix;\n\
         void main()\n\
         {\n\
-        fragment_colour = vertex_colour; \n\
+        vec4 modelVertex = modelMatrix * vec4(vertex_position.x, vertex_position.y, vertex_position.z, 1.0);\n\
+        fragment_colour = vertex_colour;\n\
+        fragment_thickness = modelVertex.z - modelMatrix[3][2];\n\
         gl_Position = modelViewProjectionMatrix * vec4(vertex_position.x, vertex_position.y, vertex_position.z, 1.0);\n\
         }";
         
@@ -130,7 +134,8 @@ namespace fw
         fShader = fShader + "uniform float zMin;\n\
         uniform float zStep;\n\
         uniform mat4 modelMatrix;\n\
-        in vec4 fragment_colour;\n";
+        in vec4 fragment_colour;\n\
+        in float fragment_thickness;\n";
         
         for(s32 i = 0; i < _voxelCountPerPassZ; i++)
         {
@@ -142,10 +147,11 @@ namespace fw
 
         fShader = fShader + "void main()\n\
         {\n\
+        float thickness = max( fragment_thickness, 0 );\n\
         float zBase = zMin;\n";
         for(s32 i = 0; i < _voxelCountPerPassZ; i++)
         {
-            fShader = fShader + "fs_" + i + "= vec4( fragment_colour.x, fragment_colour.y, fragment_colour.z, clamp( ( length( modelMatrix[2] ) - abs( zBase - modelMatrix[3][2] ) ) / zStep, 0.0, 1.0 ) );\n\
+            fShader = fShader + "fs_" + i + "= vec4( fragment_colour.x, fragment_colour.y, fragment_colour.z, clamp( ( thickness - abs( zBase - modelMatrix[3][2] ) ) / zStep, 0.0, 1.0 ) );\n\
             zBase += zStep;\n";
         }
         fShader = fShader + "}";
@@ -208,7 +214,7 @@ namespace fw
         //occ += clamp( samp-last, 0.0, 1.0);\n\
         //last = samp;\n\
         }\n\
-        attenuate *= clamp( 1.0 - occ*0.75, 0.0, 1.0);\n";
+        attenuate *= clamp( 1.0 - occ * 0.75, 0.0, 1.0);\n";
 #if GsOpenGl3
         fShader = fShader + "\
         output_colour[0].rgb = lightCol * attenuate;\n\
@@ -230,17 +236,21 @@ namespace fw
         vShader = vShader + "in vec3 vertex_position;\n\
         in vec3 vertex_normal;\n\
         in vec4 vertex_colour;\n\
-        out vec4 fragment_normal;\n\
+        out vec4 fragment_vertex;\n\
+        out vec3 fragment_normal;\n\
+        out vec3 fragment_normal_ao;\n\
         out vec4 fragment_colour;\n\
         out vec4 fragment_worldPos;\n\
         uniform mat4 modelViewProjectionMatrix;\n\
         uniform mat4 modelMatrix;\n\
         void main()\n\
         {\n\
-        gl_Position = modelViewProjectionMatrix * vec4( vertex_position, 1.0 );\n\
+        fragment_vertex = modelViewProjectionMatrix * vec4( vertex_position, 1.0 );\n\
         fragment_worldPos = modelMatrix * vec4( vertex_position, 1.0 );\n\
-        fragment_normal = modelMatrix * vec4( vertex_normal, 0.0 );\n\
+        fragment_normal = ( modelMatrix * vec4( vertex_normal, 0.0 ) ).xyz;\n\
+        fragment_normal_ao = vec3( fragment_normal.x, fragment_normal.y + 0.75, fragment_normal.z );\n\
         fragment_colour = vertex_colour;\n\
+        gl_Position = fragment_vertex;\n\
         }";
 #if GsOpenGl3
         fShader = "#version 150\n";
@@ -256,21 +266,22 @@ namespace fw
         uniform vec3 worldMin;\n\
         uniform vec3 worldSize;\n\
         in vec4 fragment_worldPos;\n\
-        in vec4 fragment_normal;\n\
+        in vec3 fragment_normal;\n\
+        in vec3 fragment_normal_ao;\n\
         in vec4 fragment_colour;\n\
         out vec4 output_colour;\n\
         void main()\n\
         {\n\
-        vec3 worldPos = fragment_worldPos.xyz;// + fragment_normal.xyz;\n\
+        vec3 unit_normal = normalize( fragment_normal );\n\
+        vec3 unit_normal_ao = normalize( fragment_normal_ao );\n\
+        vec3 worldPos = fragment_worldPos.xyz;// + unit_normal;\n\
         vec3 texturePos = ( worldPos - worldMin ) / worldSize;\n\
         vec3 lightDir = texture( texture1, texturePos ).rgb;\n\
-        float attenuation = 0.0f + 1.0f * max(0.0, -dot( fragment_normal.xyz, lightDir ) );\n\
-        vec4 aonormal = fragment_normal;\n\
-        aonormal.y += 0.75;\n\
-        vec3 worldPos2 = fragment_worldPos.xyz + aonormal.xyz * 1.0 * 0.4;\n\
-        vec3 worldPos3 = fragment_worldPos.xyz + aonormal.xyz * 2.0 * 0.4;\n\
-        vec3 worldPos4 = fragment_worldPos.xyz + aonormal.xyz * 4.0 * 0.4;\n\
-        vec3 worldPos5 = fragment_worldPos.xyz + aonormal.xyz * 8.0 * 0.4;\n\
+        float attenuation = 0.4f + 0.6f * max(0.0, -dot( unit_normal, lightDir ) );\n\
+        vec3 worldPos2 = fragment_worldPos.xyz + unit_normal_ao * 1.0 * 0.15;\n\
+        vec3 worldPos3 = fragment_worldPos.xyz + unit_normal_ao * 2.0 * 0.15;\n\
+        vec3 worldPos4 = fragment_worldPos.xyz + unit_normal_ao * 4.0 * 0.15;\n\
+        vec3 worldPos5 = fragment_worldPos.xyz + unit_normal_ao * 8.0 * 0.15;\n\
         vec3 texturePos2 = ( worldPos2 - worldMin ) / worldSize;\n\
         vec3 texturePos3 = ( worldPos3 - worldMin ) / worldSize;\n\
         vec3 texturePos4 = ( worldPos4 - worldMin ) / worldSize;\n\
@@ -286,11 +297,52 @@ namespace fw
         ao += clamp( aocol2.a * 1.0, 0.0, 1.0 );\n\
         ao += clamp( aocol3.a * 1.0, 0.0, 1.0 );\n\
         ao = 1.0 - clamp( 0.25 * ao, 0.0, 1.0 );\n\
-        vec3 amb = aocol0.rgb * aocol1.rgb * aocol2.rgb * aocol3.rgb;\n\
-        output_colour = fragment_colour * ( vec4( amb.xyz * 0.5 * ao + 1.0 * ( col * attenuation ), 1.0 ) + vec4(0.0,0.0,0.0,1.0));\n\
+        vec3 indirectLighting = aocol0.rgb * aocol1.rgb * aocol2.rgb * aocol3.rgb * ao * 0.5;\n\
+        vec3 directLighting = col * attenuation * 0.2;\n\
+        output_colour = fragment_colour * ( vec4( indirectLighting + directLighting, 1.0 ) + vec4( 0.1, 0.1, 0.1, 1.0 ) );\n\
+        //output_colour.x = tn.x;\n\
+        //output_colour.y = tn.y;\n\
+        //output_colour.z = tn.z;\n\
         }";
         _shaderForward = ShaderNew( vShader.toStr(), fShader.toStr() );
     }
+    /*
+    precision mediump float;
+    
+    varying vec3 normalInterp;
+    varying vec3 vertPos;
+    
+    uniform int mode;
+    
+    const vec3 lightPos = vec3(1.0,1.0,1.0);
+    const vec3 ambientColor = vec3(0.1, 0.0, 0.0);
+    const vec3 diffuseColor = vec3(0.5, 0.0, 0.0);
+    const vec3 specColor = vec3(1.0, 1.0, 1.0);
+    
+    void main() {
+        
+        vec3 normal = normalize(normalInterp);
+        vec3 lightDir = normalize(lightPos - vertPos);
+        
+        float lambertian = max(dot(lightDir,normal), 0.0);
+        float specular = 0.0;
+        
+        if(lambertian > 0.0) {
+            
+            vec3 viewDir = normalize(-vertPos);
+            
+            // this is blinn phong
+            vec3 halfDir = normalize(lightDir + viewDir);
+            float specAngle = max(dot(halfDir, normal), 0.0);
+            specular = pow(specAngle, 22.0);
+
+        }
+        
+        gl_FragColor = vec4(ambientColor +
+                            lambertian * diffuseColor +
+                            specular * specColor, 1.0);
+    }
+*/
     
     ShaderHandle RadiosityRenderer::MakeBlurShader( s32 axis, s32 targetCount, f32 zMin, f32 zStep )
     {

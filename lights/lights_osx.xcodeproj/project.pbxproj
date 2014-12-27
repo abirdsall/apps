@@ -12,6 +12,8 @@
 		D6155FA819BD12320039F8FA /* fwRadiositySuperShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6155FA719BD12320039F8FA /* fwRadiositySuperShape.cpp */; };
 		D61CBED219A2CF0E00CF7DAD /* fwDrawBatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D61CBED119A2CF0E00CF7DAD /* fwDrawBatch.cpp */; };
 		D61CBED519A693A400CF7DAD /* fwQuad2dBatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D61CBED419A693A400CF7DAD /* fwQuad2dBatch.cpp */; };
+		D629F4EC1A4A1845009D3BAF /* fwSphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D629F4EA1A4A1845009D3BAF /* fwSphere.cpp */; };
+		D629F4EF1A4A4FCC009D3BAF /* fwRadiositySphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D629F4ED1A4A4FCC009D3BAF /* fwRadiositySphere.cpp */; };
 		D6315A6F19AA25570045B472 /* fwSceneNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6315A6E19AA25570045B472 /* fwSceneNode.cpp */; };
 		D6315A7319AA661C0045B472 /* coreArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6315A7219AA661C0045B472 /* coreArray.cpp */; };
 		D639B0781997B6100036741C /* fwFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D639B0771997B6100036741C /* fwFont.cpp */; };
@@ -90,6 +92,10 @@
 		D61CBED119A2CF0E00CF7DAD /* fwDrawBatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fwDrawBatch.cpp; sourceTree = "<group>"; };
 		D61CBED319A2CF2A00CF7DAD /* fwDrawBatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fwDrawBatch.h; sourceTree = "<group>"; };
 		D61CBED419A693A400CF7DAD /* fwQuad2dBatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fwQuad2dBatch.cpp; sourceTree = "<group>"; };
+		D629F4EA1A4A1845009D3BAF /* fwSphere.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fwSphere.cpp; sourceTree = "<group>"; };
+		D629F4EB1A4A1845009D3BAF /* fwSphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fwSphere.h; sourceTree = "<group>"; };
+		D629F4ED1A4A4FCC009D3BAF /* fwRadiositySphere.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fwRadiositySphere.cpp; sourceTree = "<group>"; };
+		D629F4EE1A4A4FCC009D3BAF /* fwRadiositySphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fwRadiositySphere.h; sourceTree = "<group>"; };
 		D6315A6E19AA25570045B472 /* fwSceneNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fwSceneNode.cpp; sourceTree = "<group>"; };
 		D6315A7019AA25650045B472 /* fwSceneNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fwSceneNode.h; sourceTree = "<group>"; };
 		D6315A7119AA61EE0045B472 /* coreArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = coreArray.h; sourceTree = "<group>"; };
@@ -257,6 +263,8 @@
 				D6F564F419ABE3C700411D9B /* fwRadiosityRenderer.h */,
 				D60D4F4D19D717A400654BC0 /* fwRadiosityRendererMono.cpp */,
 				D60D4F4E19D717A400654BC0 /* fwRadiosityRendererMono.h */,
+				D629F4ED1A4A4FCC009D3BAF /* fwRadiositySphere.cpp */,
+				D629F4EE1A4A4FCC009D3BAF /* fwRadiositySphere.h */,
 				D6155FA719BD12320039F8FA /* fwRadiositySuperShape.cpp */,
 				D6155FA919BD12490039F8FA /* fwRadiositySuperShape.h */,
 				D64890D5198D98DD001636B5 /* fwRect.h */,
@@ -267,6 +275,8 @@
 				D675868B19BBB3EF00E0A3F8 /* fwSceneNodeComponent.h */,
 				D6D1E94819A8DD5D00FE2541 /* fwShader.cpp */,
 				D6D1E94A19A8DD7600FE2541 /* fwShader.h */,
+				D629F4EA1A4A1845009D3BAF /* fwSphere.cpp */,
+				D629F4EB1A4A1845009D3BAF /* fwSphere.h */,
 				D6155FA419BD0D410039F8FA /* fwSuperShape.cpp */,
 				D6155FA619BD0D4F0039F8FA /* fwSuperShape.h */,
 				D64890BE198D98DD001636B5 /* fwTextureViewer.cpp */,
@@ -491,6 +501,7 @@
 				D648912B198D98DD001636B5 /* fwMesh.cpp in Sources */,
 				D648914B198D98DD001636B5 /* macWindow.mm in Sources */,
 				D648913A198D98DD001636B5 /* gsShader.cpp in Sources */,
+				D629F4EF1A4A4FCC009D3BAF /* fwRadiositySphere.cpp in Sources */,
 				D648913B198D98DD001636B5 /* gsTexture.cpp in Sources */,
 				D673D01C19A0D01A00243153 /* coreAssert.cpp in Sources */,
 				D6489122198D98DD001636B5 /* fwCamera.cpp in Sources */,
@@ -513,6 +524,7 @@
 				D61CBED219A2CF0E00CF7DAD /* fwDrawBatch.cpp in Sources */,
 				D673D01D19A0D01A00243153 /* coreMath.cpp in Sources */,
 				D6489143198D98DD001636B5 /* openGlTexture.cpp in Sources */,
+				D629F4EC1A4A1845009D3BAF /* fwSphere.cpp in Sources */,
 				D6155FA819BD12320039F8FA /* fwRadiositySuperShape.cpp in Sources */,
 				D675868119BB3AFD00E0A3F8 /* fwCube.cpp in Sources */,
 				D648914F198D98DD001636B5 /* osTouch.cpp in Sources */,

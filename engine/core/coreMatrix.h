@@ -239,26 +239,13 @@ namespace core
                   1.0f );
     }
     
-    inline m4 perspective2( const f32 fovX, const f32 aspect, const f32 n, const f32 f )
+    inline m4 perspective( const f32 fovX, const f32 aspect, const f32 n, const f32 f )
     {
         f32 x = core::cos( 0.5f * fovX ) / core::sin( 0.5f * fovX );
         f32 y = x / aspect;
         f32 fn = 1.0f / ( f - n );
         
         return m4( x, 0.0f, 0.0f, 0.0f, 0.0f, y, 0.0f, 0.0f, 0.0f, 0.0f, ( f + n ) * fn, -2.0f * f * n * fn, 0.0f, 0.0f, 1.0f, 0.0f );
-    }
-    
-    inline m4 perspective(f32 fovX, f32 aspect, f32 zNear, f32 zFar)
-    {
-        f32 x = core::cos(0.5f * fovX) / core::sin(0.5f * fovX);
-        f32 y = x / aspect;
-        
-        //f32 x = 1.0f / fovX;
-        //f32 y = 1.0f / (fovX * osWindow().aspect());
-        return m4(	   x, 0.0f, 0.0f, 0.0f,
-                  0.0f,    y, 0.0f, 0.0f,
-                  0.0f, 0.0f, (zFar + zNear) / (zFar - zNear), -(2.0f * zFar * zNear) / (zFar - zNear),
-                  0.0f, 0.0f, 1.0f, 0.0f);
     }
     
     inline m4 orthogonal( const f32 l, const f32 r, const f32 t, const f32 b, const f32 n, const f32 f )

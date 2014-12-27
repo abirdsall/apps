@@ -79,6 +79,7 @@ namespace gs
             ShaderSetMat4( "projectionMatrix", stateActive._matrixP );
 			ShaderSetMat4( "viewMatrix", stateActive._matrixV );
             ShaderSetMat4( "modelMatrix", stateActive._matrixM );
+            ShaderSetMat4( "normalMatrix", transpose( !stateActive._matrixM ) ); // Only calculate if required!
 		}
 
 		core::copy( &_stateApplied, &_state[ _stateActive ], sizeof( state ) );

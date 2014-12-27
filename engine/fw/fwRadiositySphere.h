@@ -1,9 +1,9 @@
-#ifndef FW_RADIOSITY_CUBE
-#define FW_RADIOSITY_CUBE
+#ifndef FW_RADIOSITY_SPHERE
+#define FW_RADIOSITY_SPHERE
 
 namespace fw
 {
-    class RadiosityCube : public SceneNodeComponent
+    class RadiositySphere : public SceneNodeComponent
     {
     private:
         
@@ -14,7 +14,7 @@ namespace fw
     public:
         bool _spin;
         
-        RadiosityCube()
+        RadiositySphere()
         {
             _batchFilled = InvalidDrawBatchHandle;
             _batchRadiosity = InvalidDrawBatchHandle;
@@ -26,28 +26,28 @@ namespace fw
             
             if(_batchFilled == InvalidDrawBatchHandle)
             {
-                _batchFilled = DrawBatchNew( 1, 36, 24, 3, 3, 4, 0 );
+                _batchFilled = DrawBatchNew( 1, 60, 12, 3, 3, 4, 0 );
             }
             DrawBatchClear( _batchFilled );
-            CubeGenElements( DrawBatchElementPtr( _batchFilled ), DrawBatchVertexCount( _batchFilled ) );
-            CubeGenPositionsNormalsColours( DrawBatchVertexPtr( _batchFilled ), V3Zero, V3One, _colour );
+            SphereGenElements( DrawBatchElementPtr( _batchFilled ), DrawBatchVertexCount( _batchFilled ) );
+            SphereGenPositionsNormalsColours( DrawBatchVertexPtr( _batchFilled ), V3Zero, V3One, _colour );
             DrawBatchIncrement( _batchFilled );
             DrawBatchFinalise( _batchFilled );
             
             if(_batchRadiosity == InvalidDrawBatchHandle)
             {
-                _batchRadiosity = DrawBatchNew( 1, 36, 24, 3, 0, 4, 0 );
+                _batchRadiosity = DrawBatchNew( 1, 60, 12, 3, 0, 4, 0 );
                 DrawBatchIncrement( _batchRadiosity );
             }
             DrawBatchClear( _batchRadiosity );
-            CubeGenElements( DrawBatchElementPtr( _batchRadiosity ), DrawBatchVertexCount( _batchRadiosity ) );
-            CubeGenPositionsColours( DrawBatchVertexPtr( _batchRadiosity ), V3Zero, V3One, _colour );
+            SphereGenElements( DrawBatchElementPtr( _batchRadiosity ), DrawBatchVertexCount( _batchRadiosity ) );
+            SphereGenPositionsColours( DrawBatchVertexPtr( _batchRadiosity ), V3Zero, V3One, _colour );
             DrawBatchIncrement( _batchRadiosity );
             DrawBatchFinalise( _batchRadiosity );
         }
         
         void Delete();
-
+        
         void Render( Renderer& renderer, SceneNode& node )
         {
             RadiosityRenderer& radiosityRenderer = (RadiosityRenderer&)renderer;
@@ -83,12 +83,12 @@ namespace fw
         }
     };
     
-    void InitRadiosityCubes();
-    void KillRadiosityCubes();
+    void InitRadiositySpheres();
+    void KillRadiositySpheres();
     
-    RadiosityCube* RadiosityCubeNew();
+    RadiositySphere* RadiositySphereNew();
     
-    void RadiosityCubeDelete( RadiosityCube* cube );
+    void RadiositySphereDelete( RadiositySphere* sphere );
 }
 
 #endif
