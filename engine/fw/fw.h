@@ -34,8 +34,9 @@ namespace fw
 #include "fwRadiosityCube.h"
 #include "fwRadiositySphere.h"
 #include "fwRadiositySuperShape.h"
-#include "fwQuad2d.h"
+#include "fwQuad.h"
 #include "fwQuad2dBatch.h"
+#include "fwQuad3dBatch.h"
 
 namespace fw
 {

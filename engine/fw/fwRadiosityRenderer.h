@@ -52,6 +52,10 @@ namespace fw
         gs::ShaderHandle _shaderVoxelise;
         gs::ShaderHandle _shaderLuminise;
         gs::ShaderHandle _shaderForward;
+        
+        bool _debugVoxels;
+        s32 _debugVoxelLayer;
+        gs::ShaderHandle _debugVoxelShader;
 
         void Init( const aabb& bounds, s32 voxelCountX, s32 voxelCountY, s32 voxelCountZ );
         
@@ -59,6 +63,7 @@ namespace fw
         
         void Kill();
         
+        void Tick( f32 dt );
         void Render( Camera* camera );
         
         void BlurLayers(gs::TextureHandle textureX,

@@ -104,7 +104,8 @@ namespace fw
             CanvasAdd( _lightCanvases[ i ], _lightTextureDirection, i );
         }
         
-        _fillShader = fw::ShaderMake2d( true, false, 0, _voxelCountPerPassZ - 1 );
+        _debugVoxelShader = fw::ShaderMake( eShader3dTexture3d );
+        _fillShader = fw::ShaderMake( fw::eShader2dFill, 0, _voxelCountPerPassZ - 1 );
 
 #if GsOpenGl3
         core::String vShader = "#version 410 core\n";
@@ -121,7 +122,7 @@ namespace fw
         {\n\
         vec4 modelVertex = modelMatrix * vec4(vertex_position.x, vertex_position.y, vertex_position.z, 1.0);\n\
         fragment_colour = vertex_colour;\n\
-        fragment_thickness = modelVertex.z - modelMatrix[3][2];\n\
+        fragment_thickness = modelVertex.z;// - modelMatrix[3][2];\n\
         gl_Position = modelViewProjectionMatrix * vec4(vertex_position.x, vertex_position.y, vertex_position.z, 1.0);\n\
         }";
         
@@ -147,7 +148,7 @@ namespace fw
 
         fShader = fShader + "void main()\n\
         {\n\
-        float thickness = max( fragment_thickness, 0 );\n\
+        float thickness = max( fragment_thickness - modelMatrix[3][2], 0 );\n\
         float zBase = zMin;\n";
         for(s32 i = 0; i < _voxelCountPerPassZ; i++)
         {
@@ -248,7 +249,7 @@ namespace fw
         fragment_vertex = modelViewProjectionMatrix * vec4( vertex_position, 1.0 );\n\
         fragment_worldPos = modelMatrix * vec4( vertex_position, 1.0 );\n\
         fragment_normal = ( modelMatrix * vec4( vertex_normal, 0.0 ) ).xyz;\n\
-        fragment_normal_ao = vec3( fragment_normal.x, fragment_normal.y + 0.75, fragment_normal.z );\n\
+        fragment_normal_ao = vec3( fragment_normal.x, fragment_normal.y + 0.0075, fragment_normal.z );\n\
         fragment_colour = vertex_colour;\n\
         gl_Position = fragment_vertex;\n\
         }";
@@ -278,15 +279,15 @@ namespace fw
         vec3 texturePos = ( worldPos - worldMin ) / worldSize;\n\
         vec3 lightDir = texture( texture1, texturePos ).rgb;\n\
         float attenuation = 0.4f + 0.6f * max(0.0, -dot( unit_normal, lightDir ) );\n\
-        vec3 worldPos2 = fragment_worldPos.xyz + unit_normal_ao * 1.0 * 0.15;\n\
-        vec3 worldPos3 = fragment_worldPos.xyz + unit_normal_ao * 2.0 * 0.15;\n\
-        vec3 worldPos4 = fragment_worldPos.xyz + unit_normal_ao * 4.0 * 0.15;\n\
-        vec3 worldPos5 = fragment_worldPos.xyz + unit_normal_ao * 8.0 * 0.15;\n\
+        vec3 worldPos2 = fragment_worldPos.xyz + unit_normal_ao * 1.0 * 0.5;\n\
+        vec3 worldPos3 = fragment_worldPos.xyz + unit_normal_ao * 2.0 * 0.5;\n\
+        vec3 worldPos4 = fragment_worldPos.xyz + unit_normal_ao * 4.0 * 0.5;\n\
+        vec3 worldPos5 = fragment_worldPos.xyz + unit_normal_ao * 8.0 * 0.5;\n\
         vec3 texturePos2 = ( worldPos2 - worldMin ) / worldSize;\n\
         vec3 texturePos3 = ( worldPos3 - worldMin ) / worldSize;\n\
         vec3 texturePos4 = ( worldPos4 - worldMin ) / worldSize;\n\
         vec3 texturePos5 = ( worldPos5 - worldMin ) / worldSize;\n\
-        vec3 col = texture( texture0, texturePos ).xyz;\n\
+        vec3 col = texture( texture0, texturePos3 ).xyz;\n\
         vec4 aocol0 = texture( texture2, texturePos2 );\n\
         vec4 aocol1 = textureLod( texture3, texturePos3, 0.0 );\n\
         vec4 aocol2 = textureLod( texture3, texturePos4, 1.0 );\n\
@@ -297,8 +298,8 @@ namespace fw
         ao += clamp( aocol2.a * 1.0, 0.0, 1.0 );\n\
         ao += clamp( aocol3.a * 1.0, 0.0, 1.0 );\n\
         ao = 1.0 - clamp( 0.25 * ao, 0.0, 1.0 );\n\
-        vec3 indirectLighting = aocol0.rgb * aocol1.rgb * aocol2.rgb * aocol3.rgb * ao * 0.5;\n\
-        vec3 directLighting = col * attenuation * 0.2;\n\
+        vec3 indirectLighting = aocol0.rgb * aocol1.rgb * aocol2.rgb * aocol3.rgb * ao * 0.3;\n\
+        vec3 directLighting = col * attenuation * 0.5;\n\
         output_colour = fragment_colour * ( vec4( indirectLighting + directLighting, 1.0 ) + vec4( 0.1, 0.1, 0.1, 1.0 ) );\n\
         //output_colour.x = tn.x;\n\
         //output_colour.y = tn.y;\n\
@@ -411,6 +412,27 @@ namespace fw
         return ShaderNew( vShader.toStr(), fShader.toStr() );
     }
 
+    void RadiosityRenderer::Tick( f32 dt )
+    {
+        if( os::KeyboardUp( os::KeyV ) )
+        {
+            _debugVoxels = !_debugVoxels;
+        }
+        
+        if( _debugVoxels )
+        {
+            if( os::KeyboardUp( os::KeyLeft ) )
+            {
+                _debugVoxelLayer = max( 0, _debugVoxelLayer - 1 );
+            }
+            
+            if( os::KeyboardUp( os::KeyRight ) )
+            {
+                _debugVoxelLayer = min( this->_voxelCountZ - 1, _debugVoxelLayer + 1 );
+            }
+        }
+    }
+    
     void RadiosityRenderer::Render( Camera* camera )
     {
         m4 projectionMatrix = orthogonal(
@@ -529,6 +551,26 @@ namespace fw
         _voxelising = false;
         _scene->Render( *this );
         
+        if( _debugVoxels )
+        {
+            for( s32 i = 0; i < _voxelCountZ; i++ )
+            {
+                _debugVoxelLayer = i;
+                f32 zFraction = f32( _debugVoxelLayer ) / f32( _voxelCountZ );
+                f32 z = lerp( _bounds._min.z, _bounds._max.z, zFraction );
+                gs::SetCull(gs::CullFaceNone);
+                gs::SetBlend(gs::BlendModeRgba);
+                ShaderSet(_debugVoxelShader);
+                TextureSet( "texture0", _voxelTextureA );
+                DrawQuad3d( Quad3dShaderTextured3dCustom,
+                           v3( _bounds._min.x, _bounds._min.y, z ),
+                           v3( _bounds._min.x, _bounds._max.y, z ),
+                           v3( _bounds._max.x, _bounds._min.y, z ),
+                           v3( _bounds._max.x, _bounds._max.y, z ),
+                           Rect( 0.0f, 0.0f, 1.0f, 1.0f ), zFraction );
+            }
+        }
+
         Pop();
         
         Pop();

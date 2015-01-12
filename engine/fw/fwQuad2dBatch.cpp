@@ -21,32 +21,32 @@ namespace fw
     {
         if(_batchFilled == InvalidDrawBatchHandle)
         {
-            _batchFilled = DrawBatchNew(BatchCapacityFilled, 6, 4, 2, 0, 4, 0);
+            _batchFilled = DrawBatchNew( BatchCapacityFilled, 6, 4, 2, 0, 4, 0 );
         }
         
         if(_batchTextured == InvalidDrawBatchHandle)
         {
-            _batchTextured = DrawBatchNew(BatchCapacityTextured, 6, 4, 2, 0, 0, 2);
+            _batchTextured = DrawBatchNew( BatchCapacityTextured, 6, 4, 2, 0, 0, 2 );
         }
         
         if(_batchTinted == InvalidDrawBatchHandle)
         {
-            _batchTinted = DrawBatchNew(BatchCapacityTinted, 6, 4, 2, 0, 4, 2);
+            _batchTinted = DrawBatchNew( BatchCapacityTinted, 6, 4, 2, 0, 4, 2 );
         }
         
         if(_shaderFilled == gs::ShaderInvalid)
         {
-            _shaderFilled = ShaderMake2d( true, false );
+            _shaderFilled = ShaderMake( eShader2dFill );
         }
         
         if(_shaderTextured == gs::ShaderInvalid)
         {
-            _shaderTextured = ShaderMake2d( false, true );
+            _shaderTextured = ShaderMake( eShader2dTexture2d );
         }
         
         if(_shaderTinted == gs::ShaderInvalid)
         {
-            _shaderTinted = ShaderMake2d( true, true );
+            _shaderTinted = ShaderMake( eShader2dTexture2dTinted );
         }
         
         _batchActive = InvalidDrawBatchHandle;
@@ -161,7 +161,7 @@ namespace fw
     void BatchQuad2d( const Rect& vcoords, const v4& colour )
     {
         ASSERT( _batchActive == _batchFilled );
-        Quad2dGenElements( DrawBatchElementPtr( _batchActive ), DrawBatchVertexCount( _batchActive ) );
+        QuadGenElements( DrawBatchElementPtr( _batchActive ), DrawBatchVertexCount( _batchActive ) );
         Quad2dGenVertices( DrawBatchVertexPtr( _batchActive ), vcoords, colour );
         DrawBatchIncrement( _batchActive );
     }
@@ -169,7 +169,7 @@ namespace fw
     void BatchQuad2d( const Rect& vcoords, const Rect& tcoords )
     {
         ASSERT( _batchActive == _batchTextured );
-        Quad2dGenElements( DrawBatchElementPtr( _batchActive ), DrawBatchVertexCount( _batchActive ) );
+        QuadGenElements( DrawBatchElementPtr( _batchActive ), DrawBatchVertexCount( _batchActive ) );
         Quad2dGenVertices( DrawBatchVertexPtr( _batchActive ), vcoords, tcoords );
         DrawBatchIncrement( _batchActive );
     }
@@ -177,7 +177,7 @@ namespace fw
     void BatchQuad2d( const Rect& vcoords, const Rect& tcoords, const v4& colour )
     {
         ASSERT( _batchActive == _batchTinted );
-        Quad2dGenElements( DrawBatchElementPtr( _batchActive ), DrawBatchVertexCount( _batchActive ) );
+        QuadGenElements( DrawBatchElementPtr( _batchActive ), DrawBatchVertexCount( _batchActive ) );
         Quad2dGenVertices( DrawBatchVertexPtr( _batchActive ), vcoords, tcoords, colour );
         DrawBatchIncrement( _batchActive );
     }

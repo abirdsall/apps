@@ -56,6 +56,7 @@ void lightingTick( f32 dt )
 		}
 	}
     
+    _renderer->Tick( dt );
     _renderer->_scene->Tick( dt );
 }
 
@@ -131,11 +132,12 @@ void lightingInit()
     fw::InitDrawBatches();
     fw::InitCubeBatches();
     fw::InitQuad2dBatches();
+    fw::InitQuad3dBatches();
     fw::InitRadiosityCubes();
     fw::InitRadiositySpheres();
     fw::SystemFontInit();
     
-    _shaderFill3d = fw::ShaderMake3d( true, false );
+    _shaderFill3d = fw::ShaderMake( fw::eShader3dFill );
     
     _lightHandleA = fw::LightNew( v3( 5.0f, 5.0f, 5.0f ), v3( 1.0f, 1.0f, 1.0f ) * 0.85f );
 	_lightHandleB = fw::LightNew( v3( 5.0f, 4.5f, 5.0f ), v3( 1.0f, 0.5f, 0.0f ) * 0.0f );

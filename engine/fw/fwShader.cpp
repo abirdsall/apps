@@ -144,43 +144,62 @@ namespace fw
         shader += ";\n";
     }
     
-    gs::ShaderHandle ShaderMake2d( bool colour, bool tcoords )
+    gs::ShaderHandle ShaderMake( eShader shader )
     {
-        return ShaderMake2d( colour, tcoords, 0, 0 );
+        return ShaderMake( shader, 0, 0 );
     }
     
-    gs::ShaderHandle ShaderMake2d( bool colour, bool tcoords, s32 locationBegin, s32 locationEnd )
+    gs::ShaderHandle ShaderMake( eShader shader, s32 locationBegin, s32 locationEnd )
     {
         core::String vShader = "";
         
         AppendHeader( vShader );
         
-        AppendVertexInput( vShader, "vec2", "vertex_position" );
+        if( shader & eShaderBits3d )
+        {
+            AppendVertexInput( vShader, "vec3", "vertex_position" );
+        }
+        else
+        {
+            AppendVertexInput( vShader, "vec2", "vertex_position" );
+        }
         
-        if( colour )
+        if( shader & eShaderBitsColour )
         {
             AppendVertexInput( vShader, "vec4", "vertex_colour" );
             AppendVertexOutput( vShader, "vec4", "fragment_colour", eShaderPrecisionLow );
         }
         
-        if( tcoords )
+        if( shader & eShaderBitsTexture2d )
         {
             AppendVertexInput( vShader, "vec2", "vertex_tcoord" );
             AppendVertexOutput( vShader, "vec2", "fragment_tcoord", eShaderPrecisionLow );
+        }
+        else if( shader & eShaderBitsTexture3d )
+        {
+            AppendVertexInput( vShader, "vec3", "vertex_tcoord" );
+            AppendVertexOutput( vShader, "vec3", "fragment_tcoord", eShaderPrecisionLow );
         }
         
         AppendVertexUniform( vShader, "mat4", "modelViewProjectionMatrix" );
         
         AppendFunctionBegin( vShader, "void", "main", "" );
         
-        vShader += "gl_Position = modelViewProjectionMatrix * vec4(vertex_position.x, vertex_position.y, 0, 1);\n";
+        if( shader & eShaderBits3d )
+        {
+            vShader += "gl_Position = modelViewProjectionMatrix * vec4(vertex_position.x, vertex_position.y, vertex_position.z, 1);\n";
+        }
+        else
+        {
+            vShader += "gl_Position = modelViewProjectionMatrix * vec4(vertex_position.x, vertex_position.y, 0, 1);\n";
+        }
         
-        if( colour )
+        if( shader & eShaderBitsColour )
         {
             vShader += "fragment_colour = vertex_colour;\n";
         }
         
-        if( tcoords )
+        if( shader & ( eShaderBitsTexture2d | eShaderBitsTexture3d ) )
         {
             vShader += "fragment_tcoord = vertex_tcoord;\n";
         }
@@ -191,15 +210,20 @@ namespace fw
         
         AppendHeader( fShader );
         
-        if( colour )
+        if( shader & eShaderBitsColour )
         {
             AppendFragmentInput( fShader, "vec4", "fragment_colour", eShaderPrecisionLow );
         }
 
-        if( tcoords )
+        if( shader & eShaderBitsTexture2d )
         {
             AppendFragmentInput( fShader, "vec2", "fragment_tcoord", eShaderPrecisionLow );
             AppendFragmentUniform( fShader, "sampler2D", "texture0", eShaderPrecisionLow );
+        }
+        else if( shader & eShaderBitsTexture3d )
+        {
+            AppendFragmentInput( fShader, "vec3", "fragment_tcoord", eShaderPrecisionLow );
+            AppendFragmentUniform( fShader, "sampler3D", "texture0", eShaderPrecisionLow );
         }
 
         if( locationEnd > 0 )
@@ -231,150 +255,39 @@ namespace fw
             tmp = "output_colour";
 #endif
         }
-        
-        if( colour && !tcoords )
+
+        switch( shader )
         {
-            fShader = fShader + tmp + " = fragment_colour;\n";
-        }
-        else if( !colour && tcoords )
-        {
-#if GsOpenGles2
-            fShader = fShader + tmp + " = texture2D(texture0, fragment_tcoord);\n";
-#else
-            fShader = fShader + tmp + " = texture(texture0, fragment_tcoord);\n";
-#endif
-        }
-        else if( colour && tcoords )
-        {
-#if GsOpenGles2
-            fShader = fShader + tmp + " = texture2D(texture0, fragment_tcoord) * fragment_colour;\n";
-#else
-            fShader = fShader + tmp + " = texture(texture0, fragment_tcoord) * fragment_colour;\n";
-#endif
-        }
-        
-        if( locationEnd > 0 )
-        {
-            for( s32 i = locationBegin; i <= locationEnd; i++ )
+            case eShader2dFill:
+            case eShader3dFill:
             {
-                fShader += "output_colour";
-                fShader = fShader + i;
-                fShader = fShader + " = " + tmp + ";\n";
+                fShader = fShader + tmp + " = fragment_colour;\n";
+                break;
             }
-        }
-        
-        AppendFunctionEnd( fShader );
-        
-        return gs::ShaderNew( vShader.toStr(), fShader.toStr() );
-    }
-    
-    gs::ShaderHandle ShaderMake3d( bool colour, bool tcoords )
-    {
-        return ShaderMake3d( colour, tcoords, 0, 0 );
-    }
-    
-    gs::ShaderHandle ShaderMake3d( bool colour, bool tcoords, s32 locationBegin, s32 locationEnd )
-    {
-        core::String vShader = "";
-        
-        AppendHeader( vShader );
-        
-        AppendVertexInput( vShader, "vec3", "vertex_position" );
-        
-        if( colour )
-        {
-            AppendVertexInput( vShader, "vec4", "vertex_colour" );
-            AppendVertexOutput( vShader, "vec4", "fragment_colour", eShaderPrecisionLow );
-        }
-        
-        if( tcoords )
-        {
-            AppendVertexInput( vShader, "vec2", "vertex_tcoord" );
-            AppendVertexOutput( vShader, "vec2", "fragment_tcoord", eShaderPrecisionLow );
-        }
-        
-        AppendVertexUniform( vShader, "mat4", "modelViewProjectionMatrix" );
-        
-        AppendFunctionBegin( vShader, "void", "main", "" );
-        
-        vShader += "gl_Position = modelViewProjectionMatrix * vec4(vertex_position.x, vertex_position.y, vertex_position.z, 1);\n";
-        
-        if( colour )
-        {
-            vShader += "fragment_colour = vertex_colour;\n";
-        }
-        
-        if( tcoords )
-        {
-            vShader += "fragment_tcoord = vertex_tcoord;\n";
-        }
-        
-        AppendFunctionEnd( vShader );
-        
-        core::String fShader = "";
-        
-        AppendHeader( fShader );
-        
-        if( colour )
-        {
-            AppendFragmentInput( fShader, "vec4", "fragment_colour", eShaderPrecisionLow );
-        }
-        
-        if( tcoords )
-        {
-            AppendFragmentInput( fShader, "vec2", "fragment_tcoord", eShaderPrecisionLow );
-            AppendFragmentUniform( fShader, "sampler2D", "texture0", eShaderPrecisionLow );
-        }
-        
-        if( locationEnd > 0 )
-        {
-            for( s32 i = locationBegin; i <= locationEnd; i++ )
+            case eShader2dTexture2d:
+            case eShader2dTexture3d:
+            case eShader3dTexture2d:
+            case eShader3dTexture3d:
             {
-                AppendFragmentOutput( fShader, i, eShaderPrecisionLow );
+#if GsOpenGles2
+                fShader = fShader + tmp + " = texture2D(texture0, fragment_tcoord);\n";
+#else
+                fShader = fShader + tmp + " = texture(texture0, fragment_tcoord);\n";
+#endif
+                break;
             }
-        }
-        else
-        {
-            AppendFragmentOutput( fShader, eShaderPrecisionLow );
-        }
-        
-        AppendFunctionBegin( fShader, "void", "main", "" );
-        
-        const c8* tmp;
-        
-        if( locationEnd > 0 )
-        {
-            tmp = "tmp";
-            AppendVariable( fShader, "vec4", "tmp", eShaderPrecisionLow );
-        }
-        else
-        {
+            case eShader2dTexture2dTinted:
+            case eShader2dTexture3dTinted:
+            case eShader3dTexture2dTinted:
+            case eShader3dTexture3dTinted:
+            {
 #if GsOpenGles2
-            tmp = "gl_FragColor";
+                fShader = fShader + tmp + " = texture2D(texture0, fragment_tcoord) * fragment_colour;\n";
 #else
-            tmp = "output_colour";
+                fShader = fShader + tmp + " = texture(texture0, fragment_tcoord) * fragment_colour;\n";
 #endif
-        }
-        
-        if( colour && !tcoords )
-        {
-            fShader = fShader + tmp + " = fragment_colour;\n";
-        }
-        else if( !colour && tcoords )
-        {
-#if GsOpenGles2
-            fShader = fShader + tmp + " = texture2D(texture0, fragment_tcoord);\n";
-#else
-            fShader = fShader + tmp + " = texture(texture0, fragment_tcoord);\n";
-#endif
-        }
-        else if( colour && tcoords )
-        {
-#if GsOpenGles2
-            fShader = fShader + tmp + " = texture2D(texture0, fragment_tcoord) * fragment_colour;\n";
-#else
-            fShader = fShader + tmp + " = texture(texture0, fragment_tcoord) * fragment_colour;\n";
-#endif
+                break;
+            }
         }
         
         if( locationEnd > 0 )
