@@ -298,8 +298,8 @@ namespace fw
         ao += clamp( aocol2.a * 1.0, 0.0, 1.0 );\n\
         ao += clamp( aocol3.a * 1.0, 0.0, 1.0 );\n\
         ao = 1.0 - clamp( 0.25 * ao, 0.0, 1.0 );\n\
-        vec3 indirectLighting = aocol0.rgb * aocol1.rgb * aocol2.rgb * aocol3.rgb * ao * 0.3;\n\
-        vec3 directLighting = col * attenuation * 0.5;\n\
+        vec3 indirectLighting = aocol0.rgb * aocol1.rgb * aocol2.rgb * aocol3.rgb * ao * 0.6;\n\
+        vec3 directLighting = col * attenuation * 0.2;\n\
         output_colour = fragment_colour * ( vec4( indirectLighting + directLighting, 1.0 ) + vec4( 0.1, 0.1, 0.1, 1.0 ) );\n\
         //output_colour.x = tn.x;\n\
         //output_colour.y = tn.y;\n\
